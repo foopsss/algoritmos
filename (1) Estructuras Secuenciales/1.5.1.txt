@@ -1,0 +1,24 @@
+Acción 1.5.1 ES
+
+Ambiente
+
+	precio_act, año_fut, año_act: entero
+	precio_fut: real
+	tasa_inf = 0,04
+
+Proceso
+
+	Escribir("Introduzca el año actual: ")
+	Leer(año_act)
+	
+	Escribir("Introduzca el precio actual del artículo: ")
+	Leer(precio_act)
+	
+	Escribir("Introduzca un año a futuro: ")
+	Leer(año_fut)
+
+	precio_fut := precio_act * (1 + tasa_inf) ** (año_fut - ano_act)
+	
+	Escribir("Para el año" año_fut "el artículo tendrá un precio de" precio_fut "pesos.")
+
+Fin Acción
