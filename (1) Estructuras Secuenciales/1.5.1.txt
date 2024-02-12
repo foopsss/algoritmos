@@ -17,7 +17,7 @@ Proceso
 	Escribir("Introduzca un año a futuro: ")
 	Leer(año_fut)
 
-	precio_fut := precio_act * (1 + tasa_inf) ** (año_fut - ano_act)
+	precio_fut := precio_act * (1 + tasa_inf) ** (año_fut - año_act)
 	
 	Escribir("Para el año" año_fut "el artículo tendrá un precio de" precio_fut "pesos.")
 
