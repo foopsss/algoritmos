@@ -1,14 +1,7 @@
 # algoritmos
 En este repositorio se encuentran ejercicios resueltos de la [guía de trabajos prácticos](https://aed-frre.github.io/) de la cátedra de Algoritmos y Estructuras de Datos de la UTN FRRe. Sin embargo, a menos que se indique lo contrario en el nombre de los archivos, mis resoluciones son de la guía en formato PDF disponible en el campus virtual.
 
-Algunos de los ejercicios cuentan además con una versión escrita en [Rust](https://www.rust-lang.org/), el lenguaje de programación de sistemas de Mozilla. Dichas versiones son probadas únicamente en sistemas operativos GNU/Linux, por lo que no puedo garantizar su correcto funcionamiento en otras plataformas.
-
-## Compilar ejercicios escritos en Rust
-Debido a que no están incluidas en proyectos de Cargo, las versiones escritas en Rust de los ejercicios pueden ser compiladas llamando directamente al compilador de Rust, `rustc`:
-
-`rustc (ejercicio).rs`
-
-En sistemas operativos GNU/Linux, es necesario darle permisos de ejecución al ejecutable obtenido como resultado del proceso de compilación, lo que se puede hacer con el comando `chmod +x (nombre del ejecutable)`.
+Algunos de los ejercicios cuentan además con una versión escrita en [Rust](https://www.rust-lang.org/), el lenguaje de programación de sistemas de Mozilla. Dichas versiones se encuentran disponibles en otro de mis repositorios, [algoritmos-rs](https://github.com/foopsss/algoritmos-rs).
 
 ## Otros repositorios
 Adjunto otros repositorios con resoluciones de la guía práctica para consultar maneras adicionales de encarar los ejercicios:
