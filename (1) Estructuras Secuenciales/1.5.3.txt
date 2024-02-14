@@ -1,0 +1,22 @@
+Acción 1.5.3 ES
+
+Ambiente
+
+	costo_pc, costo_imp, ganancia_pc, ganancia_imp, iva, total: entero
+
+Proceso
+
+	Escribir("Costo para el vendedor de la PC: ")
+	Leer("costo_pc")
+
+	Escribir("Costo para el vendedor de la impresora: ")
+	Leer("costo_imp")
+	
+	ganancia_pc := costo_pc * 0,12
+	ganancia_imp := costo_imp * 0,7
+	iva := (costo_pc + costo_imp + ganancia_pc + ganancia_imp) * 0,21
+	total := costo_pc + costo_imp + ganancia_pc + ganancia_imp + iva
+	
+	Escribir("El precio total de las ventas es de: " total "pesos.")
+
+Fin Acción

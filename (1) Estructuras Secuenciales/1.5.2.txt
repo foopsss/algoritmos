@@ -1,0 +1,20 @@
+Acción 1.5.2 ES
+
+Ambiente
+
+	a, b, c, discriminante: entero
+
+Proceso
+
+	Escribir("Introduzca un valor para el coeficiente A: ")
+	Leer(a)
+	Escribir("Introduzca un valor para el coeficiente B: ")
+	Leer(b)
+	Escribir("Introduzca un valor para el coeficiente C: ")
+	Leer(c)
+	
+	discriminante := b ** 2 - 4 * a * c
+	
+	Escribir("El resultado del discriminante es: " discriminante)
+
+Fin Acción
