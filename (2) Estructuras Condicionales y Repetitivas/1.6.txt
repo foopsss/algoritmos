@@ -1,0 +1,76 @@
+Acción 1.6 ES
+
+Ambiente
+
+	a, b, c, mayor, intermedio, menor: entero
+
+Proceso
+
+	Escribir("Ingrese un valor para el número a: ")
+	Leer(a)
+	
+	Escribir("Ingrese un valor para el número b: ")
+	Leer(b)
+
+	Escribir("Ingrese un valor para el número c: ")
+	Leer(c)
+
+	mayor := a
+	
+	Si (b > mayor) y (c > mayor) Entonces
+		menor := mayor
+		
+		Si (b > c) Entonces
+			// mayor < c < b
+			intermedio := c
+			mayor := b
+		Contrario
+			Si (b = c) Entonces
+				// mayor < b = c
+				intermedio := b
+				mayor := intermedio
+			Contrario
+				// mayor < b < c
+				intermedio := b
+				mayor := c
+			Fin Si
+		Fin Si
+	Fin Si
+
+	Si (b > mayor) y (c < mayor) Entonces
+		// c < mayor < b
+		menor := c
+		intermedio := mayor
+		mayor := b
+	Fin Si
+
+	Si (b < mayor) y (c > mayor) Entonces
+		// b < mayor < c
+		menor := b
+		intermedio := mayor
+		mayor := c
+	Fin Si
+	
+	Si (b < mayor) y (c < mayor) Entonces
+		Si (b > c) Entonces
+			// mayor > b > c
+			menor := c
+			intermedio := b
+		Contrario
+			Si (b = c) Entonces
+				// mayor > b = c
+				intermedio := b
+				menor := intermedio
+			Contrario
+				// mayor > c > b
+				menor := b
+				intermedio := c
+			Fin Si
+		Fin Si
+	Fin Si
+
+	Escribir("El número más grande es: " mayor)
+	Escribir("El número más pequeño es: " menor)
+	Escribir("Entre ellos se encuentra el número: " intermedio)
+
+Fin Acción

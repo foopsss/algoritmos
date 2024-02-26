@@ -1,0 +1,24 @@
+Acción 1.7 ES
+
+Ambiente
+
+	a, b, suma: entero
+
+Proceso
+
+	Escribir("Ingrese un valor para el número a: ")
+	Leer(a)
+	
+	Escribir("Ingrese un valor para el número b: ")
+	Leer(b)
+
+	suma := a + b
+
+	Según suma Hacer
+		<= 50: Escribir("La suma es menor o igual a 50.")
+		<= 100: Escribir("La suma es mayor que 50 pero menor o igual a 100.")
+		<= 200: Escribir("La suma es mayor que 100 pero menor o igual a 200.")
+		> 200: Escribir("La suma es mayor que 200.")
+	Fin Según
+
+Fin Acción
