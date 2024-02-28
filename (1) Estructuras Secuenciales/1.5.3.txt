@@ -2,7 +2,7 @@ Acción 1.5.3 ES
 
 Ambiente
 
-	costo_pc, costo_imp, ganancia_pc, ganancia_imp, iva, total: entero
+	costo_pc, costo_imp, ganancia_pc, ganancia_imp, sumatoria, iva, total: entero
 
 Proceso
 
@@ -14,8 +14,10 @@ Proceso
 	
 	ganancia_pc := costo_pc * 0,12
 	ganancia_imp := costo_imp * 0,7
-	iva := (costo_pc + costo_imp + ganancia_pc + ganancia_imp) * 0,21
-	total := costo_pc + costo_imp + ganancia_pc + ganancia_imp + iva
+	
+	sumatoria := costo_pc + costo_imp + ganancia_pc + ganancia_imp
+	iva := sumatoria * 0,21
+	total := sumatoria + iva
 	
 	Escribir("El precio total de las ventas es de: " total "pesos.")
 

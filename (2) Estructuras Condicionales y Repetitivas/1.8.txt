@@ -1,0 +1,49 @@
+Acción 1.8 ES
+
+Proceso
+
+	año_act, año_nac, mes_act, mes_nac, día_act, día_nac, edad: entero
+
+Ambiente
+
+	Escribir("Introduzca el año actual: ")
+	Leer(año_act)
+	
+	Escribir("Introduzca el mes actual: ")
+	Leer(mes_act)
+	
+	Escribir("Introduzca el día actual: ")
+	Leer(día_act)
+	
+	Escribir("Introduzca el año de nacimiento: ")
+	Leer(año_nac)
+	
+	Escribir("Introduzca el mes de nacimiento: ")
+	Leer(mes_nac)
+	
+	Escribir("Introduzca el día de nacimiento: ")
+	Leer(día_nac)
+	
+	Si (mes_act > mes_nac) Entonces
+		edad := año_act - año_nac
+	Contrario
+		Si (mes_act = mes_nac) Entonces
+			Si (día_act > día_nac) Entonces
+				edad := año_act - año_nac
+			Contrario
+				Si (día_act = día_nac) Entonces
+					edad := año_act - año_nac
+				Contrario
+					edad := (año_act - año_nac) - 1					
+				Fin Si
+			Fin Si
+		Contrario
+			Si (mes_act < mes_nac) Entonces
+				edad := (año_act - año_nac) - 1
+			Fin Si
+		Fin Si
+	Fin Si
+
+	Escribir("La edad de la persona es: " edad)
+
+Fin Acción
