@@ -17,9 +17,9 @@ Proceso
 	
 	superficie := ( (b_mayor + b_menor) * altura ) / 2
 	
-	Escribir("Superficie del trapecio: " superficie "metros cuadrados.")
-	Escribir("Longitud de la base mayor: " b_mayor "metros.")
-	Escribir("Longitud de la base menor: " b_menor "metros.")
-	Escribir("Altura: " altura "metros.")
+	Escribir("La superficie del trapecio es de" superficie "metros cuadrados.")
+	Escribir("La longitud de la base mayor es de" b_mayor "metros.")
+	Escribir("La longitud de la base menor es de" b_menor "metros.")
+	Escribir("La altura es de" altura "metros.")
 
 Fin Acción

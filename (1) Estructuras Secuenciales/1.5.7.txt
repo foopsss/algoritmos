@@ -15,7 +15,7 @@ Proceso
 	Escribir("Introduzca un valor para Z: ")
 	Leer(z)
 
-	med_geo := (X * Y * Z) DIV 3
+	med_geo := (x * y * z) DIV 3
 
 	Escribir("Valor de X: " x)
 	Escribir("Valor de Y: " y)

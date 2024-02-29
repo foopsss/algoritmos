@@ -24,23 +24,15 @@ Ambiente
 	Escribir("Introduzca el día de nacimiento: ")
 	Leer(día_nac)
 	
-	Si (mes_act > mes_nac) Entonces
-		edad := año_act - año_nac
+	edad := año_act - año_nac
+	
+	Si (mes_act = mes_nac) Entonces
+		Si (día_act < día_nac) Entonces
+			edad := (año_act - año_nac) - 1					
+		Fin Si
 	Contrario
-		Si (mes_act = mes_nac) Entonces
-			Si (día_act > día_nac) Entonces
-				edad := año_act - año_nac
-			Contrario
-				Si (día_act = día_nac) Entonces
-					edad := año_act - año_nac
-				Contrario
-					edad := (año_act - año_nac) - 1					
-				Fin Si
-			Fin Si
-		Contrario
-			Si (mes_act < mes_nac) Entonces
-				edad := (año_act - año_nac) - 1
-			Fin Si
+		Si (mes_act < mes_nac) Entonces
+			edad := (año_act - año_nac) - 1
 		Fin Si
 	Fin Si
 
