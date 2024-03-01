@@ -69,8 +69,8 @@ Proceso
 		Fin Si
 	Fin Si
 
-	Escribir("El número más grande es: " mayor)
-	Escribir("El número más pequeño es: " menor)
-	Escribir("Entre ellos se encuentra el número: " intermedio)
+	Escribir("El número más grande es" mayor ".")
+	Escribir("El número más pequeño es" menor ".")
+	Escribir("Entre ellos se encuentra el número" intermedio ".")
 
 Fin Acción
