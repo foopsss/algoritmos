@@ -6,10 +6,10 @@ Ambiente
 
 Proceso
 
-	Escribir("Ingrese un valor para el número a: ")
+	Escribir("Ingrese un valor para a: ")
 	Leer(a)
 	
-	Escribir("Ingrese un valor para el número b: ")
+	Escribir("Ingrese un valor para b: ")
 	Leer(b)
 
 	suma := a + b

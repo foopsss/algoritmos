@@ -36,6 +36,6 @@ Ambiente
 		Fin Si
 	Fin Si
 
-	Escribir("La edad de la persona es: " edad)
+	Escribir("La persona tiene" edad "años.")
 
 Fin Acción
