@@ -1,0 +1,23 @@
+Acción 1.10 ES
+
+Proceso
+
+	a, b: entero
+
+Ambiente
+
+	Escribir("Ingrese un valor para a: ")
+	Leer(a)
+	
+	Escribir("Ingrese un valor para b: ")
+	Leer(b)
+
+	Si (a MOD b = "0") Entonces
+		Escribir("B es divisor de A.")
+	Contrario
+		Si (b MOD a = "0") Entonces
+			Escribir("A es divisor de B.")
+		Fin Si
+	Fin Si
+
+Fin Acción
