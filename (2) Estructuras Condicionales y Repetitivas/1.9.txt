@@ -2,7 +2,7 @@ Acción 1.9 ES
 
 Proceso
 
-	viaje_euros, ahorros_dólares, dólar_a_euro, euro_a_pesos, ahorros_euros, diferencia_pesos: real
+	viaje_euros, ahorros_dólares, dólar_a_euro, euro_a_peso, ahorros_euros, diferencia_pesos: real
 
 Ambiente
 
@@ -18,16 +18,16 @@ Ambiente
 	
 	// 1 euro = X pesos.
 	Escribir("Equivalencia de euro a peso: ")
-	Leer(euro_a_pesos)
+	Leer(euro_a_peso)
 	
 	ahorros_euros := ahorros_dólares * dólar_a_euro
 	
 	Si (viaje_euros > ahorros_euros) Entonces
-		diferencia_pesos := (viaje_euros - ahorros_euros) * euro_a_pesos
+		diferencia_pesos := (viaje_euros - ahorros_euros) * euro_a_peso
 		Escribir("Para poder cubrir los costos del viaje se requieren de otros" diferencia_pesos "pesos.")
 	Contrario
 		Si (viaje_euros < ahorros_euros) Entonces
-			diferencia_pesos := (ahorros_euros - viaje_euros) * euro_a_pesos
+			diferencia_pesos := (ahorros_euros - viaje_euros) * euro_a_peso
 			Escribir("Existe un excedente de ahorros de" diferencia_pesos "pesos.")
 		Fin Si
 	Fin Si
