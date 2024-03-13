@@ -1,0 +1,28 @@
+// Consigna de los profes: se dispone de una secuencia de números de socios (de enteros)
+// y se desea grabar en una secuencia de salida los socios con número par que están registrados.
+
+Acción 2.1.5 ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de entero
+	v_ent: entero
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
+
+	Mientras NFDS(sec) Hacer
+		Si v MOD 2 = "0" Entonces
+			GRABAR(sec_sal, v_ent)
+		Fin Si
+		
+		AVZ(sec_ent, v_ent)
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción
