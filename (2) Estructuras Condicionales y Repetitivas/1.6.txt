@@ -17,52 +17,44 @@ Proceso
 
 	mayor := a
 	
-	Si (b > mayor) y (c > mayor) Entonces
+	Si b > mayor y c > mayor Entonces
 		menor := mayor
 		
-		Si (b > c) Entonces
-			// mayor < c < b
+		Si b > c Entonces
 			intermedio := c
 			mayor := b
 		Contrario
-			Si (b = c) Entonces
-				// mayor < b = c
+			Si b = c Entonces
 				intermedio := b
 				mayor := intermedio
 			Contrario
-				// mayor < b < c
 				intermedio := b
 				mayor := c
 			Fin Si
 		Fin Si
 	Fin Si
 
-	Si (b > mayor) y (c < mayor) Entonces
-		// c < mayor < b
+	Si b > mayor y c < mayor Entonces
 		menor := c
 		intermedio := mayor
 		mayor := b
 	Fin Si
 
-	Si (b < mayor) y (c > mayor) Entonces
-		// b < mayor < c
+	Si b < mayor y c > mayor Entonces
 		menor := b
 		intermedio := mayor
 		mayor := c
 	Fin Si
 	
-	Si (b < mayor) y (c < mayor) Entonces
-		Si (b > c) Entonces
-			// mayor > b > c
+	Si b < mayor y c < mayor Entonces
+		Si b > c Entonces
 			menor := c
 			intermedio := b
 		Contrario
-			Si (b = c) Entonces
-				// mayor > b = c
+			Si b = c Entonces
 				intermedio := b
 				menor := intermedio
 			Contrario
-				// mayor > c > b
 				menor := b
 				intermedio := c
 			Fin Si

@@ -22,11 +22,11 @@ Ambiente
 	
 	ahorros_euros := ahorros_dólares * dólar_a_euro
 	
-	Si (viaje_euros > ahorros_euros) Entonces
+	Si viaje_euros > ahorros_euros Entonces
 		diferencia_pesos := (viaje_euros - ahorros_euros) * euro_a_peso
 		Escribir("Para poder cubrir los costos del viaje se requieren de otros" diferencia_pesos "pesos.")
 	Contrario
-		Si (viaje_euros = ahorros_euros) Entonces
+		Si viaje_euros = ahorros_euros Entonces
 			Escribir("Felicidades, posee la cantidad justa para realizar el viaje.")
 		Contrario
 			diferencia_pesos := (ahorros_euros - viaje_euros) * euro_a_peso

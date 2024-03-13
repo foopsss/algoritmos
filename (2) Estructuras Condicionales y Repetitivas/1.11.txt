@@ -12,10 +12,10 @@ Ambiente
 	Escribir("Ingrese un año a elección: ")
 	Leer(año_usuario)
 	
-	Si (año_usuario > año_act) Entonces
+	Si año_usuario > año_act Entonces
 		Escribir("FUTURO.")
 	Contrario
-		Si (año_usuario = año_act) Entonces
+		Si año_usuario = año_act Entonces
 			Escribir("ACTUAL.")
 		Contrario
 			Escribir("PASADO.")

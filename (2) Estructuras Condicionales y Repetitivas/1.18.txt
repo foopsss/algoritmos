@@ -15,7 +15,7 @@ Proceso
 	resto := dividendo
 	cociente := 0
 
-	Mientras (resto - divisor >= 0) Hacer
+	Mientras resto - divisor >= 0 Hacer
 		resto := resto - divisor
 		cociente := cociente + 1
 	Fin Mientras

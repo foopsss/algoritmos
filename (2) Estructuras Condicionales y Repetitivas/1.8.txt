@@ -26,12 +26,12 @@ Ambiente
 	
 	edad := año_act - año_nac
 	
-	Si (mes_act = mes_nac) Entonces
-		Si (día_act < día_nac) Entonces
+	Si mes_act = mes_nac Entonces
+		Si día_act < día_nac Entonces
 			edad := (año_act - año_nac) - 1					
 		Fin Si
 	Contrario
-		Si (mes_act < mes_nac) Entonces
+		Si mes_act < mes_nac Entonces
 			edad := (año_act - año_nac) - 1
 		Fin Si
 	Fin Si

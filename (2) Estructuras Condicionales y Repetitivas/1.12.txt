@@ -9,7 +9,7 @@ Ambiente
 	Escribir("Inserte un número que sea mayor que 100 y menor que 1000: ")
 	Leer(número)
 	
-	Si (número > 100) y (número < 1000) Entonces
+	Si número > 100 y número < 1000 Entonces
 		centenas := número DIV 100
 		decenas := (número - centenas * 100) DIV 10
 		unidades := número - (centenas * 100) - (decenas * 10)
@@ -18,7 +18,7 @@ Ambiente
 		Escribir("El número cuenta con" decenas "decenas.")
 		Escribir("El número cuenta con" unidades "unidades.")
 
-		Si (número MOD 3 = "0") Entonces
+		Si número MOD 3 = "0" Entonces
 			Escribir("El número es múltiplo de 3.")
 		Contrario
 			Escribir("El número NO es múltiplo de 3.")

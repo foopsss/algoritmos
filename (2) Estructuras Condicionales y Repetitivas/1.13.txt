@@ -9,7 +9,7 @@ Proceso
 	Escribir("Inserte una suma de dinero que sea mayor que 100 y menor que 1000: ")
 	Leer(dinero)
 	
-	Si (dinero > 100) y (dinero < 1000) Entonces
+	Si dinero > 100 y dinero < 1000 Entonces
 		centenas := dinero DIV 100
 		decenas := (dinero - centenas * 100) DIV 10
 		unidades := dinero - (centenas * 100) - (decenas * 10)
