@@ -6,7 +6,7 @@ Acción 2.1.5 ES
 Ambiente
 
 	sec_ent, sec_sal: secuencia de entero
-	v_act, v_ant: entero
+	v_act, v_ant, i: entero
 
 Proceso
 
