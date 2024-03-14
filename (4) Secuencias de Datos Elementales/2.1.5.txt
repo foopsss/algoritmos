@@ -1,0 +1,35 @@
+// Secuencia original: 1, 2, 5, 7, 8, 10, ...
+// Secuencia resultante: 3, 4, 6, 9, ...
+
+Acción 2.1.5 ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de entero
+	v_act, v_ant: entero
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_act)
+	CREAR(sec_sal)
+
+	v_ant := v_act
+	AVZ(sec_ent, v_act)
+
+	Mientras NFDS(sec) Hacer
+		Si v_act - v_ant <> "1" Entonces
+			Para i := 1 hasta (v_act - v_ant - 1) Hacer
+				v_ant := v_ant + 1
+				GRABAR(sec_sal, v_ant)
+			Fin Para
+		Fin Si
+
+		v_ant := v_act
+		AVZ(sec_ent, v_act)
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción
