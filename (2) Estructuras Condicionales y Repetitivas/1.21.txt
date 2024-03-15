@@ -1,0 +1,29 @@
+Acción 1.21 ES
+
+Ambiente
+
+	número, incremento, suma_cuadrados, cuadrado, cubo: entero
+
+Proceso
+
+	Escribir("Ingrese un número: ")
+	Leer(número)
+
+	Escribir("Ingrese la cantidad de veces a incrementarlo: ")
+	Leer(incremento)
+
+	suma_cuadrados := 0
+
+	Para i := 1 hasta incremento Hacer
+		cuadrado := número ** 2
+		suma_cuadrados := suma_cuadrados + cuadrado
+		cubo := número ** 3
+		Escribir("Número: " número)
+		Escribir("Cuadrado: " cuadrado)
+		Escribir("Cubo:" cubo)
+		número := número + 1
+	Fin Para
+
+	Escribir("El resultado de la suma de cuadrados es" suma_cuadrados ".")
+
+Fin Acción

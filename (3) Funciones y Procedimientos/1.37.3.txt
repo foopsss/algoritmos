@@ -1,0 +1,45 @@
+Acción 1.37.3 ES
+
+Ambiente
+
+	elección: alfanumérico
+	a, b, c, menor: entero
+
+	Función DevolverMenor(num_a, num_b, num_c: entero):entero ES		
+		Si num_a < num_b y num_a < num_c Entonces
+			DevolverMenor := num_a
+		Contrario
+			Si num_b < num_a y num_b < num_c Entonces
+				DevolverMenor := num_b
+			Contrario
+				Si num_c < num_a y num_c < num_b Entonces
+					DevolverMenor := num_c
+				Fin Si
+			Fin Si
+		Fin Si
+	Fin Función
+
+Proceso
+
+	Escribir("¿Desea realizar una comparación de tres números? [S/N]: ")
+	Leer(elección)
+
+	Mientras elección = "S" Hacer
+		Escribir("Ingrese un valor numérico para A: ")
+		Leer(a)
+		
+		Escribir("Ingrese un valor numérico para B: ")
+		Leer(b)
+		
+		Escribir("Ingrese un valor numérico para C: ")
+		Leer(c)
+		
+		menor := DevolverMenor(a, b, c)
+		
+		Escribir("De los números introducidos, el menor es el número" menor ".")
+		
+		Escribir("¿Desea realizar otra comparación? [S/N]: ")
+		Leer(elección)
+	Fin Mientras
+
+Fin Acción

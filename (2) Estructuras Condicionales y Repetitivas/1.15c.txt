@@ -1,0 +1,29 @@
+Acción 1.15c ES
+
+Ambiente
+
+	elección: alfanumérico
+	pisos, alt_prom: entero
+	alt_edificio: real
+
+Proceso
+
+	Escribir("¿Desea calcular la altura en pies de un edificio? [S/N]: ")
+	Leer(elección)
+
+	Mientras elección = "S" Hacer
+		Escribir("Introduzca el número de pisos del edificio: ")
+		Leer(pisos)
+		
+		Escribir("Introduzca la altura promedio de cada piso (en metros): ")
+		Leer(alt_prom)
+
+		alt_edificio := (pisos * alt_piso) * 3.28
+		
+		Escribir("La altura del edificio es de" alt_edificio "pies.")
+
+		Escribir("¿Desea realizar otro cálculo? [S/N]: ")
+		Leer(elección)
+	Fin Mientras
+
+Fin Acción
