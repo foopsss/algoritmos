@@ -1,0 +1,56 @@
+// Secuencia: 43|18|23|56|96|72|18|50|92|62|75|37|...
+// Los primeros 4 corresponden a una sola capital.
+
+Acción 2.1.6 ES
+
+Ambiente
+
+	sec: secuencia de entero
+	v, i: entero
+	
+	Procedimiento Inicializar() ES
+		varones_menos_18 := 0
+		varones_más_18 := 0
+		mujeres_menos_18 := 0
+		mujeres_más_18 := 0
+	Fin Procedimiento
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+	
+	Inicializar()
+
+	Mientras NFDS(sec) Hacer
+		Para i := 1 hasta 4 Hacer
+			Según i Hacer
+				= 1: varones_menos_18 := varones_menos_18 + v 
+				= 2: varones_más_18 := varones_más_18 + v
+				= 3: mujeres_menos_18 := mujeres_menos_18 + v
+				= 4: mujeres_más_18 := mujeres_más_18 + v
+			Fin Según
+
+			AVZ(sec, v)
+		Fin Para
+	Fin Mientras
+
+	total := varones_menos_18 + varones_más_18 + mujeres_menos_18 + mujeres_más_18
+	hab_masc := varones_menos_18 + varones_más_18
+	hab_masc := mujeres_menos_18 + mujeres_más_18
+	hab_menos_18 := varones_menos_18 + mujeres_menos_18
+	hab_más_18 := varones_más_18 + mujeres_más_18
+	porc_masc := (hab_masc * 100) / total
+	porc_masc := (hab_masc * 100) / total
+	porc_más_18 := (hab_más_18 * 100) / total
+	porc_menos_18 := (hab_menos_18 * 100) / total
+
+	Escribir("La población total es de" total "habitantes.")
+	Escribir("Los habitantes del género masculino componen el" porc_masc "% de la población.")
+	Escribir("Los habitantes del género femenino componen el" porc_masc "% de la población.")
+	Escribir("Los habitantes mayores de 18 años componen el" porc_más_18 "% de la población.")
+	Escribir("Los habitantes menores de 18 años componen el" porc_menos_18 "% de la población.")
+
+	CERRAR(sec)
+
+Fin Acción
