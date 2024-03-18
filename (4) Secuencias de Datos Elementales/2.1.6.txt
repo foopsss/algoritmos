@@ -8,6 +8,9 @@ Ambiente
 	sec: secuencia de entero
 	v, i: entero
 	
+	varones_menos_18, varones_más_18, mujeres_menos_18, mujeres_más_18, hab_masc, hab_fem, hab_más_18, hab_menos_18, total: entero
+	porc_masc, porc_fem, porc_más_18, porc_menos_18: real
+	
 	Procedimiento Inicializar() ES
 		varones_menos_18 := 0
 		varones_más_18 := 0
@@ -37,17 +40,17 @@ Proceso
 
 	total := varones_menos_18 + varones_más_18 + mujeres_menos_18 + mujeres_más_18
 	hab_masc := varones_menos_18 + varones_más_18
-	hab_masc := mujeres_menos_18 + mujeres_más_18
+	hab_fem := mujeres_menos_18 + mujeres_más_18
 	hab_menos_18 := varones_menos_18 + mujeres_menos_18
 	hab_más_18 := varones_más_18 + mujeres_más_18
 	porc_masc := (hab_masc * 100) / total
-	porc_masc := (hab_masc * 100) / total
+	porc_fem := (hab_fem * 100) / total
 	porc_más_18 := (hab_más_18 * 100) / total
 	porc_menos_18 := (hab_menos_18 * 100) / total
 
 	Escribir("La población total es de" total "habitantes.")
 	Escribir("Los habitantes del género masculino componen el" porc_masc "% de la población.")
-	Escribir("Los habitantes del género femenino componen el" porc_masc "% de la población.")
+	Escribir("Los habitantes del género femenino componen el" porc_fem "% de la población.")
 	Escribir("Los habitantes mayores de 18 años componen el" porc_más_18 "% de la población.")
 	Escribir("Los habitantes menores de 18 años componen el" porc_menos_18 "% de la población.")
 
