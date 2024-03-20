@@ -8,8 +8,8 @@ Acción Profes3 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de caracter
-	v_ent, num_us: caracter
+	sec_ent, sec_sal: secuencia de carácter
+	v_ent, num_us: carácter
 
 	Procedimiento NúmeroUsuario() ES
 		Escribir("Introduzca un dígito: ")
