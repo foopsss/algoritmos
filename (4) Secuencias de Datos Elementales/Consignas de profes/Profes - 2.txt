@@ -1,0 +1,34 @@
+// Consigna de los profes: se tiene una secuencia de enteros que contiene los números
+// de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos. La empresa
+// necesita organizar los clientes de acuerdo al último dígito de su número telefónico.
+// Generar una secuencia con los números de las personas que terminen en 5, 6 o 7.
+
+Acción Profes2 ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de entero
+	v_ent, ult_num: entero
+
+	dígitos = ("5", "6", "7")
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
+
+	Mientras NFDS(sec_ent) Hacer
+		ult_dig := v_ent MOD 10
+		
+		Si ult_num en dígitos Entonces
+			GRABAR(sec_sal, v_ent)
+		Fin Si
+		
+		AVZ(sec_ent, v_ent)
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción

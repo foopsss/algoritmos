@@ -25,18 +25,16 @@ Proceso
 	
 	Inicializar()
 
-	Mientras NFDS(sec) Hacer
-		Para i := 1 hasta 4 Hacer
-			Según i Hacer
-				= 1: varones_menos_18 := varones_menos_18 + v 
-				= 2: varones_más_18 := varones_más_18 + v
-				= 3: mujeres_menos_18 := mujeres_menos_18 + v
-				= 4: mujeres_más_18 := mujeres_más_18 + v
-			Fin Según
-
-			AVZ(sec, v)
-		Fin Para
-	Fin Mientras
+	Para i := 1 hasta 23 Hacer
+		varones_menos_18 := varones_menos_18 + v 
+		AVZ(sec, v)
+		mujeres_más_18 := mujeres_más_18 + v
+		AVZ(sec, v)
+		varones_menos_18 := varones_menos_18 + v
+		AVZ(sec, v)
+		mujeres_más_18 := mujeres_más_18 + v
+		AVZ(sec, v)
+	Fin Para
 
 	total := varones_menos_18 + varones_más_18 + mujeres_menos_18 + mujeres_más_18
 	hab_masc := varones_menos_18 + varones_más_18

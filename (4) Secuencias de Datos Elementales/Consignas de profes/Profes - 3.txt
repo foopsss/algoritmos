@@ -1,0 +1,46 @@
+// Consigna de los profes: se tiene una secuencia de caracteres que contiene los
+// números de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos.
+// La empresa necesita organizar a los clientes de acuerdo al último dígito de su
+// número telefónico. Generar una secuencia con los números de las personas que
+// comienzan con un número ingresado por el usuario.
+
+Acción Profes3 ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de caracter
+	v_ent, num_us: caracter
+
+	Procedimiento NúmeroUsuario() ES
+		Escribir("Introduzca un dígito: ")
+		Leer(num_us)
+	Fin Procedimiento
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
+
+	NúmeroUsuario()
+
+	Mientras NFDS(sec_ent) Hacer
+		Si v_ent = num_us Entonces
+			Para i := 1 hasta 10 Hacer
+				GRABAR(sec_sal, v_ent)
+				// Si quisiera mostrar los números por pantalla
+				// voy mostrando a medida que grabo, haciendo:
+				// Escribir(v_ent)
+				AVZ(sec_ent, v_ent)
+			Fin Para
+		Contrario
+			Para i := 1 hasta 10 Hacer
+				AVZ(sec_ent, v_ent)
+			Fin Para
+		Fin Si
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción

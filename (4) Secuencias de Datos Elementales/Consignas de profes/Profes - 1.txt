@@ -1,7 +1,7 @@
 // Consigna de los profes: se dispone de una secuencia de números de socios (de enteros)
 // y se desea grabar en una secuencia de salida los socios con número par que están registrados.
 
-Acción 2.1.5 ES
+Acción Profes1 ES
 
 Ambiente
 

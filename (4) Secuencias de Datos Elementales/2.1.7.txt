@@ -1,0 +1,29 @@
+Acción 2.1.7 ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de entero
+	v_ent, ult_num: entero
+
+	dígitos = ("0", "1", "2", "3")
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
+
+	Mientras v_ent <> "0" Hacer
+		ult_num := v_ent MOD 11
+		
+		Si ult_num en dígitos Entonces
+			GRABAR(sec_sal, v_ent)
+		Fin Si
+		
+		AVZ(sec_ent, v_ent)
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción
