@@ -3,7 +3,7 @@ Acción 2.1.7 ES
 Ambiente
 
 	sec_ent, sec_sal: secuencia de entero
-	v_ent, ult_num: entero
+	v_ent, ult_num, dni: entero
 
 	dígitos = ("0", "1", "2", "3")
 
@@ -14,7 +14,8 @@ Proceso
 	CREAR(sec_sal)
 
 	Mientras v_ent <> "0" Hacer
-		ult_num := v_ent MOD 11
+		dni := v_ent DIV 10
+		ult_num := dni MOD 10
 		
 		Si ult_num en dígitos Entonces
 			GRABAR(sec_sal, v_ent)
