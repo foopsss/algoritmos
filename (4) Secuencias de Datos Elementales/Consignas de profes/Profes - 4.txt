@@ -1,116 +1,46 @@
-// Consigna de los profes: se cuenta con una secuencia de caracteres, con información
-// de alumnos, de acuerdo a la siguiente estructura:
-//
-// * Número de comisión: un carácter, entre 1 y 6.
-// * Información de los horarios de clase: 12 caracteres, 6 para indicar teoría y 6 
-// para práctica.
-//    ** Tipo: T (teoría) o P (práctica)
-//    ** Hora: 2 caracteres (00..23)
-//    ** Minutos: 2 caracteres (00..59)
-//    ** Día de la semana: ("L", "M", "X", "J", "V", "S", "D")
-// * Información de los alumnos inscriptos: finaliza con "%".
-//    ** Fecha de ingreso: 8 caracteres.
-//      *** Dia: 2 caracteres.
-//      *** Mes: 2 caracteres.
-//      *** Año: 4 caracteres.
-//    ** Apellido y nombre: finaliza con "!".
-//    ** Legajo: 4 caracteres.
-//
-// Informar:
-// (a) Por cada comisión, el total de alumnos inscriptos.
-// (b) Listado de todos los alumnos (apellido y nombre) que ingresaron en 2024.
-//
-// Estilo de la secuencia:
-// |1|T|1|8|0|0|X|P|1|8|1|0|M|información de alumnos|%|4|T|1|8|0|0|J|P|1|8|1|0|M|información de alumnos|%|...|FDS
-//
-// Información de los alumnos:
-// |0|1|0|3|2|0|2|4|J|U|A|N|P|E|R|E|Z|!|1|1|1|1|0|1|0|3|2|0|2|4|M|A|R|I|A|F|E|R|N|A|N|D|E|Z|!|1|1|1|1|
+// Consigna de los profes: se tiene una secuencia de caracteres que contiene los
+// números de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos.
+// La empresa necesita organizar a los clientes de acuerdo al último dígito de su
+// número telefónico. Generar una secuencia con los números de las personas que
+// comienzan con un número ingresado por el usuario.
 
 Acción Profes4 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v, car1_año, car2_año: carácter
+	sec_ent, sec_sal: secuencia de carácter
+	v_ent, num_us: carácter
 
-	cant_com1, cant_com2, cant_com3, cant_com4, cant_com5, cant_com6, año_ing: entero
-
-	Procedimiento Inicializar() ES
-		cant_com1 := 0
-		cant_com2 := 0
-		cant_com3 := 0
-		cant_com4 := 0
-		cant_com5 := 0
-		cant_com6 := 0
+	Procedimiento NúmeroUsuario() ES
+		Escribir("Introduzca un dígito: ")
+		Leer(num_us)
 	Fin Procedimiento
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
-	
-	Inicializar()
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
 
-	Escribir("Alumnos que ingresaron en 2024: ")
+	NúmeroUsuario()
 
-	Mientras NFDS(sec) Hacer
-		Mientras v <> "%" Hacer
-			Según v Hacer
-				="1": cant_com1 := cant_com1 + 1
-				="2": cant_com2 := cant_com2 + 1
-				="3": cant_com3 := cant_com3 + 1
-				="4": cant_com4 := cant_com4 + 1
-				="5": cant_com5 := cant_com5 + 1
-				="6": cant_com6 := cant_com6 + 1
-			Fin Según
-			
-			// Hasta acá sigo en el primer carácter.
-			// Esto me va a dejar parado en el año de ingreso.
-			Para i := 1 hasta 18 Hacer
-				AVZ(sec, v)
+	Mientras NFDS(sec_ent) Hacer
+		Si v_ent = num_us Entonces
+			Para i := 1 hasta 10 Hacer
+				GRABAR(sec_sal, v_ent)
+				// Si quisiera mostrar los números por pantalla
+				// voy mostrando a medida que grabo, haciendo:
+				// Escribir(v_ent)
+				AVZ(sec_ent, v_ent)
 			Fin Para
-			
-			// Hallo el año de ingreso.
-			// Estoy parado en el tercer dígito del año.
-			// Solo me importan los últimos dos.
-			car1_año := v
-			AVZ(sec, v)
-			car2_año := v
-			AVZ(sec, v)
-			
-			// Estoy parado en el primer carácter del nombre.
-			// Hago lo correspondiente según el año de ingreso.
-			Si car1_año = "2" y car2_año = "4" Entonces
-				Mientras v <> "!" Hacer
-					Escribir(v)
-					AVZ(sec, v)
-				Fin Mientras
-			Contrario
-				Mientras v <> "!" Hacer
-					AVZ(sec, v)
-				Fin Mientras
-			Fin Si
-			
-			// Estoy parado en "!".
-			// Tras escribir (o no) un nombre por pantalla
-			// avanzo los caracteres necesarios para llegar
-			// al primer carácter del próximo día de ingreso
-			// de un alumno.
-			Para i := 1 hasta 5 Hacer
-				AVZ(sec, v)
+		Contrario
+			Para i := 1 hasta 10 Hacer
+				AVZ(sec_ent, v_ent)
 			Fin Para
-		Fin Mientras
-		
-		AVZ(sec, v)
+		Fin Si
 	Fin Mientras
 
-	Escribir("En la comisión 1 se inscribieron un total de" cant_com1 "alumnos.")
-	Escribir("En la comisión 2 se inscribieron un total de" cant_com2 "alumnos.")
-	Escribir("En la comisión 3 se inscribieron un total de" cant_com3 "alumnos.")
-	Escribir("En la comisión 4 se inscribieron un total de" cant_com4 "alumnos.")
-	Escribir("En la comisión 5 se inscribieron un total de" cant_com5 "alumnos.")
-	Escribir("En la comisión 6 se inscribieron un total de" cant_com6 "alumnos.")
-
-	CERRAR(sec)
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
 
 Fin Acción

@@ -1,34 +1,32 @@
-// Consigna de los profes: se tiene una secuencia de enteros que contiene los números
-// de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos. La empresa
-// necesita organizar los clientes de acuerdo al último dígito de su número telefónico.
-// Generar una secuencia con los números de las personas que terminen en 5, 6 o 7.
+// Consigna de los profes: dada una secuencia de números enteros que finaliza con 0,
+// calcular el promedio de dicha secuencia.
 
 Acción Profes2 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de entero
-	v_ent, ult_num: entero
-
-	dígitos = ("5", "6", "7")
+	sec: secuencia de entero
+	v, cant_car, suma_car: entero
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+	ARR(sec)
+	AVZ(sec, v)
 
-	Mientras NFDS(sec_ent) Hacer
-		ult_dig := v_ent MOD 10
-		
-		Si ult_num en dígitos Entonces
-			GRABAR(sec_sal, v_ent)
-		Fin Si
-		
-		AVZ(sec_ent, v_ent)
+	cant_car := 0
+	suma_car := 0
+
+	// Opto por un Mientras porque el carácter final es 0.
+	Mientras v <> "0" Hacer
+		cant_car := cant_car + 1
+		suma_car := suma_car + v
+		AVZ(sec, v)
 	Fin Mientras
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+	promedio := suma_car DIV cant_car
+
+	Escribir("El promedio de los elementos de la secuencia es" promedio ".")
+
+	CERRAR(sec)
 
 Fin Acción

@@ -1,20 +1,16 @@
-// Consigna de los profes: se tiene una secuencia de caracteres que contiene los
-// números de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos.
-// La empresa necesita organizar a los clientes de acuerdo al último dígito de su
-// número telefónico. Generar una secuencia con los números de las personas que
-// comienzan con un número ingresado por el usuario.
+// Consigna de los profes: se tiene una secuencia de enteros que contiene los números
+// de teléfono de los clientes de una empresa. Cada número tiene 10 dígitos. La empresa
+// necesita organizar los clientes de acuerdo al último dígito de su número telefónico.
+// Generar una secuencia con los números de las personas que terminen en 5, 6 o 7.
 
 Acción Profes3 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de carácter
-	v_ent, num_us: carácter
+	sec_ent, sec_sal: secuencia de entero
+	v_ent, ult_num: entero
 
-	Procedimiento NúmeroUsuario() ES
-		Escribir("Introduzca un dígito: ")
-		Leer(num_us)
-	Fin Procedimiento
+	dígitos = ("5", "6", "7")
 
 Proceso
 
@@ -22,22 +18,14 @@ Proceso
 	AVZ(sec_ent, v_ent)
 	CREAR(sec_sal)
 
-	NúmeroUsuario()
-
 	Mientras NFDS(sec_ent) Hacer
-		Si v_ent = num_us Entonces
-			Para i := 1 hasta 10 Hacer
-				GRABAR(sec_sal, v_ent)
-				// Si quisiera mostrar los números por pantalla
-				// voy mostrando a medida que grabo, haciendo:
-				// Escribir(v_ent)
-				AVZ(sec_ent, v_ent)
-			Fin Para
-		Contrario
-			Para i := 1 hasta 10 Hacer
-				AVZ(sec_ent, v_ent)
-			Fin Para
+		ult_dig := v_ent MOD 10
+		
+		Si ult_num en dígitos Entonces
+			GRABAR(sec_sal, v_ent)
 		Fin Si
+		
+		AVZ(sec_ent, v_ent)
 	Fin Mientras
 
 	CERRAR(sec_ent)
