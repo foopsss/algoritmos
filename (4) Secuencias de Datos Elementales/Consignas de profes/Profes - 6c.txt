@@ -1,0 +1,64 @@
+// Consigna de los profes: dada una secuencia de caracteres que posee las ventas
+// realizadas de un determinado producto, dando la fecha de venta y luego la cantidad
+// vendida. Como máximo se pueden comprar 9 unidades.
+//
+// La fecha siempre tiene 8 caracteres y un solo carácter para las unidades vendidas,
+// no hay una marca que separe cada venta.
+//
+// Se pide:
+// Contabilizar en cuantas transacciones se vendieron más de 3 unidades.
+//
+// Estilo de la secuencia:
+// |1|1|0|3|2|0|2|2|6|2|1|0|4|2|0|2|3|2
+
+Acción Profes6c ES
+
+Ambiente
+
+	sec: secuencia de carácter
+	v: carácter
+
+	más_de_tres, i, unidades: entero
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+
+	más_de_tres := 0
+
+	Mientras NFDS(sec) Hacer
+		Para i := 1 hasta 8 Hacer
+			AVZ(sec, v)
+		Fin Para
+		
+		// Estoy parado en el número de unidades.
+		unidades := CharToInt(v)
+		
+		Si unidades > 3 Entonces
+			más_de_tres := más_de_tres + 1
+		Fin Si
+
+		// Avanzo a la siguiente fecha.
+		AVZ(sec, v)
+	Fin Mientras
+
+	Escribir("Se vendieron más de 3 unidades en" más_de_tres "transacciones.")
+
+	CERRAR(sec)
+
+Fin Acción

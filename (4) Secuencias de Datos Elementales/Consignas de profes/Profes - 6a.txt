@@ -1,0 +1,79 @@
+// Consigna de los profes: dada una secuencia de caracteres que posee las ventas
+// realizadas de un determinado producto, dando la fecha de venta y luego la cantidad
+// vendida. Como máximo se pueden comprar 9 unidades.
+//
+// La fecha siempre tiene 8 caracteres y un solo carácter para las unidades vendidas,
+// no hay una marca que separe cada venta.
+//
+// Se pide:
+// Generar una secuencia de salida de enteros, con todas las unidades vendidas en
+// meses pares.
+//
+// Estilo de la secuencia:
+// |1|1|0|3|2|0|2|2|6|2|1|0|4|2|0|2|3|2
+
+Acción Profes6a ES
+
+Ambiente
+
+	sec_ent: secuencia de carácter
+	sec_sal: secuencia de entero
+
+	v_ent: carácter
+	i, unidades_vendidas: entero
+	
+	meses_pares = ("2", "4", "6", "8")
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v_ent)
+	CREAR(sec_sal)
+
+	Mientras NFDS(sec_ent) Hacer
+		// Salto los caracteres correspondientes al día.
+		Para i := 1 hasta 3 Hacer
+			AVZ(sec, v)
+		Fin Para
+
+		// Estoy parado en el segundo carácter del mes.
+		// Controlo si el mes es par.
+		Si v en meses_pares Entonces
+			// Recorro los caracteres del año.
+			Para i := 1 hasta 5 Hacer
+				AVZ(sec, v)
+			Fin Para
+
+			// Estoy parado en las unidades vendidas.
+			// Grabo en la salida.
+			unidades_vendidas := CharToInt(v)
+			GRABAR(sec_sal, unidades_vendidas)
+
+			// Quedo en el primer carácter de la siguiente fecha.
+			AVZ(sec, v)
+		Contrario
+			// Quedo en el primer carácter de la siguiente fecha.
+			Para i := 1 hasta 6 Hacer
+				AVZ(sec, v)
+			Fin Para
+		Fin Si
+	Fin Mientras
+
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción

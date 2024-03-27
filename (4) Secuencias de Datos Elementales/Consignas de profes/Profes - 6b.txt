@@ -1,0 +1,94 @@
+// Consigna de los profes: dada una secuencia de caracteres que posee las ventas
+// realizadas de un determinado producto, dando la fecha de venta y luego la cantidad
+// vendida. Como máximo se pueden comprar 9 unidades.
+//
+// La fecha siempre tiene 8 caracteres y un solo carácter para las unidades vendidas,
+// no hay una marca que separe cada venta.
+//
+// Se pide:
+// Contabilizar unidades vendidas para un mes en particular ingresado por el usuario.
+// 
+// Estilo de la secuencia:
+// |1|1|0|3|2|0|2|2|6|2|1|0|4|2|0|2|3|2
+
+Acción Profes6b ES
+
+Ambiente
+
+	sec: secuencia de carácter
+	v: carácter
+
+	mes_us, mes, unidades_vendidas, i: entero
+
+	Procedimiento FechaUsuario() ES
+		Escribir("Ingrese un mes: ")
+		Leer(mes_us)
+	Fin Procedimiento
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+
+	FechaUsuario()
+
+	mes := 0
+	unidades_vendidas := 0
+
+	Mientras NFDS(sec) Hacer
+		// Salto los caracteres correspondientes al día.
+		Para i := 1 hasta 2 Hacer
+			AVZ(sec, v)
+		Fin Para
+	
+		// Estoy parado en el tercer carácter de la fecha.
+		// Controlo si el mes tiene dos dígitos o no.
+		Si v = "1" Entonces
+			mes := CharToInt(v) * 10
+			AVZ(sec, v)
+			mes := mes + CharToInt(v) * 1
+		Contrario
+			AVZ(sec, v)
+			mes := CharToInt(v) * 1
+		Fin Si
+		
+		// Estoy parado en el segundo carácter del mes.
+		// Comparo el mes con el introducido por el usuario.
+		Si mes = mes_us Entonces
+			// Recorro los caracteres del año.
+			Para i := 1 hasta 5 Hacer
+				AVZ(sec, v)
+			Fin Para
+
+			// Estoy parado en las unidades vendidas.
+			unidades_vendidas := unidades_vendidas + CharToInt(v)
+			
+			// Quedo en el primer carácter de la siguiente fecha.
+			AVZ(sec, v)
+		Contrario
+			// Quedo en el primer carácter de la siguiente fecha.
+			Para i := 1 hasta 6 Hacer
+				AVZ(sec, v)
+			Fin Para
+		Fin Si
+	Fin Mientras
+
+	Escribir("En el mes" mes_us "se vendieron" unidades_vendidas "unidades.")
+
+	CERRAR(sec)
+
+Fin Acción
