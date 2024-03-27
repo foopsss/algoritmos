@@ -17,6 +17,8 @@ Ambiente
 	Contrario
 		Si b MOD a = "0" Entonces
 			Escribir("A es divisor de B.")
+		Contrario
+			Escribir("¡No es posible dividir entre estos números!")
 		Fin Si
 	Fin Si
 

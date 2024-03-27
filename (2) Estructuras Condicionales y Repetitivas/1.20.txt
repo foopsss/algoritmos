@@ -2,7 +2,7 @@ Acción 1.20 ES
 
 Ambiente
 
-	número, cuadrado, cubo: entero
+	número, i, cuadrado, cubo: entero
 
 Proceso
 

@@ -10,6 +10,7 @@ Ambiente
 
 	sec_ent, sec_sal: secuencia de carácter
 	v_ent, num_us: carácter
+	i: entero
 
 	Procedimiento NúmeroUsuario() ES
 		Escribir("Introduzca un dígito: ")

@@ -9,7 +9,7 @@ Proceso
 
 	Para i := 1 hasta 50 Hacer
 		Escribir("----------------------------------------------")
-		Escribir("Edificio número" i ".")
+		Escribir("Número de edificio: " i)
 		
 		Escribir("Introduzca el número de pisos del edificio: ")
 		Leer(pisos)
@@ -17,7 +17,7 @@ Proceso
 		Escribir("Introduzca la altura promedio de cada piso (en metros): ")
 		Leer(alt_prom)
 
-		alt_edificio := (pisos * alt_piso) * 3.28
+		alt_edificio := (pisos * alt_prom) * 3.28
 		
 		Escribir("La altura del edificio es de" alt_edificio "pies.")
 	Fin Para

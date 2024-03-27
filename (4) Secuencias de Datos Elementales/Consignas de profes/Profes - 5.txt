@@ -33,7 +33,7 @@ Ambiente
 	sec: secuencia de carácter
 	v, car1_año, car2_año: carácter
 
-	cant_com1, cant_com2, cant_com3, cant_com4, cant_com5, cant_com6, año_ing: entero
+	cant_com1, cant_com2, cant_com3, cant_com4, cant_com5, cant_com6, i, año_ing: entero
 
 	Procedimiento Inicializar() ES
 		cant_com1 := 0

@@ -2,7 +2,7 @@ Acción 1.21 ES
 
 Ambiente
 
-	número, incremento, suma_cuadrados, cuadrado, cubo: entero
+	número, incremento, suma_cuadrados, i, cuadrado, cubo: entero
 
 Proceso
 
@@ -16,11 +16,11 @@ Proceso
 
 	Para i := 1 hasta incremento Hacer
 		cuadrado := número ** 2
-		suma_cuadrados := suma_cuadrados + cuadrado
 		cubo := número ** 3
 		Escribir("Número: " número)
 		Escribir("Cuadrado: " cuadrado)
 		Escribir("Cubo:" cubo)
+		suma_cuadrados := suma_cuadrados + cuadrado
 		número := número + 1
 	Fin Para
 
