@@ -8,9 +8,7 @@ Ambiente
 
 Proceso
 
-	Escribir("¿Desea obtener los porcentajes de egresados de varias facultades? [S/N]: ")
-	Leer(elección)
-
+	elección := "S"
 	nro_facu := 0
 	total_isi := 0
 	total_iem := 0

@@ -21,8 +21,7 @@ Ambiente
 
 Proceso
 
-	Escribir("¿Desea realizar una comparación de tres números? [S/N]: ")
-	Leer(elección)
+	elección := "S"
 
 	Mientras elección = "S" Hacer
 		Escribir("Ingrese un valor numérico para A: ")
