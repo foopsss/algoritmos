@@ -27,6 +27,6 @@ Proceso
 
 	suma_dígitos := SumarDígitos(número)
 
-	Escribir("La suma de los dígitos del número es" suma_dígitos ".")
+	Escribir("La suma de los dígitos de" número "es" suma_dígitos ".")
 
 Fin Acción
