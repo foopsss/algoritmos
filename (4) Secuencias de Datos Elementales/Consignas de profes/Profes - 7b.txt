@@ -1,0 +1,64 @@
+// Consigna de los profes: finalizando el ciclo lectivo 2023 de algoritmos,
+// se necesitan estadísticas sobre cuántos aprobaron de manera directa la
+// materia, aprobaron la cursada (regularizaron) o quedaron libres.
+//
+// Para definir la situación de cada estudiante se debe contabilizar la 
+// cantidad de aprobados. De seis instancias evaluativas, se define:
+//
+// Aprobación directa (promoción): 6 instancias aprobadas.
+// Aprobación de la cursada (regular): 4 instancias aprobadas.
+// Libre: menos de 4 instancias aprobadas.
+//
+// Estilo de la secuencia:
+// NombreAlumnoLegajoNroAprobados#
+//
+// Ejemplo de la secuencia:
+// J|U|A|N|P|E|R|E|Z|2|7|1|1|1|6|#|M|A|R|I|A|L|O|P|E|Z|2|8|8|8|8|2|#
+//
+// Se pide:
+// Porcentaje de estudiantes que promocionaron la materia.
+
+Acción Profes7b ES
+
+Ambiente
+
+	sec: secuencia de carácter
+	v: carácter
+
+	total_estudiantes, est_prom: entero
+
+	números: ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+
+	total_estudiantes := 0
+	est_prom := 0
+
+	Mientras NFDS(sec) Hacer
+		Mientras v NO en números Hacer
+			AVZ(sec, v)
+		Fin Mientras
+		
+		Para i := 1 hasta 5 Hacer
+			AVZ(sec, v)	
+		Fin Para
+		
+		Si v = "6" Entonces
+			est_prom := est_prom + 1
+		Fin Si
+		
+		total_estudiantes := total_estudiantes + 1
+		
+		AVZ(sec, v)
+	Fin Mientras
+
+	porc_prom := (est_prom * 100) / total_estudiantes
+	
+	Escribir("El" porc_prom "% de los estudiantes promocionaron la materia.")
+
+	CERRAR(sec)
+
+Fin Acción

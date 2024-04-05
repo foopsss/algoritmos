@@ -1,0 +1,65 @@
+// Consigna de los profes: finalizando el ciclo lectivo 2023 de algoritmos,
+// se necesitan estadísticas sobre cuántos aprobaron de manera directa la
+// materia, aprobaron la cursada (regularizaron) o quedaron libres.
+//
+// Para definir la situación de cada estudiante se debe contabilizar la 
+// cantidad de aprobados. De seis instancias evaluativas, se define:
+//
+// Aprobación directa (promoción): 6 instancias aprobadas.
+// Aprobación de la cursada (regular): 4 instancias aprobadas.
+// Libre: menos de 4 instancias aprobadas.
+//
+// Estilo de la secuencia:
+// NombreAlumnoLegajoNroAprobados#
+//
+// Ejemplo de la secuencia:
+// J|U|A|N|P|E|R|E|Z|2|7|1|1|1|6|#|M|A|R|I|A|L|O|P|E|Z|2|8|8|8|8|2|#
+//
+// Se pide:
+// Cantidad de alumnos en cada condición.
+
+Acción Profes7a ES
+
+Ambiente
+
+	sec: secuencia de carácter
+	v: carácter
+
+	prom_dir, aprob_cur, libres: entero
+
+	números: ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+
+	prom_dir := 0
+	aprob_cur := 0
+	libres := 0
+
+	Mientras NFDS(sec) Hacer
+		Mientras v NO en números Hacer
+			AVZ(sec, v)
+		Fin Mientras
+		
+		Para i := 1 hasta 5 Hacer
+			AVZ(sec, v)	
+		Fin Para
+		
+		Según v Hacer
+			="6": prom_dir := prom_dir + 1
+			="4": aprob_cur := aprob_cur + 1
+			<="4": libres := libres + 1
+		Fin Según
+		
+		AVZ(sec, v)
+	Fin Mientras
+
+	Escribir("El número de estudiantes que promocionaron la materia es de" prom_dir "alumnos.")
+	Escribir("El número de estudiantes que regularizaron la materia es de" aprob_cur "alumnos.")
+	Escribir("El número de estudiantes que quedaron libres es de" libres "alumnos.")
+
+	CERRAR(sec)
+
+Fin Acción

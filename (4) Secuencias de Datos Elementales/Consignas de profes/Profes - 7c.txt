@@ -1,0 +1,87 @@
+// Consigna de los profes: finalizando el ciclo lectivo 2023 de algoritmos,
+// se necesitan estadísticas sobre cuántos aprobaron de manera directa la
+// materia, aprobaron la cursada (regularizaron) o quedaron libres.
+//
+// Para definir la situación de cada estudiante se debe contabilizar la 
+// cantidad de aprobados. De seis instancias evaluativas, se define:
+//
+// Aprobación directa (promoción): 6 instancias aprobadas.
+// Aprobación de la cursada (regular): 4 instancias aprobadas.
+// Libre: menos de 4 instancias aprobadas.
+//
+// Estilo de la secuencia:
+// LegajoNombreAlumnoNroAprobados#
+//
+// Ejemplo de la secuencia:
+// |2|7|1|1|1|J|U|A|N|P|E|R|E|Z|6|#|2|8|8|8|8|M|A|R|I|A|L|O|P|E|Z|2|#
+//
+// Se pide:
+// Secuencia de salida con todos los alumnos, cuyo legajo sea mayor o igual
+// a 27000. Copiar solo nombre y legajo.
+
+Acción Profes7c ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de carácter
+	v: carácter
+	
+	legajo: entero
+
+	números: ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v)
+	CREAR(sec_sal)
+		
+	Mientras NFDS(sec_ent) Hacer
+		legajo := CharToInt(v) * 10000
+		AVZ(sec_ent, v)
+		legajo := legajo + CharToInt(v) * 1000
+		
+		// Avanzo hasta el primer carácter
+		// del nombre.
+		Para i := 1 hasta 4 Hacer
+			AVZ(sec_ent, v)
+		Fin Para
+		
+		Si legajo >= "27000" Entonces
+			Mientras v NO en números Hacer
+				GRABAR(sec_sal, v)
+				AVZ(sec_ent, v)
+			Fin Mientras
+		Contrario
+			Mientras v NO en números Hacer
+				AVZ(sec_ent, v)
+			Fin Mientras
+		Fin Si
+		
+		// Estoy parado en la cantidad de
+		// parciales aprobados. Llego hasta
+		// el primer carácter del siguiente
+		// legajo.
+		Para i := 1 hasta 2 Hacer
+			AVZ(sec_ent, v)
+		Fin Para
+	Fin Mientras
+	
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+
+Fin Acción
