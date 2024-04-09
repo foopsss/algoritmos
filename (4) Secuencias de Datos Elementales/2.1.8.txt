@@ -18,7 +18,7 @@ Acción 2.1.8 ES
 Ambiente
 
 	sec_ent: secuencia de entero
-	v_ent, ult_num, dni, divisor, cuit: entero
+	v_ent, ult_num, dni, divisor, cuit, i: entero
 
 	sec_sal: secuencia de carácter
 	v_sal: carácter
