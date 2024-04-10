@@ -1,0 +1,48 @@
+// Consigna de los profes: se dispone de 2 secuencias de caracteres. Una contiene
+// caracteres, espacios incluidos, y otra contiene caracteres "numéricos". Se pide crear
+// una nueva secuencia de salida de caracteres donde se copien los caracteres de ambas
+// secuencias en forma alternada. Es decir, copiando un carácter y luego un dígito de
+// manera sucesiva hasta completar ambas secuencias.
+//
+// Analizar y responder: qué pasaría en el caso de que una secuencia de entrada termine
+// antes que la otra? ¿Se podría cumplir con la consigna?
+//
+// Respuesta: se puede cumplir utilizando un ciclo excluyente, dado en mezcla.
+
+Acción Profes9b ES
+
+Ambiente 
+
+	sec_ent1, sec_ent2, sec_sal: secuencia de carácter
+	v_ent1, v_ent2: carácter
+
+Proceso
+
+	ARR(sec_ent1)
+	AVZ(sec_ent1, v_ent1)
+	ARR(sec_ent2)
+	AVZ(sec_ent2, v_ent2)
+	CREAR(sec_sal)
+	
+	Mientras NFDS(sec_ent1) y NFDS(sec_ent2) Hacer
+		GRABAR(sec_sal, v_ent1)
+		AVZ(sec_ent1, v_ent1)
+		GRABAR(sec_sal, v_ent2)
+		AVZ(sec_ent2, v_ent2)
+	Fin Mientras
+	
+	Mientras NFDS(sec_ent1) Hacer
+		GRABAR(sec_sal, v_ent1)
+		AVZ(sec_ent1, v_ent1)
+	Fin Mientras
+	
+	Mientras NFDS(sec_ent2) Hacer
+		GRABAR(sec_sal, v_ent2)
+		AVZ(sec_ent2, v_ent2)
+	Fin Mientras
+	
+	CERRAR(sec_ent1)
+	CERRAR(sec_ent2)
+	CERRAR(sec_sal)
+
+Fin Acción
