@@ -9,7 +9,7 @@
 //
 // Respuesta: se puede cumplir utilizando un ciclo excluyente, dado en mezcla.
 
-Acción Profes9b ES
+Acción Profes9 ES
 
 Ambiente 
 

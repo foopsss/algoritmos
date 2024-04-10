@@ -20,7 +20,7 @@
 // Ejemplo de la secuencia:
 // |P|J|U|A|N|P|E|R|E|Z|#|4|D|E|T|A|L|L|E|%|F|2|3|0|0|B|M|A|R|I|A|L|O|P|E|Z|#|7|D|E|T|A|L|L|E|%|T|4|5|0|0|...|FDS
 
-Acción Profes8c ES
+Acción Profes8 ES
 
 Ambiente
 

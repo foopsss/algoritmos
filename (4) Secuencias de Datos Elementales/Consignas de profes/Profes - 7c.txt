@@ -19,7 +19,7 @@
 // Secuencia de salida con todos los alumnos, cuyo legajo sea mayor o igual
 // a 27000. Copiar solo nombre y legajo.
 
-Acción Profes7c ES
+Acción Profes7 ES
 
 Ambiente
 

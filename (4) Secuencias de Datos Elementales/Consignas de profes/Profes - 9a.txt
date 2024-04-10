@@ -6,7 +6,7 @@
 //
 // Por defecto, se asume que ambas secuencias tienen la misma cantidad de caracteres.
 
-Acción Profes9a ES
+Acción Profes9 ES
 
 Ambiente 
 

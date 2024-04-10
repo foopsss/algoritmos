@@ -18,7 +18,7 @@
 // Se pide:
 // Cantidad de alumnos en cada condición.
 
-Acción Profes7a ES
+Acción Profes7 ES
 
 Ambiente
 

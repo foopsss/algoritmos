@@ -11,7 +11,7 @@
 // Estilo de la secuencia:
 // |1|1|0|3|2|0|2|2|6|2|1|0|4|2|0|2|3|2
 
-Acción Profes6b ES
+Acción Profes6 ES
 
 Ambiente
 
