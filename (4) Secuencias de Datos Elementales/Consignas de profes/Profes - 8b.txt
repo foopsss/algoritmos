@@ -1,0 +1,93 @@
+// Consigna de los profes: Un importante banco del país posee la información de
+// los resúmenes de las tarjetas de créditos (del último mes) de sus clientes en
+// una secuencia de caracteres con la siguiente estructura:
+//
+// * Categoría del cliente, 1 carácter: (G) Gold, (P) Platinum o (B) Black.
+// * Nombre y apellido del cliente, finaliza con el carácter “#”.
+// * Cantidad de movimientos, 1 carácter.
+// * Movimientos, con la siguiente estructura:
+//    ** Detalle de la operación: finaliza con el carácter “%”.
+//    ** Rubro de la operación, 1 carácter: (S) Supermercado, (F) Farmacia, (T) Tecnología u (O) Otros.
+//    ** Importe: 4 caracteres.
+//
+// Informar:
+// (a) Secuencia de salida con el apellido y nombre de todos los clientes de la categoría Black.
+// (b) Cantidad de ventas totales.
+//
+// Estilo de la secuencia:
+// CategoriaNombreApellido#CantidadMovimientosMovimientos
+//
+// Ejemplo de la secuencia:
+// |P|J|U|A|N|P|E|R|E|Z|#|4|D|E|T|A|L|L|E|%|F|2|3|0|0|B|M|A|R|I|A|L|O|P|E|Z|#|7|D|E|T|A|L|L|E|%|T|4|5|0|0|...|FDS
+
+Acción Profes8b ES
+
+Ambiente
+
+	sec_ent, sec_sal: secuencia de carácter
+	v: carácter
+	
+	total_ventas, resg_mov, i: entero
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec_ent)
+	AVZ(sec_ent, v)
+	CREAR(sec_sal)
+	
+	total_ventas := 0
+	
+	Mientras NFDS(sec_ent) Hacer
+		// Controlo la categoría del cliente.
+		Si v = "B" Entonces
+			Mientras v <> "#" Hacer
+				GRABAR(sec_sal, v)
+				AVZ(sec_ent, v)
+			Fin Mientras
+		Contrario
+			Mientras v <> "#" Hacer
+				AVZ(sec_ent, v)
+			Fin Mientras
+		Fin Si
+		
+		// Acumulo las ventas totales realizadas.
+		AVZ(sec_ent, v)
+		total_ventas := total_ventas + CharToInt(v)
+		resg_mov := CharToInt(v)
+		
+		// El resto de caracteres no me interesan
+		// así que los avanzo.
+		// Utilizo un "Para" para avanzar todos los
+		// detalles de movimientos en caso de que
+		// sean varios.
+		Para i := 1 hasta resg_mov Hacer
+			Mientras v <> "%" Hacer
+				AVZ(sec_ent, v)
+			Fin Mientras
+
+			Para i := 1 hasta 5 Hacer
+				AVZ(sec_ent, v)
+			Fin Para
+		Fin Mientras
+	Fin Mientras
+	
+	Escribir("Se realizaron un total de" total_ventas "ventas.")
+	
+	CERRAR(sec_ent)
+	CERRAR(sec_sal)
+	
+Fin Acción

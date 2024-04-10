@@ -1,0 +1,124 @@
+// Consigna de los profes: Un importante banco del país posee la información de
+// los resúmenes de las tarjetas de créditos (del último mes) de sus clientes en
+// una secuencia de caracteres con la siguiente estructura:
+//
+// * Categoría del cliente, 1 carácter: (G) Gold, (P) Platinum o (B) Black.
+// * Nombre y apellido del cliente, finaliza con el carácter “#”.
+// * Cantidad de movimientos, 1 carácter.
+// * Movimientos, con la siguiente estructura:
+//    ** Detalle de la operación: finaliza con el carácter “%”.
+//    ** Rubro de la operación, 1 carácter: (S) Supermercado, (F) Farmacia, (T) Tecnología u (O) Otros.
+//    ** Importe: 4 caracteres.
+//
+// Informar:
+// (a) Listado de todos los clientes, con su respectivo total a pagar.
+// (b) Cantidad de ventas por cada rubro.
+//
+// Estilo de la secuencia:
+// CategoriaNombreApellido#CantidadMovimientosMovimientos
+//
+// Ejemplo de la secuencia:
+// |P|J|U|A|N|P|E|R|E|Z|#|4|D|E|T|A|L|L|E|%|F|2|3|0|0|B|M|A|R|I|A|L|O|P|E|Z|#|7|D|E|T|A|L|L|E|%|T|4|5|0|0|D|E|T|A|L|L|E|%|O|5|5|0|0|...|FDS
+
+Acción Profes8a ES
+
+Ambiente
+
+	sec: secuencia de carácter
+	v: carácter
+
+	resg_mov, ventas_sup, ventas_far, ventas_tec, ventas_otros, importe, i: entero
+
+	Procedimiento Inicializar() ES
+		ventas_sup := 0
+		ventas_far := 0
+		ventas_tec := 0
+		ventas_otros := 0
+		importe := 0
+	Fin Procedimiento
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			="1" : CharToInt := 1
+			="2" : CharToInt := 2
+			="3" : CharToInt := 3
+			="4" : CharToInt := 4
+			="5" : CharToInt := 5
+			="6" : CharToInt := 6
+			="7" : CharToInt := 7
+			="8" : CharToInt := 8
+			="9" : CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec)
+	AVZ(sec, v)
+	
+	Inicializar()
+
+	Mientras NFDS(sec) Hacer
+		// Salto la categoría del cliente.
+		// No me interesa.
+		AVZ(sec, v)
+		
+		// Muestro el nombre del cliente.
+		Escribir("Cliente: ")
+		Mientras v <> "#" Hacer
+			Escribir(v)
+			AVZ(sec, v)
+		Fin Mientras
+		
+		// Resguardo la cantidad de movimientos.
+		AVZ(sec, v)
+		resg_mov := CharToInt(v)
+		
+		// Parto desde la cantidad de movimientos.
+		// Trato cada movimiento según a la consigna.
+		Para i := 1 hasta resg_mov Hacer
+			// Avanzo el detalle del movimiento
+			// porque no me importa.
+			Mientras v <> "%" Hacer
+				AVZ(sec, v)
+			Fin Mientras
+			
+			// Según el rubro, hago la acción correspondiente.
+			AVZ(sec, v)
+			Según v Hacer
+				="S": ventas_sup := ventas_sup + 1
+				="F": ventas_far := ventas_far + 1
+				="T": ventas_tec := ventas_tec + 1
+				="O": ventas_otros := ventas_otros + 1
+			Fin Según
+			
+			// Obtengo el importe para mostrar.
+			// Cuando termino de avanzar quedo
+			// parado en el siguiente movimiento
+			// si es que este existe. De lo contrario,
+			// quedo parado en el siguiente cliente.
+			AVZ(sec, v)
+			Escribir("Importe: ")
+			
+			Para i := 1 hasta 4 Hacer
+				Según i Hacer
+					="1": importe := importe + CharToInt(v) * 1000
+					="2": importe := importe + CharToInt(v) * 100
+					="3": importe := importe + CharToInt(v) * 10
+					="4": importe := importe + CharToInt(v) * 1
+				Fin Según
+				AVZ(sec, v)
+			Fin Para
+		Fin Para
+		
+		Escribir("Importe pagado por el cliente: " importe)
+	Fin Mientras
+	
+	Escribir("En el rubro 'Supermercado' se produjo un total de" ventas_sup "ventas.")
+	Escribir("En el rubro 'Farmacia' se produjo un total de" ventas_far "ventas.")
+	Escribir("En el rubro 'Tecnología' se produjo un total de" ventas_tec "ventas.")
+	Escribir("En el rubro 'Otros' se produjo un total de" ventas_otros "ventas.")
+	
+	CERRAR(sec)
+
+Fin Acción
