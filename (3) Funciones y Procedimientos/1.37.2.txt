@@ -5,19 +5,14 @@ Ambiente
 	número: entero
 
 	Función SumarDígitos(num: entero): entero ES
+	Ambiente
+		centenas, decenas, unidades: entero
+	Proceso
+		centenas := num DIV 100
+		decenas := (num - centenas * 100) DIV 10
+		unidades := num - (centenas * 100) - (decenas * 10)
 
-		Ambiente
-
-			centenas, decenas, unidades: entero
-
-		Proceso
-
-			centenas := num DIV 100
-			decenas := (num - centenas * 100) DIV 10
-			unidades := num - (centenas * 100) - (decenas * 10)
-
-			SumarDígitos := centenas + decenas + unidades
-
+		SumarDígitos := centenas + decenas + unidades
 	Fin Función
 
 Proceso

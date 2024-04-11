@@ -1,0 +1,77 @@
+// Consigna de los profes: desarrollar una subacción que transforme cada dígito
+// de un número, ingresado por el usuario, en los caracteres equivalentes.
+// Además, se pide desarrollar un algoritmo que use la subacción y almacene
+// estos caracteres en una secuencia de salida. Al terminar un número separar
+// con el carácter “#”. 
+//
+// Consideraciones:
+// (a) Agregar los parámetros que se consideren necesarios.
+// (b) La secuencia de salida tiene que ser de caracteres.
+//
+// Ejemplo:
+// Dado el número entero 355, la salida debería ser |3|5|5|#|.
+//
+// Notas:
+// * Agregar un parámetro para especificar la longitud, entonces puedo tratar
+//   números de cualquier longitud.
+
+Acción Profes11 ES
+
+Ambiente
+
+	sec_sal: secuencia de carácter
+	
+	Función IntToChar(entrada: entero): carácter ES
+		Según entrada Hacer
+			="1": IntToChar := "1"
+			="2": IntToChar := "2"
+			="3": IntToChar := "3"
+			="4": IntToChar := "4"
+			="5": IntToChar := "5"
+			="6": IntToChar := "6"
+			="7": IntToChar := "7"
+			="8": IntToChar := "8"
+			="9": IntToChar := "9"
+		Fin Según
+	Fin Función
+
+	Procedimiento Convertir(entrada, long_entrada: entero) ES
+	Ambiente
+		divisor, i, dígito: entero
+		salida: carácter
+	Proceso
+		divisor := 1
+
+		// Para que el divisor tenga la longitud correcta
+		// debo hacer una iteración menos que la longitud
+		// del número que ingresa el usuario.
+		Para i := 1 hasta (long_entrada - 1) Hacer
+			divisor := divisor * 10
+		Fin Para
+		
+		Para i := 1 hasta long_entrada Hacer
+			dígito := entrada DIV divisor
+			salida := IntToChar(dígito)
+			GRABAR(sec_sal, salida)
+			entrada := entrada - (dígito * divisor)
+			divisor := divisor DIV 10
+		Fin Para
+		
+		GRABAR(sec_sal, "#")
+	Fin Procedimiento
+
+Proceso
+
+	CREAR(sec_sal)
+
+	Escribir("Ingrese un número: ")
+	Leer(número)
+	
+	Escribir("Especifique la longitud del número: ")
+	Leer(longitud)
+	
+	Convertir(número, longitud)
+
+	CERRAR(sec_sal)
+
+Fin Acción
