@@ -1,0 +1,59 @@
+Acción 1.37.4 ES
+
+Ambiente
+
+	elección: carácter
+	número, clave: entero
+
+	Función es_negativo(entrada: entero) ES
+	Ambiente
+		divisor, dígito, suma_dígitos, long_entrada, i: entero
+	Proceso
+		Si entrada > 0 Entonces
+			divisor := 1
+			suma_dígitos := 0
+
+			Escribir("Especifique la longitud del número: ")
+			Leer(long_entrada)
+
+			// Para que el divisor tenga la longitud correcta
+			// debo hacer una iteración menos que la longitud
+			// del número que ingresa el usuario.
+			Para i := 1 hasta (long_entrada - 1) Hacer
+				divisor := divisor * 10
+			Fin Para
+			
+			Para i := 1 hasta long_entrada Hacer
+				dígito := entrada DIV divisor
+				suma_dígitos := suma_dígitos + dígito
+				entrada := entrada - (dígito * divisor)
+				divisor := divisor DIV 10
+			Fin Para
+			
+			es_negativo := suma_dígitos MOD 7
+		Contrario
+			Si entrada = "0" Entonces
+				es_negativo := 0
+			Contrario
+				es_negativo := -1
+			Fin Si
+		Fin Si
+	Fin Función
+
+Proceso
+
+	elección := "S"
+	
+	Mientras elección = "S" Hacer
+		Escribir("Introduzca un número: ")
+		Leer(número)
+		
+		clave := es_negativo(número)
+		
+		Escribir("La clave es" clave ".")
+		
+		Escribir("¿Desea probar con otro número? [S/N]: ")
+		Leer(elección)
+	Fin Mientras
+	
+Fin Acción
