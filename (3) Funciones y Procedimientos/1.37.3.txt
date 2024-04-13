@@ -2,7 +2,7 @@ Acción 1.37.3 ES
 
 Ambiente
 
-	elección: alfanumérico
+	elección: carácter
 	a, b, c, menor: entero
 
 	Función DevolverMenor(num_a, num_b, num_c: entero):entero ES		

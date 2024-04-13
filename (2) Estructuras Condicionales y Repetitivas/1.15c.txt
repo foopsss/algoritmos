@@ -2,7 +2,7 @@ Acción 1.15c ES
 
 Ambiente
 
-	elección: alfanumérico
+	elección: carácter
 	pisos, alt_prom: entero
 	alt_edificio: real
 

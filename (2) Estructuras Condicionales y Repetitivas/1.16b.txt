@@ -2,7 +2,7 @@ Acción 1.16b ES
 
 Ambiente
 
-	elección: alfanumérico
+	elección: carácter
 	nro_facu, eg_isi, eg_iem, eg_iq, total_isi, total_iem, total_iq, total_facu, total_general: entero
 	porc_isi, porc_iem, porc_iq: real
 
