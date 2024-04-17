@@ -109,7 +109,7 @@ Proceso
 		Fin Para
 		
 		// Proceso la secuencia con los detalles.
-		Mientras NFDS(sec_det) y v_det <> "!" Hacer
+		Mientras v_det <> "!" Hacer
 			// Salto los datos que no me importan.
 			Para i := 1 hasta 6 Hacer
 				AVZ(sec_det, v_det)
@@ -118,14 +118,14 @@ Proceso
 			Mientras v_det NO en números Hacer
 				AVZ(sec_det, v_det)
 			Fin Mientras
-			
-			// Resguardo la cantidad comprada
-			// de artículos.
-			cant_art := CharToInt(v_det)
-			AVZ(sec_det, v_det)
-			
-			// Estoy parado en el precio de un artículo.
+
 			Si es_tipo_a Entonces
+				// Resguardo la cantidad comprada
+				// de artículos.
+				cant_art := CharToInt(v_det)
+				AVZ(sec_det, v_det)
+			
+				// Estoy parado en el precio de un artículo.
 				monto_art := monto_art + CharToInt(v_det) * 100
 				AVZ(sec_det, v_det)
 				

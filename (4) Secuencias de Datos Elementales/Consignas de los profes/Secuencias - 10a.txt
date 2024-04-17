@@ -31,28 +31,21 @@
 // |A|1|B|2|4|B|J|u|g|o|N|a|r|a|n|j|a|2|0|8|0|A|A|5|5|4|B|M|e|d|i|a|l|u|n|a|s|6|1|2|0|!|B|2|1|B|2|4|C|e|r|e|a|l|5|1|2|5|!|
 //
 // Se pide:
-// (a) Secuencia de salida con Nombre del cliente seguido del código y descripción de cada artículo comprado.
-//     Separar cada cliente con una marca “/”.
-// (b) Contar cantidad de artículos vendidos de todos los artículos cuyos códigos comienzan con un carácter ingresado por el usuario.
+// (a) Secuencia con el CUIT/CUIL y códigos de productos de todas las facturas emitidas en el mes de junio, sin importar el año.
+// (b) Por factura informar la cantidad total de artículos comprados, sin diferenciar qué producto es.
 
 Acción Profes10 ES
 
 Ambiente
 
 	sec_fac, sec_det, sec_sal: secuencia de carácter
-	v_fac, v_det, car_us: carácter
+	v_fac, v_det: carácter
 	
-	art_vendidos, i: entero
-	
-	coincide_car: lógico
+	cant_compras, i: entero
+	es_junio: lógico
 	
 	números: ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 	
-	Procedimiento PedirCarácter() ES
-		Escribir("Introduzca un carácter: ")
-		Leer(car_us)
-	Fin Procedimiento
-
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
 			="1" : CharToInt := 1
@@ -75,82 +68,88 @@ Proceso
 	AVZ(sec_det, v_det)
 	CREAR(sec_sal)
 	
-	PedirCarácter()
-	
-	coincide_car := F
-	art_vendidos := 0
-	
+	cant_compras := 0
+	es_junio := F
+
 	Mientras NFDS(sec_fac) Hacer
-		// Salto los caracteres innecesarios.
-		Para i := 1 hasta 14 Hacer
+		// Muestro el código de la factura.
+		Escribir("Factura: ")
+		Para i := 1 hasta 5 Hacer
+			Escribir(v_fac)
 			AVZ(sec_fac, v_fac)
 		Fin Para
 		
-		// Estoy parado en el nombre.
+		// Avanzo hasta el dígito útil del mes.
+		Para i := 1 hasta 5 Hacer
+			AVZ(sec_fac, v_fac)
+		Fin Para
+		
+		Si v_fac = "6" Entonces
+			es_junio := V
+		Fin Si
+		
+		// Avanzo hasta el CUIT/CUIL.
 		Mientras v_fac <> "#" Hacer
-			GRABAR(sec_sal, v_fac)
 			AVZ(sec_fac, v_fac)
 		Fin Mientras
+		AVZ(sec_fac, v_fac)
 		
-		// Avanzo hasta el siguiente código
-		// de factura.
-		Para i := 1 hasta 12 Hacer
-			AVZ(sec_fac, v_fac)
-		Fin Para
+		// Si el mes es junio, copio el CUIT/CUIL.
+		Si es_junio Entonces
+			Para i := 1 hasta 11 Hacer
+				GRABAR(sec_sal, v_fac)
+				AVZ(sec_fac, v_fac)
+			Fin Para
+		Contrario
+			Para i := 1 hasta 11 Hacer
+				AVZ(sec_fac, v_fac)
+			Fin Para
+		Fin Si
 		
-		// Proceso la secuencia con los
-		// detalles.
-		Mientras NFDS(sec_det) y v_det <> "!" Hacer
-			// Parado en el primer dígito del
-			// código del producto, comparo el
-			// carácter provisto por el usuario
-			// con el primer carácter del código.
-			Si v_det = car_us Entonces
-				coincide_car := T
+		// Tratamiento de la segunda secuencia.
+		Mientras v_det <> "!" Hacer
+			// Si el mes es junio, copio
+			// el código de producto.
+			Si es_junio Entonces
+				Para i := 1 hasta 6 Hacer
+					GRABAR(sec_sal, v_det)
+					AVZ(sec_det, v_det)
+				Fin Para
+			Contrario
+				Para i := 1 hasta 6 Hacer
+					AVZ(sec_det, v_det)
+				Fin Para				
 			Fin Si
 			
-			// Copio el código de producto y la
-			// descripción.
-			Para i := 1 hasta 6 Hacer
-				GRABAR(sec_sal, v_det)
-				AVZ(sec_det, v_det)
-			Fin Para
-			
+			// Salto la descripción.
 			Mientras v_det NO en números Hacer
-				GRABAR(sec_sal, v_det)
 				AVZ(sec_det, v_det)
 			Fin Mientras
 			
-			// Estoy parado en la cantidad comprada
-			// del artículo.
-			Si coincide_car Entonces
-				art_vendidos := art_vendidos + CharToInt(v_det)
-			Fin Si
+			// Estoy en la cantidad de
+			// artículos comprados.
+			cant_compras := cant_compras + CharToInt(v_det)
 			
-			// Avanzo la cantidad comprada y el
-			// precio unitario.
+			// Avanzo hasta el siguiente código
+			// o la marca de fin de una factura
+			// según lo que haya.
 			Para i := 1 hasta 4 Hacer
 				AVZ(sec_det, v_det)
 			Fin Para
 		Fin Mientras
 		
-		// Cuando estoy acá, ya llegué al fin del
-		// detalle de la factura actual, porque la
-		// ventana es igual a "!". De lo contrario
-		// seguiría recorriendo el detalle de los
-		// otros artículos.
-		// Grabo en la salida el separador de
-		// clientes.
-		GRABAR(sec_sal, "/")
+		// Total de artículos comprados en la factura.
+		Escribir("Artículos comprados en la factura: " cant_compras)
+		
+		// Reseteo las variables necesarias.
+		cant_compras := 0
 		
 		// Avanzo la secuencia de detalles.
 		// La otra no porque ya quedé parado en
 		// el primer carácter de la siguiente
-		// tras avanzar el CUIT/CUIL.
+		// tras tratar el CUIT/CUIL.
 		AVZ(sec_det, v_det)
 	Fin Mientras
-	
-	Escribir("Se vendieron" art_vendidos "unidades de artículos cuyos códigos comienzan con" car_us ".")
 	
 	CERRAR(sec_fac)
 	CERRAR(sec_det)
