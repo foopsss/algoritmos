@@ -48,7 +48,7 @@ Ambiente
 	
 	es_tipo_a: lógico
 
-	números: ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 	
 	Procedimiento Inicializar() ES
 		es_tipo_a := F
