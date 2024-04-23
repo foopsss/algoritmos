@@ -4,7 +4,7 @@
 // número telefónico. Generar una secuencia con los números de las personas que
 // comienzan con un número ingresado por el usuario.
 
-Acción Profes4 ES
+Acción Secuencias4 ES
 
 Ambiente
 

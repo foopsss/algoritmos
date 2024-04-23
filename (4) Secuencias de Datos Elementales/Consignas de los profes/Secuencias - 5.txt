@@ -26,7 +26,7 @@
 // Información de los alumnos:
 // |0|1|0|3|2|0|2|4|J|U|A|N|P|E|R|E|Z|!|1|1|1|1|0|1|0|3|2|0|2|4|M|A|R|I|A|F|E|R|N|A|N|D|E|Z|!|1|1|1|1|
 
-Acción Profes5 ES
+Acción Secuencias5 ES
 
 Ambiente
 

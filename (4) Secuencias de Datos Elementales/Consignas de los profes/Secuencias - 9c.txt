@@ -7,7 +7,7 @@
 // Demostrar: ¿Cómo modificaría el algoritmo en el caso de que solicite contar la cantidad
 // de caracteres de cada secuencia y mostrar por pantalla al final del proceso?
 
-Acción Profes9 ES
+Acción Secuencias9 ES
 
 Ambiente
 

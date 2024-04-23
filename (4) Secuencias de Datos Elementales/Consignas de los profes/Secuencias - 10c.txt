@@ -35,7 +35,7 @@
 //     Separar cada cliente con una marca “/”.
 // (b) Contar cantidad de artículos vendidos de todos los artículos cuyos códigos comienzan con un carácter ingresado por el usuario.
 
-Acción Profes10 ES
+Acción Secuencias10 ES
 
 Ambiente
 

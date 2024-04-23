@@ -34,7 +34,7 @@
 // (a) Secuencia de salida de enteros y monto total de todas las facturas tipo A.
 // (b) Porcentaje de facturas tipo A emitidas.
 
-Acción Profes10 ES
+Acción Secuencias10 ES
 
 Ambiente
 

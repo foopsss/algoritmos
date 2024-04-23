@@ -1,7 +1,7 @@
 // Consigna de los profes: dada una secuencia de números enteros que finaliza con 0,
 // calcular el promedio de dicha secuencia.
 
-Acción Profes2 ES
+Acción Secuencias2 ES
 
 Ambiente
 

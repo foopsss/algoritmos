@@ -34,7 +34,7 @@
 // (a) Secuencia con el CUIT/CUIL y códigos de productos de todas las facturas emitidas en el mes de junio, sin importar el año.
 // (b) Por factura informar la cantidad total de artículos comprados, sin diferenciar qué producto es.
 
-Acción Profes10 ES
+Acción Secuencias10 ES
 
 Ambiente
 

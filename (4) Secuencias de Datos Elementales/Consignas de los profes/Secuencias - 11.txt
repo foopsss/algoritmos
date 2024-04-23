@@ -15,7 +15,7 @@
 // * Agregar un parámetro para especificar la longitud, entonces puedo tratar
 //   números de cualquier longitud.
 
-Acción Profes11 ES
+Acción Secuencias11 ES
 
 Ambiente
 

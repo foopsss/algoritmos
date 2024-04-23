@@ -18,7 +18,7 @@
 // Se pide:
 // Porcentaje de estudiantes que promocionaron la materia.
 
-Acción Profes7 ES
+Acción Secuencias7 ES
 
 Ambiente
 
