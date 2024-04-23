@@ -37,24 +37,14 @@ Ambiente
 
 	Procedimiento Convertir(entrada, long_entrada: entero) ES
 	Ambiente
-		divisor, i, dígito: entero
+		i, dígito: entero
 		salida: carácter
-	Proceso
-		divisor := 1
-
-		// Para que el divisor tenga la longitud correcta
-		// debo hacer una iteración menos que la longitud
-		// del número que ingresa el usuario.
-		Para i := 1 hasta (long_entrada - 1) Hacer
-			divisor := divisor * 10
-		Fin Para
-		
-		Para i := 1 hasta long_entrada Hacer
-			dígito := entrada DIV divisor
+	Proceso		
+		Para i := long_entrada hasta 1, -1 Hacer
+			dígito := entrada DIV (10 ** (long_entrada - 1))
 			salida := IntToChar(dígito)
 			GRABAR(sec_sal, salida)
-			entrada := entrada - (dígito * divisor)
-			divisor := divisor DIV 10
+			entrada := entrada - (10 ** (long_entrada - 1))
 		Fin Para
 		
 		GRABAR(sec_sal, "#")
