@@ -9,17 +9,17 @@ Ambiente
 	Escribir("Introduzca el año actual: ")
 	Leer(año_act)
 	
-	Escribir("Introduzca el mes actual: ")
-	Leer(mes_act)
-	
-	Escribir("Introduzca el día actual: ")
-	Leer(día_act)
-	
 	Escribir("Introduzca el año de nacimiento: ")
 	Leer(año_nac)
 	
+	Escribir("Introduzca el mes actual: ")
+	Leer(mes_act)
+	
 	Escribir("Introduzca el mes de nacimiento: ")
 	Leer(mes_nac)
+	
+	Escribir("Introduzca el día actual: ")
+	Leer(día_act)
 	
 	Escribir("Introduzca el día de nacimiento: ")
 	Leer(día_nac)
