@@ -1,0 +1,221 @@
+// Consigna de los profes: un importante supermercado del país le solicita desarrollar un algoritmo
+// que asista en el manejo de sus líneas de cajas. El programa registra cada compra realizada 
+// listando al final el ticket de compra. Será utilizado por un cajero y el ingreso de datos se hará
+// de manera interactiva, pudiendo el cajero atender varios clientes y cerrar la caja en cualquier
+// momento (una vez terminado de atender un cliente).
+// 
+// El proceso es el siguiente:
+// --------------------------
+// Por primera vez, se solicitan los siguientes datos:
+// (*) Nro de Caja
+// (*) Apellido y nombre del cajero.
+//
+// Luego, por cada arribo de un cliente a la caja, se le solicitará (también por única vez):
+// (*) DNI del cliente
+// (*) Cantidad de productos (distintos) a comprar
+//
+// Por cada producto que compra el usuario se deberá ingresar el código de barras (alfanumérico)
+// correspondiente y las unidades que lleva para dicho producto.
+//
+// Subacciones ya implementadas (no se las debe desarrollar):
+// ---------------------------------------------------------
+// (*) obtener_precio_producto(codigo_barras): brinda el precio unitario del producto.
+// (*) es_socio(dni): permite determinar si el cliente pertenece al programa de fidelización del
+//     supermercado de "clientes frecuentes".
+//     Los resultados posibles son: ORO | PLATA | DIAMANTE | NO SOCIO
+// (*) obtener_fecha_hora(): brinda la fecha y hora del sistema.
+//
+// Descuentos posibles:
+// -------------------
+// (*) Si el cliente pertenece al programa, se le hará  un descuento sobre el precio final, de
+//     acuerdo a su categoría: ORO (5%), PLATA (10%) y DIAMANTE (15%).
+// (*) Si el cliente realiza una compra de 4 unidades o más del mismo producto, obtiene un descuento
+//     del 2% sobre dicho total para ese producto. Este descuento es acumulable con el anterior.
+//
+// Salida esperada:
+// ---------------
+// Para cada compra de cliente deberá emitir el ticket correspondiente, en donde deberán figurar
+// los siguientes datos con este orden:
+//
+// - CABECERA -
+// Ticket de Compra - Supermercado [xxxxxxxxxxxxxxx]
+// Fecha y Hora: [dd/mm/aaaa hh:mm] | Caja: [Nro. X] | Cajero: [Nombre y Apellido]
+//
+// - DETALLE DE COMPRA -
+// | Unidades | Producto | Precio | Unitario | Cantidad | Descuento (%) | Precio con Descuento | Total Producto |
+// |    ...   |    ...   |   ...  |    ...   |    ...   |      ...      |          ...         |       ...      |
+// |    ...   |    ...   |   ...  |    ...   |    ...   |      ...      |          ...         |       ...      |
+//                                                                      |        Subtotal      |      $xxx      |
+// - PIE -
+// Precio total sin descuento: $xxxxx
+// Descuento total: $xxxxx
+// Descuento por programa de fidelización: $xxxxx
+// Total a pagar: $xxxxxx
+//
+// Deberá implementar subacciones que permitan mostrar el ticket:
+// -------------------------------------------------------------
+// (*) imprimir_ticket()
+// (*) imprimir_cabecera()
+// (*) imprimir_detalle()
+// (*) imprimir_pie()
+//
+// Al cerrar la caja se pide informar:
+// ----------------------------------
+// (*) Cantidad de ventas realizadas por el cajero.
+// (*) Importe promedio de cada compra.
+// (*) Total recaudado en el día.
+// (*) Porcentaje de clientes que hicieron compras y forman parte del programa de fidelización.
+//
+// Consideraciones:
+// ---------------
+// (*) Agregue funciones y procedimientos según considere necesario.
+
+Acción EstCont1 ES
+
+Ambiente
+
+	desc_oro = 0,5
+	desc_plata = 0,10
+	desc_diamante = 0,15
+
+	num_caja, dni_cliente, cant_prod_dist, unid_prod, clientes_fieles, cant_ventas, porcentaje_fieles, i: entero
+	precio_unitario, cantidad, descuento_producto, precio_con_descuento: real
+	total_producto, precio_total_sin_descuento, descuento_total, subtotal_ticket: real
+	descuento_fidelidad, total_a_pagar, total_recaudado_día, importe_promedio_compras: real
+	
+	nomap_cajero, código_barras: alfanumérico
+	caja_abierta: carácter
+	
+	Procedimiento PedirDatosCliente() ES
+		Escribir("Introduzca el DNI del cliente: ")
+		Leer(dni_cliente)
+		
+		Escribir("Cantidad de productos distintos a comprar: ")
+		Leer(cant_prod_dist)
+	Fin Procedimiento
+	
+	Procedimiento PedirInfoProducto() ES
+		Escribir("Introduzca el código de barras del producto: ")
+		Leer(código_barras)
+		
+		Escribir("Introduzca las unidades a llevar del producto: ")
+		Leer(unid_prod)
+	Fin Procedimiento
+	
+	Procedimiento RegistrarCompra() ES
+		Escribir("¿Desea registrar una compra? [S/N]: ")
+		Leer(caja_abierta)
+	Fin Procedimiento
+	
+	Procedimiento Inicializar() ES
+		precio_total_sin_descuento := 0
+		descuento_total := 0
+		subtotal_ticket := 0
+		clientes_fieles := 0
+		cant_ventas := 0
+		total_recaudado_día := 0
+	Fin Procedimiento
+	
+	Procedimiento ImprimirCabecera() ES
+		Escribir("Ticket de Compra - Supermercado [xxxxxxxxxxxxxxx]")
+		Escribir("Fecha y hora: " obtener_fecha_hora())
+		Escribir("Caja: " num_caja)
+		Escribir("Cajero: " nomap_cajero)
+		Escribir("")
+		Escribir("Cliente: ")
+		Escribir("DNI: " dni_cliente)
+		Escribir("Tipo de cliente: " membresía_cliente)
+	Fin Procedimiento
+	
+	Procedimiento ImprimirDetalle() ES
+		// Muestro la cabecera del detalle.
+		Escribir("|Unidades|Producto|Precio Unitario|Cantidad|Descuento (%)|Precio con descuento|Total Producto|")
+		
+		// Trato las compras.
+		Para i := 1 hasta cant_prod_dist Hacer
+			PedirInfoProducto()
+			
+			precio_unitario := obtener_precio_producto(código_barras)
+			cantidad := precio_unitario * unid_prod
+			precio_total_sin_descuento := precio_total_sin_descuento + cantidad
+			
+			Si unid_prod >= 4 Entonces
+				descuento_producto := 2
+				precio_con_descuento := cantidad * (descuento_producto * 10)
+				
+				// Entiendo que corresponde considerar el total
+				// del producto con descuento si es que este es
+				// aplicable.
+				total_producto := precio_con_descuento
+				
+				// Aprovecho para calcular acá también los
+				// montos del descuento total.
+				descuento_total := descuento_total + (cantidad - precio_con_descuento)
+			Contrario
+				descuento_producto := 0
+				precio_con_descuento := cantidad
+				total_producto := cantidad
+			Fin Si
+			
+			subtotal_ticket := subtotal_ticket + total_producto
+			
+			Escribir(unid_prod, código_barras, precio_unitario, cantidad, descuento_producto, precio_con_descuento, total_producto)
+		Fin Para
+		
+		Escribir("Subtotal: ", subtotal_ticket)
+	Fin Procedimiento
+	
+	Procedimiento ImprimirPie() ES
+		Escribir("Precio total sin descuento: ", precio_total_sin_descuento)
+		Escribir("Descuento total: ", descuento_total)
+		Escribir("Descuento por programa de fidelización: ", descuento_fidelidad)
+		Escribir("Total a pagar: ", total_a_pagar)
+	Fin Procedimiento
+
+Proceso
+	
+	PedirDatosCajero()
+	RegistrarCompra()
+	Inicializar()
+	
+	Mientras caja_abierta = "S" Hacer
+		PedirDatosCliente()
+		membresía_cliente := es_socio(dni_cliente)
+		
+		// Aumento el valor de los contadores
+		// que sean necesarios.
+		cant_ventas := cant_ventas + 1
+		
+		Si membresía_cliente <> "NO SOCIO" Entonces
+			clientes_fieles := clientes_fieles + 1
+		Fin Si
+		
+		ImprimirCabecera()
+		ImprimirDetalle()
+		
+		// Acá calculo el monto del descuento
+		// por programa de fidelización y el
+		// total a pagar.
+		Según membresía_cliente Hacer
+			="ORO": descuento_fidelidad := precio_total_sin_descuento * desc_oro
+			="PLATA": descuento_fidelidad := precio_total_sin_descuento * desc_plata
+			="DIAMANTE": descuento_fidelidad := precio_total_sin_descuento * desc_diamante
+			="NO SOCIO": descuento_fidelidad := 0
+		Fin Según
+		
+		total_a_pagar := precio_total_sin_descuento - descuento_total - descuento_fidelidad
+		total_recaudado_día := total_recaudado_día + total_a_pagar
+		
+		ImprimirPie()
+		RegistrarCompra()
+	Fin Mientras
+	
+	importe_promedio_compras := total_recaudado_día / cant_ventas
+	porcentaje_fieles := (clientes_fieles * 100) DIV cant_ventas
+	
+	Escribir("El cajero realizó" cant_ventas "ventas.")
+	Escribir("El importe promedio de cada compra es de" importe_promedio_compras "pesos.")
+	Escribir("El total recaudado en el día es de" total_recaudado_día "pesos.)
+	Escribir("Los clientes que forman parte del programa de fidelización representan el" porcentaje_fieles "% de los clientes.")
+
+Fin Acción
