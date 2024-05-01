@@ -1,0 +1,50 @@
+Acción 2.2 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Facturas = Registro
+		NroFactura: N(5)
+		FechaFactura: Fecha
+		Total: N(4)
+	Fin Facturas
+
+	ARCH: archivo de Facturas
+	REG: Facturas
+
+	FechaUsuario: Fecha
+
+	Procedimiento ObtenerFechaUsuario() ES
+		Escribir("Ingrese un año: ")
+		Leer(FechaUsuario.Año)
+		Escribir("Ingrese un mes: ")
+		Leer(FechaUsuario.Mes)
+		Escribir("Ingrese un día: ")
+		Leer(FechaUsuario.Día)
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	ObtenerFechaUsuario()
+
+	Escribir("| Número de factura | Fecha | Importe total |")
+
+	Mientras NFDA(ARCH) Hacer
+		Si REG.FechaFactura > FechaUsuario y REG.Importe < "1000" Entonces
+			Escribir(REG.NroFactura, REG.FechaFactura.Día, "/", REG.FechaFactura.Mes, "/", REG.FechaFactura.Año, REG.Total)
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+
+	CERRAR(ARCH)
+
+Fin Acción

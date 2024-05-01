@@ -1,0 +1,65 @@
+// Consigna de los profes: se dispone de una secuencia con los datos de los 
+// alumnos de la facultad:
+//
+// - Apellido y Nombre
+// - Nº de Legajo
+// - Fecha de Ingreso
+// - Sexo (M o F)
+// - Carrera (ISI - IEM - IQ)
+// - Fecha de Nacimiento
+// - D.N.I.
+// - Fecha de último examen aprobado
+// - Nota
+//
+// Se desea:
+// (*) Un listado de alumnos, con el siguiente formato:
+//     | Nro. Legajo | Apellido y Nombre | Documento | Carrera | Fecha de Ingreso |
+// (*) Mostrar un mensaje de error en caso de que el archivo esté vacío.
+
+Acción 2.1 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Fecha
+
+	Alumnos = Registro
+		NomAp: AN(50)
+		Carrera: ("ISI", "IEM", "IQ")
+		Legajo: N(5)
+		FechaNacimiento: Fecha
+		FechaIngreso: Fecha
+		DNI: N(8)
+		Sexo: ("M", "F")
+		FechaUltExAprob: Fecha
+		Nota: (0..100)
+	Fin Registro
+	
+	ARCH: archivo de Alumnos
+	REG: Alumnos
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+
+	archivo_vacío := V
+
+	Escribir("| Nro. de legajo | Apellido y nombre | Documento | Carrera | Fecha de ingreso |")
+
+	Mientras NFDA(ARCH) Hacer
+		archivo_vacío := F
+		Escribir(REG.Legajo, REG.NomAp, REG.DNI, REG.Carrera, REG.FechaIngreso.Día, "/", REG.FechaIngreso.Mes, "/", REG.FechaIngreso.Año)
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	Si archivo_vacío Entonces
+		Escribir("El archivo está vacío.")
+	Fin Si
+
+	CERRAR(ARCH)
+
+Fin Acción

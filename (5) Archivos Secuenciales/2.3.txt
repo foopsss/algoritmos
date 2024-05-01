@@ -1,0 +1,37 @@
+Acción 2.3 ES
+
+Ambiente
+
+	Socios = Registro
+		NroSocio: N(5)
+		NroTeléfono: N()
+		NomAp: AN(50)
+		Carrera: ("ISI", "IEM", "IQ", "LAR")
+		Domicilio: AN(50)
+		UnidadesPrestadas: N(2)
+	Fin Registro
+
+	ARCH: archivo de Socios
+	REG: Socios
+	
+	ARCH2: archivo de Socios
+	REG2: Socios
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Mientras NFDA(ARCH) Hacer
+		Si REG.Carrera = "ISI" y REG.UnidadesPrestadas > "4" Entonces
+			GRABAR(ARCH2, REG)
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción

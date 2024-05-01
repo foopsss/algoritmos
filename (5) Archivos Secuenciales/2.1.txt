@@ -1,0 +1,40 @@
+Acción 2.1 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Fecha
+
+	Alumnos = Registro
+		NomAp: AN(50)
+		Carrera: ("ISI", "IEM", "IQ")
+		Legajo: N(5)
+		FechaNacimiento: Fecha
+		FechaIngreso: Fecha
+		DNI: N(8)
+		Sexo: ("M", "F")
+		FechaUltExAprob: Fecha
+		Nota: (0..100)
+	Fin Registro
+	
+	ARCH: archivo de Alumnos
+	REG: Alumnos
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+
+	Escribir("| Nro. de legajo | Apellido y nombre | Documento | Carrera |")
+
+	Mientras NFDA(ARCH) Hacer
+		Escribir(REG.Legajo, REG.NomAp, REG.DNI, REG.Carrera)
+		LEER(ARCH, REG)
+	Fin Mientras
+
+	CERRAR(ARCH)
+
+Fin Acción
