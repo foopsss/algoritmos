@@ -1,0 +1,60 @@
+Acción 2.2.7 ES
+
+Ambiente
+
+	Padrón = Registro
+		NomAp: AN(50)
+		Clase: N(4)
+		DNI: N(8)
+		Dirección: AN(50)
+		NroMesa: N(2)
+		Observaciones: AN(50)
+		NroCircuito: N(2)
+		Partido: ("0", "1", "2", "3")
+	Fin Registro
+
+	ARCH: archivo de Padrón
+	REG: Padrón
+	
+	Persona = Registro
+		NomAp: AN(50)
+		DNI: N(8)
+		Dirección: AN(50)
+	Fin Registro
+
+	ARCH2: archivo de Persona
+	REG2: Persona
+	
+	ARCH3: archivo de Persona
+	REG3: Persona
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	ABRIR S/ (ARCH3)
+	LEER(ARCH, REG)
+	
+	Mientras NFDA(ARCH) Hacer
+		Si REG.Partido = "3" Entonces
+			REG2.NomAp := REG.NomAp
+			REG2.DNI := REG.DNI
+			REG2.Dirección := REG.Dirección
+			GRABAR(ARCH2, REG2)
+		Contrario
+			Si REG.Partido = "0" y REG.Clase > "1940" Entonces
+				REG3.NomAp := REG.NomAp
+				REG3.DNI := REG.DNI
+				REG3.Dirección := REG.Dirección
+				GRABAR(ARCH3, REG3)
+			Fin Si
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+
+Fin Acción
