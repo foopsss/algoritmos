@@ -17,7 +17,7 @@ Ambiente
 		DNI: N(8)
 		Sexo: ("M", "F")
 		FechaUltExAprob: Fecha
-		Nota: (0..100)
+		Nota: (1..100)
 	Fin Registro
 	
 	ARCH: archivo de Alumnos

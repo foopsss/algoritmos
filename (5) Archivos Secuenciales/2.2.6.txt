@@ -1,0 +1,84 @@
+Acción 2.2.6 ES
+
+Ambiente
+
+	Graduados = Registro
+		NomAp: AN(50)
+		Promedio: (1..10)
+	Fin Registro
+	
+	ARCH: archivo de Graduados
+	REG: Graduados
+
+	cont_neg, cont_pos, cont_fav, cont_muy_fav: entero
+	suma_prom_neg, suma_prom_pos, suma_prom_fav, suma_prom_muy_fav: entero
+	prom_neg, prom_pos, prom_fav, prom_muy_fav: real
+
+	Procedimiento Inicializar() ES
+		cont_neg := 0
+		cont_pos := 0
+		cont_fav := 0
+		cont_muy_fav := 0
+		suma_prom_neg := 0
+		suma_prom_pos := 0
+		suma_prom_fav := 0
+		suma_prom_muy_fav := 0
+	Fin Procedimiento
+
+	Procedimiento PromedioNegativo() ES
+		Escribir(REG.NomAp, REG.Promedio, "No")
+		cont_neg := cont_neg + 1
+		suma_prom_neg := suma_prom_neg + REG.Promedio
+	Fin Procedimiento
+	
+	Procedimiento PromedioPositivo() ES
+		Escribir(REG.NomAp, REG.Promedio, "Sí")
+		cont_pos := cont_pos + 1
+		suma_prom_pos := suma_prom_pos + REG.Promedio
+	Fin Procedimiento
+	
+	Procedimiento PromedioFavorable() ES
+		Escribir(REG.NomAp, REG.Promedio, "F")
+		cont_fav := cont_fav + 1
+		suma_prom_fav := suma_prom_fav + REG.Promedio
+	Fin Procedimiento
+
+	Procedimiento PromedioMuyFavorable() ES
+		Escribir(REG.NomAp, REG.Promedio, "MF")
+		cont_muy_fav := cont_muy_fav + 1
+		suma_prom_muy_fav := suma_prom_muy_fav + REG.Promedio
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Escribir("| Apellido y nombre | Promedio | Recomendación |")
+	
+	Mientras NFDA(ARCH) Hacer
+		Según REG.Promedio Hacer
+			< "7": PromedioNegativo()
+			< "8": PromedioPositivo()
+			< "9": PromedioFavorable()
+			> "9": PromedioMuyFavorable()
+		Fin Según
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+
+	prom_neg := suma_neg / cont_neg
+	prom_pos := suma_pos / cont_pos
+	prom_fav := suma_fav / cont_fav
+	prom_muy_fav := suma_muy_fav / cont_muy_fav
+
+	Escribir("Hubo" cont_neg "graduados que recibieron una calificación negativa, con un promedio global de" prom_neg ".")
+	Escribir("Hubo" cont_pos "graduados que recibieron una calificación positiva, con un promedio global de" prom_pos ".")
+	Escribir("Hubo" cont_fav "graduados que recibieron una calificación favorable, con un promedio global de" prom_fav ".")
+	Escribir("Hubo" cont_muy_fav "graduados que recibieron una calificación muy favorable, con un promedio global de" prom_muy_fav ".")
+
+	CERRAR(ARCH)
+
+Fin Acción

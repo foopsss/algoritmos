@@ -1,4 +1,4 @@
-Acción 2.2.4 ES
+Acción 2.2.5 ES
 
 Ambiente
 
@@ -22,20 +22,9 @@ Ambiente
 	
 	ARCH: archivo de Alumnos
 	REG: Alumnos
-	
-	ARCH2: archivo de Alumnos
-	REG2: Alumnos
-	
-	FechaUsuario: Fecha
-	
-	carrera_us: alfanumérico
+
 	año_us: entero
-	
-	Procedimiento ObtenerCarrera() ES
-		Escribir("Ingrese una carrera: ")
-		Leer(carrera_us)
-	Fin Procedimiento
-	
+
 	Procedimiento ObtenerAñoUsuario() ES
 		Escribir("Ingrese el año actual: ")
 		Leer(año_us)
@@ -44,23 +33,20 @@ Ambiente
 Proceso
 
 	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
 	LEER(ARCH, REG)
 	
-	ObtenerCarrera()
 	ObtenerAñoUsuario()
-
+	
+	Escribir("| Nro. de legajo | Apellido y nombre | Carrera |")
+	
 	Mientras NFDA(ARCH) Hacer
-		Si REG.Carrera = carrera_us Entonces
-			Si REG.FechaUltExAprob.Año = año_us y REG.Nota > "7" Entonces
-				GRABAR(ARCH2, REG)
-			Fin Si
+		Si año_us - REG.FechaIngreso.Año = "1" y REG.Nota > "7" Entonces
+			Escribir(REG.Legajo, REG.NomAp, REG.Carrera)
 		Fin Si
 		
 		LEER(ARCH, REG)
 	Fin Mientras
-
+	
 	CERRAR(ARCH)
-	CERRAR(ARCH2)
 
 Fin Acción
