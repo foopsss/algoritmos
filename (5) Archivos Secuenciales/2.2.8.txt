@@ -1,0 +1,78 @@
+Acción 2.2.8 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Compras = Registro
+		NroCliente: N(5)
+		ÚltimaCompra: Fecha
+		Monto: N(4)
+	Fin Registro
+
+	ARCH: archivo de Compras ordenado por NroCliente
+	REG: Compras
+	
+	Clientes = Registro
+		NroCliente: N(5)
+		NomAp: AN(50)
+		Domicilio: AN(50)
+		NroTeléfono: N(12)
+		DNI: N(8)
+	Fin Registro
+	
+	ARCH2: archivo de Clientes ordenado por NroCliente
+	REG: Clientes
+	
+	FechaUsuario: Fecha
+	monto_us: entero
+	
+	Procedimiento ObtenerDatosUsuario() ES
+		Escribir("Ingrese un año: ")
+		Leer(FechaUsuario.Año)
+		Escribir("Ingrese un mes: ")
+		Leer(FechaUsuario.Mes)
+		Escribir("Ingrese un día: ")
+		Leer(FechaUsuario.Día)
+		Escribir("Ingrese un monto: ")
+		Leer(monto_us)
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	LEER(ARCH, REG)
+	LEER(ARCH2, REG2)
+	
+	ObtenerDatosUsuario()
+	
+	Escribir("| Nombre | Fecha | Monto |")
+	
+	Mientras NFDA(ARCH) y NFDA(ARCH2) Hacer
+		Si REG.NroCliente = REG2.NroCliente Entonces
+			Si REG.FechaÚltimaCompra > FechaUsuario y REG.Monto > monto_us Entonces
+				Escribir(REG2.NomAp)
+				Escribir(REG.FechaÚltimaCompra.Día, "/", REG.FechaÚltimaCompra.Mes, "/", REG.FechaÚltimaCompra.Año)
+				Escribir(REG.Monto)
+			Fin Si
+			
+			LEER(ARCH, REG)
+			LEER(ARCH2, REG2)
+		Contrario
+			Si REG.NroCliente > REG2.NroCliente Entonces
+				LEER(ARCH2, REG2)
+			Contrario
+				LEER(ARCH, REG)
+			Fin Si
+		Fin Si
+	Fin Mientras
+
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
