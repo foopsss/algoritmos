@@ -5,7 +5,7 @@ Ambiente
 	elección: carácter
 	a, b, c, menor: entero
 
-	Función DevolverMenor(num_a, num_b, num_c: entero):entero ES		
+	Función DevolverMenor(num_a, num_b, num_c: entero): entero ES		
 		Si num_a < num_b y num_a < num_c Entonces
 			DevolverMenor := num_a
 		Contrario

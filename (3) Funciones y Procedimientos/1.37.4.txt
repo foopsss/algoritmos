@@ -5,7 +5,7 @@ Ambiente
 	elección: carácter
 	número, clave: entero
 
-	Función es_negativo(entrada, long_entrada: entero) ES
+	Función es_negativo(entrada, long_entrada: entero): entero ES
 	Ambiente
 		divisor, dígito, suma_dígitos, i: entero
 	Proceso
