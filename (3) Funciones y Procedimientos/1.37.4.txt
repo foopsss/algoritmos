@@ -12,8 +12,8 @@ Ambiente
 		Si entrada > 0 Entonces
 			suma_dígitos := 0
 			
-			Para i := long_entrada hasta 1, -1 Hacer
-				divisor := 10 ** (long_entrada - 1)
+			Para i := 1 hasta long_entrada Hacer
+				divisor := 10 ** (long_entrada - i)
 				dígito := entrada DIV divisor
 				suma_dígitos := suma_dígitos + dígito
 				entrada := entrada - (dígito * divisor)

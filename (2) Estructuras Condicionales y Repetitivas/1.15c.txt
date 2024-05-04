@@ -10,7 +10,7 @@ Ambiente
 
 Proceso
 
-	Escribir("¿Desea calcular la altura aproximada de un edificio? [S/N]: ")
+	Escribir("¿Desea calcular la altura de un edificio en pies? [S/N]: ")
 	Leer(elección)
 
 	Mientras elección = "S" Hacer
