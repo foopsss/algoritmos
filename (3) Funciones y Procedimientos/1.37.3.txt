@@ -21,7 +21,8 @@ Ambiente
 
 Proceso
 
-	elección := "S"
+	Escribir("¿Desea hallar el menor de tres valores? [S/N]: ")
+	Leer(elección)
 
 	Mientras elección = "S" Hacer
 		Escribir("Ingrese un valor numérico para A: ")

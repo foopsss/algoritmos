@@ -8,7 +8,9 @@ Ambiente
 
 Proceso
 
-	elección := "S"
+	Escribir("¿Desea calcular el porcentaje de alumnos por carrera de varias facultades? [S/N]: ")
+	Leer(elección)
+	
 	nro_facu := 0
 	total_isi := 0
 	total_iem := 0

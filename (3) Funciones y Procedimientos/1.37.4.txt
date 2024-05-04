@@ -31,7 +31,8 @@ Ambiente
 
 Proceso
 
-	elección := "S"
+	Escribir("¿Desea comprobar si un número es negativo? [S/N]: ")
+	Leer(elección)
 	
 	Mientras elección = "S" Hacer
 		Escribir("Introduzca un número: ")
@@ -42,7 +43,12 @@ Proceso
 		
 		clave := es_negativo(número, longitud)
 		
-		Escribir("La clave es" clave ".")
+		Si clave >= 0 Entonces
+			Escribir("El número es positivo.")
+			Escribir("Clave: " clave)
+		Contrario
+			Escribir("El número es negativo.")
+		Fin Si
 		
 		Escribir("¿Desea probar con otro número? [S/N]: ")
 		Leer(elección)

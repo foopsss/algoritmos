@@ -8,7 +8,8 @@ Ambiente
 
 Proceso
 
-	elección := "S"
+	Escribir("¿Desea calcular la altura aproximada de un edificio? [S/N]: ")
+	Leer(elección)
 
 	Mientras elección = "S" Hacer
 		Escribir("Introduzca el número de pisos del edificio: ")

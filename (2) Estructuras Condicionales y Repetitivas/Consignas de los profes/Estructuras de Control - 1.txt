@@ -75,7 +75,7 @@ Acción EstCont1 ES
 Ambiente
 
 	desc_oro = 0,5
-	desc_plata = 0,10
+	desc_plata = 0,1
 	desc_diamante = 0,15
 
 	num_caja, dni_cliente, cant_prod_dist, unid_prod, clientes_fieles, cant_ventas, porcentaje_fieles, i: entero
@@ -85,6 +85,13 @@ Ambiente
 	
 	nomap_cajero, código_barras: alfanumérico
 	caja_abierta: carácter
+	
+	Procedimiento PedirDatosCajero() ES
+		Escribir("Número de caja: ")
+		Leer(num_caja)
+		Escribir("Nombre y apellido del cajero: ")
+		Leer(nomap_cajero)
+	Fin Procedimiento
 	
 	Procedimiento PedirDatosCliente() ES
 		Escribir("Introduzca el DNI del cliente: ")
