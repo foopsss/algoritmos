@@ -2,9 +2,10 @@ Acción 1.5.1 ES
 
 Ambiente
 
+	tasa_inf = 0,04
+
 	precio_act, año_fut, año_act: entero
 	precio_fut: real
-	tasa_inf = 0,04
 
 Proceso
 

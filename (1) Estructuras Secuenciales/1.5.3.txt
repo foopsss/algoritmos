@@ -2,6 +2,10 @@ Acción 1.5.3 ES
 
 Ambiente
 
+	tasa_pc = 0,12
+	tasa_imp = 0,7
+	tasa_iva = 0,21
+
 	costo_pc, costo_imp, ganancia_pc, ganancia_imp, sumatoria, iva, total: entero
 
 Proceso
@@ -12,11 +16,11 @@ Proceso
 	Escribir("Costo para el vendedor de la impresora: ")
 	Leer("costo_imp")
 	
-	ganancia_pc := costo_pc * 0,12
-	ganancia_imp := costo_imp * 0,7
+	ganancia_pc := costo_pc * tasa_pc
+	ganancia_imp := costo_imp * tasa_imp
 	
 	sumatoria := costo_pc + costo_imp + ganancia_pc + ganancia_imp
-	iva := sumatoria * 0,21
+	iva := sumatoria * tasa_iva
 	total := sumatoria + iva
 	
 	Escribir("El precio total de las ventas es de: " total "pesos.")
