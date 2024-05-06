@@ -43,12 +43,12 @@ Proceso
 		
 		clave := es_negativo(número, longitud)
 		
-		Si clave >= 0 Entonces
-			Escribir("El número es positivo.")
-			Escribir("Clave: " clave)
-		Contrario
-			Escribir("El número es negativo.")
-		Fin Si
+		Según clave Hacer
+			< "0": Escribir("El número es negativo.")
+			= "0": Escribir("El número es 0.")
+			> "0": Escribir("El número es positivo.")
+			       Escribir("Clave: " clave)
+		Fin Según
 		
 		Escribir("¿Desea probar con otro número? [S/N]: ")
 		Leer(elección)
