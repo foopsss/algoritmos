@@ -20,18 +20,17 @@ Proceso
 	Si b > mayor y c > mayor Entonces
 		menor := mayor
 		
-		Si b > c Entonces
-			intermedio := c
-			mayor := b
-		Contrario
-			Si b = c Entonces
-				intermedio := b
-				mayor := intermedio
-			Contrario
-				intermedio := b
-				mayor := c
-			Fin Si
-		Fin Si
+		Según b Hacer
+			< c:
+			    intermedio := b
+			    mayor := c
+			= c:
+			    intermedio := b
+			    mayor := intermedio
+			> c:
+			    intermedio := c
+			    mayor := b
+		Fin Según
 	Fin Si
 
 	Si b > mayor y c < mayor Entonces
@@ -46,19 +45,18 @@ Proceso
 		mayor := c
 	Fin Si
 	
-	Si b < mayor y c < mayor Entonces
-		Si b > c Entonces
-			menor := c
-			intermedio := b
-		Contrario
-			Si b = c Entonces
-				intermedio := b
-				menor := intermedio
-			Contrario
-				menor := b
-				intermedio := c
-			Fin Si
-		Fin Si
+	Si b < mayor y c < mayor Entonces		
+		Según b Hacer
+			< c:
+			    menor := b
+			    intermedio := c
+			= c:
+			    intermedio := b
+			    menor := intermedio
+			> c:
+			    menor := c
+			    intermedio := b
+		Fin Según
 	Fin Si
 
 	Escribir("El número más grande es" mayor ".")
