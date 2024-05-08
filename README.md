@@ -11,3 +11,4 @@ Adjunto otros repositorios con resoluciones de la guía práctica, e incluso eje
 * [Repositorio de Juan Segnana](https://github.com/juansegnana/aed-ejercicios).
 * [Repositorio de Leonardo David Brabo](https://github.com/LeonardoBrabo/Algoritmos_Resueltos).
 * [Repositorio de Xiomara Solari](https://github.com/Xiomara-Solari/PARCIALES_AED).
+* [Repositorio de Orianna Fernandez](https://github.com/OriannaF/Parcial_AyED_UTN).
