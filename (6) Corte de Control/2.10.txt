@@ -1,0 +1,61 @@
+Acción 2.10 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Fecha
+
+	// La consigna no indica un formato claro.
+	// Formato tomado del 2.2.1 y modificado ligeramente.
+	Alumnos = Registro
+		NomAp: AN(50)
+		Sexo: ("M", "F")
+		DNI: N(8)
+		Legajo: N(5)
+		Carrera: ("ISI", "IEM", "IQ")
+		FechaNacimiento: Fecha
+		FechaIngreso: Fecha
+	Fin Registro
+	
+	ARCH: archivo de Alumnos ordenado por Carrera
+	REG: Alumnos
+	
+	resg_carrera: alfanumérico
+	total_carrera, total_general: entero
+	
+	Procedimiento CorteCarrera() ES
+		Escribir("Carrera: " resg_carrera)
+		Escribir("En esta carrera hay" total_carrera "alumnos.")
+		total_general := total_general + total_carrera
+		total_carrera := 0
+		resg_carrera := REG.Carrera
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+
+	resg_carrera := REG.Carrera
+	total_carrera := 0
+	total_general := 0
+
+	Mientras NFDA(ARCH) Hacer
+		Si resg_carrera <> REG.Carrera Entonces
+			CorteCarrera()
+		Fin Si
+		
+		total_carrera := total_carrera + 1
+		LEER(ARCH, REG)
+	Fin Mientras
+
+	CorteCarrera()
+	
+	Escribir("El total general es de" total_general "alumnos.")
+
+	CERRAR(ARCH)
+
+Fin Acción
