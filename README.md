@@ -1,5 +1,5 @@
 # algoritmos
-En este repositorio se encuentran ejercicios resueltos de la [guía de trabajos prácticos](https://aed-frre.github.io/) de la cátedra de Algoritmos y Estructuras de Datos de la UTN FRRe. Sin embargo, a menos que se indique lo contrario en el nombre de los archivos, mis resoluciones son de la guía en formato PDF disponible en el campus virtual.
+En este repositorio se encuentran ejercicios resueltos de la [guía de trabajos prácticos](https://aed-frre.github.io/) de la cátedra de Algoritmos y Estructuras de Datos de la UTN FRRe. Mis resoluciones suelen ser de la guía en formato PDF disponible en el campus virtual, aunque también puede haber resoluciones de la guía en formato web, lo que va a ser indicado oportunamente en el nombre de los archivos y/o carpetas que los contienen.
 
 Algunos de los ejercicios cuentan además con una versión escrita en [Rust](https://www.rust-lang.org/), el lenguaje de programación de sistemas de Mozilla. Dichas versiones se encuentran disponibles en otro de mis repositorios, [algoritmos-rs](https://github.com/foopsss/algoritmos-rs).
 
