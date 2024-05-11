@@ -1,0 +1,75 @@
+Acción 2.2.14 ES
+
+Ambiente
+
+	Viviendas = Registro
+		Clave = Registro
+			Radio: N(3)
+			Manzana: N(3)
+			NroVivienda: N(4)
+		Fin Registro
+		Condición: ("Muy buena", "Buena", "Mala")
+		CantidadHabitantes: N(2)
+	Fin Registro
+
+	ARCH: archivo de Viviendas ordenado por Clave
+	REG: Viviendas
+	
+	resg_manzana, resg_radio: entero
+	total_manzana, total_radio, total_ciudad: entero
+	
+	Procedimiento Inicializar() ES
+		resg_manzana := REG.Clave.Manzana
+		resg_radio := REG.Clave.Radio
+		total_manzana := 0
+		total_radio := 0
+		total_ciudad := 0
+	Fin Procedimiento
+
+	Procedimiento CorteManzana() ES
+		Escribir("Manzana: " resg_manzana)
+		Escribir("Cantidad de personas que habitan en viviendas cuya condición es muy buena: " total_manzana)
+		total_radio := total_radio + total_manzana
+		total_manzana := 0
+		resg_manzana := REG.Clave.Manzana
+	Fin Procedimiento
+	
+	Procedimiento CorteRadio() ES
+		CorteManzana()
+		Escribir("Radio: " resg_radio)
+		Escribir("Cantidad de personas que habitan en viviendas cuya condición es muy buena: " total_radio)
+		total_ciudad := total_ciudad + total_radio
+		total_radio := 0
+		resg_radio := REG.Clave.Radio
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_radio <> REG.Clave.Radio Entonces
+			CorteRadio()
+		Contrario
+			Si resg_manzana <> REG.Clave.Manzana Entonces
+				CorteManzana()
+			Fin Si
+		Fin Si
+	
+		Si REG.Condición = "Muy buena" Entonces
+			total_manzana := total_manzana + REG.CantidadHabitantes
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteRadio()
+	
+	Escribir("En la ciudad habitan un total de" total_ciudad "personas en viviendas cuya condición es muy buena.")
+	
+	CERRAR(ARCH)
+
+Fin Acción

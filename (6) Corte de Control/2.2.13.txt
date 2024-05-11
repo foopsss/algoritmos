@@ -1,0 +1,131 @@
+Acción 2.2.13 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Reparaciones = Registro
+		Clave = Registro
+			CodSucursal: N(5)
+			Marca: AN(100)
+			Modelo: AN(100)
+			CodTragamonedas: N(5)
+		Fin Registro
+		FechaReparación: Fecha
+		CostoReparación: N(4)
+	Fin Registro
+
+	ARCH: archivo de Reparaciones ordenado por Clave
+	REG: Reparaciones
+
+	resg_tragamoneda, resg_sucursal: entero
+	resg_modelo, resg_marca: alfanumérico
+	cant_rep_trag, cant_rep_mod, cant_rep_mar, cant_rep_suc: entero
+	costo_tragamonedas, costo_modelo, costo_marca, costo_sucursal: entero
+	cant_rep_gral, costo_general: entero
+
+	Procedimiento Inicializar() ES
+		resg_tragamoneda := REG.Clave.CodTragamonedas
+		resg_modelo := REG.Clave.Modelo
+		resg_marca := REG.Clave.Marca
+		resg_sucursal := REG.Clave.CodSucursal
+		cant_rep_trag := 0
+		cant_rep_mod := 0
+		cant_rep_mar := 0
+		cant_rep_suc := 0
+		total_reparaciones := 0
+		costo_tragamonedas := 0
+		costo_modelo := 0
+		costo_marca := 0
+		costo_sucursal := 0
+		costo_general := 0
+	Fin Procedimiento
+
+	Procedimiento CorteTragamonedas() ES
+		Escribir("Tragamonedas: " resg_tragamonedas)
+		Escribir("Cantidad de reparaciones: " cant_rep_trag)
+		Escribir("Costos de reparación: " costo_tragamonedas)
+		cant_rep_mod := cant_rep_mod + cant_rep_trag
+		costo_modelo := costo_modelo + costo_tragamonedas
+		cant_rep_trag := 0
+		costo_tragamonedas := 0
+		resg_tragamonedas := REG.Clave.CodTragamonedas
+	Fin Procedimiento
+	
+	Procedimiento CorteModelo() ES
+		CorteTragamoneda()
+		Escribir("Modelo de tragamonedas: " resg_modelo)
+		Escribir("Cantidad de reparaciones: " cant_rep_mod)
+		Escribir("Costos de reparación: " costo_modelo)
+		cant_rep_mar := cant_rep_mar + cant_rep_mod
+		costo_marca := costo_marca + costo_modelo
+		cant_rep_mod := 0
+		costo_modelo := 0
+		resg_modelo := REG.Clave.Modelo
+	Fin Procedimiento
+	
+	Procedimiento CorteMarca() ES
+		CorteModelo()
+		Escribir("Marca de tragamonedas: " resg_marca)
+		Escribir("Cantidad de reparaciones: " cant_rep_mar)
+		Escribir("Costos de reparación: " costo_marca)
+		cant_rep_suc := cant_rep_suc + cant_rep_mar
+		costo_sucursal := costo_sucursal + costo_marca
+		cant_rep_mar := 0
+		costo_marca := 0
+		resg_marca := REG.Clave.Marca
+	Fin Procedimiento
+	
+	Procedimiento CorteSucursal() ES
+		CorteMarca()
+		Escribir("Sucursal: " resg_sucursal)
+		Escribir("Cantidad de reparaciones: " cant_rep_suc)
+		Escribir("Costos de reparación: " costo_sucursal)
+		cant_rep_gral := cant_rep_gral + cant_rep_suc
+		costo_general := costo_general + costo_sucursal
+		cant_rep_suc := 0
+		costo_sucursal := 0
+		resg_sucursal := REG.Clave.CodSucursal
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_sucursal <> REG.Clave.CodSucursal Entonces
+			CorteSucursal()
+		Contrario
+			Si resg_marca <> REG.Clave.Marca Entonces
+				CorteMarca()
+			Contrario
+				Si resg_modelo <> REG.Clave.Modelo Entonces
+					CorteModelo()
+				Contrario
+					Si resg_tragamonedas <> REG.Clave.CodTragamonedas Entonces
+						CorteTragamonedas()
+					Fin Si
+				Fin Si
+			Fin Si
+		Fin Si
+		
+		cant_rep_trag := cant_rep_trag + 1
+		costo_tragamonedas := costo_tragamonedas + REG.CostoReparación
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteSucursal()
+	
+	Escribir("Se realizaron un total de" cant_rep_gral "reparaciones.")
+	Escribir("Estas tuvieron un costo de" costo_general "pesos.")
+	
+	CERRAR(ARCH)
+
+Fin Acción
