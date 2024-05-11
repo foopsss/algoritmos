@@ -1,0 +1,98 @@
+Acción 1.37.9 ES
+
+Ambiente
+
+	Procedimiento mostrar_0() ES
+		Escribir("****")
+		Escribir("*  *")
+		Escribir("*  *")
+		Escribir("*  *")
+		Escribir("****")
+	Fin Procedimiento
+
+	Procedimiento mostrar_1() ES
+		Escribir("   *")
+		Escribir("   *")
+		Escribir("   *")
+		Escribir("   *")
+		Escribir("   *")
+	Fin Procedimiento
+
+	Procedimiento mostrar_2() ES
+		Escribir("****")
+		Escribir("   *")
+		Escribir("****")
+		Escribir("*   ")
+		Escribir("****")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_3() ES
+		Escribir("****")
+		Escribir("   *")
+		Escribir("****")
+		Escribir("   *")
+		Escribir("****")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_4() ES
+		Escribir("*  *")
+		Escribir("*  *")
+		Escribir("****")
+		Escribir("   *")
+		Escribir("   *")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_5() ES
+		Escribir("****")
+		Escribir("*   ")
+		Escribir("****")
+		Escribir("   *")
+		Escribir("****")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_6() ES
+		Escribir("****")
+		Escribir("*   ")
+		Escribir("****")
+		Escribir("*  *")
+		Escribir("****")
+	Fin Procedimiento
+
+	Procedimiento mostrar_7() ES
+		Escribir("****")
+		Escribir("   *")
+		Escribir("   *")
+		Escribir("   *")
+		Escribir("   *")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_8() ES
+		Escribir("****")
+		Escribir("*  *")
+		Escribir("****")
+		Escribir("*  *")
+		Escribir("****")
+	Fin Procedimiento
+	
+	Procedimiento mostrar_9() ES
+		Escribir("****")
+		Escribir("*  *")
+		Escribir("****")
+		Escribir("   *")
+		Escribir("****")
+	Fin Procedimiento
+
+Proceso
+
+	mostrar_0()
+	mostrar_1()
+	mostrar_2()
+	mostrar_3()
+	mostrar_4()
+	mostrar_5()
+	mostrar_6()
+	mostrar_7()
+	mostrar_8()
+	mostrar_9()
+
+Fin Acción
