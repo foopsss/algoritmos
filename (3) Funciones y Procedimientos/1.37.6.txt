@@ -9,15 +9,11 @@ Ambiente
 		desc_docena = 0,4
 		desc_mayor_docena = 0,10
 	Proceso
-		Si unidades_producto <= "6" Entonces
-			CalcularDescuento := 0
-		Contrario
-			Si unidades_producto >= "6" y unidades_producto <= "12" Entonces
-				CalcularDescuento := precio_producto * desc_docena
-			Contrario
-				CalcularDescuento := precio_producto * desc_mayor_docena
-			Fin Si
-		Fin Si
+		Según unidades_producto Hacer
+			<= "6": CalcularDescuento := 0
+			<= "12": CalcularDescuento := (precio_producto * unidades_producto) * desc_docena
+			> "12": CalcularDescuento := (precio_producto * unidades_producto) * desc_mayor_docena
+		Fin Según
 	Fin Función
 
 Proceso

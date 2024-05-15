@@ -1,0 +1,33 @@
+Acción 1.37.12 ES
+
+Ambiente
+
+	precio, unidades, precio_final: entero
+
+	Procedimiento CalcularDescuento(precio_producto, unidades_producto: entero) ES
+	Ambiente
+		desc_docena = 0,4
+		desc_mayor_docena = 0,10
+		total_sin_descuento: entero
+	Proceso
+		total_sin_descuento := precio_producto * unidades_producto
+		Según unidades_producto Hacer
+			<= "6": precio_final := total_sin_descuento
+			<= "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_docena)
+			> "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_mayor_docena)
+		Fin Según
+	Fin Función
+
+Proceso
+
+	Escribir("Introduzca el precio del producto a llevar: ")
+	Leer(precio)
+	
+	Escribir("Introduzca las unidades a llevar: ")
+	Leer(unidades)
+
+	CalcularDescuento(precio, unidades)
+	
+	Escribir("El precio final a pagar es de" precio_final "pesos.")
+
+Fin Acción
