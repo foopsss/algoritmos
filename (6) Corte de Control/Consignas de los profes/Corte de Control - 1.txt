@@ -1,0 +1,108 @@
+// Consigna de los profes: el sector farmacia de un importante hospital cuenta con
+// un archivo secuencial con datos de todos los medicamentos que posee:
+//
+// STOCK_MEDICAMENTOS (ordenado por Categoría, NroLote, idMedicamento)
+// | Categoría | NroLote | idMedicamento | Stock | FechaVencimiento |
+//
+// En donde el campo categoría indica:
+// (*) "I": presumiblemente seguro.
+// (*) "II": produce efectos adversos, leves o moderados.
+// (*) "III": produce efectos adversos, graves o potencialmente peligrosos.
+//
+// Se desea mostrar un reporte con las estadísticas de cantidad de medicamentos
+// próximos a vencer por categorías de la siguiente manera:
+//
+// (*) Total categoría I próximos a vencer: xxxxxxx
+//     Total categoría I NO próximos a vencer: xxxxxxx
+// (*) Total categoría II próximos a vencer: xxxxxxx
+//     Total categoría II NO próximos a vencer: xxxxxxx
+// (*) Total categoría III próximos a vencer: xxxxxxx
+//     Total categoría III NO próximos a vencer: xxxxxxx
+// (*) Total medicamentos próximos a vencer: xxxxxxx
+//     Total medicamentos NO próximos a vencer: xxxxxxx
+// (*) Total de medicamentos: xxxxxxx
+//
+// Para determinar los medicamentos próximos a vencer, existe una función
+// próximoAVencer() que recibe como parámetro un número de lote, e indica
+// Verdadero o Falso si es que el mismo se encuentra próximo a vencer.
+
+Acción Corte1 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Stock = Registro
+		Clave = Registro
+			Categoría: ("I", "II", "III")
+			NroLote: N(5)
+			IDMedicamento: N(3)
+		Fin Registro
+		Stock: N(2)
+		FechaVencimiento: Fecha
+	Fin Registro
+	
+	ARCH: archivo de Stock ordenado por Clave
+	REG: Stock
+	
+	vencimiento_cerca: lógico
+	resg_categoría: alfanumérico
+	med_prox_ven, med_no_prox_ven, tot_prox_ven, tot_no_prox_ven, tot_gen_med: entero
+	
+	Procedimiento Inicializar() ES
+		resg_categoría := REG.Clave.Categoría
+		med_prox_ven := 0
+		med_no_prox_ven := 0
+		tot_prox_ven := 0
+		tot_no_prox_ven := 0
+		tot_gen_med := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteCategoría() ES
+		Escribir("Categoría: " resg_categoría)
+		Escribir("Cantidad de medicamentos próximos a vencer: " med_prox_ven)
+		Escribir("Cantidad de medicamentos que no están próximos a vencer: " med_no_prox_ven)
+		tot_prox_ven := tot_prox_ven + med_prox_ven
+		tot_no_prox_ven := tot_prox_ven + med_no_prox_ven
+		tot_gen_med := tot_gen_med + med_prox_ven + med_no_prox_ven
+		med_prox_ven := 0
+		med_no_prox_ven := 0
+		resg_categoría := REG.Clave.Categoría
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+
+	Inicializar()
+
+	Mientras NFDA(ARCH) Hacer
+		Si resg_cat <> REG.Clave.Categoría Entonces
+			CorteCategoría()
+		Fin Si
+		
+		vencimiento_cerca := próximoAVencer(REG.Clave.NroLote)
+		
+		Si vencimiento_cerca Entonces
+			med_prox_ven := med_prox_ven + 1
+		Contrario
+			med_no_prox_ven := med_no_prox_ven + 1
+		Fin Si
+				
+		LEER(ARCH, REG)
+	Fin Mientras
+
+	CorteCategoría()
+
+	Escribir("Hay disponible un total de" tot_gen_med "medicamentos.")
+	Escribir("Hay" tot_no_prox_ven "medicamentos que no están próximos a vencer.")
+	Escribir("Hay" tot_prox_ven "medicamentos que están próximos a vencer.")
+
+	CERRAR(ARCH)
+
+Fin Acción

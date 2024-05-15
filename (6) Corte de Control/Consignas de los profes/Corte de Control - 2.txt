@@ -1,0 +1,145 @@
+// Consigna de los profes: el Nuevo Banco del Chaco necesita liquidar los plazos fijos
+// que vencen el día de hoy, esto significa, calcular el monto que debe pagar a sus clientes.
+//
+// Para realizar esta operación dispone de un archivo secuencial con los siguientes
+// datos de plazos fijos, ordenado por nro. cliente, nro. de cuenta y nro. de depósito
+// (que identifica a cada plazo fijo):
+//
+// | Nro de cliente | Nro de cuenta | Nro de depósito | Fecha de vencimiento (aaaa/mm/dd) | Capital inicial ($) | Capital con interés ($) |
+//
+// Tener en cuenta que un cliente puede tener varias cuentas y varios plazos fijos
+// (identificados por el nro. de depósito). De ser necesario puede utilizar la función
+// fecha_actual(), que retorna la fecha actual en un formato de registro.
+//
+// Se solicita:
+// (a) Generar un archivo de salida que contenga, para los plazos fijos que vencen hoy:
+//     | Nro de cliente | Nro de cuenta | Nro de depósito | Capital con interés ($) |
+// (b) Mostrar por pantalla por nro. de cuenta, por cliente y general, cuantos plazos fijos
+//     tiene y total de capital SIN interés.
+// (c) Para cada cliente informar el promedio de capital inicial depositado en cada plazo fijo.
+
+Acción Corte2 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Plazos = Registro
+		Clave = Registro
+			NroCliente: N(5)
+			NroCuenta: N(5)
+			NroDepósito: N(5)
+		Fin Registro
+		FechaVencimiento: Fecha
+		CapitalInicial: N(4)
+		CapitalConInterés: N(4)
+	Fin Registro
+	
+	ARCH: archivo de Plazos ordenado por Clave
+	REG: Plazos
+	
+	Plazos_Hoy = Registro
+		Clave = Registro
+			NroCliente: N(5)
+			NroCuenta: N(5)
+		Fin Registro
+		NroDepósito: N(5)
+		CapitalConInterés: N(4)
+	Fin Registro
+
+	ARCH2: archivo de Plazos_Hoy ordenado por Clave
+	REG2: Plazos_Hoy
+	
+	FechaActual: Fecha
+	resg_cliente, resg_cuenta: entero
+	plazos_fijos_cuenta, cap_sin_int_cuenta: entero
+	plazos_fijos_cliente, cap_sin_int_cliente, prom_cap_dep: entero
+	total_plazos_fijos, total_cap_sin_int: entero
+	
+	Procedimiento Inicializar() ES
+		FechaActual := fecha_actual()
+		resg_cliente := REG.Clave.NroCliente
+		resg_cuenta := REG.Clave.NroCuenta
+		plazos_fijos_cuenta := 0
+		cap_sin_int_cuenta := 0
+		plazos_fijos_cliente := 0
+		cap_sin_int_cliente := 0
+		prom_cap_dep := 0
+		total_plazos_fijos := 0
+		total_cap_sin_int := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteCuenta() ES
+		Escribir("Cuenta: " resg_cuenta)
+		Escribir("La cuenta posee" plazos_fijos_cuenta "plazos fijos.")
+		Escribir("En esta cuenta se depositó un capital inicial total de" cap_sin_int_cuenta "pesos.")
+		plazos_fijos_cliente := plazos_fijos_cliente + plazos_fijos_cuenta
+		cap_sin_int_cliente := cap_sin_int_cliente + cap_sin_int_cuenta
+		plazos_fijos_cuenta := 0
+		cap_sin_int_cuenta := 0
+		resg_cuenta := REG.Clave.NroCuenta
+	Fin Procedimiento
+	
+	Procedimiento CorteCliente() ES
+		CorteCuenta()
+		Escribir("Cliente: " resg_cliente)
+		Escribir("El cliente posee" plazos_fijos_cliente "plazos fijos.")
+		Escribir("Este cliente depositó un capital inicial total de" cap_sin_int_cliente "pesos.")
+		prom_cap_dep := cap_sin_int_cliente / plazos_fijos_cliente
+		Escribir("Promedio de capital depositado en cada plazo fijo: " prom_cap_dep)
+		total_plazos_fijos := total_plazos_fijos + plazos_fijos_cliente
+		total_cap_sin_int := total_cap_sin_int + cap_sin_int_cliente
+		plazos_fijos_cliente := 0
+		cap_sin_int_cliente := 0
+		prom_cap_dep := 0
+		resg_cliente := REG.Clave.NroCliente
+	Fin Procedimiento
+	
+	Procedimiento GenerarSalida() ES
+		REG2.Clave.NroCliente := REG.Clave.NroCliente
+		REG2.Clave.NroCuenta := REG.Clave.NroCuenta
+		REG2.NroDepósito := REG.NroDepósito
+		REG2.CapitalConInterés := REG.CapitalConInterés
+		GRABAR(ARCH2, REG2)
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_cliente <> REG.Clave.NroCliente Entonces
+			CorteCliente()
+		Contrario
+			Si resg_cuenta <> REG.Clave.NroCuenta Entonces
+				CorteCuenta()
+			Fin Si
+		Fin Si
+	
+		Si REG.FechaVencimiento = FechaActual Entonces
+			GenerarSalida()
+		Fin Si
+	
+		plazos_fijos_cuenta := plazos_fijos_cuenta + 1
+		cap_sin_int_cuenta := cap_sin_int_cuenta + REG.CapitalInicial
+	
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteCliente()
+	
+	Escribir("Se realizaron un total de" total_plazos_fijos "plazos_fijos.")
+	Escribir("Se depositó en total un capital inicial de" total_cap_sin_int "pesos.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
