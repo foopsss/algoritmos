@@ -34,7 +34,7 @@ Ambiente
 		Escribir("El resultado de la división es: " resultado)
 	Fin Función
 
-	Procedimiento Menú() ES
+	Procedimiento mostrar_menú() ES
 	Ambiente
 		operación, num_a, num_b: entero
 	Proceso
@@ -65,6 +65,6 @@ Ambiente
 
 Proceso
 
-	Menú()
+	mostrar_menú()
 
 Fin Acción
