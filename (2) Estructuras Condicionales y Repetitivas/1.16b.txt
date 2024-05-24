@@ -47,7 +47,7 @@ Proceso
 		Leer(elección)
 	Fin Mientras
 
-	Escribir("El total general de egresados de todas las facultades es de" total_general "estudiantes.")
+	Escribir("El total de egresados de todas las facultades es de" total_general "estudiantes.")
 	Escribir("El total de egresados de ISI es de" total_isi "estudiantes.")
 	Escribir("El total de egresados de IEM es de" total_iem "estudiantes.")
 	Escribir("El total de egresados de IQ es de" total_iq "estudiantes.")
