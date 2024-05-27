@@ -1,0 +1,195 @@
+// Consigna de los profes: la plataforma UTN-eLearning brinda capacitaciones virtuales
+// las cuales son dictadas por profesores de las distintas regionales de la UTN. Para
+// el seguimiento de los mismos registra las inscripciones a los cursos en un archivo
+// llamado INSCRIPCIONES. El archivo está ordenado por Facultad, Tema, Curso, Turno,
+// fecha de inicio e ID curso. Además, contiene la duración del curso en horas
+// (es un entero), el cupo (cantidad de alumnos que puede tener como máximo) y la
+// cantidad de inscriptos actuales.
+//
+// | Facultad | Tema | Curso | Turno | Fecha_Inicio | ID_curso | Duración | Cupo | CantInscriptos |
+//
+// Se pide:
+// (a) Generar el siguiente archivo, considerando solo los cursos que comienzan en el
+//     siguiente mes o después:
+//     | Facultad | Tema | CantCursos |
+//     NOTA: se puede usar la función fecha_sistema() para obtener la fecha actual.
+// (b) Obtener totales parciales por curso de la cantidad de inscriptos, solo de los
+//     cursos que ya han comenzado.
+// (c) Mostrar cuál es el tema que tiene la mayor cantidad de inscriptos.
+// (d) Mostrar el porcentaje de cursos que son de un tema particular indicado por el
+//     usuario.
+// (e) Obtener total general de inscriptos, discriminando por inscriptos a cursos que
+//     ya comenzaron y cursos que aún no comienzan.
+
+Acción Corte3 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Inscripciones = Registro
+		Clave = Registro
+			Facultad: AN(100)
+			Tema: AN(100)
+			Curso: AN(100)
+			Turno: ("Mañana", "Tarde", "Noche")
+			FechaInicio: Fecha
+			IDCurso: N(5)
+		Fin Registro
+		Duración: N(2)
+		Cupo: N(3)
+		Inscriptos: N(3)
+	Fin Registro
+	
+	ARCH: archivo de Inscripciones ordenado por Clave
+	REG: Inscripciones
+
+	Temas = Registro
+		Facultad: AN(100)
+		Tema: AN(100)
+		Cursos: N(2)
+	Fin Registro
+
+	ARCH2: archivo de Temas
+	REG2: Temas
+	
+	FechaActual: Fecha
+	tema_us: alfanumérico
+	cursos_sig_mes, cant_cursos, cursos_usuario: entero
+	mayor_tema: alfanumérico
+	mayor_tema_insc: entero
+	porc_cursos_usuario: entero
+	resg_curso, resg_tema, resg_fac: alfanumérico
+	insc_curso_no_comenzado, insc_curso_comenzado: entero
+	insc_tema, insc_tema_no_comenzado, insc_tema_comenzado: entero
+	insc_fac_comenzado, insc_fac_no_comenzado: entero
+	tot_insc_comenzado, tot_insc_no_comenzado: entero
+
+	Procedimiento Inicializar() ES
+		FechaActual := fecha_sistema()
+		resg_curso := REG.Clave.Curso
+		resg_tema := REG.Clave.Tema
+		resg_fac := REG.Clave.Facultad
+		cursos_sig_mes := 0
+		cant_cursos := 0
+		cursos_usuario := 0
+		insc_curso_no_comenzado := 0
+		insc_curso_comenzado := 0
+		insc_tema := 0
+		insc_tema_no_comenzado := 0
+		insc_tema_comenzado := 0
+		insc_fac_comenzado := 0
+		insc_fac_no_comenzado := 0
+		tot_insc_comenzado := 0
+		tot_insc_no_comenzado := 0
+	Fin Procedimiento
+	
+	Procedimiento PedirTemaUsuario() ES
+		Escribir("Introduzca un tema: ")
+		Leer(tema_us)
+	Fin Procedimiento
+	
+	Procedimiento CorteCurso() ES
+		Escribir("Total de inscriptos a cursos ya iniciados: " insc_curso_comenzado)
+		insc_tema := insc_tema + insc_curso_comenzado + insc_curso_no_comenzado
+		insc_tema_comenzado := insc_tema_comenzado + insc_curso_comenzado
+		insc_tema_no_comenzado := insc_tema_no_comenzado + insc_curso_no_comenzado
+		insc_curso_comenzado := 0
+		insc_curso_no_comenzado := 0
+		resg_curso := REG.Clave.Curso
+	Fin Procedimiento
+	
+	Procedimiento CorteTema() ES
+		CorteCurso()
+		
+		// Grabo el archivo de salida.
+		REG2.Facultad := REG.Clave.Facultad
+		REG2.Tema := resg_tema
+		REG2.Cursos := cursos_sig_mes
+		GRABAR(ARCH2, REG2)
+		
+		// Determino el tema con la mayor
+		// cantidad de inscriptos.
+		Si insc_tema > mayor_tema_inscriptos Entonces
+			mayor_tema := resg_tema
+			mayor_tema_inscriptos := insc_tema
+		Fin Si
+		
+		// Cosas de corte.
+		insc_fac_comenzado := insc_fac_comenzado + insc_tema_comenzado
+		insc_fac_no_comenzado := insc_fac_no_comenzado + insc_tema_no_comenzado
+		insc_tema := 0
+		insc_tema_comenzado := 0
+		insc_tema_no_comenzado := 0
+		resg_tema := REG.Clave.Tema
+	Fin Procedimiento
+	
+	Procedimiento CorteFacultad() ES
+		CorteTema()
+		tot_insc_comenzado := tot_insc_comenzado + insc_fac_comenzado
+		tot_insc_no_comenzado := tot_insc_no_comenzado + insc_fac_no_comenzado
+		insc_fac_comenzado := 0
+		insc_fac_no_comenzado := 0
+		resg_fac := REG.Clave.Facultad
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	PedirTemaUsuario()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_facultad <> REG.Clave.Facultad Entonces
+			CorteFacultad()
+		Contrario
+			Si resg_tema <> REG.Clave.Tema Entonces
+				CorteTema()
+			Contrario
+				Si resg_curso <> REG.Clave.Curso Entonces
+					CorteCurso()
+				Fin Si
+			Fin Si
+		Fin Si
+		
+		Si REG.FechaInicio.Mes > FechaActual.Mes Entonces
+			// Primer consigna.
+			cursos_sig_mes := cursos_sig_mes + 1
+			insc_curso_no_comenzado := insc_curso_no_comenzado + REG.Inscriptos
+		Contrario
+			Si REG.FechaInicio.Mes < FechaActual.Mes Entonces
+				// Segunda consigna.
+				insc_curso_comenzado := insc_curso_comenzado + REG.Inscriptos
+			Fin Si
+		Fin Si
+		
+		// Cuarta consigna.
+		cant_cursos := cant_cursos + 1
+		
+		Si REG.Clave.Tema = tema_us Entonces
+			cursos_usuario := cursos_usuario + 1
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteFacultad()
+	
+	porc_cursos_usuario := (cursos_usuario * 100) / cant_cursos
+	
+	Escribir("El tema con la mayor cantidad de inscriptos es" mayor_tema "con" mayor_tema_inscriptos "inscriptos.")
+	Escribir("El" porc_cursos_usuario "% de los cursos corresponden al tema indicado por el usuario.")
+	Escribir("Hay un total de" tot_insc_comenzado "inscriptos a cursos que ya comenzaron.")
+	Escribir("Hay un total de" tot_insc_no_comenzado "inscriptos a cursos que no comenzaron.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
