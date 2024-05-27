@@ -1,0 +1,128 @@
+Acción 2.3.10 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Puntos = Registro
+                DNI: N(8)
+                Cantidad: N(3)
+                FechaÚltimaCarga: Fecha
+        Fin Registro
+        
+        ARCH_PUNTOS: archivo de Puntos indexado por DNI
+        REG_PUNTOS: Puntos
+
+        Cliente = Registro
+                DNI: N(8)
+                NomAp: AN(100)
+                Edad: N(2)
+                Ciudad: AN(100)
+        Fin Registro
+        
+        ARCH_CLI: archivo de Cliente indexado por DNI
+        REG_CLI: Cliente
+        
+        FechaActual: Fecha
+        
+        elección, nomap_us, ciudad_us: alfanumérico
+        dni_us, monto_carga, calculo_puntos, edad_us, cargas_us_noext: entero
+
+        Procedimiento ObtenerFechaUsuario() ES
+                Escribir("Introduzca el año actual: ")
+                Leer(FechaActual.Año)
+                Escribir("Introduzca el mes actual: ")
+                Leer(FechaActual.Mes)
+                Escribir("Introduzca el día actual: ")
+                Leer(FechaActual.Día)
+        Fin Procedimiento
+
+        Procedimiento ElecciónCarga() ES
+                Escribir("¿Desea registrar una carga de combustible? [S/N]: ")
+                Leer(elección)
+        Fin Procedimiento
+
+        Procedimiento ControlarCantidadPuntos() ES
+                Si REG_PUNTOS.Cantidad >= 100 Entonces
+                        monto_carga := monto_carga - 100
+                        REG_PUNTOS.Cantidad := REG_PUNTOS.Cantidad - 100
+                Fin Si
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/S (ARCH_PUNTOS)
+        ABRIR E/S (ARCH_CLI)
+        
+        cargas_us_noext := 0
+        ObtenerFechaUsuario()
+        ElecciónCarga()
+        
+        Mientras elección = "S" Hacer
+                Escribir("Ingrese el DNI del consumidor: ")
+                Leer(dni_us)
+                Escribir("Ingrese el monto cargado en pesos: ")
+                Leer(monto_carga)
+                
+                calculo_puntos := monto_carga DIV 100
+                REG_CLI.DNI := dni_us
+                LEER(ARCH_CLI, REG_CLI)
+                
+                Si existe Entonces
+                        REG_PUNTOS.DNI := dni_us
+                        LEER(ARCH_PUNTOS, REG_PUNTOS)
+                        
+                        Si existe Entonces
+                                REG_PUNTOS.Cantidad := REG_PUNTOS.Cantidad + 10 * calculo_puntos
+                                REG_PUNTOS.FechaÚltimaCarga := FechaActual
+                                
+                                ControlarCantidadPuntos()
+                                REGRABAR(ARCH_PUNTOS, REG_PUNTOS)
+                        Contrario
+                                Escribir("Error. El archivo de puntos no existe.")
+                        Fin Si
+                Contrario
+                        // Si no existe el archivo de clientes, asumo
+                        // que tampoco existe el archivo con los puntos.
+                        cargas_us_noext := cargas_us_noext + 1
+                        
+                        Escribir("Introduzca el nombre y apellido del cliente: ")
+                        Leer(nomap_us)
+                        
+                        Escribir("Introduzca la edad del cliente: ")
+                        Leer(edad_us)
+                        
+                        Escribir("Introduzca la ciudad de residencia del cliente: ")
+                        Leer(ciudad_us)
+                        
+                        REG_PUNTOS.DNI := dni_us
+                        REG_PUNTOS.Cantidad := 0
+                        REG_PUNTOS.FechaÚltimaCarga := FechaActual
+                        REG_CLI.DNI := dni_us
+                        REG_CLI.NomAp := nomap_us
+                        REG_CLI.Edad := edad_us
+                        REG_CLI.Ciudad := ciudad_us
+                        
+                        Si calculo_puntos >= 1 Entonces
+                                REG_PUNTOS.Cantidad := 10 * calculo_puntos
+                        Fin Si
+                        
+                        ControlarCantidadPuntos()
+                        GRABAR(ARCH_PUNTOS, REG_PUNTOS)
+                        GRABAR(ARCH_CLI, REG_CLI)
+                Fin Si
+                
+                Escribir("El monto total a pagar por la carga es de" monto_carga "pesos.")
+                ElecciónCarga()
+        Fin Mientras
+        
+        Escribir("Hubo" cargas_us_noext "cargas realizadas por usuarios no existentes.")
+        
+        CERRAR(ARCH_PUNTOS)
+        CERRAR(ARCH_CLI)
+
+Fin Acción
