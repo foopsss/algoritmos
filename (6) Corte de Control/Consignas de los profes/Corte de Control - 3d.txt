@@ -107,7 +107,7 @@ Ambiente
 		CorteCurso()
 		
 		// Grabo el archivo de salida.
-		REG2.Facultad := REG.Clave.Facultad
+		REG2.Facultad := resg_fac
 		REG2.Tema := resg_tema
 		REG2.Cursos := cursos_sig_mes
 		GRABAR(ARCH2, REG2)
