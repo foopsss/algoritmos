@@ -53,7 +53,6 @@ Ambiente
 	Fin Procedimiento
 
 	Procedimiento CorteCurso() ES
-		Escribir("Curso: " resg_curso)
 		Escribir("Cantidad de inscriptos: " insc_curso)
 		insc_tema := insc_tema + insc_curso
 		insc_curso := 0
