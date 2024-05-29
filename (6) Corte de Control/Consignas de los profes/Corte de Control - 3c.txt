@@ -1,0 +1,186 @@
+// Consigna de los profes: la plataforma UTN-eLearning brinda capacitaciones virtuales
+// las cuales son dictadas por profesores de las distintas regionales de la UTN. Para
+// el seguimiento de los mismos registra las inscripciones a los cursos en un archivo
+// llamado INSCRIPCIONES. El archivo está ordenado por Facultad, Tema, Curso, Turno,
+// fecha de inicio e ID curso. Además, contiene la duración del curso en horas
+// (es un entero), el cupo (cantidad de alumnos que puede tener como máximo) y la
+// cantidad de inscriptos actuales.
+//
+// | Facultad | Tema | Curso | Turno | Fecha_Inicio | ID_curso | Duración | Cupo | CantInscriptos |
+//
+// Se pide:
+// (a) Generar un archivo con el siguiente formato:
+//     | Tema | ID_curso | CantInscriptos |
+// (b) Obtener totales parciales por tema, curso y turno de la cantidad de cursos
+//     que ya completaron el cupo máximo de estudiantes.
+// (c) Mostrar el total general de inscriptos.
+// (d) Mostrar el total general de inscriptos a cursos que ya completaron el cupo.
+
+Acción Corte3 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Inscripciones = Registro
+		Clave = Registro
+			Facultad: AN(100)
+			Tema: AN(100)
+			Curso: AN(100)
+			Turno: ("Mañana", "Tarde", "Noche")
+			FechaInicio: Fecha
+			IDCurso: N(5)
+		Fin Registro
+		Duración: N(2)
+		Cupo: N(3)
+		Inscriptos: N(3)
+	Fin Registro
+	
+	ARCH: archivo de Inscripciones ordenado por Clave
+	REG: Inscripciones
+	
+	Cursos = Registro
+		Tema: AN(100)
+		IDCurso: N(5)
+		Inscriptos: N(3)
+	Fin Registro
+	
+	ARCH2: archivo de Cursos
+	REG2: Cursos
+
+	resg_turno, resg_curso, resg_tema, resg_fac: alfanumérico
+	turnos_completos, insc_turno_comp, insc_turno: entero
+	cursos_completos, insc_curso_comp, insc_curso: entero
+	temas_completos, insc_tema_comp, insc_tema: entero
+	insc_fac_comp, insc_fac: entero
+	tot_insc_comp, tot_insc: entero
+
+	Procedimiento Inicializar() ES
+		resg_turno := REG.Clave.Turno
+		resg_curso := REG.Clave.Curso
+		resg_tema := REG.Clave.Tema
+		resg_fac := REG.Clave.Facultad
+		turnos_completos := 0
+		insc_turno_comp := 0
+		insc_turno := 0
+		cursos_completos := 0
+		insc_curso_comp := 0
+		insc_curso := 0
+		temas_completos := 0
+		insc_tema_comp := 0
+		insc_tema := 0
+		insc_fac_comp := 0
+		insc_fac := 0
+		tot_insc_comp := 0
+		tot_insc := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteTurno() ES
+		Escribir("Turno: " resg_turno)
+		Escribir("Cantidad de cursos que completaron el cupo: " turnos_completos)
+		Escribir("Total de inscriptos a cursos con cupo lleno: " insc_turno_comp)
+		cursos_completos := cursos_completos + turnos_completos
+		insc_curso_comp := insc_curso_comp + insc_turno_comp
+		insc_curso := insc_curso + insc_turno
+		turnos_completos := 0
+		insc_turno_comp := 0
+		insc_turno := 0
+		resg_turno := REG.Clave.Turno
+	Fin Procedimiento
+	
+	Procedimiento CorteCurso() ES
+		CorteTurno()
+		Escribir("Curso: " resg_curso)
+		Escribir("Cantidad de cursos que completaron el cupo: " cursos_completos)
+		Escribir("Total de inscriptos a cursos con cupo lleno: " insc_curso_comp)
+		temas_completos := temas_completos + cursos_completos
+		insc_tema_comp := insc_tema_comp + insc_curso_comp
+		insc_tema := insc_tema + insc_curso
+		cursos_completos := 0
+		insc_curso_comp := 0
+		insc_curso := 0
+		resg_curso := REG.Clave.Curso
+	Fin Procedimiento
+	
+	Procedimiento CorteTema() ES
+		CorteCurso()
+		Escribir("Tema: " resg_tema)
+		Escribir("Cantidad de cursos que completaron el cupo: " temas_completos)
+		Escribir("Total de inscriptos a cursos con cupo lleno: " insc_tema_comp)
+		insc_fac_comp := insc_fac_comp + insc_tema_comp
+		insc_fac := insc_fac + insc_tema
+		temas_completos := 0
+		insc_tema_comp := 0
+		insc_tema := 0
+		resg_tema := REG.Clave.Tema
+	Fin Procedimiento
+	
+	Procedimiento CorteFacultad() ES
+		CorteTema()
+		tot_insc_comp := tot_insc_comp + insc_fac_comp
+		tot_insc := tot_insc + insc_fac
+		insc_fac_comp := 0
+		insc_fac := 0
+		resg_fac := REG.Clave.Facultad
+	Fin Procedimiento
+	
+	Procedimiento GrabarArchivo() ES
+		REG2.Tema := REG.Clave.Tema
+		REG2.IDCurso := REG.Clave.IDCurso
+		REG2.Inscriptos := REG.Inscriptos
+		GRABAR(ARCH2, REG2)
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_facultad <> REG.Clave.Facultad Entonces
+			CorteFacultad()
+		Contrario
+			Si resg_tema <> REG.Clave.Tema Entonces
+				CorteTema()
+			Contrario
+				Si resg_curso <> REG.Clave.Curso Entonces
+					CorteCurso()
+				Contrario
+					Si resg_turno <> REG.Clave.Turno Entonces
+						CorteTurno()
+					Fin Si
+				Fin Si
+			Fin Si
+		Fin Si
+		
+		// Primera consigna.
+		GrabarArchivo()
+		
+		// Segunda y cuarta consigna.
+		Si REG.Cupo = REG.Inscriptos Entonces
+			turnos_completos := turnos_completos + 1
+			insc_turno_comp := insc_turno_comp + REG.Inscriptos
+		Fin Si
+		
+		// Tercera consigna.
+		insc_turno := insc_turno + REG.Inscriptos
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteFacultad()
+	
+	Escribir("Hay un total de" tot_insc "personas inscriptas a cursos.")
+	Escribir("Hay un total de" tot_insc_comp "personas inscriptas a cursos con el cupo completo.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción

@@ -1,0 +1,155 @@
+// Consigna de los profes: la plataforma UTN-eLearning brinda capacitaciones virtuales
+// las cuales son dictadas por profesores de las distintas regionales de la UTN. Para
+// el seguimiento de los mismos registra las inscripciones a los cursos en un archivo
+// llamado INSCRIPCIONES. El archivo está ordenado por Facultad, Tema, Curso, Turno,
+// fecha de inicio e ID curso. Además, contiene la duración del curso en horas
+// (es un entero), el cupo (cantidad de alumnos que puede tener como máximo) y la
+// cantidad de inscriptos actuales.
+//
+// | Facultad | Tema | Curso | Turno | Fecha_Inicio | ID_curso | Duración | Cupo | CantInscriptos |
+//
+// Se pide:
+// (a) Totales parciales de cantidad de inscriptos por facultad, curso y turno, solo
+//     de los cursos cuya duración sea mayor a 40 horas.
+// (b) Total de inscriptos por tema, solo si hay menos de 500 inscriptos actualmente
+//     en el tema.
+// (c) Total general de inscriptos.
+
+Acción Corte3 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Inscripciones = Registro
+		Clave = Registro
+			Facultad: AN(100)
+			Tema: AN(100)
+			Curso: AN(100)
+			Turno: ("Mañana", "Tarde", "Noche")
+			FechaInicio: Fecha
+			IDCurso: N(5)
+		Fin Registro
+		Duración: N(2)
+		Cupo: N(3)
+		Inscriptos: N(3)
+	Fin Registro
+	
+	ARCH: archivo de Inscripciones ordenado por Clave
+	REG: Inscripciones
+	
+	resg_turno, resg_curso, resg_tema, resg_fac: alfanumérico
+	insc_turno_mas40, insc_turno: entero
+	insc_curso_mas40, insc_curso: entero
+	insc_tema_mas40, insc_tema: entero
+	insc_fac_mas40, insc_fac: entero
+	tot_insc: entero
+
+	Procedimiento Inicializar() ES
+		resg_turno := REG.Clave.Turno
+		resg_curso := REG.Clave.Curso
+		resg_tema := REG.Clave.Tema
+		resg_fac := REG.Clave.Facultad
+		insc_turno_mas40 := 0
+		insc_turno := 0
+		insc_curso_mas40 := 0
+		insc_curso := 0
+		insc_tema_mas40 := 0
+		insc_tema := 0
+		insc_fac_mas40 := 0
+		insc_fac := 0
+		tot_insc := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteTurno() ES
+		Escribir("Turno: " resg_turno)
+		Escribir("Total de inscriptos en cursos que duran más de 40 horas: " insc_turno_mas40)
+		insc_curso_mas40 := insc_curso_mas40 + insc_turno_mas40
+		insc_curso := insc_curso + insc_turno
+		insc_turno_mas40 := 0
+		insc_turno := 0
+		resg_turno := REG.Clave.Turno
+	Fin Procedimiento
+	
+	Procedimiento CorteCurso() ES
+		CorteTurno()
+		Escribir("Curso: " resg_curso)
+		Escribir("Total de inscriptos en cursos que duran más de 40 horas: " insc_curso_mas40)
+		insc_tema_mas40 := insc_tema_mas40 + insc_curso_mas40
+		insc_tema := insc_tema + insc_curso
+		insc_curso_mas40 := 0
+		insc_curso := 0
+		resg_curso := REG.Clave.Curso
+	Fin Procedimiento
+	
+	Procedimiento CorteTema() ES
+		CorteCurso()
+		Si insc_tema < "500" Entonces
+			Escribir("Tema: " resg_tema)
+			Escribir("Total de inscriptos: " insc_tema)
+		Fin Si
+		insc_fac_mas40 := insc_fac_mas40 + insc_tema_mas40
+		insc_fac := insc_fac + insc_tema
+		insc_tema_mas40 := 0
+		insc_tema := 0
+		resg_tema := REG.Clave.Tema
+	Fin Procedimiento
+	
+	Procedimiento CorteFacultad() ES
+		CorteTema()
+		Escribir("Facultad: " resg_fac)
+		Escribir("Total de inscriptos en cursos que duran más de 40 horas: " insc_fac_mas40)
+		tot_insc := tot_insc + insc_fac
+		insc_fac_mas40 := 0
+		insc_fac := 0
+		resg_fac := REG.Clave.Facultad
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_facultad <> REG.Clave.Facultad Entonces
+			CorteFacultad()
+		Contrario
+			Si resg_tema <> REG.Clave.Tema Entonces
+				CorteTema()
+			Contrario
+				Si resg_curso <> REG.Clave.Curso Entonces
+					CorteCurso()
+				Contrario
+					Si resg_turno <> REG.Clave.Turno Entonces
+						CorteTurno()
+					Fin Si
+				Fin Si
+			Fin Si
+		Fin Si
+		
+		// Inscriptos para los cursos con más de 40 horas de duración.
+		// Lo uso para la primera consigna.
+		Si REG.Duración > 40 Entonces
+			insc_turno_mas40 := insc_turno_mas40 + REG.Inscriptos
+		Fin Si
+		
+		// Inscriptos en general.
+		// Lo uso para la segunda consigna.
+		insc_turno := insc_turno + REG.Inscriptos
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteFacultad()
+	
+	Escribir("Hay un total de" tot_insc "personas inscriptas a cursos.")
+	
+	CERRAR(ARCH)
+
+Fin Acción
