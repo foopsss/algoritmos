@@ -1,0 +1,93 @@
+Acción 2.2.17 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Aspirantes = Registro
+		DNI: N(8)
+		NomAp: AN(100)
+		Carrera: ("ISI", "IEM", "IQ", "LAR")
+		FacultadNacional: AN(100)
+		Email: AN(100)
+		Secundario: AN(100)
+		FechaInscripción: Fecha
+		Aprobado: ("SI", "NO")
+	Fin Registro
+
+	ARCH: archivo de Aspirantes ordenado por DNI
+	REG: Aspirantes
+	
+	ARCH2: archivo de Aspirantes ordenado por DNI
+	REG2: Aspirantes
+
+	Seguimiento = Registro
+		DNI: N(8)
+		NomAp: AN(100)
+		Email: AN(100)
+		Secundario: AN(100)
+	Fin Registro
+	
+	ARCH3: archivo de Seguimiento ordenado por DNI
+	REG3: Seguimiento
+
+	Procedimiento LEER_FEBRERO() ES
+		LEER(ARCH, REG)
+		Si FDA(ARCH) Entonces
+			REG.DNI := HV
+		Fin Si
+	Fin Procedimiento
+
+	Procedimiento LEER_AGOSTO() ES
+		LEER(ARCH2, REG2)
+		Si FDA(ARCH2) Entonces
+			REG2.DNI := HV
+		Fin Si
+	Fin Procedimiento
+	
+	aspirantes_grabados: entero
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	ABRIR S/ (ARCH3)
+	
+	LEER_FEBRERO()
+	LEER_AGOSTO()
+	
+	aspirantes_grabados := 0
+	
+	Mientras REG.DNI <> HV o REG2.DNI <> HV Hacer
+		Si REG.DNI = REG2.DNI Entonces
+			Si REG.Aprobado = "NO" y REG2.Aprobado = "NO" Entonces
+				REG3.DNI := REG.DNI
+				REG3.NomAp := REG.NomAp
+				REG3.Email := REG.Email
+				REG3.Secundario := REG.Secundario
+				GRABAR(ARCH3, REG3)
+				aspirantes_grabados := aspirantes_grabados + 1
+			Fin Si
+			
+			LEER_FEBRERO()
+			LEER_AGOSTO()
+		Contrario
+			Si REG.DNI < REG2.DNI Entonces
+				LEER_FEBRERO()
+			Contrario
+				LEER_AGOSTO()
+			Fin Si
+		Fin Si
+	Fin Mientras
+	
+	Escribir("En el archivo de seguimiento se grabaron" aspirantes_grabados "aspirantes.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+
+Fin Acción

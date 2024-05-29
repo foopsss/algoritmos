@@ -1,0 +1,61 @@
+Acción 2.2.16 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Películas = Registro
+		NroPelícula: N(5)
+		Título: AN(100)
+		Género: AN(100)
+		Copias: N(2)
+		FechaEstreno: Fecha
+	Fin Registro
+	
+	ARCH: archivo de Películas ordenado por NroPelícula
+	REG: Películas
+	
+	ARCH2: archivo de Películas ordenado por NroPelícula
+	REG2: Películas
+	
+	ARCH3: archivo de Películas
+	REG3: Películas
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	ABRIR S/ (ARCH3)
+	
+	LEER(ARCH, REG)
+	LEER(ARCH2, REG2)
+	
+	Mientras NFDA(ARCH) y NFDA(ARCH2) Hacer
+		Si REG.NroPelícula < REG2.NroPelícula Entonces
+			GRABAR(ARCH3, REG)
+			LEER(ARCH, REG)
+		Contrario
+			GRABAR(ARCH3, REG2)
+			LEER(ARCH2, REG2)
+		Fin Si
+	Fin Mientras
+	
+	Mientras NFDA(ARCH) Hacer
+		GRABAR(ARCH3, REG)
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	Mientras NFDA(ARCH2) Hacer
+		GRABAR(ARCH3, REG2)
+		LEER(ARCH2, REG2)
+	Fin Mientras
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+
+Fin Acción
