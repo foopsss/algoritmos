@@ -1,0 +1,221 @@
+// Consigna: la plataforma de música digital Spotify almacena información sobre
+// las playlists y sus canciones en secuencias de caracteres. Durante todo el
+// año, las canciones son reproducidas por los usuarios y también se generan
+// nuevas playlists. Al final de cada año suelen emitir un resumen para sus
+// usuarios (Spotify wrapped) por lo que necesitan ayuda con un algoritmo que
+// les brinde la información necesaria.
+//
+// En la secuencia PLAYLISTS se almacena en el siguiente orden:
+// (*) Género de música ('R' – Rock, 'P' – Pop, 'E' – Electrónica, 'F' – Folklore).
+// (*) Nombre de la playlist.
+// (*) Usuario que la creó.
+// (*) Fecha de creación.
+// (*) Duración (4 dígitos).
+// (*) Cantidad de canciones (3 dígitos).
+//
+// Los datos de cada playlist están separados entre sí por el símbolo '+' y
+// finalizan con el símbolo '?'.
+//
+// Formato de la secuencia PLAYLISTS:
+// Genero(1AN)+Nombre+usuario+aammdd+duracion(hhmm)+cantidad(3AN)?
+//
+// Ejemplo de la secuencia PLAYLISTS:
+// R+Una Playlist Linda+Valentina1+001203+1352+012?P+Hits Taylor Swift+Majo00+231013+0922+015?
+//
+// En la secuencia CANCIONES se almacena en el siguiente orden:
+// (*) Nombre de la canción.
+// (*) Duración en minutos.
+// (*) Año en que fue publicada.
+// (*) Nombre artista.
+//
+// Todos los datos de las canciones están separados por el símbolo '#' y
+// finalizan con el símbolo '/'.
+//
+// Formato de la secuencia CANCIONES:
+// Nombre#duracion(mmss)#aaaa#nombreArtista/
+//
+// Ejemplo de la secuencia PLAYLISTS:
+// One#0744#1989#Metallica/Dress#0350#2017#Taylor Swift/
+//
+// La playlist de cada canción se determina de acuerdo al dato
+// 'cantidad de canciones' de la secuencia PLAYLISTS, por ej.: la playlist
+// de ROCK ARGENTINO tiene 2 canciones, por lo cual las primeras 2 canciones
+// de la secuencia CANCIONES le pertenecen, las siguientes 6 pertenecen a LA
+// CUMBIA DEL MOMENTO, etc.
+//
+// Se pide:
+// (a) Informar el porcentaje de playlists de cada género sobre el total.
+// (b) Cantidad promedio de canciones de las playlists.
+// (c) Identificar e informar el género de la playlist con la mayor cantidad
+//     de canciones.
+// (d) Generar una secuencia de salida con información de las playlists de rock.
+//     La secuencia debe contener el nombre de la playlist seguido de sus canciones
+//     (nombre y artista). Los datos correspondientes a la misma playlist deben
+//     separarse entre sí con el signo '+' y finalizar con el signo '#'.
+
+Acción SecuenciasM1 ES
+
+Ambiente
+
+	sec1, sec2, sec_sal: secuencia de carácter
+	v1, v2: carácter
+	
+	cont_play, cont_can, canciones_play: entero
+	cont_rock, cont_pop, cont_elec, cont_folk: entero
+	pr, pp, pe, pf, prom_can: real
+	resg_gen: carácter
+	mayor_gen: alfanumérico
+	mayor_can: entero
+	
+	Procedimiento Inicializar() ES
+		cont_play := 0
+		cont_can := 0
+		canciones_play := 0
+		cont_rock := 0
+		cont_pop := 0
+		cont_elec := 0
+		cont_folk := 0
+	Fin Procedimiento
+	
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(sec1)
+	ARR(sec2)
+	CREAR(sec_sal)
+	
+	Inicializar()
+	
+	Mientras NFDS(sec1) Hacer
+		Mientras v1 <> "?" Hacer
+			cont_play := cont_play + 1
+			resg_gen := v1
+			
+			Según v1 Hacer
+				= "R": cont_rock := cont_rock + 1
+				= "P": cont_pop := cont_pop + 1
+				= "E": cont_elec := cont_elec + 1
+				= "F": cont_folk := cont_folk + 1
+			Fin Según
+			
+			Para i := 1 hasta 2 Hacer
+				AVZ(sec1, v1)
+			Fin Para
+			
+			Si resg_gen = "R" Entonces
+				Mientras v1 <> "+" Hacer
+					GRABAR(sec_sal, v1)
+					AVZ(sec1, v1)
+				Fin Mientras
+				GRABAR(sec_sal, "+")
+			Contrario
+				Mientras v1 <> "+" Hacer
+					AVZ(sec1, v1)
+				Fin Mientras
+			Fin Si
+			
+			AVZ(sec1, v1)
+			
+			Mientras v1 <> "+" Hacer
+				AVZ(sec1, v1)
+			Fin Mientras
+			
+			Para i := 1 hasta 13 Hacer
+				AVZ(sec1, v1)
+			Fin Para
+			
+			Para i := 3 hasta 1, -1 Hacer
+				canciones_play := canciones_play + CharToInt(v1) ** (i - 1)
+				AVZ(sec1, v1)
+			Fin Para
+			
+			cont_can := cont_can + canciones_play
+			
+			Si mayor_can < canciones_play Entonces
+				Según resg_gen Hacer
+					= "R": mayor_gen := "Rock"
+					= "P": mayor_gen := "Pop"
+					= "E": mayor_gen := "Electrónica"
+					= "F": mayor_gen := "Folklore"
+				Fin Según
+				
+				mayor_can := canciones_play
+			Fin Si
+			
+			Para i := 1 hasta canciones_play Hacer
+				Mientras v2 <> "/" Hacer
+					Si resg_gen = "R" Entonces
+						Mientras v2 <> "#" Hacer
+							GRABAR(sec_sal, v2)
+							AVZ(sec2, v2)
+						Fin Mientras
+						GRABAR(sec_sal, "+")
+					Contrario
+						Mientras v2 <> "#" Hacer
+							AVZ(sec2, v2)
+						Fin Mientras
+					Fin Si
+					
+					Para i := 1 hasta 11 Hacer
+						AVZ(sec2, v2)
+					Fin Para
+					
+					Si resg_gen = "R" Entonces
+						Mientras v2 <> "/" Hacer
+							GRABAR(sec_sal, v2)
+							AVZ(sec2, v2)
+						Fin Mientras
+						
+						Si i = canciones_play Entonces
+							GRABAR(sec_sal, "#")
+						Contrario
+							GRABAR(sec_sal, "+")
+						Fin Si
+					Contrario
+						Mientras v2 <> "/" Hacer
+							AVZ(sec2, v2)
+						Fin Mientras
+					Fin Si
+				Fin Mientras
+				AVZ(sec2, v2)
+			Fin Para
+			
+			AVZ(sec1, v1)
+		Fin Mientras
+		
+		canciones_play := 0
+		AVZ(sec1, v1)
+	Fin Mientras
+	
+	pr := (cont_rock * 100) / cont_play
+	pp := (cont_pop * 100) / cont_play
+	pe := (cont_elec * 100) / cont_play
+	pf := (cont_folk * 100) / cont_play
+	prom_can := cont_can / cont_play
+	
+	Escribir("Porcentaje de playlists que son de rock: " pr "%.")
+	Escribir("Porcentaje de playlists que son de pop: " pp "%.")
+	Escribir("Porcentaje de playlists que son de electrónica: " pe "%.")
+	Escribir("Porcentaje de playlists que son de folklore: " pf "%.")
+	Escribir("Cada playlist tiene en promedio" prom_can "canciones.")
+	Escribir("La playlist con la mayor cantidad de canciones pertenece al género" mayor_gen ".")
+	
+	CERRAR(sec1)
+	CERRAR(sec2)
+	CERRAR(sec_sal)
+
+Fin Acción
