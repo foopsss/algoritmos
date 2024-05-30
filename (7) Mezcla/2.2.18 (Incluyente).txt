@@ -66,11 +66,9 @@ Proceso
 				GRABAR(ARCH3, REG)
 				LEER_SUC1()
 			Contrario
-				Si REG.CodProd > REG2.CodProd Entonces
-					Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
-					GRABAR(ARCH3, REG2)
-					LEER_SUC2()
-				Fin Si
+				Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
+				GRABAR(ARCH3, REG2)
+				LEER_SUC2()
 			Fin Si
 		Fin Si
 	Fin Mientras
