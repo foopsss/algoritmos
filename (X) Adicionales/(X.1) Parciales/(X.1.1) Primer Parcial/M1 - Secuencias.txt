@@ -212,7 +212,7 @@ Proceso
 	Escribir("Porcentaje de playlists que son de electrónica: " pe "%.")
 	Escribir("Porcentaje de playlists que son de folklore: " pf "%.")
 	Escribir("Cada playlist tiene en promedio" prom_can "canciones.")
-	Escribir("La playlist con la mayor cantidad de canciones pertenece al género" mayor_gen ".")
+	Escribir("La playlist con la mayor cantidad de canciones pertenece al género" mayor_gen "teniendo" mayor_can "canciones.")
 	
 	CERRAR(sec1)
 	CERRAR(sec2)
