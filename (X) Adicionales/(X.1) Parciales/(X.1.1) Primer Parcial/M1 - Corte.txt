@@ -1,0 +1,125 @@
+// Consigna: para continuar con su análisis de fin de año, Spotify cuenta con un
+// archivo con todas sus canciones según el siguiente formato:
+//
+// CANCIONES: ordenado por Genero, Artista, Album, Nombre y Codigo.
+// | Genero | Artista | Album | Nombre | Codigo | Fecha_publicacion | Cantidad_Reproducciones |
+// | AN(20) | AN(70) | AN(70) | AN(12) | N(15) | - | N(20) |
+//
+// Se pide:
+// (a) Emitir un archivo que contenga la cantidad de canciones publicadas por
+//     cada artista:
+//     CANCIONES_SALIDA: ordenado por ARTISTA
+//     | Artista | Cant_canciones |
+//     | AN(70) | N(3) |
+// (b) Emitir la cantidad total de reproducciones por cada género y el total
+//     general de cantidad de reproducciones.
+// (c) Identificar el artista con la mayor cantidad de reproducciones.
+
+Acción CorteM1 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Canciones = Registro
+		Clave = Registro
+			Género: AN(20)
+			Artista: AN(70)
+			Álbum: AN(70)
+			Nombre: AN(12)
+			Código: N(15)
+		Fin Registro
+		FechaPublicación: Fecha
+		Reproducciones: N(20)
+	Fin Registro
+
+	ARCH: archivo de Canciones ordenado por Clave
+	REG: Canciones
+	
+	Salida = Registro
+		Artista: AN(70)
+		Canciones: N(3)
+	Fin Registro
+	
+	ARCH2: archivo de Salida ordenado por Artista
+	REG2: Salida
+
+	resg_gen, resg_art: alfanumérico
+	can_art: entero
+	rep_art, rep_gen, tot_rep: entero
+	mayor_art: alfanumérico
+	mayor_rep: entero
+
+	Procedimiento Inicializar() ES
+		resg_gen := REG.Clave.Género
+		resg_art := REG.Clave.Artista
+		can_art := 0
+		rep_art := 0
+		rep_gen := 0
+		tot_rep := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteArtista() ES
+		// Archivo de salida.
+		REG2.Artista := resg_art
+		REG2.Canciones := can_art
+		GRABAR(ARCH2, REG2)
+		
+		// Artista con más reproducciones.
+		Si mayor_rep < rep_art Entonces
+			mayor_rep := rep_art
+			mayor_art := resg_art
+		Fin Si
+		
+		// Cosas de corte.
+		rep_gen := rep_gen + rep_art
+		can_art := 0
+		rep_art := 0
+		resg_art := REG.Clave.Artista
+	Fin Procedimiento
+	
+	Procedimiento CorteGénero() ES
+		CorteArtista()
+		Escribir("Género: " resg_gen)
+		Escribir("Reproducciones: " rep_gen)
+		tot_rep := tot_rep + rep_gen
+		rep_gen := 0
+		resg_gen := REG.Clave.Género
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_gen <> REG.Clave.Género Entonces
+			CorteGénero()
+		Contrario
+			Si resg_art <> REG.Clave.Artista Entonces
+				CorteArtista()
+			Fin Si
+		Fin Si
+		
+		can_art := can_art + 1
+		rep_art := rep_art + REG.Reproducciones
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteGénero()
+
+	Escribir("Hay un total general de" tot_rep "reproducciones.")
+	Escribir("El artista con más reproducciones es" mayor_art "con" mayor_rep "reproducciones.")
+
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
