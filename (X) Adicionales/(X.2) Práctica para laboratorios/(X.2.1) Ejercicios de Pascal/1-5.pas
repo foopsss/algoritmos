@@ -1,19 +1,19 @@
 {* Escribir un programa en pascal que dado dos números reales realice la
-suma, resta, multiplicación, división entera y resto de los mismos. Los
-números son: X = 55 e Y = 30. *}
+suma, resta, multiplicación, división entera y resto de los mismos. Tanto
+X como Y deben ser ingresados por el usuario. *}
 
-// Material para este ejercicio:
-// https://wiki.freepascal.org/Basic_Pascal_Tutorial/Chapter_2/Formatting_output
-
-program EJ4;
+program EJ5;
 
 var
 	x, y: real;
 	suma, resta, mult, div_real: real;
 
 begin
-	x := 55;
-	y := 30;
+	write('Introduzca un valor para X: ');
+	readln(x);
+
+	write('Introduzca un valor para Y: ');
+	readln(y);
 
 	suma := x + y;
 	resta := x - y;
@@ -23,9 +23,6 @@ begin
 	writeln('Valor de X: ', x:10:2);
 	writeln('Valor de Y: ', y:10:2);
 
-	// Los resultados están acortados a dos decimales y utilizan notación
-	// de punto fijo (fixed-point notation) para ser mostrados en un formato
-	// más amigable a la vista.
 	writeln('');
 	writeln('Suma: ', suma:10:2);
 	writeln('Resta: ', resta:10:2);
