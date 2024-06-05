@@ -17,12 +17,6 @@ program EJ7;
 var
 	nota: integer;
 
-procedure pedir_nota;
-begin
-	write('Introduzca la nota del alumno: ');
-	readln(nota);
-end;
-
 procedure draw_line(length: integer);
 var
 	i: integer;
@@ -34,24 +28,33 @@ begin
 	writeln('-');
 end;
 
+procedure pedir_nota;
 begin
-	repeat
-		pedir_nota;
+	write('Introduzca la nota del alumno: ');
+	readln(nota);
+end;
 
-		writeln('');
-		if not (nota in [0..10]) then
-		begin
-			writeln('Número fuera de rango.');
-			writeln('Introduzca un número correcto.');
-			draw_line(35);
-		end;
-	until nota in [0..10];
-
-	case nota of
+procedure procesar_nota(ent: integer);
+begin
+	case ent of
 		0..3: writeln('Mal.');
 		4..5: writeln('Insuficiente.');
 		6..7: writeln('Bien.');
 		8..9: writeln('Sobresaliente.');
 		10: writeln('Perfecto.');
+	else
+		writeln('Número fuera de rango.');
+		writeln('Introduzca un número correcto.');
+
+		draw_line(35);
+		pedir_nota;
+		writeln('');
+		procesar_nota(nota);
 	end;
+end;
+
+begin
+	pedir_nota;
+	writeln('');
+	procesar_nota(nota);
 end.
