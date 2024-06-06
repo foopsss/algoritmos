@@ -14,6 +14,9 @@ salga (número fuera de rango) y se debe volver a solicitar una nota. *}
 
 program EJ7;
 
+uses
+	functions;
+
 var
 	nota: integer;
 
@@ -21,17 +24,6 @@ procedure pedir_nota;
 begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
-end;
-
-procedure draw_line(length: integer);
-var
-	i: integer;
-begin
-	for i := 0 to (length - 1) do
-	begin
-		write('-');
-	end;
-	writeln('-');
 end;
 
 begin

@@ -17,6 +17,9 @@ luego calcular el promedio de las notas de estos. *}
 
 program EJ9;
 
+uses
+	functions;
+
 var
 	eleccion: char;
 	nota, cant_notas, suma_notas: integer;
@@ -32,17 +35,6 @@ procedure pedir_nota;
 begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
-end;
-
-procedure draw_line(length: integer);
-var
-	i: integer;
-begin
-	for i := 0 to (length - 1) do
-	begin
-		write('-');
-	end;
-	writeln('-');
 end;
 
 begin
