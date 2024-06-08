@@ -1,0 +1,133 @@
+Acción 2.2.19 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Remedios = Registro
+		Clave = Registro
+			Farmacia: N(4)
+			Medicamento: N(3)
+		Fin Registro
+		CantActual: N(2)
+		FechaVencimiento: Fecha
+	Fin Registro
+
+	ARCH: archivo de Remedios ordenado por Clave
+	REG: Remedios
+	
+	ARCH4: archivo de Remedios ordenado por Clave
+	REG4: Remedios
+	
+	Movimientos = Registro
+		Clave = Registro
+			Farmacia: N(4)
+			Medicamento: N(3)
+		Fin Registro
+		CodMov: N(1)
+		CantRecibida: N(2)
+	Fin Registro
+	
+	ARCH2: archivo de Movimientos ordenado por Clave y CodMov
+	REG2: Movimientos
+	
+	Vencidos = Registro
+		Medicamento: N(3)
+		CantVencida: N(2)
+	Fin Registro
+	
+	ARCH3: archivo de Vencidos ordenado por Medicamento
+	REG3: Vencidos
+
+	FechaActual: Fecha
+
+	Procedimiento LEER_MEDICAMENTOS() ES
+		LEER(ARCH, REG)
+		Si FDA(ARCH) Entonces
+			REG.Clave := HV
+		Fin Si
+	Fin Procedimiento
+
+	Procedimiento LEER_MOVIMIENTOS() ES
+		LEER(ARCH2, REG2)
+		Si FDA(ARCH2) Entonces
+			REG2.Clave := HV
+		Fin Si
+	Fin Procedimiento
+	
+	Procedimiento ObtenerFechaUsuario() ES
+		Escribir("Introduzca el año actual: ")
+		Leer(FechaActual.Año)
+		Escribir("Introduzca el mes actual: ")
+		Leer(FechaActual.Mes)
+		Escribir("Introduzca el día actual: ")
+		Leer(FechaActual.Día)
+	Fin Procedimiento
+
+	Procedimiento IncorporarRemedio() ES
+		REG4.Clave.Farmacia := REG2.Clave.Farmacia
+		REG4.Clave.Medicamento := REG2.Clave.Medicamento
+		REG4.CantActual := REG2.CantRecibida
+		REG4.FechaVencimiento.Año := FechaActual.Año
+		REG4.FechaVencimiento.Mes := FechaActual.Mes + 1
+		REG4.FechaVencimiento.Día := FechaActual.Día
+		GRABAR(ARCH4, REG4)
+	Fin Procedimiento
+	
+	Procedimiento RemedioVencido() ES
+		REG3.Medicamento := REG.Clave.Medicamento
+		REG3.CantVencida := REG.CantActual
+		GRABAR(ARCH3, REG3)
+	Fin Procedimiento
+	
+	Procedimiento ModificarCantidad() ES
+		REG4 := REG
+		REG4.CantActual := REG4.CantActual + REG2.CantRecibida
+		GRABAR(ARCH4, REG4)
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	ABRIR S/ (ARCH3)
+	ABRIR S/ (ARCH4)
+	
+	LEER_MEDICAMENTOS()
+	LEER_MOVIMIENTOS()
+	ObtenerFechaUsuario()
+	
+	Mientras REG.Clave <> HV o REG2.Clave <> HV Hacer
+		Si REG.Clave < REG2.Clave Entonces
+			GRABAR(ARCH4, REG)
+			LEER_MEDICAMENTOS()
+		Contrario
+			Si REG.Clave > REG2.Clave Entonces
+				Según REG2.CodMov Hacer
+					= "1": IncorporarRemedio()
+					= "2": Escribir("Error. No se puede dar de baja algo inexistente.")
+					= "3": Escribir("Error. No se puede modificar algo inexistente.")
+				Fin Según
+				LEER_MOVIMIENTOS()
+			Contrario
+				Según REG2.CodMov Hacer
+					= "1": Escribir("Error. No se puede dar de alta algo que ya existe.")
+					= "2": RemedioVencido()
+					= "3": ModificarCantidad()
+				Fin Según
+				LEER_MEDICAMENTOS()
+				LEER_MOVIMIENTOS()
+			Fin Si
+		Fin Si
+	Fin Mientras
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+	CERRAR(ARCH4)
+
+Fin Acción
