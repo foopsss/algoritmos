@@ -1,0 +1,168 @@
+// Consigna: se lanzó la preventa del Primavera Sound 2023, la modalidad que se
+// elige es lanzar una preventa de entradas, sin anunciar los artistas que se
+// presentarán. Los early birds #1 (preventa de entradas), se lanzarán el 1 de
+// mayo de 2023 a las 13:00 hs, pero los fanáticos pueden hacer “fila virtual”
+// desde las 00:00 para asegurar su lugar en el famoso festival, una vez que se
+// lance la venta virtual los usuarios pueden ir comprando las entradas de a tandas.
+//
+// Con la finalidad de analizar si se debe optimizar el rendimiento de la
+// plataforma, se disponen dos secuencias de caracteres. La primera secuencia
+// contiene a los fanáticos que hacen la “fila virtual”, esta secuencia contiene
+// la hora en la que se registró en la fila (hhmm), el número en la fila (6 caracteres),
+// el medio de pago con el que piensa pagar (“T”- tarjeta, “C”-efectivo, “E”-transferencia)
+// y cuántas entradas piensa comprar (como máximo puede comprar 5 entradas).
+//
+// En estos sistemas de fila, al colocarse en ella se obtiene un identificador o
+// número de fila, pero recién el usuario inicia sesión al llegar a su lugar en la
+// fila y entrar a la sección de Compras.
+// 
+// En una segunda secuencia se encuentran las compras reales realizadas, esta secuencia
+// contiene el número en la fila (6 caracteres), el nombre de usuario (cantidad indefinida,
+// termina en “+”) y luego contiene los datos de para quién es cada entrada en la
+// compra, incluyendo su DNI y nombre (separados con ‘.’). Una compra finaliza con un “?”.
+//
+// Formato de la secuencia Fila_Virtual:
+// horafilanumerofilamediopagocantentradas#
+//
+// Ejemplo de la secuencia Fila_Virtual:
+// 0301123456T3#0345234567E4#
+//
+// Formato de la secuencia Compras:
+// numerofilanombre_usuario+dninombre.dninombre.dninombre?
+//
+// Ejemplo de la secuencia Compras:
+// 123456unsuario+33254787Juan.27895614Melisa.36257489Pedro?
+//
+// Si por algún motivo algún fanático deja su lugar en la fila, en la secuencia
+// de Compras en nombre de usuario aparece un carácter “#”, el signo “+” y luego
+// la marca “?”. Esto implica una correspondencia 1 a 1 entre las dos secuencias.
+//
+// Se pide:
+// (a) Generar una secuencia de salida con los nombres de usuario y cada DNI de
+//     las entradas compradas que fueron pagadas con tarjeta. Separar cada campo
+//     con un + y finalizar con “#” al completar la compra de un usuario.
+//     EJ: nombreusuario+dni+dni#nombreusuario+dni+dni#
+// (b) Se desea conocer cuántos usuarios compraron una cantidad de entradas distinta
+//     a la que declararon en la fila virtual.
+
+Acción SecuenciasM2 ES
+
+Ambiente
+
+	fila, compras, salida: secuencia de carácter
+	v_fila, v_comp: carácter
+
+	compra_tarjeta: lógico
+	entradas_declaradas, entradas_compradas, mentirosos: entero
+	
+	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+	Procedimiento Inicializar() ES
+		compra_tarjeta := F
+		entradas_compradas := 0
+		mentirosos := 0
+	Fin Procedimiento
+	
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(fila)
+	ARR(compras)
+	CREAR(salida)
+	
+	AVZ(fila, v_fila)
+	AVZ(compras, v_comp)
+	
+	Inicializar()
+	
+	Mientras NFDS(fila) Hacer
+		Mientras v_fila <> "#" Hacer
+			Para i := 1 hasta 10 Hacer
+				AVZ(fila, v_fila)
+			Fin Para
+			
+			Si v_fila = "T" Entonces
+				compra_tarjeta := V
+			Fin Si
+			
+			AVZ(fila, v_fila)
+			
+			entradas_declaradas := CharToInt(v_fila)
+			AVZ(fila, v_fila)
+			
+			Mientras v_comp <> "?" Hacer
+				Para i := 1 hasta 6 Hacer
+					AVZ(compras, v_comp)
+				Fin Para
+				
+				Si compra_tarjeta Entonces
+					Mientras v_comp <> "+" Hacer
+						GRABAR(salida, v_comp)
+						AVZ(compras, v_comp)
+					Fin Mientras
+					GRABAR(salida, "+")
+				Contrario
+					Mientras v_comp <> "+" Hacer
+						AVZ(compras, v_comp)
+					Fin Mientras
+				Fin Si
+				
+				AVZ(compras, v_comp)
+				
+				Mientras v_comp <> "?" Hacer
+					Si compra_tarjeta Entonces
+						Mientras v_comp en números Hacer
+							GRABAR(salida, v_comp)
+							AVZ(compras, v_comp)
+						Fin Mientras
+						GRABAR(salida, "+")
+					Contrario
+						Mientras v_comp en números Hacer
+							AVZ(compras, v_comp)
+						Fin Mientras
+					Fin Si
+					
+					entradas_compradas := entradas_compradas + 1
+					
+					Mientras v_comp NO en números y v_comp <> "?" Hacer
+						AVZ(compras, v_comp)
+					Fin Mientras
+				Fin Mientras
+				
+				Si compra_tarjeta Entonces
+					GRABAR(salida "#")
+				Fin Si
+			Fin Mientras
+		Fin Mientras
+		
+		Si entradas_compradas <> entradas_declaradas Entonces
+			mentirosos := mentirosos + 1
+		Fin Si
+		
+		entradas_compradas := 0
+		
+		AVZ(fila, v_fila)
+		AVZ(compras, v_comp)
+	Fin Mientras
+
+	Escribir("Hubo" mentirosos "que compraron una cantidad de entradas distinta a la declarada en la fila virtual.")
+
+	CERRAR(fila)
+	CERRAR(compras)
+	CERRAR(salida)
+
+Fin Acción
