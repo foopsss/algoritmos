@@ -110,7 +110,7 @@ Proceso
 			Fin Si
 		Fin Si
 		
-		Si REG.FechaVentas.Mes >= "6" Entonces
+		Si REG.Clave.FechaVentas.Mes >= "6" Entonces
 			ventas_plat := ventas_plat + REG.Entradas
 		Fin Si
 		
