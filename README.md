@@ -1,5 +1,5 @@
 # algoritmos
-Este es un repositorio donde almaceno ejercicios hechos durante el cursado de la materia Algoritmos y Estructuras de Datos de la UTN FRRe. Acá se pueden encontrar:
+En este repositorio almaceno ejercicios hechos durante el cursado de la materia Algoritmos y Estructuras de Datos de la UTN FRRe. Acá se pueden encontrar:
 
 * Ejercicios de la [guía de trabajos prácticos](https://aed-frre.github.io/) de la cátedra.
 * Ejercicios creados por los profesores para resolver en clases, que no se encuentran en la guía.
