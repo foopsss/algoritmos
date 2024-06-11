@@ -37,14 +37,14 @@ Ambiente
 	ARCH: archivo de Ventas ordenado por Clave
 	REG: Ventas
 	
-	VentasGrandes = Registro
+	Salida = Registro
 		Provincia: AN(100)
 		Ciudad: AN(100)
 		Entradas: N(4)
 	Fin Registro
 	
-	ARCH2: archivo de VentasGrandes
-	REG2: VentasGrandes
+	ARCH2: archivo de Salida
+	REG2: Salida
 	
 	resg_plataforma, resg_ciudad, resg_provincia: alfanumérico
 	ventas_plat, ventas_ciudad: entero
