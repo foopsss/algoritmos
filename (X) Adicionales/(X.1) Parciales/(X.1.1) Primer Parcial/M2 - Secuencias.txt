@@ -53,7 +53,7 @@ Ambiente
 	v_fila, v_comp: carácter
 
 	compra_tarjeta: lógico
-	entradas_declaradas, entradas_compradas, mentirosos: entero
+	i, entradas_declaradas, entradas_compradas, mentirosos: entero
 	
 	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 

@@ -60,6 +60,7 @@ Ambiente
 	sec1, sec2, sec_sal: secuencia de carácter
 	v1, v2: carácter
 	
+	i: entero
 	cont_play, cont_can, canciones_play: entero
 	cont_rock, cont_pop, cont_elec, cont_folk: entero
 	pr, pp, pe, pf, prom_can: real
