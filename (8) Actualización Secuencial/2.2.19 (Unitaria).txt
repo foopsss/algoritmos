@@ -1,3 +1,7 @@
+// Consideraciones
+// (*) Se provee una función sumar_días que permite sumarle una X cantidad de
+//     días a una fecha dada.
+
 Acción 2.2.19 ES
 
 Ambiente
@@ -68,25 +72,23 @@ Ambiente
 		Leer(FechaActual.Día)
 	Fin Procedimiento
 
-	Procedimiento IncorporarRemedio() ES
-		REG4.Clave.Farmacia := REG2.Clave.Farmacia
-		REG4.Clave.Medicamento := REG2.Clave.Medicamento
-		REG4.CantActual := REG2.CantRecibida
-		REG4.FechaVencimiento.Año := FechaActual.Año
-		REG4.FechaVencimiento.Mes := FechaActual.Mes + 1
-		REG4.FechaVencimiento.Día := FechaActual.Día
-		GRABAR(ARCH4, REG4)
-	Fin Procedimiento
-	
 	Procedimiento RemedioVencido() ES
-		REG3.Medicamento := REG.Clave.Medicamento
+		REG3.Medicamento := REG2.Clave.Medicamento
 		REG3.CantVencida := REG.CantActual
 		GRABAR(ARCH3, REG3)
 	Fin Procedimiento
 	
 	Procedimiento ModificarCantidad() ES
 		REG4 := REG
-		REG4.CantActual := REG4.CantActual + REG2.CantRecibida
+		REG4.CantActual := REG2.CantRecibida
+		GRABAR(ARCH4, REG4)
+	Fin Procedimiento
+
+	Procedimiento IncorporarRemedio() ES
+		REG4.Clave.Farmacia := REG2.Clave.Farmacia
+		REG4.Clave.Medicamento := REG2.Clave.Medicamento
+		REG4.CantActual := REG2.CantRecibida
+		REG4.FechaVencimiento := sumar_días(FechaActual, 30)
 		GRABAR(ARCH4, REG4)
 	Fin Procedimiento
 
@@ -108,18 +110,18 @@ Proceso
 		Contrario
 			Si REG.Clave > REG2.Clave Entonces
 				Según REG2.CodMov Hacer
-					= "1": IncorporarRemedio()
-					= "2": Escribir("Error. No se puede dar de baja algo inexistente.")
-					= "3": Escribir("Error. No se puede modificar algo inexistente.")
-				Fin Según
-				LEER_MOVIMIENTOS()
-			Contrario
-				Según REG2.CodMov Hacer
 					= "1": Escribir("Error. No se puede dar de alta algo que ya existe.")
 					= "2": RemedioVencido()
 					= "3": ModificarCantidad()
 				Fin Según
 				LEER_MEDICAMENTOS()
+				LEER_MOVIMIENTOS()
+			Contrario
+				Según REG2.CodMov Hacer
+					= "1": IncorporarRemedio()
+					= "2": Escribir("Error. No se puede dar de baja algo inexistente.")
+					= "3": Escribir("Error. No se puede modificar algo inexistente.")
+				Fin Según
 				LEER_MOVIMIENTOS()
 			Fin Si
 		Fin Si
