@@ -19,6 +19,7 @@ begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
 
+	writeln();
 	case nota of
 		0..3: writeln('Mal.');
 		4..5: writeln('Insuficiente.');

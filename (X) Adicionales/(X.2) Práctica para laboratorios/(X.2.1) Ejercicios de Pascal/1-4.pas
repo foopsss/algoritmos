@@ -26,7 +26,7 @@ begin
 	// Los resultados están acortados a dos decimales y utilizan notación
 	// de punto fijo (fixed-point notation) para ser mostrados en un formato
 	// más amigable a la vista.
-	writeln('');
+	writeln();
 	writeln('Suma: ', suma:10:2);
 	writeln('Resta: ', resta:10:2);
 	writeln('Multiplicación: ', mult:10:2);

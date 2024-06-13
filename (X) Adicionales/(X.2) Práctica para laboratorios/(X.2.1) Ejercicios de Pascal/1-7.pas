@@ -30,7 +30,7 @@ begin
 	repeat
 		pedir_nota;
 
-		writeln('');
+		writeln();
 		if not (nota in [0..10]) then
 		begin
 			writeln('Número fuera de rango.');

@@ -48,13 +48,13 @@ begin
 
 		draw_line(35);
 		pedir_nota;
-		writeln('');
+		writeln();
 		procesar_nota(nota);
 	end;
 end;
 
 begin
 	pedir_nota;
-	writeln('');
+	writeln();
 	procesar_nota(nota);
 end.

@@ -17,7 +17,7 @@ begin
 	writeln('4. División entera');
 	writeln('5. Resto');
 
-	writeln('');
+	writeln();
 	write('Introduzca su elección: ');
 	readln(eleccion);
 	write('Introduzca un valor para X: ');
@@ -25,7 +25,7 @@ begin
 	write('Introduzca un valor para Y: ');
 	readln(y);
 
-	writeln('');
+	writeln();
 	case eleccion of
 		1:
 			begin

@@ -20,10 +20,11 @@ begin
 	mult := x * y;
 	div_real := x / y;
 
+	writeln();
 	writeln('Valor de X: ', x:10:2);
 	writeln('Valor de Y: ', y:10:2);
 
-	writeln('');
+	writeln();
 	writeln('Suma: ', suma:10:2);
 	writeln('Resta: ', resta:10:2);
 	writeln('Multiplicación: ', mult:10:2);

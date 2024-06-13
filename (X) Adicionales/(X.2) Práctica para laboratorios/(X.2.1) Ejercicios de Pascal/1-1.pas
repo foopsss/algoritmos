@@ -21,7 +21,7 @@ begin
 	writeln('Valor de X: ', x);
 	writeln('Valor de Y: ', y);
 
-	writeln('');
+	writeln();
 	writeln('Suma: ', suma);
 	writeln('Resta: ', resta);
 	writeln('Multiplicación: ', mult);
