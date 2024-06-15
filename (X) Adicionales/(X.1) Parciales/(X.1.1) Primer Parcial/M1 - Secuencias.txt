@@ -99,6 +99,9 @@ Proceso
 	ARR(sec2)
 	CREAR(sec_sal)
 	
+	AVZ(sec1, v1)
+	AVZ(sec2, v2)
+	
 	Inicializar()
 	
 	Mientras NFDS(sec1) Hacer

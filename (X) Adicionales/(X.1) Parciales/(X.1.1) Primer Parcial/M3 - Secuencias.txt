@@ -84,14 +84,17 @@ Proceso
 	ARR(compras)
 	CREAR(salida)
 	
+	AVZ(fila, v_fila)
+	AVZ(compras, v_comp)
+	
 	Inicializar()
 	
 	Mientras NFDS(fila) Hacer
 		Mientras v_fila <> "#" Hacer
 			// Obtengo la hora de registro.
-			hora_registro := hora_registro + CharToInt(v) * 10
+			hora_registro := hora_registro + CharToInt(v_fila) * 10
 			AVZ(fila, v_fila)
-			hora_registro := hora_registro + CharToInt(v)
+			hora_registro := hora_registro + CharToInt(v_fila)
 			
 			// Verifico si la hora de registro
 			// es previa a las 10:00 AM.
