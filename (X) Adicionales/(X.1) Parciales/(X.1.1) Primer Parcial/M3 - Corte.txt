@@ -102,6 +102,8 @@ Proceso
 	
 		LEER(ARCH, REG)
 	Fin Mientras
+	
+	CorteProvincia()
 
 	CERRAR(ARCH)
 	CERRAR(ARCH2)
