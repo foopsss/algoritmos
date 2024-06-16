@@ -143,7 +143,7 @@ Proceso
 			Fin Para
 			
 			Para i := 3 hasta 1, -1 Hacer
-				canciones_play := canciones_play + CharToInt(v1) ** (i - 1)
+				canciones_play := canciones_play + CharToInt(v1) * (10 ** (i - 1))
 				AVZ(sec1, v1)
 			Fin Para
 			
