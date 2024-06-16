@@ -1,0 +1,169 @@
+// Consigna: un importante supermercado de la provincia del Chaco posee la información
+// del stock de todos sus artículos en una secuencia de datos.
+//
+// Formato de la secuencia:
+// CodArtCodRubroStockNombreArticulo&CodArtCodRubroStockNombreArticulo&CodArtCodRubroStockNombreArticulo&FDS
+//
+// Donde:
+// (*) CodArt (5 caracteres): código del artículo.
+// (*) CodRubro (1 carácter): se refiere al rubro del artículo, las opciones son:
+//     “L”: Limpieza, “F”: Fiambrería, “C”: Carnicería, “B”: Bazar y “H”: Higiene.
+// (*) Stock (3 caracteres): cantidad de artículos en stock.
+// (*) NombreArticulo: es el nombre del artículo y finaliza con un “&”.
+//
+// Ejemplo de la secuencia:
+// 12345L789Detergente Magistral&23456F078Jamon Iberico& [...] &FDS
+//
+// Además, se posee una secuencia de caracteres con todas las ventas realizadas para
+// los artículos (el fin de las ventas de cada artículo se indica con el carácter “#”).
+//
+// Formato de la secuencia:
+// (*) DiaMesFPFEUVDiaMesFPFEUVDiaMesFPFEUV#DiaMesFPFEUVDiaMesFPFEUVDiaMesFPFEUV# [...] #
+// (*) DiaMesFPFEUVDiaMesFPFEUVDiaMesFPFEUV # [...] FDS
+//
+// Donde:
+// (*) Dia (2 caracteres): corresponde al día de la venta.
+// (*) Mes (2 caracteres): corresponde al mes de la venta.
+// (*) FP (1 carácter): indica forma de pago, las opciones son:
+//     “T”: Tarjeta de crédito – “C”: Contado.
+// (*) FE (1 carácter): indica forma de envío, las opciones son:
+//     “S”: Entregado en sucursal y “D”: Envío a domicilio.
+// (*) UV (2 caracteres): unidades vendidas.
+//
+// Consideraciones:
+// (*) Existe una correspondencia uno a uno entre las 2 secuencias, de la siguiente forma:
+//     el primer grupo de ventas corresponde al primer artículo, el siguiente al segundo y
+//     así sucesivamente.
+//
+// Se pide:
+// (a) Generar una nueva secuencia de salida con los nombres de todos los artículos que
+//     tengan mayor cantidad de ventas con tarjeta de crédito que al contado.
+// (b) Generar un informe de las ventas realizadas para una determinada forma de envío
+//     que ingresa el usuario, con la siguiente estructura:
+//     | Nombre del Artículo | Cant. unidades vendidas con tarjeta | Cant. unid vendidas al contado |
+
+Acción SecuenciasM5 ES
+
+Ambiente
+
+	artículos, ventas, salida: secuencia de carácter
+	v_art, v_ventas: carácter
+
+	fe_us, resg_fp, resg_fe: carácter
+	i, resg_uv: entero
+	ventas_tarjeta, ventas_tarjeta_us: entero
+	ventas_contado, ventas_contado_us: entero
+
+	Procedimiento Inicializar() ES
+		resg_uv := 0
+		ventas_tarjeta := 0
+		ventas_tarjeta_us := 0
+		ventas_contado := 0
+		ventas_contado_us := 0
+	Fin Procedimiento
+
+	Procedimiento FormaEnvíoUsuario() ES
+		Escribir("Introduzca una forma de envío: ")
+		Leer(fe_us)
+	Fin Procedimiento
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(artículos)
+	ARR(ventas)
+	CREAR(salida)
+	
+	AVZ(artículos, v_art)
+	AVZ(ventas, v_ventas)
+	
+	Inicializar()
+	FormaEnvíoUsuario()
+	
+	Escribir("Forma de envío introducida por el usuario: " fe_us)
+	Escribir("| Nombre del Artículo | Cant. unidades vendidas con tarjeta | Cant. unid vendidas al contado |")
+	
+	Mientras NFDS(artículos) Hacer
+		Mientras v_art <> "&" Hacer
+			// Avanzo hasta quedar parado en el
+			// primer carácter del nombre del
+			// artículo.
+			Para i := 1 hasta 9 Hacer
+				AVZ(artículos, v_art)
+			Fin Para
+			
+			Mientras v_ventas <> "#" Hacer
+				Para i := 1 hasta 4 Hacer
+					AVZ(ventas, v_ventas)
+				Fin Para
+				
+				resg_fp := v_ventas
+				AVZ(ventas, v_ventas)
+				
+				resg_fe := v_ventas
+				AVZ(ventas, v_ventas)
+				
+				resg_uv := resg_uv + CharToInt(v_ventas) * 10
+				AVZ(ventas, v_ventas)
+				resg_uv := resg_uv + CharToInt(v_ventas)
+				
+				Si resg_fp = "T" Entonces
+					ventas_tarjeta := ventas_tarjeta + resg_uv
+					
+					Si resg_fe = fe_us Entonces
+						ventas_tarjeta_us := ventas_tarjeta_us + resg_uv
+					Fin Si
+				Contrario
+					ventas_contado := ventas_contado + resg_uv
+					
+					Si resg_fe = fe_us Entonces
+						ventas_contado_us := ventas_contado_us + resg_uv
+					Fin Si
+				Fin Si
+				
+				AVZ(ventas, v_ventas)
+			Fin Mientras
+			
+			// Trato el nombre del artículo.
+			Si ventas_tarjeta > ventas_contado Entonces
+				Mientras v_art <> "&" Hacer
+					GRABAR(salida, v_art)
+					Escribir(v_art)
+					AVZ(artículos, v_art)
+				Fin Mientras
+			Contrario
+				Mientras v_art <> "&" Hacer
+					Escribir(v_art)
+					AVZ(artículos, v_art)
+				Fin Mientras
+			Fin Si
+			
+			Escribir(ventas_tarjeta_us)
+			Escribir(ventas_contado_us)
+		Fin Mientras
+		
+		Inicializar()
+		
+		AVZ(artículos, v_art)
+		AVZ(ventas, v_ventas)
+	Fin Mientras
+	
+	CERRAR(artículos)
+	CERRAR(ventas)
+	CERRAR(salida)
+
+Fin Acción
