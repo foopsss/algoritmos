@@ -18,7 +18,7 @@ de las notas de estos. *}
 program EJ8;
 
 uses
-	functions;
+	functions in '../functions.pas';
 
 var
 	i, nota, suma_notas: integer;

@@ -17,7 +17,7 @@ jugador y en base a ella determinar al ganador. *}
 program EJ15;
 
 uses
-	functions;
+	functions in '../functions.pas';
 
 var
 	i, turnos, num_j1, num_j2: integer;

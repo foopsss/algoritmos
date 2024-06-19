@@ -9,7 +9,7 @@ jugador y en base a ella determinar al ganador. *}
 program EJ14;
 
 uses
-	functions;
+	functions in '../functions.pas';
 
 var
 	i, num_j1, num_j2: integer;

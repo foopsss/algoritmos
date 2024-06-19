@@ -18,7 +18,7 @@ luego calcular el promedio de las notas de estos. *}
 program EJ9;
 
 uses
-	functions;
+	functions in '../functions.pas';
 
 var
 	eleccion: char;

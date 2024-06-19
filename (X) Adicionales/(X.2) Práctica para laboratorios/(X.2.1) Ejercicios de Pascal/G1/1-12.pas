@@ -61,7 +61,16 @@ begin
 		end
 	else
 		begin
-			writeln('El usuario y/o contraseña introducidos no son correctos.');
+			if us_user <> us_sist then
+			begin
+				writeln('El usuario introducido no es correcto.');
+			end;
+
+			if pass_user <> pass_sist then
+			begin
+				writeln('La contraseña introducida no es correcta.');
+			end;
+
 			writeln('Intente de nuevo.');
 		end;
 end.

@@ -15,7 +15,7 @@ salga (número fuera de rango) y se debe volver a solicitar una nota. *}
 program EJ7;
 
 uses
-	functions;
+	functions in '../functions.pas';
 
 var
 	nota: integer;
