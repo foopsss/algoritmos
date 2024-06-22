@@ -1,0 +1,123 @@
+// Consigna: la misma cadena de supermercados, además cuenta con un archivo secuencial
+// con el stock de todos sus artículos con el siguiente formato:
+//
+// Stock: ordenado por Código sucursal, Rubro y Código Artículo.
+// | Cod Suc | Rubro | Cod Articulo | FechaUltRep | Stock de seguridad | Stock actual |
+// | N(2) | AN(20) | N(5) |
+//
+// Consideraciones:
+// (*) FechaUltRep: fecha última reposición.
+// (*) El stock de seguridad es el nivel mínimo de existencias que se debe mantener en
+//     almacén.
+//
+// Se pide:
+// (a) Generar un informe que muestre todos los artículos (sucursal, rubro y código de
+//     articulo) cuyo stock actual esté por debajo del stock de seguridad, indicando
+//     cantidad total por sucursal, por rubro y total general.
+// (b) Generar un archivo de salida que contenga la cantidad total de artículos que
+//     requieren reposición (stock actual menor a stock de seguridad) por Rubro, por
+//     cada sucursal. Debe contener: código sucursal, rubro y cantidad de artículos.
+
+Acción CorteM4 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Stock = Registro
+		Clave = Registro
+			CodSuc: N(2)
+			Rubro: AN(20)
+			CodArt: N(5)
+		Fin Registro
+		FechaUltRep: Fecha
+		StockSeguridad: N(3)
+		StockActual: N(5)
+	Fin Registro
+	
+	ARCH: archivo de Stock ordenado por Clave
+	REG: Stock
+	
+	StockCrítico = Registro
+		CodSuc: N(2)
+		Rubro: AN(20)
+		CantArt: N(3)
+	Fin Registro
+	
+	ARCH2: archivo de StockCrítico
+	REG2: StockCrítico
+	
+	resg_suc: entero
+	resg_rubro: alfanumérico
+	faltantes_rubro, faltantes_suc, tot_faltantes: entero
+	
+	Procedimiento Inicializar() ES
+		resg_suc := REG.Clave.CodSuc
+		resg_rubro := REG.Clave.Rubro
+		faltantes_rubro := 0
+		faltantes_suc := 0
+		tot_faltantes := 0
+	Fin Procedimiento
+	
+	Procedimiento CorteRubro() ES
+		// Algunas cosas de corte.
+		Escribir("Rubro: " resg_rubro)
+		Escribir("Total de artículos con niveles críticos de stock: " faltantes_rubro)
+		
+		// Grabo el archivo de salida.
+		REG2.CodSuc := resg_suc
+		REG2.Rubro := resg_rubro
+		REG2.CantArt := faltantes_rubro
+		GRABAR(ARCH2, REG2)
+		
+		// Resto de las cosas de corte.
+		faltantes_suc := faltantes_suc + faltantes_rubro
+		faltantes_rubro := 0
+		resg_rubro := REG.Clave.Rubro
+	Fin Procedimiento
+	
+	Procedimiento CorteSucursal() ES
+		CorteRubro()
+		Escribir("Sucursal: " resg_suc)
+		Escribir("Total de artículos con niveles críticos de stock: " faltantes_suc)
+		tot_faltantes := tot_faltantes + faltantes_suc
+		faltantes_suc := 0
+		resg_suc := REG.Clave.CodSuc
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_suc <> REG.Clave.CodSuc Entonces
+			CorteSucursal()
+		Contrario
+			Si resg_rubro <> REG.Clave.Rubro Entonces
+				CorteRubro()
+			Fin Si
+		Fin Si
+	
+		Si REG.StockActual < REG.StockSeguridad Entonces
+			faltantes_rubro := faltantes_rubro + 1
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteSucursal()
+	
+	Escribir("Hay un total de" tot_faltantes "artículos cuyo stock actual está por debajo del stock de seguridad.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
