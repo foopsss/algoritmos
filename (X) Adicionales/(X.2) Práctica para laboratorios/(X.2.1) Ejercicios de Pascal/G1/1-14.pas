@@ -35,7 +35,8 @@ begin
 	// más grande que se permite introducir, que es 100.
 	//
 	// De esta forma, en el cálculo posterior de puntos de cada
-	// turno, el jugador que no siga las reglas no recibe nada.
+	// turno, el jugador que no siga las reglas no recibe nada
+	// aún si técnicamente es el ganador de la ronda.
 
 	pedir_num_j1();
 	if (num_j1 < 1) or (num_j1 > 100) then
