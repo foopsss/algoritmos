@@ -1,0 +1,113 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. La información de los equipos se encuentra en una secuencia
+// de caracteres:
+//
+// Formato de la secuencia:
+// Argentina#Brasil#Canadá#Perú#...#Colombia#FDS
+//
+// La edad de cada uno de los jugadores que componen un plantel se encuentra
+// disponible en una secuencia de enteros:
+//
+// Formato de la secuencia:
+// |32|22|27|19|...|33|18|FDS|
+//
+// La cantidad de jugadores que componen un plantel es de 26 jugadores.
+//
+// Se pide:
+// (a) Informar el promedio de edad de los jugadores que participarán en la copa.
+// (b) La edad del jugador más joven en participar en la copa, y la edad del
+//     jugador más longevo en participar de la copa.
+// (c) Informar los datos solicitados en las consignas (a) y (b) para cada equipo.
+
+Acción SecuenciasM1 ES
+
+Ambiente
+
+	equipos: secuencia de carácter
+	edades: secuencia de enteros
+	eq: carácter
+	ed: entero
+	
+	jugadores_equipo = 26
+	
+	i, prom_gen, prom_eq: entero
+	suma_ed_gen, suma_ed_eq, cant_eq: entero
+	mj, eq_mj, ml, eq_ml: entero
+
+	Procedimiento Inicializar() ES
+		suma_ed_gen := 0
+		suma_ed_eq := 0
+		cant_eq := 0
+		mj := HV
+		eq_mj := HV
+		ml := LV
+		eq_ml := LV
+	Fin Procedimiento
+
+Proceso
+
+	ARR(equipos)
+	ARR(edades)
+	AVZ(equipos, eq)
+	AVZ(edades, ed)
+	
+	Inicializar()
+	
+	Mientras NFDS(equipos) Hacer
+		cant_eq := cant_eq + 1
+		
+		Escribir("Equipo: ")
+		
+		Mientras eq <> "#" Hacer
+			Escribir(eq)
+			AVZ(equipos, eq)
+		Fin Mientras
+		
+		Para i := 1 hasta jugadores_equipo Hacer
+			suma_ed := suma_ed + ed
+			suma_ed_eq := suma_ed_eq + ed
+			
+			Si ed < eq_mj Entonces
+				eq_mj := ed
+			Contrario
+				Si ed > eq_ml Entonces
+					eq_ml := ed
+				Fin Si
+			Fin Si
+			
+			Si ed < mj Entonces
+				mj := ed
+			Contrario
+				Si ed > ml Entonces
+					ml := ed
+				Fin Si
+			Fin Si
+			
+			AVZ(edades, ed)
+		Fin Para
+		
+		prom_eq := suma_ed_eq / jugadores_equipo
+		
+		Escribir("El promedio del edad del equipo es de" prom_eq "años.")
+		Escribir("El jugador más joven del equipo tiene" eq_mj "años.")
+		Escribir("El jugador más longevo del equipo tiene" eq_ml "años.")
+		
+		suma_ed_eq := 0
+		eq_mj := HV
+		eq_ml := LV
+		
+		AVZ(equipos, eq)
+	Fin Mientras
+	
+	prom_gen := suma_ed_gen / cant_eq
+	
+	Escribir("El promedio de edad de los jugadores de la copa es de" prom_gen "años.")
+	Escribir("El jugador más joven de la copa tiene" mj "años.")
+	Escribir("El jugador más longevo de la copa tiene" ml "años.")
+	
+	CERRAR(equipos)
+	CERRAR(edades)
+
+Fin Acción
