@@ -12,7 +12,7 @@
 //
 // Se pide:
 // (a) Obtener total de personas que integran cada selección, por nombre de
-//     selección y posición, y por total general.
+//     selección y posición y por total general.
 
 Acción CorteM1 ES
 
