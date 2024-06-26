@@ -11,8 +11,8 @@
 // DE (Delantero) y CT (Cuerpo Técnico).
 //
 // Se pide:
-// (a) Obtener total de personas que integran cada selección, por nombre de
-//     selección y posición y por total general.
+// (a) Obtener el total de personas que integran cada selección por nombre
+//     de selección, por posición y por total general.
 
 Acción CorteM1 ES
 
