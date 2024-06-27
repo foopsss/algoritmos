@@ -1,0 +1,111 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. La información de los equipos se encuentra en una secuencia
+// de caracteres:
+//
+// Formato de la secuencia:
+// Argentina#Brasil#Canadá#Perú#...#Colombia#FDS
+//
+// Se cuenta además con el dorsal y edad de cada jugador en una secuencia de
+// enteros:
+//
+// Formato de la secuencia:
+// |10|36|11|36|19|...|33|18|FDS
+//
+// Esto significa que el primer jugador de la Selección Argentina, que usa el
+// dorsal 10, tiene 36 años, el siguiente usa el dorsal 11 y también tiene 36
+// años y así sucesivamente. La cantidad de jugadores que componen un plantel
+// es de 26 jugadores.
+//
+// Se pide:
+// (a) Informar el promedio de edad de los jugadores que usan un determinado
+//     dorsal, que lo indica el usuario por única vez.
+// (b) Indicar la edad del jugador más joven en cada equipo, así como la edad
+//     del más longevo.
+
+Acción SecuenciasM2 ES
+
+Ambiente
+
+	equipos: secuencia de carácter
+	eq: carácter
+	
+	edades: secuencia de entero
+	ed: entero
+	
+	dorsal_us: entero
+	coincide_dorsal: lógico
+	suma_ed_dorsal_us, cant_jug_dorsal_us, prom_dorsal_us: entero
+	eq_mj, eq_ml: entero
+	
+	Procedimiento PedirDorsalUsuario() ES
+		Escribir("Introduzca un dorsal: ")
+		Leer(dorsal_us)
+	Fin Procedimiento
+
+	Procedimiento Inicializar() ES
+		coincide_dorsal := F
+		suma_ed_dorsal_us := 0
+		cant_jug_dorsal_us := 0
+		eq_mj := HV
+		eq_ml := LV
+	Fin Procedimiento
+
+Proceso
+
+	ARR(equipos)
+	ARR(edades)
+	
+	AVZ(equipos, eq)
+	AVZ(edades, ed)
+
+	Inicializar()
+	PedirDorsalUsuario()
+
+	Mientras NFDS(equipos) Hacer
+		Escribir("Equipo: ")
+		
+		Mientras eq <> "#" Hacer
+			Escribir(eq)
+			AVZ(equipos, eq)
+		Fin Mientras
+		
+		Para i := 1 hasta 26 Hacer
+			Si ed = dorsal_us Entonces
+				coincide_dorsal := V
+			Fin Si
+			
+			AVZ(edades, ed)
+			
+			Si coincide_dorsal Entonces
+				suma_ed_dorsal_us := suma_ed_dorsal_us + ed
+				jugadores_dorsal_us := jugadores_dorsal_us + 1
+			Fin Si
+			
+			Si ed < eq_mj Entonces
+				eq_mj := ed
+			Contrario
+				Si ed > eq_ml Entonces
+					eq_ml := ed
+				Fin Si
+			Fin Si
+			
+			AVZ(edades, ed)
+		Fin Para
+		
+		Escribir("El jugador más joven del equipo tiene" eq_mj "años.")
+		Escribir("El jugador más longevo del equipo tiene" eq_ml "años.")
+		
+		AVZ(equipos, eq)
+	Fin Mientras
+	
+	prom_dorsal_us := suma_ed_dorsal_us / cant_jug_dorsal_us
+	
+	Escribir("Dorsal indicado por el usuario: " dorsal_us)
+	Escribir("El promedio de edad de los jugadores que usan el dorsal indicado por el usuario es de" prom_dorsal_us "años.")
+
+	CERRAR(equipos)
+	CERRAR(edades)
+
+Fin Acción
