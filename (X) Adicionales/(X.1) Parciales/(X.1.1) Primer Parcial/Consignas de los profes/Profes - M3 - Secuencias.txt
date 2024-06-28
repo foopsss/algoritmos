@@ -43,14 +43,9 @@ Acción SecuenciasM3 ES
 
 Ambiente
 
-	info: secuencia de carácter
-	v_inf: carácter
-
-	plantel: secuencia de carácter
-	v_pl: carácter
+	info, plantel, salida: secuencia de carácter
+	v_inf, v_pl: carácter
 	
-	salida: secuencia de carácter
-
 	es_cabeza_serie: lógico
 	i, cant_integrantes: entero
 	resg_pos_a, resg_pos_b: carácter
@@ -100,6 +95,7 @@ Proceso
 		Fin Si
 		
 		AVZ(info, v_inf)
+		
 		Escribir("Equipo: ")
 		
 		Mientras v_inf <> "#" Hacer

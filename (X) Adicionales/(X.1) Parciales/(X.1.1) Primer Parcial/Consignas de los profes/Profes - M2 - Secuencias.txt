@@ -97,6 +97,10 @@ Proceso
 		Escribir("El jugador más joven del equipo tiene" eq_mj "años.")
 		Escribir("El jugador más longevo del equipo tiene" eq_ml "años.")
 		
+		coincide_dorsal := F
+		eq_mj := HV
+		eq_ml := LV
+		
 		AVZ(equipos, eq)
 	Fin Mientras
 	
