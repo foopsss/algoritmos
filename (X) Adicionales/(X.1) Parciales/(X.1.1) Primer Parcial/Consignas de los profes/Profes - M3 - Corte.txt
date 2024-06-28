@@ -1,0 +1,135 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. Se tiene la información de todos los jugadores de cada
+// uno de los planteles en un archivo secuencial con el siguiente formato:
+//
+// Jugadores (ordenado por Selección, Posición y Dorsal)
+// | Selección | Posición (AR, DF, ME, DE, CT) | Dorsal | Nombre y Apellido | Participaciones |
+//
+// Donde:
+// (*) El campo Posición puede tomar los siguientes valores: AR (Arquero),
+//     DF (Defensor), ME (Mediocampista), DE (Delantero) y CT (Cuerpo Técnico).
+// (*) El campo Participaciones indica cuántas veces participó un jugador en
+//     una Copa América.
+//
+// Se pide:
+// (a) Obtener el total de personas que integran cada selección por posición,
+//     por selección y por total general, discriminando por jugadores con
+//     experiencia y sin experiencia y excluyendo a los miembros del cuerpo
+//     técnico.
+// (b) Generar un archivo de salida con la siguiente información:
+//     | Selección | Cantidad de jugadores nuevos | Cantidad de jugadores con experiencia |
+
+Acción CorteM3 ES
+
+Ambiente
+
+	Jugadores = Registro
+		Clave = Registro
+			Selección: AN(50)
+			Posición: ("AR", "DF", "ME", "DE", "CT")
+			Dorsal: N(2)
+		Fin Registro
+		NomAp: AN(100)
+		Participaciones: N(1)
+	Fin Registro
+	
+	ARCH: archivo de Jugadores ordenado por Clave
+	REG: Jugadores
+	
+	Salida = Registro
+		Selección: AN(50)
+		JugadoresNuevos: N(3)
+		JugadoresExperimentados: N(3)
+	Fin Registro
+	
+	ARCH2: archivo de Salida
+	REG2: Salida
+	
+	resg_posición, resg_selección: alfanumérico
+	posición_experimentados, posición_nuevos: entero
+	selección_experimentados, selección_nuevos: entero
+	tot_experimentados, tot_nuevos: entero
+	
+	Procedimiento Inicializar() ES
+		resg_posición := REG.Clave.Posición
+		resg_selección := REG.Clave.Selección
+		posición_experimentados := 0
+		posición_nuevos := 0
+		selección_experimentados := 0
+		selección_nuevos := 0
+		tot_experimentados := 0
+		tot_nuevos := 0
+	Fin Procedimiento
+	
+	Procedimiento CortePosición() ES
+		Escribir("Selección: " resg_selección)
+		Escribir("Posición: " resg_posición)
+		Escribir("Cantidad de jugadores con experiencia en Copa América: " posición_experimentados)
+		Escribir("Cantidad de jugadores sin experiencia en Copa América: " posición_nuevos)
+		selección_experimentados := selección_experimentados + posición_experimentados
+		selección_nuevos := selección_nuevos + posición_nuevos
+		posición_experimentados := 0
+		posición_nuevos := 0
+		resg_posición := REG.Clave.Posición
+	Fin Procedimiento
+	
+	Procedimiento CorteSelección() ES
+		// Algunas cosas de corte.
+		CortePosición()
+		Escribir("Selección: " resg_selección)
+		Escribir("Cantidad de jugadores con experiencia en Copa América: " selección_experimentados)
+		Escribir("Cantidad de jugadores sin experiencia en Copa América: " selección_nuevos)
+		
+		// Grabo el archivo de salida.
+		REG2.Selección := resg_selección
+		REG2.JugadoresNuevos := selección_nuevos
+		REG2.JugadoresExperimentados := selección_experimentados
+		GRABAR(ARCH2, REG2)
+		
+		// Resto de las cosas de corte.
+		tot_experimentados := tot_experimentados + selección_experimentados
+		tot_nuevos := tot_nuevos + selección_nuevos
+		selección_experimentados := 0
+		selección_nuevos := 0
+		resg_selección := REG.Clave.Selección
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_selección <> REG.Clave.Selección Entonces
+			CorteSelección()
+		Contrario
+			Si resg_posición <> REG.Clave.Posición Entonces
+				CortePosición()
+			Fin Si
+		Fin Si
+		
+		Si REG.Posición <> "CT" Entonces
+			Si REG.Participaciones > "0" Entonces
+				posición_experimentados := posición_experimentados + 1
+			Contrario
+				posición_nuevos := posición_nuevos + 1
+			Fin Si
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteSelección()
+	
+	Escribir("El total de jugadores con experiencia en Copa América es de" tot_experimentados "jugadores.")
+	Escribir("El total de jugadores sin experiencia en Copa América es de" tot_nuevos "jugadores.")
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción

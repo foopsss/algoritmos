@@ -34,7 +34,7 @@ Ambiente
 	edades: secuencia de entero
 	ed: entero
 	
-	dorsal_us: entero
+	i, dorsal_us: entero
 	coincide_dorsal: lógico
 	suma_ed_dorsal_us, cant_jug_dorsal_us, prom_dorsal_us: entero
 	eq_mj, eq_ml: entero
