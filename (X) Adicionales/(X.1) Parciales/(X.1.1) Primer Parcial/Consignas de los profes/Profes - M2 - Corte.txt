@@ -1,0 +1,112 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. Se tiene la información de todos los jugadores de cada
+// uno de los planteles en un archivo secuencial con el siguiente formato:
+//
+// Jugadores (ordenado por Selección, Posición y Dorsal)
+// | Selección | Posición (AR, DF, ME, DE, CT) | Dorsal | Nombre y Apellido | Edad | Equipo |
+//
+// Donde, en el campo de Posición: AR (Arquero), DF (Defensor), ME (Mediocampista),
+// DE (Delantero) y CT (Cuerpo Técnico).
+//
+// Se pide:
+// (a) Obtener el total de personas que integran cada selección por posición,
+//     por selección y por total general.
+// (b) Indicar por selección el promedio de edad de los jugadores.
+
+Acción CorteM2 ES
+
+Ambiente
+
+	Jugadores = Registro
+		Clave = Registro
+			Selección: AN(50)
+			Posición: ("AR", "DF", "ME", "DE", "CT")
+			Dorsal: N(2)
+		Fin Registro
+		NomAp: AN(100)
+		Edad: N(2)
+		Equipo: AN(50)
+	Fin Registro
+	
+	ARCH: archivo de Jugadores ordenado por Clave
+	REG: Jugadores
+	
+	resg_posición, resg_selección: alfanumérico
+	tot_posición, tot_selección, tot_gen: entero
+	suma_edades_posición, cantidad_jugadores_posición: entero
+	suma_edades_selección, cantidad_jugadores_selección: entero
+	prom_edad_jugadores: entero
+	
+	Procedimiento Inicializar() ES
+		resg_posición := REG.Clave.Posición
+		resg_selección := REG.Clave.Selección
+		tot_posición := 0
+		tot_selección := 0
+		tot_gen := 0
+		suma_edades_posición := 0
+		cantidad_jugadores_posición := 0
+		suma_edades_selección := 0
+		cantidad_jugadores_selección := 0
+	Fin Procedimiento
+	
+	Procedimiento CortePosición() ES
+		Escribir("Selección: " resg_selección)
+		Escribir("Posición: " resg_posición)
+		Escribir("Total de personas que juegan en la posición: " tot_posición)
+		tot_selección := tot_selección + tot_posición
+		suma_edades_selección := suma_edades_selección + suma_edades_posición
+		cantidad_jugadores_selección := cantidad_jugadores_selección + cantidad_jugadores_posición
+		tot_posición := 0
+		suma_edades_posición := 0
+		cantidad_jugadores_posición := 0
+		resg_posición := REG.Clave.Posición
+	Fin Procedimiento
+	
+	Procedimiento CorteSelección() ES
+		CortePosición()
+		prom_edad_jugadores := suma_edades_selección / cantidad_jugadores_selección
+		Escribir("Selección: " resg_selección)
+		Escribir("Total de personas que juegan en la selección: " tot_selección)
+		Escribir("Promedio de edad de los jugadores: " prom_edad_jugadores)
+		tot_gen := tot_gen + tot_selección
+		tot_selección := 0
+		suma_edades_selección := 0
+		cantidad_jugadores_selección := 0
+		resg_selección := REG.Clave.Selección
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_selección <> REG.Clave.Selección Entonces
+			CorteSelección()
+		Contrario
+			Si resg_posición <> REG.Clave.Posición Entonces
+				CortePosición()
+			Fin Si
+		Fin Si
+		
+		tot_posición := tot_posición + 1
+		
+		Si REG.Clave.Posición <> "CT" Entonces
+			suma_edades_posición := suma_edades_posición + REG.Edad
+			cantidad_jugadores_posición := cantidad_jugadores_posición + 1
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteSelección()
+	
+	Escribir("El total general de jugadores que participan de la copa es de" tot_gen "jugadores.")
+	
+	CERRAR(ARCH)
+
+Fin Acción

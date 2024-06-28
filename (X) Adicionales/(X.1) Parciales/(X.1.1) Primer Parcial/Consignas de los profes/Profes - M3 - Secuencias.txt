@@ -1,0 +1,151 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. La información de los equipos se encuentra en una secuencia
+// de caracteres:
+//
+// Formato de la secuencia:
+// IntegrantesEsCabezaDeSerieNombreEquipo#IntegrantesEsCabezaDeSerieNombreEquipo#FDS
+//
+// Donde:
+// (*) Integrantes: cuenta con dos caracteres e indica la cantidad de personas
+//     que conforman el equipo (jugadores y cuerpo técnico).
+// (*) EsCabezaDeSerie: un carácter que puede ser S o N e indica si la selección
+//     fue considerada cabeza de grupo en el sorteo.
+//
+// Ejemplo de la secuencia:
+// 35SArgentina#33NBrasil#34SCanadá#36NPerú#...#36SColombia#FDS
+//
+// Se cuenta además con información de la composición de cada plantel en una
+// secuencia de caracteres:
+//
+// Formato de la secuencia:
+// PosiciónNombreApellidoJugador#DorsalEdad|PosiciónNombreApellidoJugador#DorsalEdad|FDS
+//
+// Donde:
+// (*) Posición: dos caracteres que indican la posición del jugador. Puede tomar los
+//     valores "AR" (Arquero), "DF" (Defensa), "ME" (Mediocampista), "DE" (Delantero)
+//     y "CT" (Cuerpo Técnico).
+// (*) Dorsal: dos caracteres que indican el dorsal del jugador.
+// (*) Edad: dos caracteres que indican la edad del jugador.
+//
+// Ejemplo de la secuencia:
+// DELionel Messi#1037|MEEnzo Fernández#2423|FDS
+//
+// Se pide:
+// (a) Generar una secuencia de salida que contenga el nombre y apellido de todos
+//     los jugadores que no pertenezcan al cuerpo técnico y formen parte de un
+//     equipo que es cabeza de serie. Se debe separar la información de cada
+//     jugador con el carácter "%".
+// (b) Indicar la edad del jugador más joven en cada equipo.
+
+Acción SecuenciasM3 ES
+
+Ambiente
+
+	info, plantel, salida: secuencia de carácter
+	v_inf, v_pl: carácter
+	
+	es_cabeza_serie: lógico
+	i, cant_integrantes: entero
+	resg_pos_a, resg_pos_b: carácter
+	resg_edad, mj: entero
+
+	Procedimiento Inicializar() ES
+		es_cabeza_serie := F
+		cant_integrantes := 0
+		resg_edad := 0
+		mj := HV
+	Fin Procedimiento
+	
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(info)
+	ARR(plantel)
+	CREAR(salida)
+	
+	AVZ(info, v_inf)
+	AVZ(plantel, v_pl)
+	
+	Inicializar()
+	
+	Mientras NFDS(info) Hacer
+		cant_integrantes := cant_integrantes + CharToInt(v_inf) * 10
+		AVZ(info, v_inf)
+		cant_integrantes := cant_integrantes + CharToInt(v_inf)
+		AVZ(info, v_inf)
+		
+		Si v_inf = "S" Entonces
+			es_cabeza_serie := V
+		Fin Si
+		
+		AVZ(info, v_inf)
+		
+		Escribir("Equipo: ")
+		
+		Mientras v_inf <> "#" Hacer
+			Escribir(v_inf)
+			AVZ(info, v_inf)
+		Fin Mientras
+		
+		Para i := 1 hasta cant_integrantes Hacer
+			resg_pos_a := v_pl
+			AVZ(plantel, v_pl)
+			resg_pos_b := v_pl
+			AVZ(plantel, v_pl)
+			
+			Si resg_pos_a <> "C" y resg_pos_b <> "T" y es_cabeza_serie Entonces
+				Mientras v_pl <> "#" Hacer
+					GRABAR(salida, v_pl)
+					AVZ(plantel, v_pl)
+				Fin Mientras
+				GRABAR(salida, "%")
+			Contrario
+				Mientras v_pl <> "#" Hacer
+					AVZ(plantel, v_pl)
+				Fin Mientras
+			Fin Si
+			
+			Para i := 1 hasta 3 Hacer
+				AVZ(plantel, v_pl)
+			Fin Para
+			
+			resg_edad := resg_edad + CharToInt(v_inf) * 10
+			AVZ(plantel, v_pl)
+			resg_edad := resg_edad + CharToInt(v_inf)
+			
+			Si resg_edad < mj Entonces
+				mj := resg_edad
+			Fin Si
+			
+			Para i := 1 hasta 2 Hacer
+				AVZ(plantel, v_pl)
+			Fin Para
+		Fin Para
+		
+		Escribir("El jugador más joven del equipo tiene" mj "años.")
+		
+		Inicializar()
+		AVZ(info, v_inf)
+	Fin Mientras
+	
+	CERRAR(info)
+	CERRAR(plantel)
+	CERRAR(salida)
+
+Fin Acción

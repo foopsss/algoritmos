@@ -1,0 +1,162 @@
+// Consigna: aprovechando que arranca una nueva edición de la Copa América de
+// fútbol masculino, los dirigentes de cada uno de los equipos y el comité
+// organizativo quieren obtener estadísticas de los jugadores que participarán
+// en la competición. La información de los equipos se encuentra en una secuencia
+// de caracteres:
+//
+// Formato de la secuencia:
+// EsCabezaDeSerieNombreSeleccion#InformaciónJugadores!EsCabezaDeSerieNombreSeleccion#InformaciónJugadores!FDS
+//
+// Donde:
+// (*) EsCabezaDeSerie: un carácter que puede ser S o N e indica si la selección
+//     fue considerada cabeza de grupo en el sorteo.
+// (*) InformaciónJugadores es una subsecuencia que tiene la siguiente estructura:
+//     ApellidoNombreJugador-PosiciónAñoNacimiento
+//     Esta estructura se repite para cada jugador de la selección.
+//
+// Dentro de InformaciónJugadores:
+// (*) ApellidoNombreJugador: indica el apellido y nombre de un jugador.
+// (*) Posición: dos caracteres que indican la posición del jugador. Puede tomar los
+//     valores "AR" (Arquero), "DF" (Defensa), "ME" (Mediocampista), "DE" (Delantero)
+//     y "CT" (Cuerpo Técnico).
+// (*) AñoNacimiento: cuatro caracteres que indican el año de nacimiento de un
+//     jugador.
+//
+// Ejemplo de la secuencia:
+// SARGENTINA#MessiLionel-DE1987AlvarezJulian-DE2000FernandezEnzo-ME2001..!N...!
+//
+// Se pide:
+// (a) Indicar la cantidad de jugadores que nacieron luego de una fecha indicada
+//     por el usuario.
+// (b) Indicar la cantidad de jugadores que componen cada plantel.
+// (c) Generar una secuencia de salida con el nombre y cantidad de jugadores de
+//     todas las selecciones que son cabeza de serie.
+
+Acción SecuenciasM4 ES
+
+Ambiente
+
+	equipos, salida: secuencia de carácter
+	v_eq, v_sal: carácter
+
+	es_cabeza_serie: lógico
+	i, año_us, año_nac: entero
+	jugadores_plantel, jugadores_año_us: entero
+
+	Procedimiento Inicializar() ES
+		es_cabeza_serie := F
+		jugadores_plantel := 0
+		año_nac := 0
+		jugadores_año_us := 0
+	Fin Procedimiento
+
+	Procedimiento PedirAñoUsuario() ES
+		Escribir("Introduzca un año: ")
+		Leer(año_us)
+	Fin Procedimiento
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+	
+	Función IntToChar(entrada: entero): carácter ES
+		Según entrada Hacer
+			= 0: IntToChar := "0"
+			= 1: IntToChar := "1"
+			= 2: IntToChar := "2"
+			= 3: IntToChar := "3"
+			= 4: IntToChar := "4"
+			= 5: IntToChar := "5"
+			= 6: IntToChar := "6"
+			= 7: IntToChar := "7"
+			= 8: IntToChar := "8"
+			= 9: IntToChar := "9"
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(equipos)
+	CREAR(salida)
+	AVZ(equipos, v_eq)
+	
+	Inicializar()
+	PedirAñoUsuario()
+	
+	Mientras NFDS(equipos) Hacer
+		Si v_eq = "S" Entonces
+			es_cabeza_serie := T
+		Fin Si
+		
+		AVZ(equipos, v_eq)
+		
+		Escribir("Equipo: ")
+		
+		Si es_cabeza_serie Entonces
+			Mientras v_eq <> "#" Hacer
+				Escribir(v_eq)
+				GRABAR(salida, v_eq)
+				AVZ(equipos, v_eq)
+			Fin Mientras
+		Contrario
+			Mientras v_eq <> "#" Hacer
+				Escribir(v_eq)
+				AVZ(equipos, v_eq)
+			Fin Mientras
+		Fin Si
+		
+		AVZ(equipos, v_eq)
+
+		Mientras v_eq <> "!" Hacer
+			jugadores_plantel := jugadores_plantel + 1
+			
+			Mientras v_eq <> "-" Hacer
+				AVZ(equipos, v_eq)
+			Fin Mientras
+						
+			Para i := 1 hasta 3 Hacer
+				AVZ(equipos, v_eq)
+			Fin Para
+			
+			Para i := 1 hasta 4 Hacer
+				año_nac := año_nac + CharToInt(v_eq) * (10 ** (i - 1))
+				AVZ(equipos, v_eq)
+			Fin Para
+			
+			Si año_nac > año_us Entonces
+				jugadores_año_us := jugadores_año_us + 1
+			Fin Si
+		Fin Mientras
+		
+		Escribir("El plantel del equipo cuenta con" jugadores_plantel "jugadores.")
+		
+		Si es_cabeza_serie Entonces
+			v_sal := IntToChar(jugadores_plantel)
+			GRABAR(salida, v_sal)
+		Fin Si
+		
+		es_cabeza_serie := F
+		jugadores_plantel := 0
+		año_nac := 0
+		
+		AVZ(equipos, v_eq)
+	Fin Mientras
+	
+	Escribir("Año indicado por el usuario: " año_us)
+	Escribir("Hay" jugadores_año_us "jugadores que nacieron luego del año indicado por el usuario.")
+	
+	CERRAR(equipos)
+	CERRAR(salida)
+
+Fin Acción
