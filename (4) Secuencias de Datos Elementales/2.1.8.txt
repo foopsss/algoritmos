@@ -27,16 +27,16 @@ Ambiente
 
 	Función IntToChar(entrada: entero): carácter ES
 		Según entrada Hacer
-			=0 : IntToChar := "0"
-			=1 : IntToChar := "1"
-			=2 : IntToChar := "2"
-			=3 : IntToChar := "3"
-			=4 : IntToChar := "4"
-			=5 : IntToChar := "5"
-			=6 : IntToChar := "6"
-			=7 : IntToChar := "7"
-			=8 : IntToChar := "8"
-			=9 : IntToChar := "9"
+			= 0: IntToChar := "0"
+			= 1: IntToChar := "1"
+			= 2: IntToChar := "2"
+			= 3: IntToChar := "3"
+			= 4: IntToChar := "4"
+			= 5: IntToChar := "5"
+			= 6: IntToChar := "6"
+			= 7: IntToChar := "7"
+			= 8: IntToChar := "8"
+			= 9: IntToChar := "9"
 		Fin Según
 	Fin Función
 
