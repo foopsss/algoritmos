@@ -43,6 +43,9 @@ begin
 
 		if num_j1 > num_j2 then
 			begin
+				// Tanto para este caso, como para num_j1 < num_j2, doy como ganador
+				// al otro jugador en caso de que num_j1 no respete los límites. De
+				// lo contrario, se procede con normalidad.
 				if (num_j1 < 1) or (num_j1 > 100) then
 					begin
 						pts_turno_j2 := 100 - num_j2;
