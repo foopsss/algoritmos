@@ -28,29 +28,6 @@ begin
 	readln(num_j2);
 end;
 
-procedure pedir_numeros;
-begin
-	// Para esta consigna, si los jugadores introducen valores
-	// por fuera de los límites permitidos, saturo en el valor
-	// más grande que se permite introducir, que es 100.
-	//
-	// De esta forma, en el cálculo posterior de puntos de cada
-	// turno, el jugador que no siga las reglas no recibe nada
-	// aún si técnicamente es el ganador de la ronda.
-
-	pedir_num_j1();
-	if (num_j1 < 1) or (num_j1 > 100) then
-	begin
-		num_j1 := 100;
-	end;
-
-	pedir_num_j2();
-	if (num_j2 < 1) or (num_j2 > 100) then
-	begin
-		num_j2 := 100;
-	end;
-end;
-
 begin
 	pts_j1 := 0;
 	pts_j2 := 0;
@@ -60,28 +37,45 @@ begin
 		writeln('Turno Nº: ', i);
 		writeln();
 
-		pedir_numeros();
+		pedir_num_j1();
+		pedir_num_j2();
+		writeln();
 
-		if num_j1 <> num_j2 then
-		begin
-			writeln();
-
-			if num_j1 > num_j2 then
+		if num_j1 > num_j2 then
+			begin
+				if (num_j1 < 1) or (num_j1 > 100) then
+					begin
+						pts_turno_j2 := 100 - num_j2;
+						pts_j2 := pts_j2 + pts_turno_j2;
+						writeln('El ganador de este turno es el jugador 2.');
+						writeln('Obtuvo ', pts_turno_j2, ' puntos.');
+					end
+				else
+					begin
+						pts_turno_j1 := 100 - num_j1;
+						pts_j1 := pts_j1 + pts_turno_j1;
+						writeln('El ganador de este turno es el jugador 1.');
+						writeln('Obtuvo ', pts_turno_j1, ' puntos.');
+					end;
+			end
+		else
+			if num_j1 < num_j2 then
 				begin
-					pts_turno_j1 := 100 - num_j1;
-					pts_j1 := pts_j1 + pts_turno_j1;
-					writeln('El ganador de este turno es el jugador 1.');
-					writeln('Obtuvo ', pts_turno_j1, ' puntos.');
-				end
-			else
-				if num_j1 < num_j2 then
-				begin
-					pts_turno_j2 := 100 - num_j2;
-					pts_j2 := pts_j2 + pts_turno_j2;
-					writeln('El ganador de este turno es el jugador 2.');
-					writeln('Obtuvo ', pts_turno_j2, ' puntos.');
+					if (num_j2 < 1) or (num_j2 > 100) then
+						begin
+							pts_turno_j1 := 100 - num_j1;
+							pts_j1 := pts_j1 + pts_turno_j1;
+							writeln('El ganador de este turno es el jugador 1.');
+							writeln('Obtuvo ', pts_turno_j1, ' puntos.');
+						end
+					else
+						begin
+							pts_turno_j2 := 100 - num_j2;
+							pts_j2 := pts_j2 + pts_turno_j2;
+							writeln('El ganador de este turno es el jugador 2.');
+							writeln('Obtuvo ', pts_turno_j2, ' puntos.');
+						end;
 				end;
-		end;
 
 		draw_line(50);
 	end;

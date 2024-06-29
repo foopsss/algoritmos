@@ -4,7 +4,6 @@ el jugador que ingresa el número más grande entre los dos gana la
 cantidad de puntos de (100 - el número elegido).
 
 Considérese además lo siguiente:
-
 (*) Se debe permitir el empate en cada iteración y en el final del juego.
 (*) Se debe permitir que la cantidad de turnos sea introducida por
     el teclado.
@@ -39,7 +38,7 @@ end;
 procedure pedir_numeros;
 begin
 	pedir_num_j1();
-	if (num_j1 < 1) or (num_j1 > 100) then
+	while (num_j1 < 1) or (num_j1 > 100) do
 	begin
 		writeln('Ingrese un número entre 1 y 100.');
 		writeln();
@@ -49,7 +48,7 @@ begin
 	writeln();
 
 	pedir_num_j2();
-	if (num_j2 < 1) or (num_j2 > 100) then
+	while (num_j2 < 1) or (num_j2 > 100) do
 	begin
 		writeln('Ingrese un número entre 1 y 100.');
 		writeln();
