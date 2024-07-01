@@ -55,7 +55,7 @@ Ambiente
 	compra_tarjeta: lógico
 	i, entradas_declaradas, entradas_compradas, mentirosos: entero
 	
-	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 	Procedimiento Inicializar() ES
 		compra_tarjeta := F

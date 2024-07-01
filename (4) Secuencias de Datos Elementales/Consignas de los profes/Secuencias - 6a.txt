@@ -22,7 +22,7 @@ Ambiente
 	v_ent: carácter
 	i, unidades_vendidas: entero
 	
-	meses_pares = ("2", "4", "6", "8")
+	meses_pares = {"2", "4", "6", "8"}
 
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer

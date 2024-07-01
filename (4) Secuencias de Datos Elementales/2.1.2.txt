@@ -6,7 +6,7 @@ Ambiente
 	v: carácter
 
 	cant_cons: alfanumérico
-	vocales = ("A", "E", "I", "O", "U")
+	vocales = {"A", "E", "I", "O", "U"}
 
 Proceso
 

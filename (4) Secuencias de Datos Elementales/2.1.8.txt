@@ -23,7 +23,7 @@ Ambiente
 	sec_sal: secuencia de carácter
 	v_sal: carácter
 
-	dígitos = ("0", "1", "2", "3")
+	dígitos = {"0", "1", "2", "3"}
 
 	Función IntToChar(entrada: entero): carácter ES
 		Según entrada Hacer

@@ -55,7 +55,7 @@ Ambiente
 	i, hora_registro, usuarios_retirados: entero
 	registro_temprano: lógico
 	
-	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	
 	Procedimiento Inicializar() ES
 		registro_temprano := F

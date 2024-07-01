@@ -52,7 +52,6 @@ Proceso
 	ARR(sec)
 	AVZ(sec, v)
 	
-	Inicializar()
 	PedirCategoría()
 	
 	importe_sup := 0
