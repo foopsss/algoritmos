@@ -156,6 +156,7 @@ Proceso
 		GRABAR(sec_sal, monto_total)
 		monto_art := 0
 		monto_total := 0
+		es_tipo_a := F
 		
 		// Avanzo la secuencia de detalles.
 		// La otra no porque ya quedé parado en

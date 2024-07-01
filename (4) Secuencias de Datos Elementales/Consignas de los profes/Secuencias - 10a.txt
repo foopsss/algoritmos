@@ -143,6 +143,7 @@ Proceso
 		
 		// Reseteo las variables necesarias.
 		cant_compras := 0
+		es_junio := F
 		
 		// Avanzo la secuencia de detalles.
 		// La otra no porque ya quedé parado en

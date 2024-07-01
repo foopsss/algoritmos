@@ -106,7 +106,7 @@ Proceso
 			// carácter provisto por el usuario
 			// con el primer carácter del código.
 			Si v_det = car_us Entonces
-				coincide_car := T
+				coincide_car := V
 			Fin Si
 			
 			// Copio el código de producto y la
@@ -142,6 +142,9 @@ Proceso
 		// Grabo en la salida el separador de
 		// clientes.
 		GRABAR(sec_sal, "/")
+		
+		// Reseteo las variables necesarias.
+		coincide_car := F
 		
 		// Avanzo la secuencia de detalles.
 		// La otra no porque ya quedé parado en
