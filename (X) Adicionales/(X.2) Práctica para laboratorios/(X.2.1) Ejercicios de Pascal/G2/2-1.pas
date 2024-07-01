@@ -14,7 +14,11 @@ Según el valor, se pueden obtener los siguientes resultados:
     implica obesidad.
 (*) Para las personas menores de 20 años, un IMC menor a 14 significa bajo
     peso. Entre 14 y 19 es normal, entre 20 y 24 es sobrepeso y más de 25
-    implica obesidad. *}
+    implica obesidad.
+
+Por último, se solicita codificar una subacción que verifique la validez de
+los datos de entrada (es decir, que estos estén en el rango permitido) y le
+solicite al usuario que los reintroduzca en caso de no ser correctos. *}
 
 program EJ1;
 
