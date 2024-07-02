@@ -24,6 +24,11 @@ Ambiente
 		Escribir("Ingrese un mes: ")
 		Leer(mes_us)
 	Fin Procedimiento
+	
+	Procedimiento Inicializar() ES
+		mes := 0
+		unidades_vendidas := 0
+	Fin Procedimiento
 
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
@@ -44,10 +49,8 @@ Proceso
 	ARR(sec)
 	AVZ(sec, v)
 
+	Inicializar()
 	FechaUsuario()
-
-	mes := 0
-	unidades_vendidas := 0
 
 	Mientras NFDS(sec) Hacer
 		// Salto los caracteres correspondientes al día.

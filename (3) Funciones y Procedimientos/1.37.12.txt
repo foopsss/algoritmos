@@ -8,6 +8,7 @@ Ambiente
 	Ambiente
 		desc_docena = 0,4
 		desc_mayor_docena = 0,10
+		
 		total_sin_descuento: entero
 	Proceso
 		total_sin_descuento := precio_producto * unidades_producto

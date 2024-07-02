@@ -46,20 +46,18 @@ Proceso
 	AVZ(sec_ent, v_ent)
 	CREAR(sec_sal)
 
-	divisor := 10000000000
-
 	Mientras v_ent <> "0" Hacer
 		dni := v_ent DIV 10
 		ult_num := dni MOD 10
 
 		Si ult_num en dígitos Entonces
 			cuit := v_ent
-			Para i := 1 hasta 11 Hacer
+			Para i := 11 hasta 1, -1 Hacer
+				divisor := 10 ** (i - 1)
 				dígito := cuit DIV divisor
 				v_sal := IntToChar(dígito)
 				GRABAR(sec_sal, v_sal)
 				cuit := cuit - (dígito * divisor)
-				divisor := divisor DIV 10
 			Fin Para
 			GRABAR(sec_sal, "-")
 		Fin Si

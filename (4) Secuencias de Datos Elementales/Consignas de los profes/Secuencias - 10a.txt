@@ -46,6 +46,11 @@ Ambiente
 	
 	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	
+	Procedimiento Inicializar() ES
+		es_junio := F
+		cant_compras := 0
+	Fin Procedimiento
+	
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
 			="1" : CharToInt := 1
@@ -68,8 +73,7 @@ Proceso
 	AVZ(sec_det, v_det)
 	CREAR(sec_sal)
 	
-	cant_compras := 0
-	es_junio := F
+	Inicializar()
 
 	Mientras NFDS(sec_fac) Hacer
 		// Muestro el código de la factura.
