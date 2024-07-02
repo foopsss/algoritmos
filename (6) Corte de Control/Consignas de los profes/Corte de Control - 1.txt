@@ -54,6 +54,7 @@ Ambiente
 	med_prox_ven, med_no_prox_ven, tot_prox_ven, tot_no_prox_ven, tot_gen_med: entero
 	
 	Procedimiento Inicializar() ES
+		vencimiento_cerca := F
 		resg_categoría := REG.Clave.Categoría
 		med_prox_ven := 0
 		med_no_prox_ven := 0

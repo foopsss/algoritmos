@@ -78,13 +78,12 @@ Ambiente
 	desc_plata = 0,1
 	desc_diamante = 0,15
 
+	nomap_cajero, código_barras: alfanumérico
+	caja_abierta: carácter
 	num_caja, dni_cliente, cant_prod_dist, unid_prod, clientes_fieles, cant_ventas, porcentaje_fieles, i: entero
 	precio_unitario, cantidad, descuento_producto, precio_con_descuento: real
 	total_producto, precio_total_sin_descuento, descuento_total, subtotal_ticket: real
 	descuento_fidelidad, total_a_pagar, total_recaudado_día, importe_promedio_compras: real
-	
-	nomap_cajero, código_barras: alfanumérico
-	caja_abierta: carácter
 	
 	Procedimiento PedirDatosCajero() ES
 		Escribir("Número de caja: ")

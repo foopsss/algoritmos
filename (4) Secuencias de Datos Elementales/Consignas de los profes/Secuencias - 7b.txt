@@ -26,16 +26,20 @@ Ambiente
 	v: carácter
 
 	total_estudiantes, est_prom, i: entero
+	
+	Procedimiento Inicializar() ES
+		total_estudiantes := 0
+		est_prom := 0
+	Fin Procedimiento
 
-	números = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 Proceso
 
 	ARR(sec)
 	AVZ(sec, v)
 
-	total_estudiantes := 0
-	est_prom := 0
+	Inicializar()
 
 	Mientras NFDS(sec) Hacer
 		Mientras v NO en números Hacer

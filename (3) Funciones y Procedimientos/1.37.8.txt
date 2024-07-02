@@ -2,6 +2,8 @@ Acción 1.37.8 ES
 
 Ambiente
 
+	num_a, num_b: entero
+
 	Procedimiento intercambiar() ES
 	Ambiente
 		resguardo: entero

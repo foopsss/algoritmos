@@ -8,13 +8,17 @@ Ambiente
 	sec: secuencia de entero
 	v, cant_car, suma_car: entero
 
+	Procedimiento Inicializar() ES
+		cant_car := 0
+		suma_car := 0
+	Fin Procedimiento
+
 Proceso
 
 	ARR(sec)
 	AVZ(sec, v)
 
-	cant_car := 0
-	suma_car := 0
+	Inicializar()
 
 	// Opto por un Mientras porque el carácter final es 0.
 	Mientras v <> "0" Hacer

@@ -15,6 +15,11 @@ Ambiente
 	v_ent1, v_ent2: carácter
 	
 	cont_car_1, cont_car_2: entero
+	
+	Procedimiento Inicializar() ES
+		cont_car_1 := 0
+		cont_car_2 := 0
+	Fin Procedimiento
 
 Proceso
 
@@ -24,8 +29,7 @@ Proceso
 	AVZ(sec_ent2, v_ent2)
 	CREAR(sec_sal)
 	
-	cont_car_1 := 0
-	cont_car_2 := 0
+	Inicializar()
 	
 	Mientras NFDS(sec_ent1) y NFDS(sec_ent2) Hacer
 		GRABAR(sec_sal, v_ent1)

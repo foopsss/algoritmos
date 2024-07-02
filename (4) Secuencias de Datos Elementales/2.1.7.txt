@@ -5,7 +5,7 @@ Ambiente
 	sec_ent, sec_sal: secuencia de entero
 	v_ent, ult_num, dni: entero
 
-	dígitos = ("0", "1", "2", "3")
+	dígitos = {"0", "1", "2", "3"}
 
 Proceso
 
