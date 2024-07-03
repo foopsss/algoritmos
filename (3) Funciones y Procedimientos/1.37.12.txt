@@ -4,7 +4,7 @@ Ambiente
 
 	precio, unidades, precio_final: entero
 
-	Procedimiento CalcularDescuento(precio_producto, unidades_producto: entero) ES
+	Procedimiento CalcularPrecioFinal(precio_producto, unidades_producto: entero) ES
 	Ambiente
 		desc_docena = 0,4
 		desc_mayor_docena = 0,10
@@ -27,7 +27,7 @@ Proceso
 	Escribir("Introduzca las unidades a llevar: ")
 	Leer(unidades)
 
-	CalcularDescuento(precio, unidades)
+	CalcularPrecioFinal(precio, unidades)
 	
 	Escribir("El precio final a pagar es de" precio_final "pesos.")
 
