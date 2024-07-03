@@ -1,0 +1,132 @@
+// Consigna: el Centro Bioquímico Chaco cuenta con información de análisis
+// realizados durante el día. Esta información se encuentra almacenada en
+// una secuencia de caracteres, la cual inicia con el código de protocolo
+// (5 caracteres, el primero siempre una letra), luego el nombre y apellido
+// del paciente (finaliza en una "," -coma-), cantidad de estudios realizados
+// (2 caracteres) y los códigos de cada uno (4 caracteres).
+//
+// El código de cada estudio inicia con una vocal, que indica el tipo. Si es
+// de tipo "A" cuesta $300, si es de tipo "E" cuesta $420 y si es de tipo "I"
+// cuesta $670. La secuencia finaliza en "*"
+//
+// Formato de la secuencia:
+// CódigoProtocoloNombreApellido,CantidadEstudiosRealizadosCódigosEstudios*
+//
+// Ejemplo de la secuencia:
+// A2462Reina Isabel,03A123E345E333P2342Rey León,01E888*
+//
+// Se pide:
+// (a) Generar otra secuencia de salida, que almacene los estudios solicitados
+//     del tipo "E", siempre y cuando el protocolo de ese paciente comience con
+//     la letra "A".
+// (b) Informar el total recaudado por tipo de estudio.
+// (c) Informar el porcentaje de estudios de tipo "A" en relación al total de
+//     estudios.
+
+Acción SecuenciasM6 ES
+
+Ambiente
+
+	estudios, salida: secuencia de carácter
+	v_est: carácter
+
+	es_prot_a: lógico
+	i, j, cant_est_pac, tot_est: entero
+	cant_est_a, cant_est_e, cant_est_i: entero
+	resg_tipo: carácter
+	monto_est_a, monto_est_e, monto_est_i: entero
+	porc_est_a: real
+
+	Procedimiento Inicializar() ES
+		es_prot_a := F
+		cant_est_pac := 0
+		tot_est := 0
+		cant_est_a := 0
+		cant_est_e := 0
+		cant_est_i := 0
+		monto_est_a := 0
+		monto_est_e := 0
+		monto_est_i := 0
+	Fin Procedimiento
+
+	Función CharToInt(entrada: carácter): entero ES
+		Según entrada Hacer
+			= "0": CharToInt := 0
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
+		Fin Según
+	Fin Función
+
+Proceso
+
+	ARR(estudios)
+	CREAR(salida)
+	AVZ(estudios, v_est)
+	
+	Inicializar()
+	
+	Mientras NFDS(estudios) Hacer
+		Mientras v_est <> "*" Hacer
+			Si v_est = "A" Entonces
+				es_prot_a := V
+			Fin Si
+			
+			Mientras v_est <> "," Hacer
+				AVZ(estudios, v_est)
+			Fin Mientras
+			
+			AVZ(estudios, v_est)
+			
+			cant_est_pac := cant_est_pac + CharToInt(v_est) * 10
+			AVZ(estudios, v_est)
+			cant_est_pac := cant_est_pac + CharToInt(v_est) * 1
+			AVZ(estudios, v_est)
+			
+			Para i := 1 hasta cant_est_pac Hacer
+				tot_est := tot_est + 1
+				
+				resg_tipo := v_est
+				
+				Según resg_tipo Hacer
+					= "A": cant_est_a := cant_est_a + 1
+					= "E": cant_est_e := cant_est_e + 1
+					= "I": cant_est_i := cant_est_i + 1
+				Fin Según
+				
+				Si es_prot_a y resg_tipo = "E" Entonces
+					Para j := 1 hasta 4 Hacer
+						GRABAR(salida, v_est)
+						AVZ(estudios, v_est)
+					Fin Para
+				Contrario
+					Para j := 1 hasta 4 Hacer
+						AVZ(estudios, v_est)
+					Fin Para
+				Fin Si
+			Fin Para
+		Fin Mientras
+		
+		AVZ(estudios, v_est)
+	Fin Mientras
+	
+	monto_est_a := cant_est_a * 300
+	monto_est_e := cant_est_e * 420
+	monto_est_i := cant_est_i * 670
+	porc_est_a := (cant_est_a * 100) / tot_est
+	
+	Escribir("El tipo de estudio A recaudó un total de" monto_est_a "pesos.")
+	Escribir("El tipo de estudio E recaudó un total de" monto_est_e "pesos.")
+	Escribir("El tipo de estudio I recaudó un total de" monto_est_i "pesos.")
+	Escribir("Los estudios de tipo A representan el" porc_est_a "% del total.")
+
+	CERRAR(estudios)
+	CERRAR(salida)
+
+Fin Acción

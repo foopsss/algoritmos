@@ -1,0 +1,116 @@
+// Consigna: se acerca el mundial de fútbol de Qatar 2022 y los organizadores
+// desean conocer las estadísticas de reservas realizadas a cada uno de los
+// estadios de fútbol que serán sedes del torneo mundial durante la primera
+// jornada de partidos.
+//
+// Para esto se cuenta con información de todas las reservas realizadas a cada
+// una de las plazas de los estadios en una secuencia de datos con la siguiente
+// estructura:
+//
+// Formato de la secuencia:
+// NombreEstadio%Capacidad#TipoReservaRazónSocial%AsientosReservados_TipoReservaRazónSocial%AsientosReservados_@
+// NombreEstadio%Capacidad#TipoReservaRazónSocial%AsientosReservados_TipoReservaRazónSocial%AsientosReservados_@...@FDS
+// 
+// Donde:
+// (*) NombreEstadio: cantidad de caracteres indefinida, indica el nombre de
+//     estadio.
+// (*) Capacidad: dos caracteres que indican la capacidad de espectadores del
+//     estadio en miles de espectadores.
+// (*) TipoReserva: un carácter que indica quien realiza la reserva. Admite los
+//     siguientes valores: E (empresa), P (particular) e Y (protocolo).
+// (*) RazónSocial: nombre de quien realiza la reserva.
+// (*) AsientosReservados: cantidad de caracteres indefinida, teniendo en cuenta
+//     la siguiente estructura: 3 caracteres con el formato CAA, donde C indica
+//     la zona (A..Z) y AA indica el número de asiento (2 caracteres).
+//
+// Se pide:
+// (a) Informar para cada estadio:
+//     (a.1) La cantidad de reservas de cada tipo (empresa, particular y protocolo).
+//     (a.2) La cantidad de reservas realizadas en una zona particular del estadio
+//           ingresada por el usuario.
+// (b) Generar una secuencia de salida de enteros, donde cada elemento indica la
+//     cantidad de reservas para cada estadio.
+
+Acción SecuenciasM8 ES
+
+Ambiente
+
+	sec_est: secuencia de carácter
+	salida: secuencia de entero
+	v_est: carácter
+
+	zona_us: carácter
+	i, res_e, res_p, res_y, res_zona_us, res_estadio: entero
+
+	Procedimiento PedirZonaUsuario() ES
+		Escribir("Ingrese una zona: ")
+		Leer(zona_us)
+	Fin Procedimiento
+
+	Procedimiento Inicializar() ES
+		res_e := 0
+		res_p := 0
+		res_y := 0
+		res_zona_us := 0
+	Fin Procedimiento
+
+Proceso
+
+	ARR(sec_est)
+	CREAR(salida)
+	AVZ(sec_est, v_est)
+	
+	Mientras NFDS(sec_est) Hacer
+		Mientras v_est <> "@" Hacer
+			Escribir("Estadio: ")
+			
+			Mientras v_est <> "%" Hacer
+				Escribir(v_est)
+				AVZ(sec_est, v_est)
+			Fin Mientras
+			
+			Para i := 1 hasta 4 Hacer
+				AVZ(sec_est, v_est)
+			Fin Para
+			
+			Mientras v_est <> "@" Hacer
+				Según v_est Hacer
+					= "E": res_e := res_e + 1
+					= "P": res_p := res_p + 1
+					= "Y": res_y := res_y + 1
+				Fin Según
+				
+				Mientras v_est <> "%" Hacer
+					AVZ(sec_est, v_est)
+				Fin Mientras
+				
+				AVZ(sec_est, v_est)
+				
+				Si v_est = zona_us Entonces
+					res_zona_us := res_zona_us + 1
+				Fin Si
+				
+				Para i := 1 hasta 4 Hacer
+					AVZ(sec_est, v_est)
+				Fin Para
+			Fin Mientras
+		Fin Mientras
+		
+		Escribir("Se realizaron" res_e "reservas por parte de empresas.")
+		Escribir("Se realizaron" res_p "reservas por parte de particulares.")
+		Escribir("Se realizaron" res_y "reservas de protocolo.")
+		
+		Escribir("Zona indicada por el usuario: " zona_us)
+		Escribir("En la zona indicada por el usuario se realizaron" res_zona_us "reservas.")
+		
+		res_estadio := res_e + res_p + res_y
+		GRABAR(salida, res_estadio)
+		
+		Inicializar()
+		AVZ(sec_est, v_est)
+	Fin Mientras
+	
+	CERRAR(sec_est)
+	CERRAR(salida)
+
+Fin Acción

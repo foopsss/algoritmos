@@ -1,0 +1,127 @@
+// Consigna: se acerca el mundial de fútbol de Qatar 2022 y los organizadores
+// desean conocer las estadísticas de reservas realizadas a cada uno de los
+// estadios de fútbol que serán sedes del torneo mundial durante la primera
+// jornada de partidos.
+//
+// Para esto se cuenta con información de todas las reservas realizadas a cada
+// una de las plazas de los estadios en una secuencia de datos con la siguiente
+// estructura:
+//
+// Formato de la secuencia:
+// NombreEstadio%Capacidad#TipoReservaRazónSocial%AsientosReservados_TipoReservaRazónSocial%AsientosReservados_@
+// NombreEstadio%Capacidad#TipoReservaRazónSocial%AsientosReservados_TipoReservaRazónSocial%AsientosReservados_@...@FDS
+// 
+// Donde:
+// (*) NombreEstadio: cantidad de caracteres indefinida, indica el nombre de
+//     estadio.
+// (*) Capacidad: dos caracteres que indican la capacidad de espectadores del
+//     estadio en miles de espectadores.
+// (*) TipoReserva: un carácter que indica quien realiza la reserva. Admite los
+//     siguientes valores: E (empresa), P (particular) e Y (protocolo).
+// (*) RazónSocial: nombre de quien realiza la reserva.
+// (*) AsientosReservados: cantidad de caracteres indefinida, teniendo en cuenta
+//     la siguiente estructura: 3 caracteres con el formato CAA, donde C indica
+//     la zona (A..Z) y AA indica el número de asiento (2 caracteres).
+//
+// Se pide:
+// (a) Informar para cada estadio:
+//     (a.1) La cantidad total de reservas.
+//     (a.2) El porcentaje de ocupación del estadio.
+// (b) Generar una secuencia de salida que contenga el nombre de cada estadio y
+//     todos los asientos reservados para un tipo de reserva particular (que debe
+//     ingresar el usuario). Separar las reservas realizadas para cada estadio
+//     por el carácter "@". Formato de la secuencia de salida:
+//     NombreEstadio%AsientosReservados@NombreEstadio%AsientosReservados@...@FDS
+
+Acción SecuenciasM7 ES
+
+Ambiente
+
+	estadios, salida: secuencia de carácter
+	v_est: carácter
+	
+	reserva_us: carácter
+	capacidad_estadio, reservas_estadio, cant_reservas_us, asientos_reservados: entero
+	porcentaje_ocupación: real
+	
+	Procedimiento Inicializar() ES
+		capacidad_estadio := 0
+		reservas_estadio := 0
+		cant_reservas_us := 0
+		asientos_reservados := 0
+	Fin Procedimiento
+
+	Procedimiento PedirReservaUsuario() ES
+		Escribir("Introduzca un tipo de reserva: ")
+		Leer(reserva_us)
+	Fin Procedimiento
+
+Proceso
+
+	ARR(estadios)
+	CREAR(salida)
+	AVZ(estadios, v_est)
+	
+	Inicializar()
+	PedirReservaUsuario()
+	
+	Mientras NFDS(estadios) Hacer
+		Escribir("Estadio: ")
+		
+		Mientras v_est <> "%" Hacer
+			Escribir(v_est)
+			GRABAR(salida, v_est)
+			AVZ(estadios, v_est)
+		Fin Mientras
+		
+		GRABAR(salida, "%")
+		AVZ(estadios, v_est)
+		
+		capacidad_estadio := capacidad_estadio + CharToInt(v_est) * 10
+		AVZ(estadios, v_est)
+		capacidad_estadio := capacidad_estadio + CharToInt(v_est)
+		capacidad_estadio := capacidad_estadio * 1000
+		
+		Para i := 1 hasta 2 Hacer
+			AVZ(estadios, v_est)
+		Fin Para
+		
+		Mientras v_est <> "@" Hacer
+			reservas_estadio := reservas_estadio + 1
+			
+			Si v_est = reserva_us Entonces
+				cant_reservas_us := cant_reservas_us + 1
+			Fin Si
+			
+			Mientras v_est <> "%" Hacer
+				AVZ(estadios, v_est)
+			Fin Mientras
+			
+			AVZ(estadios, v_est)
+		
+			Mientras v_est <> "_" Hacer
+				asientos_reservados := asientos_reservados + 1
+				
+				Para i := 1 hasta 3 Hacer
+					AVZ(estadios, v_est)
+				Fin Para
+			Fin Mientras
+			
+			AVZ(estadios, v_est)
+		Fin Mientras
+		
+		porcentaje_ocupación := (asientos_reservados * 100) / capacidad_estadio
+		GRABAR(salida, cant_reservas_us)
+		GRABAR(salida, "@")
+		
+		Escribir("En este estadio se realizaron un total de" reservas_estadio "reservas.")
+		Escribir("El porcentaje de ocupación es del" porcentaje_ocupación "%.")
+		
+		Inicializar()
+		AVZ(estadios, v_est)
+	Fin Mientras
+	
+	CERRAR(estadios)
+	CERRAR(salida)
+
+Fin Acción

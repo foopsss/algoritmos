@@ -1,0 +1,149 @@
+// Consigna: una empresa de servicios agropecuarios con diversas sucursales en
+// el país necesita un programa que le permita operar con los diferentes servicios
+// que tiene contratados. Para ello almacena información en un archivo: se tiene
+// la sucursal, el área al que corresponde el servicio (0: administración de campo,
+// 1: siembra y cosecha de soja, etc), una clave de identificación del servicio, la
+// descripción o nombre del servicio, la cantidad de clientes que han contratado el
+// servicio y el monto facturado por el servicio.
+//
+// SERVICIO (ordenado por SUCURSAL, AREA e ID_SERV)
+// | SUCURSAL | ÁREA | ID_SERV | DESC | CANT_CLI | MONTO |
+// | N(4) | N(1) | N(6) | AN(45) | N(4) | N(6,2) |
+//
+// Se pide:
+// (a) Informar el monto facturado por la venta de servicios contratados, teniendo
+//     en cuenta la sucursal, el área de servicio y total general, siempre y cuando
+//     la cantidad de clientes sea par.
+// (b) Generar un archivo de salida con sucursal y total facturado por el área 1 de
+//     la misma.
+//     | SUCURSAL | TOTAL |
+//     | N(4) | N(8,2) |
+// (c) Informar si el total facturado por la sucursal 50 representa más o menos del
+//     20% del total facturado por toda la empresa.
+
+Acción CorteM6 ES
+
+Ambiente
+
+	Servicios = Registro
+		Clave = Registro
+			Sucursal: N(4)
+			Área: N(1)
+			IDServ: N(6)
+		Fin Registro
+		Descripción: AN(45)
+		Clientes: N(4)
+		Monto: N(6,2)
+	Fin Registro
+	
+	ARCH: archivo de Servicios ordenado por Clave
+	REG: Servicios
+	
+	Sucursales = Registro
+		Sucursal: N(4)
+		Total: N(8,2)
+	Fin Registro
+	
+	ARCH2: archivo de Sucursales
+	REG2: Sucursales
+
+	resg_área, resg_suc: entero
+	monto_área, monto_área_par: entero
+	monto_suc, monto_suc_par: entero
+	tot_gen, tot_par: entero
+	monto_suc_50: entero
+	20_porc_tot: real
+
+	Procedimiento Inicializar() ES
+		resg_área := REG.Clave.Área
+		resg_suc := REG.Clave.Sucursal
+		monto_área := 0
+		monto_área_par := 0
+		monto_suc := 0
+		monto_suc_par := 0
+		tot_gen := 0
+		tot_par := 0
+		monto_suc_50 := 0
+	Fin Procedimiento
+
+	Procedimiento CorteÁrea() ES
+		// Algunas cosas de corte.
+		Escribir("Área: " resg_área)
+		Escribir("Monto facturado: " monto_área_par)
+		
+		// Grabo el archivo de salida.
+		Si resg_área = "1" Entonces
+			REG2.Sucursal := resg_sucursal
+			REG2.Total := monto_área
+			GRABAR(ARCH2, REG2)
+		Fin Si
+		
+		// Resto de las cosas de corte.
+		monto_suc := monto_suc + monto_área
+		monto_suc_par := monto_suc_par + monto_área_par
+		monto_área := 0
+		monto_área_par := 0
+		resg_área := REG.Clave.Área
+	Fin Procedimiento
+
+	Procedimiento CorteSucursal() ES
+		CorteÁrea()
+		Escribir("Sucursal: " resg_suc)
+		Escribir("Monto facturado: " monto_suc_par)
+		tot_gen := tot_gen + monto_suc
+		tot_par := tot_par + monto_suc_par
+		monto_suc := 0
+		monto_suc_par := 0
+		resg_suc := REG.Clave.Sucursal
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR S/ (ARCH2)
+	LEER(ARCH, REG)
+	
+	Inicializar()
+	
+	Mientras NFDA(ARCH) Hacer
+		Si resg_suc <> REG.Clave.Sucursal Entonces
+			CorteSucursal()
+		Contrario
+			Si resg_área <> REG.Clave.Área Entonces
+				CorteÁrea()
+			Fin Si
+		Fin Si
+		
+		// Primer punto.
+		Si REG.Clientes MOD 2 = 0 Entonces
+			monto_área_par := monto_área_par + REG.Monto
+		Fin Si
+		
+		// Tercer punto.
+		monto_área := REG.Monto
+		
+		Si REG.Clave.Sucursal = "50" Entonces
+			monto_suc_50 := monto_suc_50 + REG.Monto
+		Fin Si
+		
+		LEER(ARCH, REG)
+	Fin Mientras
+	
+	CorteSucursal()
+	
+	20_porc_tot := tot_gen * 0,20
+	
+	Escribir("Se facturó un total de" tot_par "pesos en ventas de servicios a cantidades pares de clientes.")
+	
+	Si monto_suc_50 > 20_porc_tot Entonces
+		Escribir("La sucursal 50 facturó un monto superior al 20% del total general facturado.")
+	Contrario
+		Si monto_suc_50 < 20_porc_tot Entonces
+			Escribir("La sucursal 50 facturó un monto inferior al 20% del total general facturado.")
+		Fin Si
+	Fin Si
+	
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+
+Fin Acción
