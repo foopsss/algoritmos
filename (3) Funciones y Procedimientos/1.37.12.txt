@@ -4,15 +4,15 @@ Ambiente
 
 	precio, unidades, precio_final: entero
 
-	Procedimiento CalcularPrecioFinal(precio_producto, unidades_producto: entero) ES
+	Procedimiento CalcularPrecioFinal(precio_prod, unidades_prod: entero) ES
 	Ambiente
 		desc_docena = 0,4
 		desc_mayor_docena = 0,10
 		
 		total_sin_descuento: entero
 	Proceso
-		total_sin_descuento := precio_producto * unidades_producto
-		Según unidades_producto Hacer
+		total_sin_descuento := precio_prod * unidades_prod
+		Según unidades_prod Hacer
 			<= "6": precio_final := total_sin_descuento
 			<= "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_docena)
 			> "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_mayor_docena)
