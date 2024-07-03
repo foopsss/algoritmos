@@ -113,6 +113,9 @@ Proceso
 			Fin Para
 		Fin Mientras
 		
+		es_prot_a := F
+		cant_est_pac := 0
+		
 		AVZ(estudios, v_est)
 	Fin Mientras
 	
