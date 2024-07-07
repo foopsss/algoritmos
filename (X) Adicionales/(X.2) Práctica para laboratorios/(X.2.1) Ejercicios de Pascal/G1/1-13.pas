@@ -50,7 +50,6 @@ begin
 	readln(us_user);
 
 	pedir_contrasenia();
-
 	espacio_doble();
 
 	if (us_user = us_sist) and (pass_user = pass_sist) then
