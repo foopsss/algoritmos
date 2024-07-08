@@ -23,19 +23,19 @@ var
 	pts_turno_j1, pts_turno_j2: integer;
 	pts_j1, pts_j2: integer;
 
-procedure pedir_num_j1;
+procedure pedir_num_j1();
 begin
 	write('Número del jugador 1: ');
 	readln(num_j1);
 end;
 
-procedure pedir_num_j2;
+procedure pedir_num_j2();
 begin
 	write('Número del jugador 2: ');
 	readln(num_j2);
 end;
 
-procedure pedir_numeros;
+procedure pedir_numeros();
 begin
 	pedir_num_j1();
 	while (num_j1 < 1) or (num_j1 > 100) do

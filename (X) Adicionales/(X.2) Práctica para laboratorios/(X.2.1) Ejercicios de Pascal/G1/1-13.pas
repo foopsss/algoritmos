@@ -21,7 +21,7 @@ var
 	car: char;
 	i, j: integer;
 
-procedure pedir_contrasenia;
+procedure pedir_contrasenia();
 begin
 	write('Introduzca su contraseña: ');
 	pass_user := '';
@@ -37,7 +37,7 @@ begin
 	until car = #13;
 end;
 
-procedure espacio_doble;
+procedure espacio_doble();
 begin
 	for i := 1 to 2 do
 	begin

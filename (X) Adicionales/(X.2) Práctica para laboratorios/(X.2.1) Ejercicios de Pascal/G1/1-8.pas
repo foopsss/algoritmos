@@ -24,7 +24,7 @@ var
 	i, nota, suma_notas: integer;
 	prom_notas: real;
 
-procedure pedir_nota;
+procedure pedir_nota();
 begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
@@ -36,7 +36,7 @@ begin
 	for i := 0 to 9 do
 	begin
 		repeat
-			pedir_nota;
+			pedir_nota();
 
 			writeln();
 			if not (nota in [0..10]) then

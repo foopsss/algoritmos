@@ -25,13 +25,13 @@ var
 	nota, cant_notas, suma_notas: integer;
 	prom_notas: real;
 
-procedure pedir_eleccion;
+procedure pedir_eleccion();
 begin
 	write('¿Desea introducir una nota? [S/N]: ');
 	read(eleccion);
 end;
 
-procedure pedir_nota;
+procedure pedir_nota();
 begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
@@ -40,12 +40,12 @@ end;
 begin
 	suma_notas := 0;
 	cant_notas := 0;
-	pedir_eleccion;
+	pedir_eleccion();
 
 	while eleccion = 'S' do
 	begin
 		repeat
-			pedir_nota;
+			pedir_nota();
 
 			writeln();
 			if not (nota in [0..10]) then
@@ -68,7 +68,7 @@ begin
 		suma_notas := suma_notas + nota;
 
 		draw_line(35);
-		pedir_eleccion;
+		pedir_eleccion();
 	end;
 
 	if eleccion = 'N' then

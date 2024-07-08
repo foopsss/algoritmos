@@ -32,7 +32,7 @@ var
 	edad, peso, altura_cm, imc: integer;
 	altura_m: real;
 
-procedure pedir_edad;
+procedure pedir_edad();
 begin
 	write('Introduzca su edad: ');
 	readln(edad);
@@ -45,7 +45,7 @@ begin
 	end;
 end;
 
-procedure pedir_peso;
+procedure pedir_peso();
 begin
 	write('Introduzca su peso en kilogramos: ');
 	readln(peso);
@@ -58,7 +58,7 @@ begin
 	end;
 end;
 
-procedure pedir_altura;
+procedure pedir_altura();
 begin
 	write('Introduzca su altura en centímetros: ');
 	readln(altura_cm);

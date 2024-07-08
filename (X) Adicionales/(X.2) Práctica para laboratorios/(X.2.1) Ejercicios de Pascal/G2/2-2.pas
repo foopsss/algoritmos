@@ -28,7 +28,7 @@ var
 	edad, peso, altura_cm, imc: integer;
 	altura_m: real;
 
-procedure calcular_imc;
+procedure calcular_imc();
 begin
 	edad := High(rango_edad);
 	peso := High(rango_peso);

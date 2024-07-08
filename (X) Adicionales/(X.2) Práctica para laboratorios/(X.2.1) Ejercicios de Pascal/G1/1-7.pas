@@ -20,7 +20,7 @@ uses
 var
 	nota: integer;
 
-procedure pedir_nota;
+procedure pedir_nota();
 begin
 	write('Introduzca la nota del alumno: ');
 	readln(nota);
@@ -28,7 +28,7 @@ end;
 
 begin
 	repeat
-		pedir_nota;
+		pedir_nota();
 
 		writeln();
 		if not (nota in [0..10]) then

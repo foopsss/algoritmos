@@ -29,7 +29,7 @@ var
 	i, digitos_pass, dig_num, dig_pass: integer;
 	ult_dos_dig_num_us, mult, suma_prod: integer;
 
-procedure sumar_prod_digitos;
+procedure sumar_prod_digitos();
 begin
 	for i := digitos_pass downto 1 do
 	begin
