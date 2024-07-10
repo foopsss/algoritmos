@@ -2,8 +2,16 @@
 
 run_program() {
 	fpc $program.pas
+	coderr=$?
+
 	echo "------------------------------------------------------------"
-	./$program
+
+	if [ "$coderr" -gt 0 ]
+	then
+		echo "No se pudo ejecutar el programa."
+	else
+		./$program
+	fi
 }
 
 delete_files() {

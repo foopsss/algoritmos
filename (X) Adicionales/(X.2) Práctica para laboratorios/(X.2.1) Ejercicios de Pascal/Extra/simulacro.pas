@@ -4,7 +4,7 @@ cuántos estudiantes obtuvieron una calificación mayor o igual al promedio. El
 programa también debe mostrar el promedio de calificaciones y el número de
 estudiantes que superaron o igualaron el promedio. *}
 
-// Materiales para este ejercicio:
+// Material para este ejercicio:
 // https://www.freepascal.org/docs-html/rtl/system/halt.html
 
 program simulacro;
