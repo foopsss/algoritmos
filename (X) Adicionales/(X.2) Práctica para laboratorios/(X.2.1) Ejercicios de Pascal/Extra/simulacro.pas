@@ -37,30 +37,32 @@ begin
 			halt(1);
 		end
 	else
-		inicializar();
-		read(entrada, v_ent);
-
-		while not eof(entrada) do
 		begin
-			suma := suma + v_ent;
+			inicializar();
 			read(entrada, v_ent);
-		end;
 
-		promedio := suma / 1500;
-		reset(entrada);
-
-		while not eof(entrada) do
-		begin
-			if v_ent >= promedio then
+			while not eof(entrada) do
 			begin
-				est_mayor_prom := est_mayor_prom + 1;
+				suma := suma + v_ent;
+				read(entrada, v_ent);
 			end;
 
-			read(entrada, v_ent);
+			promedio := suma / 1500;
+			reset(entrada);
+
+			while not eof(entrada) do
+			begin
+				if v_ent >= promedio then
+				begin
+					est_mayor_prom := est_mayor_prom + 1;
+				end;
+
+				read(entrada, v_ent);
+			end;
+
+			writeln('Promedio de calificaciones: ', promedio:10:2);
+			writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
+
+			close(entrada);
 		end;
-
-		writeln('Promedio de calificaciones: ', promedio:10:2);
-		writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
-
-		close(entrada);
 end.
