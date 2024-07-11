@@ -81,6 +81,8 @@ begin
 				begin
 					cant_ventas := cant_ventas + 1;
 				end;
+
+				importe := 0;
 			end;
 
 			writeln('Cantidad de ventas que superan los $400: ', cant_ventas);
