@@ -60,7 +60,7 @@ begin
 				read(entrada, v_ent);
 			end;
 
-			writeln('Promedio de calificaciones: ', promedio:10:2);
+			writeln('Promedio de calificaciones: ', promedio:4:2);
 			writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
 
 			close(entrada);

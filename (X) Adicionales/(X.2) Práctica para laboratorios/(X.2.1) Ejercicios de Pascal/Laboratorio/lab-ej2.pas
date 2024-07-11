@@ -84,7 +84,7 @@ begin
 			end;
 
 			porc_noval_dep := (noval_dep * 100) / cont_op;
-			writeln('Porcentaje de operaciones no válidas del tipo depósito: ', porc_noval_dep:10:2);
+			writeln('Porcentaje de operaciones no válidas del tipo depósito: ', porc_noval_dep:4:2);
 
 			close(entrada)
 		end;

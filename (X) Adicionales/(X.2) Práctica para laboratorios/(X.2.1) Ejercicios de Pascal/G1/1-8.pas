@@ -60,5 +60,5 @@ begin
 	end;
 
 	prom_notas := suma_notas / 10;
-	writeln('Promedio de las 10 notas: ', prom_notas:10:2);
+	writeln('Promedio de las 10 notas: ', prom_notas:4:2);
 end.
