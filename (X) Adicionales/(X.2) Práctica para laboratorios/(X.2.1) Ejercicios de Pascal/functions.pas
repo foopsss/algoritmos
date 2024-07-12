@@ -5,9 +5,26 @@
 unit functions;
 
 interface
+	function CharToInt(entrada: char): integer;
 	procedure draw_line(length: integer; symbol: char = ' ');
 
 implementation
+	function CharToInt(entrada: char): integer;
+	begin
+		case entrada of
+			'0': CharToInt := 0;
+			'1': CharToInt := 1;
+			'2': CharToInt := 2;
+			'3': CharToInt := 3;
+			'4': CharToInt := 4;
+			'5': CharToInt := 5;
+			'6': CharToInt := 6;
+			'7': CharToInt := 7;
+			'8': CharToInt := 8;
+			'9': CharToInt := 9;
+		end;
+	end;
+
 	procedure draw_line(length: integer; symbol: char = ' ');
 	var
 		i: integer;

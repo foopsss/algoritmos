@@ -13,6 +13,7 @@ Se pide: ¿cuál es la cantidad de ventas que superaron el importe de $400? *}
 program EJ1;
 
 uses
+	functions in '../functions.pas',
 	math;
 
 type
@@ -24,22 +25,6 @@ var
 
 	i, cant_ventas: integer;
 	importe: LongInt;
-
-function CharToInt(entrada: char): integer;
-begin
-	case entrada of
-		'0': CharToInt := 0;
-		'1': CharToInt := 1;
-		'2': CharToInt := 2;
-		'3': CharToInt := 3;
-		'4': CharToInt := 4;
-		'5': CharToInt := 5;
-		'6': CharToInt := 6;
-		'7': CharToInt := 7;
-		'8': CharToInt := 8;
-		'9': CharToInt := 9;
-	end;
-end;
 
 procedure inicializar();
 begin
