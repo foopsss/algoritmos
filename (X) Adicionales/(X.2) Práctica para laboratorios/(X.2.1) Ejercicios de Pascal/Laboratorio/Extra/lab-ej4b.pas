@@ -6,10 +6,13 @@ y pie preferido.
 Se pide: ¿cuál es el porcentaje de jugadoras de treinta años o más que prefieren
 utilizar el pie derecho para patear? *}
 
+// ACLARACIÓN: esta resolución no utiliza registros, sino que trata cada línea
+// del archivo como un arreglo.
+
 program EJ4;
 
 uses
-	functions in '../functions.pas';
+	functions in '../../functions.pas';
 
 type
 	csv = TextFile;
@@ -18,7 +21,7 @@ var
 	entrada_csv: csv;
 	v_csv: string;
 
-	i, j, col_linea: integer;
+	i, col_linea: integer;
 	cant_jugadoras, edad_jugadora, der_treinta: integer;
 	resg_pie: char;
 	porc_der_treinta: real;
@@ -42,17 +45,14 @@ begin
 end;
 
 begin
-	assign(entrada_csv, 'Materiales/entrada-lab-ej4.csv');
+	assign(entrada_csv, '../Materiales/entrada-lab-ej4.csv');
 
 	{$I-}
 	reset(entrada_csv);
 	{$I+}
 
 	if IOResult <> 0 then
-		begin
-			writeln('¡Error!');
-			halt(1);
-		end
+		error_lectura_archivo()
 	else
 		begin
 			inicializar();
@@ -79,7 +79,7 @@ begin
 				// Primero avanzo los caracteres hasta
 				// situarme en la cuarta celda, la de
 				// la edad.
-				for j := 1 to 3 do
+				for i := 1 to 3 do
 				begin
 					avanzar_columnas();
 				end;
@@ -90,7 +90,7 @@ begin
 				// Repito el mismo proceso, pero ahora para
 				// llegar al pie preferido, la última celda
 				// de cada fila.
-				for j := 1 to 4 do
+				for i := 1 to 4 do
 				begin
 					avanzar_columnas();
 				end;
@@ -106,7 +106,6 @@ begin
 				// a la siguiente línea del archivo.
 				col_linea := 1;
 				edad_jugadora := 0;
-
 				readln(entrada_csv, v_csv);
 			end;
 

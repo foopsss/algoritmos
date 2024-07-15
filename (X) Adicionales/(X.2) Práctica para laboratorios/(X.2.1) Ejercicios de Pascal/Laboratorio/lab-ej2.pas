@@ -9,6 +9,9 @@ sobre el total de operaciones? *}
 
 program EJ2;
 
+uses
+	functions in '../functions.pas';
+
 type
 	sec = TextFile;
 
@@ -34,10 +37,7 @@ begin
 	{$I+}
 
 	if IOResult <> 0 then
-		begin
-			writeln('¡Error!');
-			halt(1);
-		end
+		error_lectura_archivo()
 	else
 		begin
 			inicializar();

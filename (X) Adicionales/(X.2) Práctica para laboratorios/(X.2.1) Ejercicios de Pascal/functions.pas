@@ -7,6 +7,7 @@ unit functions;
 interface
 	function CharToInt(entrada: char): integer;
 	procedure draw_line(length: integer; symbol: char = ' ');
+	procedure error_lectura_archivo();
 
 implementation
 	function CharToInt(entrada: char): integer;
@@ -41,6 +42,13 @@ implementation
 			writeln('-')
 		else
 			writeln(symbol);
+	end;
+
+	procedure error_lectura_archivo();
+	begin
+		writeln('¡Error!');
+		writeln('No se pudo abrir el archivo.');
+		halt(1);
 	end;
 
 end.

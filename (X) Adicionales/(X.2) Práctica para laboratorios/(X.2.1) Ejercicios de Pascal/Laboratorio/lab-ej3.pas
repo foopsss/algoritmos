@@ -39,10 +39,7 @@ begin
 	{$I+}
 
 	if IOResult <> 0 then
-		begin
-			writeln('¡Error!');
-			halt(1);
-		end
+		error_lectura_archivo()
 	else
 		begin
 			inicializar();
