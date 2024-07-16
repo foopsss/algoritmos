@@ -9,6 +9,7 @@ utilizar el pie derecho para patear? *}
 // Material para este ejercicio:
 // https://stackoverflow.com/questions/9831731/reading-a-file-in-freepascal
 // https://forum.lazarus.freepascal.org/index.php?topic=46021.0
+// https://wiki.freepascal.org/SDF
 // https://www.freepascal.org/docs-html/rtl/classes/tstrings.html
 // https://www.freepascal.org/docs-html/rtl/classes/tstringlist.html
 // https://www.freepascal.org/docs-html/rtl/classes/tstrings.delimiter.html
@@ -16,8 +17,6 @@ utilizar el pie derecho para patear? *}
 // https://www.freepascal.org/docs-html/rtl/classes/tstrings.delimitedtext.html
 // https://www.freepascal.org/docs-html/rtl/classes/tstrings.count.html
 
-// Necesito esta directiva de compilador para poder usar las palabras reservadas
-// "try" y "finally".
 {$mode objfpc}
 
 program EJ4;
@@ -25,7 +24,6 @@ program EJ4;
 uses
 	// Provee el tipo de dato "TStringList".
 	classes,
-	// Provee las funciones "StrToInt" y "StrToFloat".
 	sysutils;
 
 type
@@ -44,6 +42,10 @@ var
 	// TStringList es un tipo de dato compuesto, que consiste
 	// básicamente en un arreglo dinámico de strings. Este tipo
 	// de dato está definido en la librería "classes".
+	//
+	// TStringList se puede utilizar con archivos CSV pero está
+	// pensado para el formato de archivos SDF, que se parece
+	// mucho a CSV pero no es exactamente igual.
 	entrada_csv: TStringList;
 	v_csv: TStringList;
 	jugadora: info_jugadora;
@@ -63,10 +65,6 @@ end;
 begin
 	inicializar();
 
-	// La documentación en la wiki de Free Pascal recomienda
-	// englobar el uso de este tipo de dato en un bloque con
-	// las palabras "try" y "finally" para evitar fugas de
-	// memoria.
 	try
 		// Establezo el separador de campos para la ventana.
 		//
