@@ -472,7 +472,6 @@ Restaurant ID;Restaurant Name;Country Code;City;Address;Locality;Cuisines;Has Ta
 18482983;The Lokal;184;Singapore;136 Neil Road 088865;Neil Road, Outram;Singaporean, Australian, German;No;No;No;3.1;Orange;Average;33
 18479742;I Am;184;Singapore;674 North Bridge Road, #01-01 Haji Lane 188804;North Bridge Road, Rochor;Western, Fusion, Fast Food;No;No;No;3.2;Orange;Average;32
 18482938;Super Loco;184;Singapore;The Quayside;;;;;;;;;
-"60 Roberston Quay #01-13 238252""";Robertson Quay, Singapore River;Robertson Quay, Singapore River, Singapore;103.839.165;1.290.083.898;American, Mexican;No;4;3.2;Orange;;;;
 18483082;Artistry;184;Singapore;17 Jalan Pinang 199149;Sungai Pinang, Rochor;American, Bakery, European, Burger, Fusion;No;No;No;3.8;Yellow;Good;28
 18483446;Bitters & Love;184;Singapore;118 Telok Ayer Street 068587;Telok Ayer Street, Outram;Finger Food;No;No;No;3.9;Yellow;Good;35
 18483252;Artichoke Cafe;184;Singapore;161 Middle Road, Sculpture Square 188978;Victoria, Rochor;Cafe, Spanish, Turkish, Greek;No;No;No;3.2;Orange;Average;33
@@ -623,7 +622,6 @@ Restaurant ID;Restaurant Name;Country Code;City;Address;Locality;Cuisines;Has Ta
 5601521;Applebee's;214;Sharjah;Opposite Jumbo Electronics, Level 2, Sahara Centre, Al Nahda, Sharjah;Sahara Centre, Al Nahda;American, Mexican, Burger;No;Yes;No;4.1;Green;Very Good;197
 5602377;Paper Fig;214;Sharjah;Near Dubai Islamic Bank, Muweilah, University City, Sharjah;University City;Cafe, Bakery, Desserts;No;No;No;4.5;Dark Green;Excellent;143
 5602884;Sis Burger;214;Sharjah;Behind ADNOC Petrol Station,;;;;;;;;;
-Univercity City Road; University City;" Sharjah""";University City;University City, Sharjah;5.545.425.095;Emirati Diram(AED);No;No;2;Good;12;;
 5602942;Crafted Blends;214;Sharjah;Next To Super Bonanza Hyper Market, Opposite Defence Camp, University City, Sharjah;University City;Cafe;No;No;No;4.2;Green;Very Good;43
 3400025;Jahanpanah;1;Agra;E 23, Shopping Arcade, Sadar Bazaar, Agra Cantt, Agra;Agra Cantt;North Indian, Mughlai;No;No;No;3.9;Yellow;Good;140
 3400341;Rangrezz Restaurant;1;Agra;E-20, Shopping Arcade, Sadar Bazaar, Agra Cantt, Agra;Agra Cantt;North Indian, Mughlai;No;No;No;3.5;Yellow;Good;71
@@ -1509,7 +1507,6 @@ Univercity City Road; University City;" Sharjah""";University City;University Ci
 308390;Gabbar Meals;1;Gurgaon;Shop 18, Metropark Food Court, HUDA City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon;North Indian, Mughlai;No;Yes;No;3.4;Orange;Average;260
 308473;McDonald's;1;Gurgaon;Metropark Food Court, HUDA City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon;Fast Food, Burger;No;Yes;No;2.7;Orange;Average;90
 308997;Crust Bistro;1;Gurgaon;Food Court, HUDA City Center Metro;;;;;;;;;
- Station; Sector 29;" Gurgaon""";Huda City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon, Gurgaon;7.707.272.552;Indian Rupees(Rs.);No;No;2;Good;144;;
 308470;Dunkin' Donuts;1;Gurgaon;Shop 3, HUDA City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon;Burger, Desserts, Fast Food;No;Yes;No;3.6;Yellow;Good;243
 308477;Kabab Roll Cafe;1;Gurgaon;Metropark Food Court, HUDA City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon;North Indian, Mughlai;No;Yes;No;3.8;Yellow;Good;121
 307786;Starbucks;1;Gurgaon;Ground Floor, South Wing, HUDA City Centre Metro Station, Sector 29, Gurgaon;Huda City Centre Metro Station, Sector 29, Gurgaon;Cafe;No;No;No;3.8;Yellow;Good;183
@@ -6068,7 +6065,6 @@ Univercity City Road; University City;" Sharjah""";University City;University Ci
 306750;Aayush Food Plaza;1;New Delhi;Main Road, Sadh Nagar, Palam, New Delhi;Palam;Chinese, Fast Food;No;No;No;2.9;Orange;Average;5
 306739;Ankit Fast Food Corner;1;New Delhi;Opposite Sanjhi Rasoi, Dabri Road, Palam, New Delhi;Palam;Chinese;No;No;No;2.9;Orange;Average;5
 18312564;Da Pizza Corner;1;New Delhi;Rz-36A, Raj Nagar Part 1,;;;;;;;;;
-Palam Colony; Opposite Piller 47; Palam;" New Delhi""";Palam;Palam, New Delhi;600;No;No;No;Orange;Average;7;
 306741;Mughal Zaika Chicken Point;1;New Delhi;Shop 4, K.H 83/8/1, Mahavir Enclave, Main Dabri Road, Palam, New Delhi;Palam;North Indian, Mughlai, Chinese;No;No;No;2.9;Orange;Average;4
 9974;Nawab Restaurant;1;New Delhi;WZ 613, Raj Nagar, Palam Colony, Palam, New Delhi;Palam;North Indian, Mughlai;No;No;No;2.9;Orange;Average;7
 300529;New Bikaner Sweets;1;New Delhi;D 105, Street 6, Mahavir Enclave, Main Palam Dabri Road, Palam, New Delhi;Palam;Street Food, Desserts;No;No;No;3;Orange;Average;10
@@ -8268,7 +8264,6 @@ Palam Colony; Opposite Piller 47; Palam;" New Delhi""";Palam;Palam, New Delhi;60
 18409212;Chawla's 2;1;Noida;C-3/18, Main Market, Sector 104, Near Sector 110, Noida;Sector 110;North Indian, Mughlai, Chinese, Fast Food;No;No;No;0;White;Not rated;1
 18219528;Chination;1;Noida;Sector 110, Noida;Sector 110;Chinese;No;No;No;0;White;Not rated;3
 18380150;Essen Foods;1;Noida;Shop 20, Ashirwad Complex, Opposite Pathway;;;;;;;;;
-School; Sector 104; Near Sector 110;" Noida""";Sector 110;Sector 110, Noida;500;No;No;No;White;Not rated;0;
 18355013;Haochi;1;Noida;Shop 1 & 2, Lower Ground Floor, Hyde Park, Commercial Complex, Sector 78, Near Sector 110, Noida;Sector 110;Chinese;No;No;No;0;White;Not rated;1
 18348609;Lassilo;1;Noida;D 51, Sector 105, Near Sector 110, Noida;Sector 110;Fast Food;No;No;No;0;White;Not rated;0
 18424175;Mittal Bikaneri Sweets;1;Noida;A 2/22, Main Market, Sector 110, Noida;Sector 110;Mithai, Street Food;No;No;No;0;White;Not rated;0
@@ -8725,7 +8720,6 @@ School; Sector 104; Near Sector 110;" Noida""";Sector 110;Sector 110, Noida;500;
 18133492;Sweta Restaurant;1;Noida;Barola, Near OBC Bank, Dadri Main Road, Sector 49, Noida;Sector 49;North Indian;No;Yes;No;3.2;Orange;Average;61
 18332086;Flames of Tandoor;1;Noida;Main DSC Road, Near OBC Bank, Sector 49, Noida;Sector 49;North Indian, Mughlai;No;Yes;No;3.5;Yellow;Good;76
 18419113;Shaivi's Kitchen;1;Noida;Hindon Vihar, Sector 49, Noida;;;;;;;;;
-"Opp. Dominos and ICICI BANK Sector 48""";Sector 49;Sector 49, Noida;77.375.287;285.562.369;North Indian, South Indian, Chinese;No;1;0;White;;;;
 18203626;Kuppies;1;Noida;A-100, 2nd Floor, Sector 5, Noida;Sector 5;Bakery, Desserts;No;No;No;3.8;Yellow;Good;89
 312978;The Urban Chulha;1;Noida;I-10, Harola, Near Sector 5, Noida;Sector 5;North Indian;No;Yes;No;3.5;Yellow;Good;87
 18451091;Goyal Chhole Kulche Wala;1;Noida;G-48, Udhyog Marg, Sector 6, Near Sector 5;Sector 5;Street Food;No;No;No;0;White;Not rated;0

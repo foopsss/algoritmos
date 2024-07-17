@@ -88,10 +88,10 @@ begin
 				der_treinta := der_treinta + 1;
 			end;
 		end;
-	finally
+
 		porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
 		writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
-
+	finally
 		entrada_csv.free;
 	end;
 end.

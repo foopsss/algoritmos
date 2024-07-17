@@ -18,7 +18,6 @@ utilizar el pie derecho para patear? *}
 // https://www.freepascal.org/docs-html/rtl/classes/tstrings.count.html
 
 {$mode objfpc}
-
 program EJ4;
 
 uses
@@ -105,10 +104,10 @@ begin
 				der_treinta := der_treinta + 1;
 			end;
 		end;
-	finally
+
 		porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
 		writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
-
+	finally
 		entrada_csv.free;
 		v_csv.free;
 	end;
