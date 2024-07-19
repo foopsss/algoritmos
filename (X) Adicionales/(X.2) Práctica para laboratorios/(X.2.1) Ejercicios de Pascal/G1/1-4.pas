@@ -20,15 +20,15 @@ begin
 	mult := x * y;
 	div_real := x / y;
 
-	writeln('Valor de X: ', x:10:2);
-	writeln('Valor de Y: ', y:10:2);
+	writeln('Valor de X: ', x:4:2);
+	writeln('Valor de Y: ', y:4:2);
 
 	// Los resultados están acortados a dos decimales y utilizan notación
 	// de punto fijo (fixed-point notation) para ser mostrados en un formato
 	// más amigable a la vista.
 	writeln();
-	writeln('Suma: ', suma:10:2);
-	writeln('Resta: ', resta:10:2);
-	writeln('Multiplicación: ', mult:10:2);
-	writeln('División real: ', div_real:10:2);
+	writeln('Suma: ', suma:4:2);
+	writeln('Resta: ', resta:4:2);
+	writeln('Multiplicación: ', mult:4:2);
+	writeln('División real: ', div_real:4:2);
 end.
