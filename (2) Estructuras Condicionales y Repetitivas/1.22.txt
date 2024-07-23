@@ -1,0 +1,44 @@
+Acción 1.22 ES
+
+Ambiente
+
+	número: entero
+
+	Función es_primo(entrada: entero): lógico ES
+	Ambiente
+		i, divisores: entero
+	Proceso
+		divisores := 2
+		
+		Para i := 2 hasta (entrada - 1) Hacer
+			Si entrada MOD i = 0 Entonces
+				divisores := divisores + 1
+			Fin Si
+		Fin Para
+		
+		Si divisores > 2 Entonces
+			es_primo := F
+		Contrario
+			es_primo := T
+		Fin Si
+	Fin Función
+
+Proceso
+
+	Escribir("Introduzca un número: ")
+	Leer(número)
+	
+	Según número Hacer
+		= "0": Escribir("El número no es primo ni compuesto.")
+		= "1": Escribir("El número no es primo ni compuesto.")
+		= "2": Escribir("El número es primo.")
+		= "3": Escribir("El número es primo.")
+		= OTROS:
+		        Si es_primo(numero) Entonces
+		        	Escribir("El número es primo.")
+		        Contrario
+		        	Escribir("El número es compuesto.")
+		        Fin Si
+	Fin Según
+
+Fin Acción
