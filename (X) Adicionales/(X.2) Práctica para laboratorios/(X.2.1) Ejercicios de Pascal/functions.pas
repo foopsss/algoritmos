@@ -1,7 +1,10 @@
 // Documentación útil para la librería:
 // https://www.freepascal.org/docs-html/user/userse33.html
 
+// Necesito poner el compilador en modo OBJFPC para poder establecer parámetros
+// por defecto en una subacción.
 {$mode objfpc}
+
 unit functions;
 
 interface
