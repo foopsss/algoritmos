@@ -110,18 +110,18 @@ Proceso
 		Contrario
 			Si REG.Clave > REG2.Clave Entonces
 				Según REG2.CodMov Hacer
+					= "1": IncorporarRemedio()
+					= "2": Escribir("Error. No se puede dar de baja algo inexistente.")
+					= "3": Escribir("Error. No se puede modificar algo inexistente.")
+				Fin Según
+				LEER_MOVIMIENTOS()
+			Contrario
+				Según REG2.CodMov Hacer
 					= "1": Escribir("Error. No se puede dar de alta algo que ya existe.")
 					= "2": RemedioVencido()
 					= "3": ModificarCantidad()
 				Fin Según
 				LEER_MEDICAMENTOS()
-				LEER_MOVIMIENTOS()
-			Contrario
-				Según REG2.CodMov Hacer
-					= "1": IncorporarRemedio()
-					= "2": Escribir("Error. No se puede dar de baja algo inexistente.")
-					= "3": Escribir("Error. No se puede modificar algo inexistente.")
-				Fin Según
 				LEER_MOVIMIENTOS()
 			Fin Si
 		Fin Si
