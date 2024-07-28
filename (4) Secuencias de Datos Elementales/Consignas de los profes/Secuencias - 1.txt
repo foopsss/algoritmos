@@ -15,7 +15,7 @@ Proceso
 	CREAR(sec_sal)
 
 	Mientras NFDS(sec) Hacer
-		Si v MOD 2 = "0" Entonces
+		Si v MOD 2 = 0 Entonces
 			GRABAR(sec_sal, v_ent)
 		Fin Si
 		

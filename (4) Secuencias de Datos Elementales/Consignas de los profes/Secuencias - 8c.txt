@@ -35,15 +35,15 @@ Ambiente
 	
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
-			="1" : CharToInt := 1
-			="2" : CharToInt := 2
-			="3" : CharToInt := 3
-			="4" : CharToInt := 4
-			="5" : CharToInt := 5
-			="6" : CharToInt := 6
-			="7" : CharToInt := 7
-			="8" : CharToInt := 8
-			="9" : CharToInt := 9
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
 		Fin Según
 	Fin Función
 
@@ -53,7 +53,6 @@ Proceso
 	AVZ(sec, v)
 	
 	PedirCategoría()
-	
 	importe_sup := 0
 	
 	Mientras NFDS(sec) Hacer
@@ -96,10 +95,10 @@ Proceso
 			Si resg_cat = cat_us o resg_rubro = "S" Entonces
 				Para i := 1 hasta 4 Hacer
 					Según i Hacer
-						="1": importe := importe + CharToInt(v) * 1000
-						="2": importe := importe + CharToInt(v) * 100
-						="3": importe := importe + CharToInt(v) * 10
-						="4": importe := importe + CharToInt(v) * 1
+						= 1: importe := importe + CharToInt(v) * 1000
+						= 2: importe := importe + CharToInt(v) * 100
+						= 3: importe := importe + CharToInt(v) * 10
+						= 4: importe := importe + CharToInt(v) * 1
 					Fin Según
 					AVZ(sec, v)
 				Fin Para

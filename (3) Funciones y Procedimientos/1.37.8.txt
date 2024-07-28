@@ -4,7 +4,7 @@ Ambiente
 
 	num_a, num_b: entero
 
-	Procedimiento intercambiar() ES
+	Procedimiento Intercambiar() ES
 	Ambiente
 		resguardo: entero
 	Proceso
@@ -24,7 +24,7 @@ Proceso
 	Escribir("Primer valor de A: " num_a)
 	Escribir("Primer valor de B: " num_b)
 	
-	intercambiar()
+	Intercambiar()
 	
 	Escribir("Nuevo valor de A: " num_a)
 	Escribir("Nuevo valor de B: " num_b)

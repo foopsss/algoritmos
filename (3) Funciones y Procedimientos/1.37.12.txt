@@ -13,9 +13,9 @@ Ambiente
 	Proceso
 		total_sin_descuento := precio_prod * unidades_prod
 		Según unidades_prod Hacer
-			<= "6": precio_final := total_sin_descuento
-			<= "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_docena)
-			> "12": precio_final := total_sin_descuento - (total_sin_descuento * desc_mayor_docena)
+			<= 6: precio_final := total_sin_descuento
+			<= 12: precio_final := total_sin_descuento - (total_sin_descuento * desc_docena)
+			> 12: precio_final := total_sin_descuento - (total_sin_descuento * desc_mayor_docena)
 		Fin Según
 	Fin Función
 

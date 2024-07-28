@@ -18,7 +18,7 @@ Proceso
 	AVZ(sec_ent, v_act)
 
 	Mientras NFDS(sec) Hacer
-		Si v_act - v_ant <> "1" Entonces
+		Si v_act - v_ant <> 1 Entonces
 			Para i := 1 hasta (v_act - v_ant - 1) Hacer
 				v_ant := v_ant + 1
 				GRABAR(sec_sal, v_ant)

@@ -46,22 +46,17 @@ Ambiente
 	
 	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	
-	Procedimiento Inicializar() ES
-		es_junio := F
-		cant_compras := 0
-	Fin Procedimiento
-	
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
-			="1" : CharToInt := 1
-			="2" : CharToInt := 2
-			="3" : CharToInt := 3
-			="4" : CharToInt := 4
-			="5" : CharToInt := 5
-			="6" : CharToInt := 6
-			="7" : CharToInt := 7
-			="8" : CharToInt := 8
-			="9" : CharToInt := 9
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
 		Fin Según
 	Fin Función
 
@@ -73,7 +68,7 @@ Proceso
 	AVZ(sec_det, v_det)
 	CREAR(sec_sal)
 	
-	Inicializar()
+	cant_compras := 0
 
 	Mientras NFDS(sec_fac) Hacer
 		// Muestro el código de la factura.
@@ -90,6 +85,8 @@ Proceso
 		
 		Si v_fac = "6" Entonces
 			es_junio := V
+		Contrario
+			es_junio := F
 		Fin Si
 		
 		// Avanzo hasta el CUIT/CUIL.
@@ -147,7 +144,6 @@ Proceso
 		
 		// Reseteo las variables necesarias.
 		cant_compras := 0
-		es_junio := F
 		
 		// Avanzo la secuencia de detalles.
 		// La otra no porque ya quedé parado en

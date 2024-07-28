@@ -6,61 +6,61 @@ Ambiente
 
 	Procedimiento mostrar_nro(entrada: entero) ES
 		Según entrada Hacer
-			= "0":
+			= 0:
 				Escribir("****")
 				Escribir("*  *")
 				Escribir("*  *")
 				Escribir("*  *")
 				Escribir("****")
-			= "1":
+			= 1:
 				Escribir("   *")
 				Escribir("   *")
 				Escribir("   *")
 				Escribir("   *")
 				Escribir("   *")
-			= "2":
+			= 2:
 				Escribir("****")
 				Escribir("   *")
 				Escribir("****")
 				Escribir("*   ")
 				Escribir("****")
-			= "3":
+			= 3:
 				Escribir("****")
 				Escribir("   *")
 				Escribir("****")
 				Escribir("   *")
 				Escribir("****")
-			= "4":
+			= 4:
 				Escribir("*  *")
 				Escribir("*  *")
 				Escribir("****")
 				Escribir("   *")
 				Escribir("   *")
-			= "5":
+			= 5:
 				Escribir("****")
 				Escribir("*   ")
 				Escribir("****")
 				Escribir("   *")
 				Escribir("****")
-			= "6":
+			= 6:
 				Escribir("****")
 				Escribir("*   ")
 				Escribir("****")
 				Escribir("*  *")
 				Escribir("****")
-			= "7":
+			= 7:
 				Escribir("****")
 				Escribir("   *")
 				Escribir("   *")
 				Escribir("   *")
 				Escribir("   *")
-			= "8":
-				Escribir("****")
-				Escribir("*  *")
+			= 8:
 				Escribir("****")
 				Escribir("*  *")
 				Escribir("****")
-			= "9":
+				Escribir("*  *")
+				Escribir("****")
+			= 9:
 				Escribir("****")
 				Escribir("*  *")
 				Escribir("****")

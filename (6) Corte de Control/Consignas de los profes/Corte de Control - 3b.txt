@@ -88,7 +88,7 @@ Ambiente
 	
 	Procedimiento CorteTema() ES
 		CorteCurso()
-		Si insc_tema < "500" Entonces
+		Si insc_tema < 500 Entonces
 			Escribir("Tema: " resg_tema)
 			Escribir("Total de inscriptos: " insc_tema)
 		Fin Si

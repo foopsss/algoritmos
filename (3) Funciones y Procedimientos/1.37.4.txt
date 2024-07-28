@@ -21,7 +21,7 @@ Ambiente
 			
 			es_negativo := suma_dígitos MOD 7
 		Contrario
-			Si entrada = "0" Entonces
+			Si entrada = 0 Entonces
 				es_negativo := 0
 			Contrario
 				es_negativo := -1
@@ -44,10 +44,9 @@ Proceso
 		clave := es_negativo(número, longitud)
 		
 		Según clave Hacer
-			< "0": Escribir("El número es negativo.")
-			= "0": Escribir("El número es 0.")
-			> "0": Escribir("El número es positivo.")
-			       Escribir("Clave: " clave)
+			< 0: Escribir("El número es negativo.")
+			= 0: Escribir("El número es 0.")
+			> 0: Escribir("El número es positivo. Clave: " clave)
 		Fin Según
 		
 		Escribir("¿Desea probar con otro número? [S/N]: ")

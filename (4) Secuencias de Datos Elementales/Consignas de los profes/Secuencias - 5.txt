@@ -56,12 +56,12 @@ Proceso
 	Mientras NFDS(sec) Hacer
 		Mientras v <> "%" Hacer
 			Según v Hacer
-				="1": cant_com1 := cant_com1 + 1
-				="2": cant_com2 := cant_com2 + 1
-				="3": cant_com3 := cant_com3 + 1
-				="4": cant_com4 := cant_com4 + 1
-				="5": cant_com5 := cant_com5 + 1
-				="6": cant_com6 := cant_com6 + 1
+				= "1": cant_com1 := cant_com1 + 1
+				= "2": cant_com2 := cant_com2 + 1
+				= "3": cant_com3 := cant_com3 + 1
+				= "4": cant_com4 := cant_com4 + 1
+				= "5": cant_com5 := cant_com5 + 1
+				= "6": cant_com6 := cant_com6 + 1
 			Fin Según
 			
 			// Hasta acá sigo en el primer carácter.

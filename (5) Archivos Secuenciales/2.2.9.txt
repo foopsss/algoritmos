@@ -8,7 +8,7 @@ Ambiente
 
 	Productos = Registro
 		CodProd: N(5)
-		Tipo: ("1", "2", "3")
+		Tipo: (1, 2, 3)
 		Marca: AN(50)
 		Modelo: AN(50)
 		Descripción: AN(100)
@@ -59,9 +59,9 @@ Proceso
 		REG2 := REG
 		
 		Según REG.Tipo Hacer
-			="1": TratamientoCalzados()
-			="2": TratamientoIndumentaria()
-			="3": TratamientoAccesorios()
+			= 1: TratamientoCalzados()
+			= 2: TratamientoIndumentaria()
+			= 3: TratamientoAccesorios()
 		Fin Según
 		
 		GRABAR(ARCH2, REG2)

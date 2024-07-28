@@ -18,7 +18,7 @@ Ambiente
 		Escribir("El número cuenta con" decenas "decenas.")
 		Escribir("El número cuenta con" unidades "unidades.")
 
-		Si número MOD 3 = "0" Entonces
+		Si número MOD 3 = 0 Entonces
 			Escribir("El número es múltiplo de 3.")
 		Contrario
 			Escribir("El número NO es múltiplo de 3.")

@@ -159,7 +159,7 @@ Proceso
 		// se gastó más del 75% del presupuesto inicial.
 		porc_restante := (REG.PresupuestoActual * 100) / REG.PresupuestoInicial
 		
-		Si porc_restante < "25" Entonces
+		Si porc_restante < 25 Entonces
 			proyectos_derrochadores := proyectos_derrochadores + 1
 			proyectos_derrochadores_trab := proyectos_derrochadores_trab + REG.Inscriptos
 		Fin Si

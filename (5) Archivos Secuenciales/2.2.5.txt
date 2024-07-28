@@ -40,7 +40,7 @@ Proceso
 	Escribir("| Nro. de legajo | Apellido y nombre | Carrera |")
 	
 	Mientras NFDA(ARCH) Hacer
-		Si año_us - REG.FechaIngreso.Año = "1" y REG.Nota > "7" Entonces
+		Si año_us - REG.FechaIngreso.Año = 1 y REG.Nota > 7 Entonces
 			Escribir(REG.Legajo, REG.NomAp, REG.Carrera)
 		Fin Si
 		

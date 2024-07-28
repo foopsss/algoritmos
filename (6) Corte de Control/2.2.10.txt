@@ -26,6 +26,12 @@ Ambiente
 	resg_carrera: alfanumérico
 	total_carrera, total_general: entero
 	
+	Procedimiento Inicializar() ES
+		resg_carrera := REG.Carrera
+		total_carrera := 0
+		total_general := 0
+	Fin Procedimiento
+	
 	Procedimiento CorteCarrera() ES
 		Escribir("Carrera: " resg_carrera)
 		Escribir("En esta carrera hay" total_carrera "alumnos.")
@@ -39,9 +45,7 @@ Proceso
 	ABRIR E/ (ARCH)
 	LEER(ARCH, REG)
 
-	resg_carrera := REG.Carrera
-	total_carrera := 0
-	total_general := 0
+	Inicializar()
 
 	Mientras NFDA(ARCH) Hacer
 		Si resg_carrera <> REG.Carrera Entonces

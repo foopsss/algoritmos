@@ -56,10 +56,10 @@ Ambiente
 		Leer(num_b)
 		
 		Según operación Hacer
-			="1": Suma(num_a, num_b)
-			="2": Resta(num_a, num_b)
-			="3": Multiplicación(num_a, num_b)
-			="4": División(num_a, num_b)
+			= 1: Suma(num_a, num_b)
+			= 2: Resta(num_a, num_b)
+			= 3: Multiplicación(num_a, num_b)
+			= 4: División(num_a, num_b)
 		Fin Según
 	Fin Procedimiento
 

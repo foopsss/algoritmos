@@ -78,7 +78,7 @@ Ambiente
 	desc_plata = 0,1
 	desc_diamante = 0,15
 
-	nomap_cajero, código_barras: alfanumérico
+	nomap_cajero, código_barras, membresía_cliente: alfanumérico
 	caja_abierta: carácter
 	num_caja, dni_cliente, cant_prod_dist, unid_prod, clientes_fieles, cant_ventas, porcentaje_fieles, i: entero
 	precio_unitario, cantidad, descuento_producto, precio_con_descuento: real
@@ -203,10 +203,10 @@ Proceso
 		// por programa de fidelización y el
 		// total a pagar.
 		Según membresía_cliente Hacer
-			="ORO": descuento_fidelidad := precio_total_sin_descuento * desc_oro
-			="PLATA": descuento_fidelidad := precio_total_sin_descuento * desc_plata
-			="DIAMANTE": descuento_fidelidad := precio_total_sin_descuento * desc_diamante
-			="NO SOCIO": descuento_fidelidad := 0
+			= "ORO": descuento_fidelidad := precio_total_sin_descuento * desc_oro
+			= "PLATA": descuento_fidelidad := precio_total_sin_descuento * desc_plata
+			= "DIAMANTE": descuento_fidelidad := precio_total_sin_descuento * desc_diamante
+			= "NO SOCIO": descuento_fidelidad := 0
 		Fin Según
 		
 		total_a_pagar := precio_total_sin_descuento - descuento_total - descuento_fidelidad

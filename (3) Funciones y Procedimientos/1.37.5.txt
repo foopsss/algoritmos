@@ -18,9 +18,6 @@ Ambiente
 
 Proceso
 
-	// Inicializo mis variables.
-	es_dígito := F
-
 	Escribir("Introduzca un carácter: ")
 	Leer(car_us)
 

@@ -10,7 +10,7 @@ Ambiente
 		NroMesa: N(2)
 		Observaciones: AN(50)
 		NroCircuito: N(2)
-		Partido: ("0", "1", "2", "3")
+		Partido: (0, 1, 2, 3)
 	Fin Registro
 
 	ARCH: archivo de Padrón
@@ -36,13 +36,13 @@ Proceso
 	LEER(ARCH, REG)
 	
 	Mientras NFDA(ARCH) Hacer
-		Si REG.Partido = "3" Entonces
+		Si REG.Partido = 3 Entonces
 			REG2.NomAp := REG.NomAp
 			REG2.DNI := REG.DNI
 			REG2.Dirección := REG.Dirección
 			GRABAR(ARCH2, REG2)
 		Contrario
-			Si REG.Partido = "0" y REG.Clase > "1940" Entonces
+			Si REG.Partido = 0 y REG.Clase > 1940 Entonces
 				REG3.NomAp := REG.NomAp
 				REG3.DNI := REG.DNI
 				REG3.Dirección := REG.Dirección

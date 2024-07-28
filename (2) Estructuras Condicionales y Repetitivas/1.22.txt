@@ -19,9 +19,17 @@ Ambiente
 		Si divisores > 2 Entonces
 			es_primo := F
 		Contrario
-			es_primo := T
+			es_primo := V
 		Fin Si
 	Fin Función
+	
+	Procedimiento ControlarSiEsPrimo(entrada: entero) ES
+	        Si es_primo(entrada) Entonces
+	        	Escribir("El número es primo.")
+	        Contrario
+	        	Escribir("El número es compuesto.")
+	        Fin Si
+	Fin Procedimiento
 
 Proceso
 
@@ -29,16 +37,11 @@ Proceso
 	Leer(número)
 	
 	Según número Hacer
-		= "0": Escribir("El número no es primo ni compuesto.")
-		= "1": Escribir("El número no es primo ni compuesto.")
-		= "2": Escribir("El número es primo.")
-		= "3": Escribir("El número es primo.")
-		= OTROS:
-		        Si es_primo(numero) Entonces
-		        	Escribir("El número es primo.")
-		        Contrario
-		        	Escribir("El número es compuesto.")
-		        Fin Si
+		= 0: Escribir("El número no es primo ni compuesto.")
+		= 1: Escribir("El número no es primo ni compuesto.")
+		= 2: Escribir("El número es primo.")
+		= 3: Escribir("El número es primo.")
+		= OTROS: ControlarSiEsPrimo(número)
 	Fin Según
 
 Fin Acción

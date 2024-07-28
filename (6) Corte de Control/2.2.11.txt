@@ -26,6 +26,17 @@ Ambiente
 	tot_sexo_más20, tot_sexo_menos20: entero
 	tot_gral_más20, tot_gral_menos20: entero
 
+	Procedimiento Inicializar() ES
+		resg_carrera := REG.Clave.Carrera
+		resg_sexo := REG.Clave.Sexo
+		tot_carr_más20 := 0
+		tot_carr_menos20 := 0
+		tot_sexo_más20 := 0
+		tot_sexo_menos20 := 0
+		tot_gral_más20 := 0
+		tot_gral_menos20 := 0
+	Fin Procedimiento
+
 	Procedimiento CorteCarrera() ES
 		Escribir("Carrera: " resg_carrera)
 		Escribir("Cantidad de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " tot_carrera_más20)
@@ -49,17 +60,6 @@ Ambiente
 		resg_sexo := REG.Clave.Sexo
 	Fin Procedimiento
 
-	Procedimiento Inicializar() ES
-		resg_carrera := REG.Clave.Carrera
-		resg_sexo := REG.Clave.Sexo
-		tot_carr_más20 := 0
-		tot_carr_menos20 := 0
-		tot_sexo_más20 := 0
-		tot_sexo_menos20 := 0
-		tot_gral_más20 := 0
-		tot_gral_menos20 := 0
-	Fin Procedimiento
-
 Proceso
 
 	ABRIR E/ (ARCH)
@@ -76,8 +76,8 @@ Proceso
 			Fin Si
 		Fin Si
 		
-		Si REG.FechaIngreso.Año > "2009" Entonces
-			Si REG.MateriasAprobadas > "20" Entonces
+		Si REG.FechaIngreso.Año > 2009 Entonces
+			Si REG.MateriasAprobadas > 20 Entonces
 				tot_carr_más20 := tot_carr_más20 + 1
 			Contrario
 				tot_carr_menos20 := tot_carr_menos20 + 1

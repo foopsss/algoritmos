@@ -21,7 +21,7 @@ Proceso
 	Inicializar()
 
 	// Opto por un Mientras porque el carácter final es 0.
-	Mientras v <> "0" Hacer
+	Mientras v <> 0 Hacer
 		cant_car := cant_car + 1
 		suma_car := suma_car + v
 		AVZ(sec, v)

@@ -38,7 +38,7 @@ Proceso
 	Escribir("| Número de factura | Fecha | Importe total |")
 
 	Mientras NFDA(ARCH) Hacer
-		Si REG.FechaFactura > FechaUsuario y REG.Importe < "1000" Entonces
+		Si REG.FechaFactura > FechaUsuario y REG.Importe < 1000 Entonces
 			Escribir(REG.NroFactura, REG.FechaFactura.Día, "/", REG.FechaFactura.Mes, "/", REG.FechaFactura.Año, REG.Total)
 		Fin Si
 		

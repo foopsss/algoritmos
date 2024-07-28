@@ -24,7 +24,7 @@ Proceso
 	LEER(ARCH, REG)
 	
 	Mientras NFDA(ARCH) Hacer
-		Si REG.Carrera = "ISI" y REG.UnidadesPrestadas > "4" Entonces
+		Si REG.Carrera = "ISI" y REG.UnidadesPrestadas > 4 Entonces
 			GRABAR(ARCH2, REG)
 		Fin Si
 		

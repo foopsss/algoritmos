@@ -43,15 +43,12 @@ Ambiente
 	
 	sec_sal: secuencia de entero
 	v_sal, cant_facturas, cant_facturas_a, cant_art, monto_art, monto_total, i: entero
-	
 	porc_fact_a: real
-	
 	es_tipo_a: lógico
 
 	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	
 	Procedimiento Inicializar() ES
-		es_tipo_a := F
 		cant_facturas := 0
 		cant_facturas_a := 0
 		monto_art := 0
@@ -60,15 +57,15 @@ Ambiente
 	
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
-			="1" : CharToInt := 1
-			="2" : CharToInt := 2
-			="3" : CharToInt := 3
-			="4" : CharToInt := 4
-			="5" : CharToInt := 5
-			="6" : CharToInt := 6
-			="7" : CharToInt := 7
-			="8" : CharToInt := 8
-			="9" : CharToInt := 9
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
 		Fin Según
 	Fin Función
 
@@ -96,11 +93,13 @@ Proceso
 		Si v_fac = "A" Entonces
 			es_tipo_a := V
 			cant_facturas_a := cant_facturas_a + 1
+		Contrario
+			es_tipo_a := F
 		Fin Si
 		
 		// El resto de los datos de la 
 		// factura no me importan.
-		Mientras v <> "#" Hacer
+		Mientras v_fac <> "#" Hacer
 			AVZ(sec_fac, v_fac)
 		Fin Mientras
 		
@@ -154,7 +153,6 @@ Proceso
 		// para la siguiente factura tipo A que
 		// encuentre.
 		GRABAR(sec_sal, monto_total)
-		es_tipo_a := F
 		monto_art := 0
 		monto_total := 0
 		

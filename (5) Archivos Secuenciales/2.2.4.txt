@@ -52,7 +52,7 @@ Proceso
 
 	Mientras NFDA(ARCH) Hacer
 		Si REG.Carrera = carrera_us Entonces
-			Si REG.FechaUltExAprob.Año = año_us y REG.Nota > "7" Entonces
+			Si REG.FechaUltExAprob.Año = año_us y REG.Nota > 7 Entonces
 				GRABAR(ARCH2, REG)
 			Fin Si
 		Fin Si

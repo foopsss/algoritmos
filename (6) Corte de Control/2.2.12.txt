@@ -24,6 +24,11 @@ Ambiente
 	cant_hab_depto: entero
 	resg_depto: alfanumérico
 	
+	Procedimiento Inicializar() ES
+		resg_depto := REG.Clave.Departamento
+		cant_hab_depto := 0
+	Fin Procedimiento
+	
 	Procedimiento CorteDepartamento() ES
 		REG2.Departamento := resg_depto
 		REG2.CantHab := cant_hab_depto
@@ -38,8 +43,7 @@ Proceso
 	ABRIR S/ (ARCH2)
 	LEER(ARCH, REG)
 
-	resg_depto := REG.Clave.Departamento
-	cant_hab_depto := 0
+	Inicializar()
 
 	Mientras NFDA(ARCH) Hacer
 		Si resg_depto <> REG.Clave.Departamento Entonces

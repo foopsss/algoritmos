@@ -26,15 +26,15 @@ Ambiente
 
 	Función CharToInt(entrada: carácter): entero ES
 		Según entrada Hacer
-			="1" : CharToInt := 1
-			="2" : CharToInt := 2
-			="3" : CharToInt := 3
-			="4" : CharToInt := 4
-			="5" : CharToInt := 5
-			="6" : CharToInt := 6
-			="7" : CharToInt := 7
-			="8" : CharToInt := 8
-			="9" : CharToInt := 9
+			= "1": CharToInt := 1
+			= "2": CharToInt := 2
+			= "3": CharToInt := 3
+			= "4": CharToInt := 4
+			= "5": CharToInt := 5
+			= "6": CharToInt := 6
+			= "7": CharToInt := 7
+			= "8": CharToInt := 8
+			= "9": CharToInt := 9
 		Fin Según
 	Fin Función
 
@@ -47,28 +47,28 @@ Proceso
 	Mientras NFDS(sec_ent) Hacer
 		// Salto los caracteres correspondientes al día.
 		Para i := 1 hasta 3 Hacer
-			AVZ(sec, v)
+			AVZ(sec, v_ent)
 		Fin Para
 
 		// Estoy parado en el segundo carácter del mes.
 		// Controlo si el mes es par.
-		Si v en meses_pares Entonces
+		Si v_ent en meses_pares Entonces
 			// Recorro los caracteres del año.
 			Para i := 1 hasta 5 Hacer
-				AVZ(sec, v)
+				AVZ(sec, v_ent)
 			Fin Para
 
 			// Estoy parado en las unidades vendidas.
 			// Grabo en la salida.
-			unidades_vendidas := CharToInt(v)
+			unidades_vendidas := CharToInt(v_ent)
 			GRABAR(sec_sal, unidades_vendidas)
 
 			// Quedo en el primer carácter de la siguiente fecha.
-			AVZ(sec, v)
+			AVZ(sec, v_ent)
 		Contrario
 			// Quedo en el primer carácter de la siguiente fecha.
 			Para i := 1 hasta 6 Hacer
-				AVZ(sec, v)
+				AVZ(sec, v_ent)
 			Fin Para
 		Fin Si
 	Fin Mientras

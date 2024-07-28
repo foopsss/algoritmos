@@ -60,10 +60,10 @@ Proceso
 	
 	Mientras NFDA(ARCH) Hacer
 		Según REG.Promedio Hacer
-			< "7": PromedioNegativo()
-			< "8": PromedioPositivo()
-			< "9": PromedioFavorable()
-			> "9": PromedioMuyFavorable()
+			< 7: PromedioNegativo()
+			< 8: PromedioPositivo()
+			< 9: PromedioFavorable()
+			> 9: PromedioMuyFavorable()
 		Fin Según
 		
 		LEER(ARCH, REG)
