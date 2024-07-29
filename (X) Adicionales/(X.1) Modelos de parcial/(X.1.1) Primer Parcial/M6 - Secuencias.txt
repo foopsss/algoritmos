@@ -38,7 +38,6 @@ Ambiente
 	porc_est_a: real
 
 	Procedimiento Inicializar() ES
-		es_prot_a := F
 		cant_est_pac := 0
 		tot_est := 0
 		cant_est_a := 0
@@ -76,6 +75,8 @@ Proceso
 		Mientras v_est <> "*" Hacer
 			Si v_est = "A" Entonces
 				es_prot_a := V
+			Contrario
+				es_prot_a := F
 			Fin Si
 			
 			Mientras v_est <> "," Hacer
@@ -91,7 +92,6 @@ Proceso
 			
 			Para i := 1 hasta cant_est_pac Hacer
 				tot_est := tot_est + 1
-				
 				resg_tipo := v_est
 				
 				Según resg_tipo Hacer
@@ -113,9 +113,7 @@ Proceso
 			Fin Para
 		Fin Mientras
 		
-		es_prot_a := F
-		cant_est_pac := 0
-		
+		cant_est_pac := 0		
 		AVZ(estudios, v_est)
 	Fin Mientras
 	

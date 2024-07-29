@@ -44,7 +44,6 @@ Ambiente
 	jugadores_plantel, jugadores_año_us: entero
 
 	Procedimiento Inicializar() ES
-		es_cabeza_serie := F
 		jugadores_plantel := 0
 		año_nac := 0
 		jugadores_año_us := 0
@@ -96,11 +95,12 @@ Proceso
 	
 	Mientras NFDS(equipos) Hacer
 		Si v_eq = "S" Entonces
-			es_cabeza_serie := T
+			es_cabeza_serie := V
+		Contrario
+			es_cabeza_serie := F
 		Fin Si
 		
 		AVZ(equipos, v_eq)
-		
 		Escribir("Equipo: ")
 		
 		Si es_cabeza_serie Entonces
@@ -146,7 +146,6 @@ Proceso
 			GRABAR(salida, v_sal)
 		Fin Si
 		
-		es_cabeza_serie := F
 		jugadores_plantel := 0
 		año_nac := 0
 		

@@ -118,7 +118,7 @@ Proceso
 		Fin Si
 		
 		// Primera consigna.
-		Si REG.Capacidad > "40000" Entonces
+		Si REG.Capacidad > 40000 Entonces
 			partidos_sede_masivos := partidos_sede_masivos + REG.PartidosJugados
 		Fin Si
 		

@@ -64,7 +64,6 @@ Ambiente
 	i, jubilables, no_jubilables, edad_doc, aportes_doc: entero
 	
 	Procedimiento Inicializar() ES
-		coincide_región := F
 		jubilables := 0
 		no_jubilables := 0
 	Fin Procedimiento
@@ -108,6 +107,8 @@ Proceso
 			Si i = 3 Entonces
 				Si vd = región_us Entonces
 					coincide_región := V
+				Contrario
+					coincide_región := F
 				Fin Si
 			Fin Si
 			
@@ -148,7 +149,6 @@ Proceso
 		Escribir("La cantidad de docentes que no pueden jubilarse es de" no_jubilables "docentes.")
 		
 		Inicializar()
-		
 		AVZ(doc, vd)
 		AVZ(edad, ve)
 	Fin Mientras

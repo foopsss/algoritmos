@@ -52,7 +52,6 @@ Ambiente
 	resg_edad, mj: entero
 
 	Procedimiento Inicializar() ES
-		es_cabeza_serie := F
 		cant_integrantes := 0
 		resg_edad := 0
 		mj := HV
@@ -92,6 +91,8 @@ Proceso
 		
 		Si v_inf = "S" Entonces
 			es_cabeza_serie := V
+		Contrario
+			es_cabeza_serie := F
 		Fin Si
 		
 		AVZ(info, v_inf)

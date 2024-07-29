@@ -72,7 +72,7 @@ Ambiente
 		Escribir("Monto facturado: " monto_área_par)
 		
 		// Grabo el archivo de salida.
-		Si resg_área = "1" Entonces
+		Si resg_área = 1 Entonces
 			REG2.Sucursal := resg_sucursal
 			REG2.Total := monto_área
 			GRABAR(ARCH2, REG2)
@@ -122,7 +122,7 @@ Proceso
 		// Tercer punto.
 		monto_área := REG.Monto
 		
-		Si REG.Clave.Sucursal = "50" Entonces
+		Si REG.Clave.Sucursal = 50 Entonces
 			monto_suc_50 := monto_suc_50 + REG.Monto
 		Fin Si
 		

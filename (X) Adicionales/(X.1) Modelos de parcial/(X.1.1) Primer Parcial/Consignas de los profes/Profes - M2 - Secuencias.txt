@@ -45,7 +45,6 @@ Ambiente
 	Fin Procedimiento
 
 	Procedimiento Inicializar() ES
-		coincide_dorsal := F
 		suma_ed_dorsal_us := 0
 		cant_jug_dorsal_us := 0
 		eq_mj := HV
@@ -74,6 +73,8 @@ Proceso
 		Para i := 1 hasta 26 Hacer
 			Si ed = dorsal_us Entonces
 				coincide_dorsal := V
+			Contrario
+				coincide_dorsal := F
 			Fin Si
 			
 			AVZ(edades, ed)
@@ -97,7 +98,6 @@ Proceso
 		Escribir("El jugador más joven del equipo tiene" eq_mj "años.")
 		Escribir("El jugador más longevo del equipo tiene" eq_ml "años.")
 		
-		coincide_dorsal := F
 		eq_mj := HV
 		eq_ml := LV
 		

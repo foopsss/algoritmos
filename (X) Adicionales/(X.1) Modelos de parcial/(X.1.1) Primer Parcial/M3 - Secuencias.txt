@@ -58,7 +58,6 @@ Ambiente
 	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	
 	Procedimiento Inicializar() ES
-		registro_temprano := F
 		hora_registro := 0
 		usuarios_retirados := 0
 	Fin Procedimiento
@@ -100,6 +99,8 @@ Proceso
 			// es previa a las 10:00 AM.
 			Si hora_registro < "10" Entonces
 				registro_temprano := V
+			Contrario
+				registro_temprano := F
 			Fin Si
 			
 			// Avanzo hasta llegar a la marca
@@ -175,7 +176,6 @@ Proceso
 			Fin Si
 		Fin Mientras
 		
-		registro_temprano := F
 		hora_registro := 0
 	
 		AVZ(fila, v_fila)

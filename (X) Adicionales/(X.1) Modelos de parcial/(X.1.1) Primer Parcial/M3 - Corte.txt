@@ -56,7 +56,7 @@ Ambiente
 	Fin Procedimiento
 	
 	Procedimiento CorteCiudad() ES
-		Si ventas_ciudad > "7500" Entonces
+		Si ventas_ciudad > 7500 Entonces
 			Escribir("Ciudad: " resg_ciudad)
 			Escribir("Provincia: " resg_prov)
 			Escribir("Entradas vendidas: " ventas_ciudad)
@@ -94,7 +94,7 @@ Proceso
 			Fin Si
 		Fin Si
 		
-		Si REG.Clave.FechaVenta.Mes = "6" Entonces
+		Si REG.Clave.FechaVenta.Mes = 6 Entonces
 			ventas_ciudad_junio := ventas_ciudad_junio + REG.Entradas
 		Fin Si
 		

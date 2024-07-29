@@ -72,7 +72,7 @@ Ambiente
 		Escribir("Entradas vendidas: " ventas_ciudad)
 		
 		// Grabo el archivo de salida.
-		Si ventas_ciudad > "1000" Entonces
+		Si ventas_ciudad > 1000 Entonces
 			REG2.Provincia := resg_provincia
 			REG2.Ciudad := resg_ciudad
 			REG2.Entradas := ventas_ciudad
@@ -110,7 +110,7 @@ Proceso
 			Fin Si
 		Fin Si
 		
-		Si REG.Clave.FechaVentas.Mes >= "6" Entonces
+		Si REG.Clave.FechaVentas.Mes >= 6 Entonces
 			ventas_plat := ventas_plat + REG.Entradas
 		Fin Si
 		

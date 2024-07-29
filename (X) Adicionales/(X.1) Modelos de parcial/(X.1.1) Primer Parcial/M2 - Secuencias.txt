@@ -58,7 +58,6 @@ Ambiente
 	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 	Procedimiento Inicializar() ES
-		compra_tarjeta := F
 		entradas_compradas := 0
 		mentirosos := 0
 	Fin Procedimiento
@@ -97,6 +96,8 @@ Proceso
 			
 			Si v_fila = "T" Entonces
 				compra_tarjeta := V
+			Contrario
+				compra_tarjeta := F
 			Fin Si
 			
 			AVZ(fila, v_fila)
@@ -153,7 +154,6 @@ Proceso
 			mentirosos := mentirosos + 1
 		Fin Si
 		
-		compra_tarjeta := F
 		entradas_compradas := 0
 		
 		AVZ(fila, v_fila)

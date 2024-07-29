@@ -114,7 +114,7 @@ Proceso
 		Fin Si
 		
 		Si REG.Posición <> "CT" Entonces
-			Si REG.Participaciones > "0" Entonces
+			Si REG.Participaciones > 0 Entonces
 				posición_experimentados := posición_experimentados + 1
 			Contrario
 				posición_nuevos := posición_nuevos + 1
