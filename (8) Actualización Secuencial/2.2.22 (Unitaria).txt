@@ -1,4 +1,4 @@
-Acción 2.2.21 ES
+Acción 2.2.22 ES
 
 Ambiente
 
@@ -36,6 +36,14 @@ Ambiente
 	ARCH3: archivo de Amigos ordenado por Clave
 	REG3: Amigos
 	
+	resg_cod_us, cant_amist_us, max_amist_us, max_amist_cant: entero
+	
+	Procedimiento Inicializar() ES
+		resg_cod_us := REG.Clave.CodUsuario
+		cant_amist_us := 0
+		max_amist_cant := 0
+	Fin Procedimiento
+	
 	Procedimiento LEER_AMIGOS() ES
 		LEER(ARCH, REG)
 		Si FDA(ARCH) Entonces
@@ -47,6 +55,20 @@ Ambiente
 		LEER(ARCH2, REG2)
 		Si FDA(ARCH2) Entonces
 			REG2.Clave := HV
+		Fin Si
+	Fin Procedimiento
+	
+	Procedimiento ObtenerMayorCantAmistades() ES
+		Si REG.Clave.CodUsuario = resg_cod_us Entonces
+			cant_amist_us := cant_amist_us + 1
+		Contrario
+			Si cant_amist_us > max_amist_cant Entonces
+				max_amist_us := resg_cod_us
+				max_amist_cant := cant_amist_us
+			Fin Si
+			
+			resg_cod_us := REG.Clave.CodUsuario
+			cant_amist_us := 0
 		Fin Si
 	Fin Procedimiento
 
@@ -77,8 +99,11 @@ Proceso
 	
 	LEER_AMIGOS()
 	LEER_NOTIFICACIONES()
+	Inicializar()
 	
 	Mientras REG.Clave <> HV o REG2.Clave <> HV Hacer
+		ObtenerMayorCantAmistades()
+	
 		Si REG.Clave < REG2.Clave Entonces
 			GRABAR(ARCH3, REG)
 			LEER_AMIGOS()
@@ -101,6 +126,8 @@ Proceso
 			Fin Si
 		Fin Si
 	Fin Mientras
+	
+	Escribir("El usuario que posee más amigos es el usuario" max_amist_us "con" max_amist_cant "amistades.")
 	
 	CERRAR(ARCH)
 	CERRAR(ARCH2)
