@@ -1,0 +1,139 @@
+Acción 2.2.23 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+
+	Cliente = Registro
+		IDCasa: N(5)
+		FechaUltLectura: Fecha
+		CantLecturas: N(3)
+		PromLecturas: N(3)
+		TipoConsumidor: ("A", "B", "C")
+	Fin Registro
+	
+	ARCH: archivo de Cliente ordenado por IDCasa
+	REG: Cliente
+
+	Mediciones = Registro
+		IDCasa: N(5)
+		FechaMedición: Fecha
+		Consumo: N(3)
+	Fin Registro
+	
+	ARCH2: archivo de Mediciones ordenado por IDCasa
+	REG2: Mediciones
+
+	ARCH3: archivo de Cliente ordenado por IDCasa
+	REG3: Cliente
+	
+	FechaLímite, ResgUltLectura: Fecha
+	cant_lecturas_casa, suma_lecturas_casa: entero
+	prom_lecturas_casa: real
+
+	Procedimiento InicializarFechaLímite() ES
+		FechaLímite.Año := 2015
+		FechaLímite.Mes := 1
+		FechaLímite.Día := 31
+	Fin Procedimiento
+
+	Procedimiento InicializarVariables() ES
+		cant_lecturas_casa := 0
+		suma_lecturas_casa := 0
+	Fin Procedimiento
+
+	Procedimiento LEER_CLIENTE() ES
+		LEER(ARCH, REG)
+		Si FDA(ARCH) Entonces
+			REG.IDCasa := HV
+		Fin Si
+	Fin Procedimiento
+
+	Procedimiento LEER_MEDICIONES() ES
+		LEER(ARCH2, REG2)
+		Si FDA(ARCH2) Entonces
+			REG2.IDCasa := HV
+		Fin Si
+	Fin Procedimiento
+
+	Función DeterminarTipoCliente(entrada: entero): carácter ES
+		Según entrada Hacer
+			< 20.000: DeterminarTipoCliente := "A"
+			< 40.000: DeterminarTipoCliente := "B"
+			>= 40.000: DeterminarTipoCliente := "C"
+		Fin Según
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	ABRIR S/ (ARCH3)
+
+	LEER_CLIENTE()
+	LEER_MEDICIONES()
+	InicializarFechaLímite()
+	InicializarVariables()
+	
+	Mientras REG.IDCasa <> HV o REG2.IDCasa <> HV Hacer
+		Si REG.IDCasa < REG2.IDCasa Entonces
+			GRABAR(ARCH3, REG)
+			LEER_CLIENTE()
+		Contrario
+			Si REG.IDCasa > REG2.IDCasa Entonces
+				// Yo interpreto la consigna como que puede haber múltiples
+				// mediciones para una casa que no existía previamente.
+				resg_casa_mov := REG2.IDCasa
+				
+				Mientras resg_casa_mov = REG2.IDCasa y REG2.FechaMedición <= FechaLímite Hacer
+					cant_lecturas_casa := cant_lecturas_casa + 1
+					suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
+					ResgUltLectura := REG2.FechaMedición
+					LEER_MEDICIONES()
+				Fin Mientras
+				
+				prom_lecturas_casa := suma_lecturas_casa / cant_lecturas_casa
+				REG3.IDCasa := resg_casa_mov
+				REG3.FechaUltLectura := ResgUltLectura
+				REG3.CantLecturas := cant_lecturas_casa
+				REG3.PromLecturas := prom_lecturas_casa
+				REG3.TipoConsumidor := DeterminarTipoCliente(prom_lecturas_casa)
+				
+				GRABAR(ARCH3, REG3)
+				InicializarVariables()
+			Contrario
+				REG3 := REG
+				
+				Mientras REG.IDCasa = REG2.IDCasa y REG2.FechaMedición <= FechaLímite Hacer
+					cant_lecturas_casa := cant_lecturas_casa + 1
+					suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
+					ResgUltLectura := REG2.FechaMedición
+					LEER_MEDICIONES()
+				Fin Mientras
+				
+				// Actualizo los consumos nuevos con la información que ya tenía.
+				cant_lecturas_casa := cant_lecturas_casa + REG.CantLecturas
+				suma_lecturas_casa := suma_lecturas_casa + (REG.PromLecturas * REG.CantLecturas)
+				prom_lecturas_casa := suma_lecturas_casa / cant_lecturas_casa
+				
+				REG3.FechaUltLectura := ResgUltLectura
+				REG3.CantLecturas := cant_lecturas_casa
+				REG3.PromLecturas := prom_lecturas_casa
+				REG3.TipoConsumidor := DeterminarTipoCliente(prom_lecturas_casa)
+				
+				GRABAR(ARCH3, REG3)
+				InicializarVariables()
+				LEER_CLIENTE()
+			Fin Si
+		Fin Si
+	Fin Mientras
+
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+
+Fin Acción
