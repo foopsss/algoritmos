@@ -32,7 +32,7 @@ Ambiente
 	REG3: Cliente
 	
 	FechaLímite, ResgUltLectura: Fecha
-	cant_lecturas_casa, suma_lecturas_casa: entero
+	resg_casa_mov, cant_lecturas_casa, suma_lecturas_casa: entero
 	prom_lecturas_casa: real
 
 	Procedimiento InicializarFechaLímite() ES
