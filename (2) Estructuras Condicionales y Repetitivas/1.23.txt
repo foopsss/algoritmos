@@ -1,0 +1,40 @@
+Acción 1.23 ES
+
+Ambiente
+
+	elección: carácter
+	valor_unit, cant_vendida, total_renglón, total_factura: entero
+
+Proceso
+
+	total_factura := 0
+	
+	Escribir("¿Desea añadir el renglón de una factura? [S/N]: ")
+	Leer(elección)
+	
+	Mientras elección = "S" Hacer
+		Escribir("Introduzca el valor unitario del artículo: ")
+		Leer(valor_unit)
+		
+		Si valor_unit = 0 Entonces
+			Mientras valor_unit = 0 Hacer
+				Escribir("Error. El valor unitario del artículo es nulo.")
+				Escribir("Introduzca un valor unitario mayor a 0: ")
+				Leer(valor_unit)
+			Fin Mientras
+		Fin Si
+	
+		Escribir("Introduzca la cantidad de unidades vendidas del artículo: ")
+		Leer(cant_vendida)
+		
+		total_renglón := valor_unit * cant_vendida
+		total_factura := total_factura + total_renglón
+		Escribir("El monto total a pagar por el artículo es de" total_renglón "pesos.")
+		
+		Escribir("¿Desea añadir otro renglón de la factura? [S/N]: ")
+		Leer(elección)
+	Fin Mientras
+
+	Escribir("El monto total a pagar en la factura es de" total_factura "pesos.")
+
+Fin Acción
