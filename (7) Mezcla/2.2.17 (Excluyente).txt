@@ -70,14 +70,6 @@ Proceso
 		Fin Si
 	Fin Mientras
 	
-	Mientras NFDA(ARCH) Hacer
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	Mientras NFDA(ARCH2) Hacer
-		LEER(ARCH2, REG2)
-	Fin Mientras
-	
 	Escribir("En el archivo de seguimiento se grabaron" aspirantes_grabados "aspirantes.")
 	
 	CERRAR(ARCH)
