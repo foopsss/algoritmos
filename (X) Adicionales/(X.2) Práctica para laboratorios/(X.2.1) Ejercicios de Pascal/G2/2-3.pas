@@ -24,13 +24,13 @@ begin
 		if b < c then
 			begin
 				intermedio := c;
-			    menor := b;
+		    	menor := b;
 			end
 		else
 			if b = c then
 				begin
 					intermedio := b;
-			    	menor := intermedio;
+					menor := intermedio;
 				end
 			else
 				begin
@@ -46,13 +46,13 @@ begin
 		if a < c then
 			begin
 				intermedio := c;
-			    menor := a;
+				menor := a;
 			end
 		else
 			if a = c then
 				begin
 					intermedio := a;
-			    	menor := intermedio;
+					menor := intermedio;
 				end
 			else
 				begin
@@ -68,13 +68,13 @@ begin
 		if a < b then
 			begin
 				intermedio := b;
-			    menor := a;
+				menor := a;
 			end
 		else
 			if a = b then
 				begin
 					intermedio := a;
-			    	menor := intermedio;
+					menor := intermedio;
 				end
 			else
 				begin
