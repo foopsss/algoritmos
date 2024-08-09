@@ -24,7 +24,7 @@ begin
 		if b < c then
 			begin
 				intermedio := c;
-		    	menor := b;
+				menor := b;
 			end
 		else
 			if b = c then
