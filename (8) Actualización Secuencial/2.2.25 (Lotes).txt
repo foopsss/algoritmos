@@ -1,0 +1,124 @@
+Acción 2.2.25 ES
+
+Ambiente
+
+	Fecha = Registro
+		Año: N(4)
+		Mes: (1..12)
+		Día: (1..31)
+	Fin Registro
+	
+	Amigos = Registro
+		Clave = Registro
+			CodUsuario: N(5)
+			CodAmigo: N(5)
+		Fin Registro
+		FechaAmistad: Fecha
+		MensajeMuro: AN(200)
+	Fin Registro
+	
+	ARCH: archivo de Amigos ordenado por Clave
+	REG: Amigos
+
+	Notificaciones = Registro
+		Clave = Registro
+			CodUsuario: N(5)
+			CodAmigo: N(5)
+		Fin Registro
+		CodMov: AN(1)
+		FechaAmistad: Fecha
+		MensajeMuro: AN(200)
+	Fin Registro
+	
+	ARCH2: archivo de Notificaciones ordenado por Clave
+	REG2: Notificaciones
+	
+	ARCH3: archivo de Amigos ordenado por Clave
+	REG3: Amigos
+	
+	Aux: Amigos
+	resg_cod_usuario, resg_cod_amigo: entero
+	baja_física: lógico
+
+	Procedimiento LEER_AMIGOS() ES
+		LEER(ARCH, REG)
+		Si FDA(ARCH) Entonces
+			REG.Clave := HV
+		Fin Si
+	Fin Procedimiento
+
+	Procedimiento LEER_NOTIFICACIONES() ES
+		LEER(ARCH2, REG2)
+		Si FDA(ARCH2) Entonces
+			REG2.Clave := HV
+		Fin Si
+	Fin Procedimiento
+
+Proceso
+
+	ABRIR E/ (ARCH)
+	ABRIR E/ (ARCH2)
+	ABRIR S/ (ARCH3)
+	
+	LEER_AMIGOS()
+	LEER_NOTIFICACIONES()
+
+	Mientras REG.Clave <> HV o REG2.Clave <> HV Hacer
+		Si REG.Clave < REG2.Clave Entonces
+			GRABAR(ARCH3, REG)
+			LEER_AMIGOS()
+		Contrario
+			Si REG.Clave > REG2.Clave Entonces
+				// Si el primer código de movimiento no es A, se está
+				// tratando de borrar o modificar algo que no existe.
+				Si REG2.CodMov = "A" Entonces
+					resg_cod_usuario := REG2.Clave.CodUsuario
+					resg_cod_amigo := REG2.Clave.CodAmigo
+					Aux.CodUsuario := resg_cod_usuario
+					Aux.CodAmistad := resg_cod_amigo
+					Aux.FechaAmistad := REG2.FechaAmistad
+					Aux.MensajeMuro := REG2.MensajeMuro
+
+					// Entiendo que después de una alta podrían venir
+					// modificaciones, bajas e incluso más altas, debido
+					// a que el archivo de movimientos no está ordenado
+					// por CodMov.
+					Mientras resg_cod_usuario = REG2.Clave.CodUsuario y resg_cod_amigo = REG2.Clave.CodAmigo Hacer
+						Según REG2.CodMov Hacer
+							= "A": Escribir("Error. No se puede volver a añadir una amistad.")
+							= "B": baja_física := V
+							= "M": Aux.MensajeMuro := REG2.MensajeMuro
+						Fin Según
+						LEER_NOTIFICACIONES()
+					Fin Mientras
+					
+					Si NO baja_física Entonces
+						GRABAR(ARCH3, Aux)
+					Fin Si
+				Contrario
+					Escribir("Error. No se puede realizar la operación.")
+				Fin Si
+			Contrario
+				Aux := REG
+				
+				Mientras REG.Clave = REG2.Clave Hacer
+					Según REG2.CodMov Hacer
+						= "A": Escribir("Error. No se puede dar de alta una amistad existente.")
+						= "B": baja_física := V
+						= "M": Aux.MensajeMuro := REG2.MensajeMuro
+					Fin Según
+					LEER_NOTIFICACIONES()
+				Fin Mientras
+				
+				Si NO baja_física Entonces
+					GRABAR(ARCH3, Aux)
+				Fin Si
+			Fin Si
+		Fin Si
+	Fin Mientras
+
+	CERRAR(ARCH)
+	CERRAR(ARCH2)
+	CERRAR(ARCH3)
+
+Fin Acción
