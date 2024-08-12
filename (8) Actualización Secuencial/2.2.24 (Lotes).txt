@@ -69,7 +69,7 @@ Proceso
 			LEER_COSTOS()
 		Contrario
 			Si REG.CodAfiliado > REG2.CodAfiliado Entonces
-				// A este ciclo entro solo si el primer código de afiliado es 001.
+				// A este ciclo entro solo si el primer código de servicio es 001.
 				Si REG2.CodServicio = 001 Entonces
 					resg_cod_afiliado := REG2.CodAfiliado
 					REG3.CodAfiliado := resg_cod_afiliado
