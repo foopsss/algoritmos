@@ -93,6 +93,12 @@ Proceso
 					// modificaciones, bajas e incluso más altas, debido
 					// a que el archivo de movimientos no está ordenado
 					// por CodMov.
+					//
+					// Por lo tanto, en caso de que tenga una baja entre
+					// la alta y las modificaciones pongo una variable
+					// lógica en positivo y no grabo nada al final del
+					// proceso. No es el enfoque más eficiente, pero
+					// debería funcionar.
 					Mientras resg_cod_usuario = REG2.Clave.CodUsuario y resg_cod_amigo = REG2.Clave.CodAmigo Hacer
 						Según REG2.CodMov Hacer
 							= "A": Escribir("Error. No se puede volver a añadir una amistad.")
