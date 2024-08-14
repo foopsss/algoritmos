@@ -1,3 +1,13 @@
+// Esta resolución alternativa contempla el caso de que el archivo de movimientos
+// no esté ordenado además por el código de movimientos. La realidad es que esto
+// no debería pasar jamás pero, en función de donde se mire el ejercicio (PDF o
+// guía web), se ve que el archivo puede o no estar ordenado por el código de
+// movimiento.
+//
+// Yo hice la resolución mirando el PDF, donde el texto no incluye el código de
+// movimiento como parte de la clave. Queda archivada para que simplemente no se
+// pierda.
+
 Acción 2.2.25 ES
 
 Ambiente
