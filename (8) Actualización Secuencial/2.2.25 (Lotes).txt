@@ -1,12 +1,9 @@
-// Esta resolución alternativa contempla el caso de que el archivo de movimientos
-// no esté ordenado además por el código de movimientos. La realidad es que esto
-// no debería pasar jamás pero, en función de donde se mire el ejercicio (PDF o
-// guía web), se ve que el archivo puede o no estar ordenado por el código de
-// movimiento.
+// Esta resolución contempla el caso de que el archivo de movimientos sí esté
+// ordenado por el código de movimiento, que es lo que realmente debería suceder
+// aún si la consigna dice que no.
 //
-// Yo hice la resolución mirando el PDF, donde el texto no incluye el código de
-// movimiento como parte de la clave. Queda archivada para que simplemente no se
-// pierda.
+// Sin embargo, esta resolución debería funcionar igualmente aún si el archivo
+// de movimientos no está ordenado por código de movimiento.
 
 Acción 2.2.25 ES
 
@@ -40,15 +37,11 @@ Ambiente
 		MensajeMuro: AN(200)
 	Fin Registro
 	
-	ARCH2: archivo de Notificaciones ordenado por Clave
+	ARCH2: archivo de Notificaciones ordenado por Clave y CodMov
 	REG2: Notificaciones
 	
 	ARCH3: archivo de Amigos ordenado por Clave
 	REG3: Amigos
-	
-	Aux: Amigos
-	resg_cod_usuario, resg_cod_amigo: entero
-	baja_física: lógico
 
 	Procedimiento LEER_AMIGOS() ES
 		LEER(ARCH, REG)
@@ -84,50 +77,41 @@ Proceso
 				Si REG2.CodMov = "A" Entonces
 					resg_cod_usuario := REG2.Clave.CodUsuario
 					resg_cod_amigo := REG2.Clave.CodAmigo
-					Aux.CodUsuario := resg_cod_usuario
-					Aux.CodAmistad := resg_cod_amigo
-					Aux.FechaAmistad := REG2.FechaAmistad
-					Aux.MensajeMuro := REG2.MensajeMuro
-
-					// Entiendo que después de una alta podrían venir
-					// modificaciones, bajas e incluso más altas, debido
-					// a que el archivo de movimientos no está ordenado
-					// por CodMov.
-					//
-					// Por lo tanto, en caso de que tenga una baja entre
-					// la alta y las modificaciones pongo una variable
-					// lógica en positivo y no grabo nada al final del
-					// proceso. No es el enfoque más eficiente, pero
-					// debería funcionar.
+					REG3.CodUsuario := resg_cod_usuario
+					REG3.CodAmistad := resg_cod_amigo
+					REG3.FechaAmistad := REG2.FechaAmistad
+					REG3.MensajeMuro := REG2.MensajeMuro
+					LEER_NOTIFICACIONES()
+					
 					Mientras resg_cod_usuario = REG2.Clave.CodUsuario y resg_cod_amigo = REG2.Clave.CodAmigo Hacer
 						Según REG2.CodMov Hacer
 							= "A": Escribir("Error. No se puede volver a añadir una amistad.")
 							= "B": baja_física := V
-							= "M": Aux.MensajeMuro := REG2.MensajeMuro
+							= "M": REG3.MensajeMuro := REG2.MensajeMuro
 						Fin Según
 						LEER_NOTIFICACIONES()
 					Fin Mientras
 					
 					Si NO baja_física Entonces
-						GRABAR(ARCH3, Aux)
+						GRABAR(ARCH3, REG3)
 					Fin Si
 				Contrario
 					Escribir("Error. No se puede realizar la operación.")
 				Fin Si
 			Contrario
-				Aux := REG
+				REG3 := REG
 				
 				Mientras REG.Clave = REG2.Clave Hacer
 					Según REG2.CodMov Hacer
 						= "A": Escribir("Error. No se puede dar de alta una amistad existente.")
 						= "B": baja_física := V
-						= "M": Aux.MensajeMuro := REG2.MensajeMuro
+						= "M": REG3.MensajeMuro := REG2.MensajeMuro
 					Fin Según
 					LEER_NOTIFICACIONES()
 				Fin Mientras
 				
 				Si NO baja_física Entonces
-					GRABAR(ARCH3, Aux)
+					GRABAR(ARCH3, REG3)
 				Fin Si
 			Fin Si
 		Fin Si
