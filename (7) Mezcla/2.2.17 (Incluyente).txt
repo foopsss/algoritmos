@@ -63,22 +63,22 @@ Proceso
 	aspirantes_grabados := 0
 	
 	Mientras REG.DNI <> HV o REG2.DNI <> HV Hacer
-		Si REG.DNI = REG2.DNI Entonces
-			Si REG.Aprobado = "NO" y REG2.Aprobado = "NO" Entonces
-				REG3.DNI := REG.DNI
-				REG3.NomAp := REG.NomAp
-				REG3.Email := REG.Email
-				REG3.Secundario := REG.Secundario
-				GRABAR(ARCH3, REG3)
-				aspirantes_grabados := aspirantes_grabados + 1
-			Fin Si
-			
+		Si REG.DNI < REG2.DNI Entonces
 			LEER_FEBRERO()
-			LEER_AGOSTO()
 		Contrario
-			Si REG.DNI < REG2.DNI Entonces
-				LEER_FEBRERO()
+			Si REG.DNI > REG2.DNI Entonces
+				LEER_AGOSTO()
 			Contrario
+				Si REG.Aprobado = "NO" y REG2.Aprobado = "NO" Entonces
+					REG3.DNI := REG.DNI
+					REG3.NomAp := REG.NomAp
+					REG3.Email := REG.Email
+					REG3.Secundario := REG.Secundario
+					GRABAR(ARCH3, REG3)
+					aspirantes_grabados := aspirantes_grabados + 1
+				Fin Si
+				
+				LEER_FEBRERO()
 				LEER_AGOSTO()
 			Fin Si
 		Fin Si

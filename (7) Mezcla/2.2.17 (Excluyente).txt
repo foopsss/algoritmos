@@ -49,22 +49,22 @@ Proceso
 	aspirantes_grabados := 0
 	
 	Mientras NFDA(ARCH) y NFDA(ARCH2) Hacer
-		Si REG.DNI = REG2.DNI Entonces
-			Si REG.Aprobado = "NO" y REG2.Aprobado = "NO" Entonces
-				REG3.DNI := REG.DNI
-				REG3.NomAp := REG.NomAp
-				REG3.Email := REG.Email
-				REG3.Secundario := REG.Secundario
-				GRABAR(ARCH3, REG3)
-				aspirantes_grabados := aspirantes_grabados + 1
-			Fin Si
-			
+		Si REG.DNI < REG2.DNI Entonces
 			LEER(ARCH, REG)
-			LEER(ARCH2, REG2)			
 		Contrario
-			Si REG.DNI < REG2.DNI Entonces
-				LEER(ARCH, REG)
+			Si REG.DNI > REG2.DNI Entonces
+				LEER(ARCH2, REG2)
 			Contrario
+				Si REG.Aprobado = "NO" y REG2.Aprobado = "NO" Entonces
+					REG3.DNI := REG.DNI
+					REG3.NomAp := REG.NomAp
+					REG3.Email := REG.Email
+					REG3.Secundario := REG.Secundario
+					GRABAR(ARCH3, REG3)
+					aspirantes_grabados := aspirantes_grabados + 1
+				Fin Si
+				
+				LEER(ARCH, REG)
 				LEER(ARCH2, REG2)
 			Fin Si
 		Fin Si

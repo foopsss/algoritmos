@@ -47,27 +47,27 @@ Proceso
 	Escribir("| CodProd | Tipo | Marca | Descripción | Cantidad SUC1 | Cantidad SUC2 | Total de unidades |")
 	
 	Mientras REG.CodProd <> HV o REG2.CodProd <> HV Hacer
-		Si REG.CodProd = REG2.CodProd Entonces
-			suma_unidades := REG.Unidades + REG2.Unidades
-			Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, REG2.Unidades, suma_unidades)
-			
-			REG3.CodProd := REG.CodProd
-			REG3.Tipo := REG.Tipo
-			REG3.Marca := REG.Marca
-			REG3.Descripción := REG.Descripción
-			REG3.Unidades := suma_unidades
-			GRABAR(ARCH3, REG3)
-			
+		Si REG.CodProd < REG2.CodProd Entonces
+			Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
+			GRABAR(ARCH3, REG)
 			LEER_SUC1()
-			LEER_SUC2()
 		Contrario
-			Si REG.CodProd < REG2.CodProd Entonces
-				Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
-				GRABAR(ARCH3, REG)
-				LEER_SUC1()
-			Contrario
+			Si REG.CodProd > REG2.CodProd Entonces
 				Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
 				GRABAR(ARCH3, REG2)
+				LEER_SUC2()
+			Contrario
+				suma_unidades := REG.Unidades + REG2.Unidades
+				Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, REG2.Unidades, suma_unidades)
+				
+				REG3.CodProd := REG.CodProd
+				REG3.Tipo := REG.Tipo
+				REG3.Marca := REG.Marca
+				REG3.Descripción := REG.Descripción
+				REG3.Unidades := suma_unidades
+				GRABAR(ARCH3, REG3)
+				
+				LEER_SUC1()
 				LEER_SUC2()
 			Fin Si
 		Fin Si

@@ -22,7 +22,7 @@ Ambiente
 	ARCH2: archivo de Películas ordenado por NroPelícula
 	REG2: Películas
 	
-	ARCH3: archivo de Películas
+	ARCH3: archivo de Películas ordenado por NroPelícula
 	REG3: Películas
 
 Proceso
