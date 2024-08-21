@@ -37,8 +37,6 @@ Ambiente
 	ARCH3: archivo de Alumnos ordenado por Legajo
 	REG3: Alumnos
 	
-	Aux: Exámenes
-
 	Procedimiento LEER_ALUMNOS() ES
 		LEER(ARCH, REG)
 		Si FDA(ARCH) Entonces
@@ -71,17 +69,17 @@ Proceso
 				Escribir("El alumno indicado no está registrado en el archivo de alumnos.")
 				LEER_EXÁMENES()
 			Contrario
-				Aux := REG
+				REG3 := REG
 				
 				Mientras REG.Legajo = REG2.Legajo Hacer
 					Si REG2.Nota >= 60 Entonces
-						Aux.Nota := REG2.Nota
-						Aux.FechaUltExAprob := REG2.FechaExamen
+						REG3.Nota := REG2.Nota
+						REG3.FechaUltExAprob := REG2.FechaExamen
 					Fin Si
 					LEER_EXÁMENES()
 				Fin Mientras
 				
-				GRABAR(ARCH3, AUX)
+				GRABAR(ARCH3, REG3)
 				LEER_ALUMNOS()
 			Fin Si
 		Fin Si

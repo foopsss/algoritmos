@@ -30,7 +30,7 @@ Ambiente
 		MensajeMuro: AN(200)
 	Fin Registro
 	
-	ARCH2: archivo de Notificaciones ordenado por Clave
+	ARCH2: archivo de Notificaciones ordenado por Clave y CodMov
 	REG2: Notificaciones
 	
 	ARCH3: archivo de Amigos ordenado por Clave

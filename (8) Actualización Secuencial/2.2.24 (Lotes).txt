@@ -33,7 +33,6 @@ Ambiente
 	REG3: Costos
 
 	resg_cod_afiliado, cant_servicios_afiliado, costo_servicios_afiliado: entero
-	dar_de_baja: lógico
 
 	Procedimiento Inicializar() ES
 		cant_servicios_afiliado := 0
