@@ -68,7 +68,7 @@ Ambiente
 			Fin Si
 			
 			resg_cod_us := REG.Clave.CodUsuario
-			cant_amist_us := 0
+			cant_amist_us := 1
 		Fin Si
 	Fin Procedimiento
 
