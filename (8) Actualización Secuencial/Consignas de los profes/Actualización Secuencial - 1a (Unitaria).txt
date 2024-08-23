@@ -1,0 +1,145 @@
+// Consigna de los profes: en una empresa de desarrollos tecnológicos se posee
+// un registro del equipamiento en un archivo MAE_COMPUTADORAS, el cual se actualiza
+// mensualmente a través de la información contenida en un archivo de ACTUALIZACIONES
+// de la siguiente forma:
+//
+// MAE_COMPUTADORAS (ordenado por ID)
+// | ID | Nombre | Almacenamiento | Memoria | Procesador | SO | Fecha_compra | Marca_baja |
+//
+// ACTUALIZACIONES (ordenado por ID y Tipo_Act)
+// | ID | Tipo_act | Nombre | Almacenamiento | Memoria | Procesador | SO | Fecha_alta | Marca_baja |
+//
+// Los tipos de actualización pueden ser:
+// (*) 0: Alta
+// (*) 1: Baja
+// (*) 2: Actualización del almacenamiento
+// (*) 3: Actualización de memoria
+// (*) 4: Actualización del procesador
+// (*) 5: Actualización del sistema operativo
+//
+// Aclaraciones:
+// (*) Por cada mes puede hacerse como máximo una modificación a un equipo,
+//     incorporar un nuevo equipo o darlo de baja.
+// (*) Al dar de alta se carga el campo fecha_compra con la fecha_alta. En caso
+//     de una baja el campo marca_baja se pone en VERDADERO. 
+//
+// Se pide:
+// (a) Generar un nuevo archivo maestro actualizado con las modificaciones
+//     correspondientes.
+
+Acción ActualizaciónSecuencial1 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Computadoras = Registro
+                ID: N(5)
+                Nombre: AN(100)
+                Almacenamiento: AN(100)
+                Memoria: AN(100)
+                Procesador: AN(100)
+                SO: AN(100)
+                FechaCompra: Fecha
+                MarcaBaja: lógico
+        Fin Registro
+
+        ARCH: archivo de Computadoras ordenado por ID
+        REG: Computadoras
+
+        Actualizaciones = Registro
+                ID: N(5)
+                TipoAct: N(1)
+                Nombre: AN(100)
+                Almacenamiento: AN(100)
+                Memoria: AN(100)
+                Procesador: AN(100)
+                SO: AN(100)
+                FechaAlta: Fecha
+                MarcaBaja: lógico
+        Fin Registro
+
+        ARCH2: archivo de Actualizaciones ordenado por ID y TipoAct
+        REG2: Actualizaciones
+
+        ARCH3: archivo de Computadoras ordenado por ID
+        REG3: Computadoras
+
+        Procedimiento LEER_COMPUTADORAS() ES
+                LEER(ARCH, REG)
+                Si FDA(ARCH) Entonces
+                        REG.ID := HV
+                Fin Si
+        Fin Procedimiento
+
+        Procedimiento LEER_ACTUALIZACIONES() ES
+                LEER(ARCH2, REG2)
+                Si FDA(ARCH2) Entonces
+                        REG2.ID := HV
+                Fin Si
+        Fin Procedimiento
+
+        Procedimiento NuevaComputadora() ES
+                REG3.ID := REG2.ID
+                REG3.Nombre := REG2.Nombre
+                REG3.Almacenamiento := REG2.Almacenamiento
+                REG3.Memoria := REG2.Memoria
+                REG3.Procesador := REG2.Procesador
+                REG3.SO := REG2.SO
+                REG3.FechaCompra := REG2.FechaAlta
+                REG3.MarcaBaja := F
+                GRABAR(ARCH3, REG3)
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH)
+        ABRIR E/ (ARCH2)
+        ABRIR S/ (ARCH3)
+
+        LEER_COMPUTADORAS()
+        LEER_ACTUALIZACIONES()
+
+        Mientras REG.ID <> HV o REG2.ID <> HV Hacer
+                Si REG.ID < REG2.ID Entonces
+                        GRABAR(ARCH3, REG)
+                        LEER_COMPUTADORAS()
+                Contrario
+                        Si REG.ID > REG2.ID Entonces
+                                Según REG2.TipoAct Hacer
+                                        = 0: NuevaComputadora()
+                                        = 1: Escribir("Error. Baja inválida.")
+                                        = 2: Escribir("Error. Modificación inválida.")
+                                        = 3: Escribir("Error. Modificación inválida.")
+                                        = 4: Escribir("Error. Modificación inválida.")
+                                        = 5: Escribir("Error. Modificación inválida.")
+                                Fin Según
+                                LEER_ACTUALIZACIONES()
+                        Contrario
+                                REG3 := REG
+
+                                Según REG2.TipoAct Hacer
+                                        = 0: Escribir("Error. Alta inválida.")
+                                        = 1: REG3.MarcaBaja := V
+                                        = 2: REG3.Almacenamiento := REG2.Almacenamiento
+                                        = 3: REG3.Memoria := REG2.Memoria
+                                        = 4: REG3.Procesador := REG2.Procesador
+                                        = 5: REG3.SO := REG2.SO
+                                Fin Según
+
+                                GRABAR(ARCH3, REG3)
+                                LEER_COMPUTADORAS()
+                                LEER_ACTUALIZACIONES()
+                        Fin Si
+                Fin Si
+        Fin Mientras
+
+        CERRAR(ARCH)
+        CERRAR(ARCH2)
+        CERRAR(ARCH3)
+
+Fin Acción
