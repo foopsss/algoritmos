@@ -1,0 +1,19 @@
+Acción 1.25 ES
+
+Ambiente
+
+	i, primer_num, segundo_num, siguiente_num: entero
+
+Proceso
+
+	primer_num := 0
+	segundo_num := 1
+	
+	Para i := 0 hasta 49 Hacer
+		Escribir("f(" i "): " primer_num)
+		siguiente_num := primer_num + segundo_num
+		primer_num := segundo_num
+		segundo_num := siguiente_num
+	Fin Para
+
+Fin Acción
