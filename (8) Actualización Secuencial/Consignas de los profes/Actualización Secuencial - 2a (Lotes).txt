@@ -1,0 +1,159 @@
+// Consigna de los profes: en la biblioteca de la UTN-FRRe se posee un archivo
+// MAE_LIBROS con cada libro disponible. Esta semana realizaron una gran compra
+// de nuevos libros y decidieron quitar los que ya no están en buen estado para
+// ser utilizados por los estudiantes. En un archivo de MOVIMIENTOS registraron
+// cada compra y aquellos que se quitaron. Considere que las compras pueden ser
+// de títulos existentes o nuevos. Además, en el archivo maestro hay solo un
+// registro por libro, pero en el de MOVIMIENTOS hay un registro por cada
+// ejemplar, por lo que puede haber más de un movimiento por título del maestro.
+//
+// MAE_LIBROS (ordenado por ID_Libro)
+// | ID_Libro | Tema | Titulo | Cant_Actual |
+//
+// MOVIMIENTOS (ordenado por ID_Libro y Cod_Mov)
+// | ID_Libro | Cod_Mov | Tema | Titulo |
+//
+// El código de movimiento puede tomar tres valores:
+// (*) A: Modificación
+// (*) B: Baja
+// (*) M: Modificación
+//
+// Tema puede tomar cuatro valores:
+// (*) MB
+// (*) ISI
+// (*) IEM
+// (*) IQ
+//
+// Se pide:
+// (*) Generar cuatro nuevos archivos maestros con las cantidades actualizadas
+//     según las compras y nuevos libros, y que no contenga los eliminados.
+//     Ahora la biblioteca quiere tener en archivos distintos los libros de
+//     materias básicas (MB), y los específicos de cada ingeniería (IEM, ISI, IQ).
+//
+// Notas personales:
+// (*) Una compra puede ser de títulos existentes (MAE = MOV) o nuevos (MAE > MOV).
+// (*) Interpreto una baja como la quita de una unidad de un libro.
+
+Acción ActualizaciónSecuencial2 ES
+
+Ambiente
+
+        Libros = Registro
+                IDLibro: N(5)
+                Tema: ("MB", "ISI", "IEM", "IQ")
+                Título: AN(100)
+                CantActual: N(2)
+        Fin Registro
+
+        ARCH_LIBROS, ARCH_MB, ARCH_ISI, ARCH_IEM, ARCH_IQ: archivo de Libros ordenado por IDLibro
+        REG_MAE, REG_MB, REG_ISI, REG_IEM, REG_IQ, Aux: Libros
+
+        Movimientos = Registro
+                IDLibro: N(5)
+                CodMov: AN(1)
+                Tema: ("MB", "ISI", "IEM", "IQ")
+                Título: AN(100)
+        Fin Registro
+
+        ARCH_MOV: archivo de Movimientos ordenado por IDLibro y CodMov
+        REG_MOV: Movimientos
+        
+        resg_id_libro: entero
+
+        Procedimiento LEER_LIBROS() ES
+                LEER(ARCH_LIBROS, REG_MAE)
+                Si FDA(ARCH_LIBROS) Entonces
+                        REG_MAE.IDLibro := HV
+                Fin Si
+        Fin Procedimiento
+
+        Procedimiento LEER_MOVIMIENTOS() ES
+                LEER(ARCH_MOV, REG_MOV)
+                Si FDA(ARCH_MOV) Entonces
+                        REG_MOV.IDLibro := HV
+                Fin Si
+        Fin Procedimiento
+
+        Procedimiento GrabarLibro(REG: alfanumérico) ES
+                Según REG.Tema Hacer
+                        = "MB": GRABAR(ARCH_MB, REG)
+                        = "ISI": GRABAR(ARCH_ISI, REG)
+                        = "IEM": GRABAR(ARCH_IEM, REG)
+                        = "IQ": GRABAR(ARCH_IQ, REG)
+                Fin Según
+        Fin Procedimiento
+
+        Procedimiento ModificarLibro() ES
+                Si REG_MOV.Tema <> "" Entonces
+                        Aux.Tema := REG_MOV.Tema
+                Fin Si
+
+                Si REG_MOV.Título <> "" Entonces
+                        Aux.Título := REG_MOV.Título
+                Fin Si
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH_LIBROS)
+        ABRIR E/ (ARCH_MOV)
+        ABRIR S/ (ARCH_MB)
+        ABRIR S/ (ARCH_ISI)
+        ABRIR S/ (ARCH_IEM)
+        ABRIR S/ (ARCH_IQ)
+
+        LEER_LIBROS()
+        LEER_MOVIMIENTOS()
+
+        Mientras REG_MAE.IDLibro <> HV o REG_MOV.IDLibro <> HV Hacer
+                Si REG_MAE.IDLibro < REG_MOV.IDLibro Entonces
+                        GrabarLibro(REG_MAE)
+                        LEER_LIBROS()
+                Contrario
+                        Si REG_MAE.IDLibro > REG_MOV.IDLibro Entonces
+                                resg_id_libro := REG_MOV.IDLibro
+                                Aux.IDLibro := resg_id_libro
+                                Aux.Tema := REG_MOV.Tema
+                                Aux.Título := REG_MOV.Título
+                                Aux.CantActual := 1
+                                LEER_MOVIMIENTOS()
+
+                                Mientras resg_id_libro = REG_MOV.IDLibro Hacer
+                                        Según REG_MOV.CodMov Hacer
+                                                = "A": Aux.CantActual := Aux.CantActual + 1
+                                                = "B": Aux.CantActual := Aux.CantActual - 1
+                                                = "M": ModificarLibro()
+                                        Fin Según
+                                        LEER_MOVIMIENTOS()
+                                Fin Mientras
+
+                                Si Aux.CantActual > 0 Entonces
+                                        GrabarLibro(Aux)
+                                Fin Si
+                        Contrario
+                                Aux := REG_MAE
+                                
+                                Mientras Aux.IDLibro = REG_MOV.IDLibro Hacer
+                                        Según REG_MOV.CodMov Hacer
+                                                = "A": Aux.CantActual := Aux.CantActual + 1
+                                                = "B": Aux.CantActual := Aux.CantActual - 1
+                                                = "M": ModificarLibro()
+                                        Fin Según
+                                        LEER_MOVIMIENTOS()
+                                Fin Mientras
+
+                                Si Aux.CantActual > 0 Entonces
+                                        GrabarLibro(Aux)
+                                Fin Si
+                        Fin Si
+                Fin Si
+        Fin Mientras
+
+        CERRAR(ARCH_LIBROS)
+        CERRAR(ARCH_MOV)
+        CERRAR(ARCH_MB)
+        CERRAR(ARCH_ISI)
+        CERRAR(ARCH_IEM)
+        CERRAR(ARCH_IQ)
+
+Fin Acción
