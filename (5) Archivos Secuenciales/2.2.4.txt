@@ -20,11 +20,8 @@ Ambiente
 		Nota: (1..100)
 	Fin Registro
 	
-	ARCH: archivo de Alumnos
-	REG: Alumnos
-	
-	ARCH2: archivo de Alumnos
-	REG2: Alumnos
+	ARCH, ARCH2: archivo de Alumnos
+	REG, REG2: Alumnos
 	
 	FechaUsuario: Fecha
 	

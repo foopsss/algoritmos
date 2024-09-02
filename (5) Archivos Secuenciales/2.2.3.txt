@@ -11,11 +11,8 @@ Ambiente
 		UnidadesPrestadas: N(2)
 	Fin Registro
 
-	ARCH: archivo de Socios
-	REG: Socios
-	
-	ARCH2: archivo de Socios
-	REG2: Socios
+	ARCH, ARCH2: archivo de Socios
+	REG, REG2: Socios
 
 Proceso
 

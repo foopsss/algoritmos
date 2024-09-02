@@ -16,8 +16,8 @@ Ambiente
 		Costo: N(4)
 	Fin Registro
 	
-	ARCH: archivo de Costos ordenado por CodAfiliado
-	REG: Costos
+	ARCH, ARCH3: archivo de Costos ordenado por CodAfiliado
+	REG, REG3: Costos
 	
 	Servicios = Registro
 		CodAfiliado: N(5)
@@ -28,10 +28,7 @@ Ambiente
 	
 	ARCH2: archivo de Servicios ordenado por CodAfiliado y FechaAtención
 	REG2: Servicios
-
-	ARCH3: archivo de Costos ordenado por CodAfiliado
-	REG3: Costos
-
+	
 	resg_cod_afiliado, cant_servicios_afiliado, costo_servicios_afiliado: entero
 
 	Procedimiento Inicializar() ES

@@ -48,8 +48,8 @@ Ambiente
                 MarcaBaja: lógico
         Fin Registro
 
-        ARCH: archivo de Computadoras ordenado por ID
-        REG: Computadoras
+        ARCH, ARCH3: archivo de Computadoras ordenado por ID
+        REG, REG3: Computadoras
 
         Actualizaciones = Registro
                 ID: N(5)
@@ -65,9 +65,6 @@ Ambiente
 
         ARCH2: archivo de Actualizaciones ordenado por ID y TipoAct
         REG2: Actualizaciones
-
-        ARCH3: archivo de Computadoras ordenado por ID
-        REG3: Computadoras
 
 	resg_id_computadora: entero
 

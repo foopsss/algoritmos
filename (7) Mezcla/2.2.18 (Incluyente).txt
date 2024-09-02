@@ -10,14 +10,8 @@ Ambiente
 		Unidades: N(2)
 	Fin Registro
 	
-	ARCH: archivo de Sucursales ordenado por CodProd
-	REG: Sucursales
-	
-	ARCH2: archivo de Sucursales ordenado por CodProd
-	REG2: Sucursales
-
-	ARCH3: archivo de Sucursales ordenado por CodProd
-	REG3: Sucursales
+	ARCH, ARCH2, ARCH3: archivo de Sucursales ordenado por CodProd
+	REG, REG2, REG3: Sucursales
 	
 	suma_unidades: entero
 

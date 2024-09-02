@@ -16,14 +16,8 @@ Ambiente
 		FechaEstreno: Fecha
 	Fin Registro
 	
-	ARCH: archivo de Películas ordenado por NroPelícula
-	REG: Películas
-	
-	ARCH2: archivo de Películas ordenado por NroPelícula
-	REG2: Películas
-	
-	ARCH3: archivo de Películas ordenado por NroPelícula
-	REG3: Películas
+	ARCH, ARCH2, ARCH3: archivo de Películas ordenado por NroPelícula
+	REG, REG2, REG3: Películas
 
 Proceso
 

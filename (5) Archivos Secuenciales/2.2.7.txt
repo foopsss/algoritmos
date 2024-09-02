@@ -21,12 +21,9 @@ Ambiente
 		DNI: N(8)
 		Dirección: AN(50)
 	Fin Registro
-
-	ARCH2: archivo de Persona
-	REG2: Persona
 	
-	ARCH3: archivo de Persona
-	REG3: Persona
+	ARCH2, ARCH3: archivo de Persona
+	REG2, REG3: Persona
 
 Proceso
 

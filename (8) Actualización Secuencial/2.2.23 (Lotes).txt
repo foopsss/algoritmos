@@ -16,8 +16,8 @@ Ambiente
 		TipoConsumidor: ("A", "B", "C")
 	Fin Registro
 	
-	ARCH: archivo de Cliente ordenado por IDCasa
-	REG: Cliente
+	ARCH, ARCH3: archivo de Cliente ordenado por IDCasa
+	REG, REG3: Cliente
 
 	Mediciones = Registro
 		IDCasa: N(5)
@@ -27,9 +27,6 @@ Ambiente
 	
 	ARCH2: archivo de Mediciones ordenado por IDCasa
 	REG2: Mediciones
-
-	ARCH3: archivo de Cliente ordenado por IDCasa
-	REG3: Cliente
 	
 	FechaLímite, ResgUltLectura: Fecha
 	resg_casa_mov, cant_lecturas_casa, suma_lecturas_casa: entero

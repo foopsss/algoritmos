@@ -16,11 +16,8 @@ Ambiente
 		PrecioUnitario: N(2)
 	Fin Registro
 	
-	ARCH: archivo de Productos ordenado por CodProd
-	REG: Productos
-	
-	ARCH2: archivo de Productos ordenado por CodProd
-	REG2: Productos
+	ARCH, ARCH2: archivo de Productos ordenado por CodProd
+	REG, REG2: Productos
 	
 	cant_art, cant_cal, cant_ind, cant_acc: entero
 	

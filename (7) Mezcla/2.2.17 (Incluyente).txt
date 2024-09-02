@@ -18,13 +18,10 @@ Ambiente
 		FechaInscripción: Fecha
 		Aprobado: ("SI", "NO")
 	Fin Registro
-
-	ARCH: archivo de Aspirantes ordenado por DNI
-	REG: Aspirantes
 	
-	ARCH2: archivo de Aspirantes ordenado por DNI
-	REG2: Aspirantes
-
+	ARCH, ARCH2: archivo de Aspirantes ordenado por DNI
+	REG, REG2: Aspirantes
+	
 	Seguimiento = Registro
 		DNI: N(8)
 		NomAp: AN(100)
@@ -34,7 +31,7 @@ Ambiente
 	
 	ARCH3: archivo de Seguimiento ordenado por DNI
 	REG3: Seguimiento
-
+	
 	Procedimiento LEER_FEBRERO() ES
 		LEER(ARCH, REG)
 		Si FDA(ARCH) Entonces

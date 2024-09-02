@@ -21,8 +21,8 @@ Ambiente
 		FechaVencimiento: Fecha
 	Fin Registro
 
-	ARCH: archivo de Remedios ordenado por Clave
-	REG: Remedios
+	ARCH, ARCH4: archivo de Remedios ordenado por Clave
+	REG, REG4: Remedios
 	
 	Movimientos = Registro
 		Clave = Registro
@@ -43,9 +43,6 @@ Ambiente
 	
 	ARCH3: archivo de Vencidos ordenado por Medicamento
 	REG3: Vencidos
-
-	ARCH4: archivo de Remedios ordenado por Clave
-	REG4: Remedios
 
 	FechaActual: Fecha
 

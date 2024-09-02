@@ -20,8 +20,8 @@ Ambiente
 		Nota: (1..100)
 	Fin Registro
 	
-	ARCH: archivo de Alumnos ordenado por Legajo
-	REG: Alumnos
+	ARCH, ARCH3: archivo de Alumnos ordenado por Legajo
+	REG, REG3: Alumnos
 	
 	Exámenes = Registro
 		Legajo: N(5)
@@ -33,9 +33,6 @@ Ambiente
 	
 	ARCH2: archivo de Exámenes ordenado por Legajo
 	REG2: Exámenes
-	
-	ARCH3: archivo de Alumnos ordenado por Legajo
-	REG3: Alumnos
 	
 	Procedimiento LEER_ALUMNOS() ES
 		LEER(ARCH, REG)

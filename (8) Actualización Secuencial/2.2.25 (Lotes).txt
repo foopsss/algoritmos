@@ -24,8 +24,8 @@ Ambiente
 		MensajeMuro: AN(200)
 	Fin Registro
 	
-	ARCH: archivo de Amigos ordenado por Clave
-	REG: Amigos
+	ARCH, ARCH3: archivo de Amigos ordenado por Clave
+	REG, REG3: Amigos
 
 	Notificaciones = Registro
 		Clave = Registro
@@ -40,9 +40,6 @@ Ambiente
 	ARCH2: archivo de Notificaciones ordenado por Clave y CodMov
 	REG2: Notificaciones
 	
-	ARCH3: archivo de Amigos ordenado por Clave
-	REG3: Amigos
-
 	Procedimiento LEER_AMIGOS() ES
 		LEER(ARCH, REG)
 		Si FDA(ARCH) Entonces
