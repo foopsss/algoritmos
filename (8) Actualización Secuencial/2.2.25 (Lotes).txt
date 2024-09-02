@@ -72,31 +72,26 @@ Proceso
 			LEER_AMIGOS()
 		Contrario
 			Si REG.Clave > REG2.Clave Entonces
-				// Si el primer código de movimiento no es A, se está
-				// tratando de borrar o modificar algo que no existe.
-				Si REG2.CodMov = "A" Entonces
-					resg_cod_usuario := REG2.Clave.CodUsuario
-					resg_cod_amigo := REG2.Clave.CodAmigo
-					REG3.CodUsuario := resg_cod_usuario
-					REG3.CodAmistad := resg_cod_amigo
-					REG3.FechaAmistad := REG2.FechaAmistad
-					REG3.MensajeMuro := REG2.MensajeMuro
+				// Asumo que el primer movimiento es una alta.			
+				resg_cod_usuario := REG2.Clave.CodUsuario
+				resg_cod_amigo := REG2.Clave.CodAmigo
+				REG3.CodUsuario := resg_cod_usuario
+				REG3.CodAmistad := resg_cod_amigo
+				REG3.FechaAmistad := REG2.FechaAmistad
+				REG3.MensajeMuro := REG2.MensajeMuro
+				LEER_NOTIFICACIONES()
+				
+				Mientras resg_cod_usuario = REG2.Clave.CodUsuario y resg_cod_amigo = REG2.Clave.CodAmigo Hacer
+					Según REG2.CodMov Hacer
+						= "A": Escribir("Error. No se puede volver a añadir una amistad.")
+						= "B": baja_física := V
+						= "M": REG3.MensajeMuro := REG2.MensajeMuro
+					Fin Según
 					LEER_NOTIFICACIONES()
-					
-					Mientras resg_cod_usuario = REG2.Clave.CodUsuario y resg_cod_amigo = REG2.Clave.CodAmigo Hacer
-						Según REG2.CodMov Hacer
-							= "A": Escribir("Error. No se puede volver a añadir una amistad.")
-							= "B": baja_física := V
-							= "M": REG3.MensajeMuro := REG2.MensajeMuro
-						Fin Según
-						LEER_NOTIFICACIONES()
-					Fin Mientras
-					
-					Si NO baja_física Entonces
-						GRABAR(ARCH3, REG3)
-					Fin Si
-				Contrario
-					Escribir("Error. No se puede realizar la operación.")
+				Fin Mientras
+				
+				Si NO baja_física Entonces
+					GRABAR(ARCH3, REG3)
 				Fin Si
 			Contrario
 				REG3 := REG

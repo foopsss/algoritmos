@@ -100,35 +100,30 @@ Proceso
 			LEER_COMPUTADORAS()
 		Contrario
 			Si REG.ID > REG2.ID Entonces
-				// Me aseguro de que el primer movimiento sea una alta.
-                                Si REG2.TipoAct = 0 Entonces
-                                        resg_id_computadora := REG2.ID
-                                        REG3.ID := resg_id_computadora
-                                        REG3.Nombre := REG2.Nombre
-                                        REG3.Almacenamiento := REG2.Almacenamiento
-                                        REG3.Memoria := REG2.Memoria
-                                        REG3.Procesador := REG2.Procesador
-                                        REG3.SO := REG2.SO
-                                        REG3.FechaCompra := REG2.FechaAlta
-                                        REG3.MarcaBaja := F
-                                        LEER_ACTUALIZACIONES()
-					
-					Mientras resg_id_computadora = REG2.ID Hacer
-				                Según REG2.TipoAct Hacer
-				                        = 0: Escribir("Error. Alta inválida.")
-				                        = 1: REG3.MarcaBaja := V
-							= 2: REG3.Almacenamiento := REG2.Almacenamiento
-							= 3: REG3.Memoria := REG2.Memoria
-							= 4: REG3.Procesador := REG2.Procesador
-							= 5: REG3.SO := REG2.SO
-				                Fin Según
-						LEER_ACTUALIZACIONES()
-					Fin Mientras
-					
-					GRABAR(ARCH3, REG3)
-				Contrario
-					Escribir("Error. No se puede realizar la operación.")
-				Fin Si
+                                resg_id_computadora := REG2.ID
+                                REG3.ID := resg_id_computadora
+                                REG3.Nombre := REG2.Nombre
+                                REG3.Almacenamiento := REG2.Almacenamiento
+                                REG3.Memoria := REG2.Memoria
+                                REG3.Procesador := REG2.Procesador
+                                REG3.SO := REG2.SO
+                                REG3.FechaCompra := REG2.FechaAlta
+                                REG3.MarcaBaja := F
+                                LEER_ACTUALIZACIONES()
+				
+				Mientras resg_id_computadora = REG2.ID Hacer
+			                Según REG2.TipoAct Hacer
+			                        = 0: Escribir("Error. Alta inválida.")
+			                        = 1: REG3.MarcaBaja := V
+						= 2: REG3.Almacenamiento := REG2.Almacenamiento
+						= 3: REG3.Memoria := REG2.Memoria
+						= 4: REG3.Procesador := REG2.Procesador
+						= 5: REG3.SO := REG2.SO
+			                Fin Según
+					LEER_ACTUALIZACIONES()
+				Fin Mientras
+				
+				GRABAR(ARCH3, REG3)
 			Contrario
 				REG3 := REG
 				
