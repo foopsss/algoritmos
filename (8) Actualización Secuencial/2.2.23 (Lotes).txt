@@ -86,10 +86,12 @@ Proceso
 				// mediciones para una casa que no existía previamente.
 				resg_casa_mov := REG2.IDCasa
 				
-				Mientras resg_casa_mov = REG2.IDCasa y REG2.FechaMedición <= FechaLímite Hacer
-					cant_lecturas_casa := cant_lecturas_casa + 1
-					suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
-					ResgUltLectura := REG2.FechaMedición
+				Mientras resg_casa_mov = REG2.IDCasa Hacer
+				        Si REG2.FechaMedición <= FechaLímite Entonces
+					        cant_lecturas_casa := cant_lecturas_casa + 1
+					        suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
+					        ResgUltLectura := REG2.FechaMedición
+					Fin Si
 					LEER_MEDICIONES()
 				Fin Mientras
 				
@@ -105,10 +107,12 @@ Proceso
 			Contrario
 				REG3 := REG
 				
-				Mientras REG.IDCasa = REG2.IDCasa y REG2.FechaMedición <= FechaLímite Hacer
-					cant_lecturas_casa := cant_lecturas_casa + 1
-					suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
-					ResgUltLectura := REG2.FechaMedición
+				Mientras REG.IDCasa = REG2.IDCasa Hacer
+				        Si REG2.FechaMedición <= FechaLímite Entonces
+					        cant_lecturas_casa := cant_lecturas_casa + 1
+					        suma_lecturas_casa := suma_lecturas_casa + REG2.Consumo
+					        ResgUltLectura := REG2.FechaMedición
+					Fin Si
 					LEER_MEDICIONES()
 				Fin Mientras
 				
