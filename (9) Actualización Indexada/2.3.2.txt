@@ -1,0 +1,132 @@
+Acción 2.3.2 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Empleados = Registro
+                Clave = Registro
+                        NroSucursal: N(5)
+                        Categoría: ("A", "B", "C")
+                Fin Registro
+                Nombre: AN(100)
+                CodCurso: N(5)
+                Técnico: lógico
+        Fin Registro
+        
+        ARCH_EMPL: archivo de Empleados ordenado por Clave
+        REG_EMPL: Empleados
+        
+        Curso = Registro
+                CodCurso: N(5)
+                Nombre: AN(100)
+                FechaCurso: Fecha
+                CantHoras: N(2)
+        Fin Registro
+        
+        ARCH_CURSO: archivo de Cursos indexado por CodCurso
+        REG_CURSO: Curso
+        
+        resg_suc, empl_cat, empl_tec_cat, empl_notec_cat: entero
+        empl_suc, empl_tec_suc, empl_notec_suc: entero
+        tot_empl, tot_empl_tec, tot_empl_notec: entero
+        resg_cat: alfanumérico
+        
+        Procedimiento Inicializar() ES
+                resg_suc := REG_EMPL.Clave.NroSucursal
+                resg_cat := REG_EMPL.Clave.Categoría
+                empl_tec_cat := 0
+                empl_notec_cat := 0
+                empl_cat := 0
+                empl_tec_suc := 0
+                empl_notec_suc := 0
+                empl_suc := 0
+                tot_empl_tec := 0
+                tot_empl_notec := 0
+                tot_empl := 0
+        Fin Procedimiento
+
+        Procedimiento CorteCategoría() ES
+                Escribir("Sucursal: " resg_suc)
+                Escribir("Categoría: " resg_cat)
+                Escribir("Total de empleados técnicos: " empl_tec_cat)
+                Escribir("Total de empleados no técnicos: " empl_notec_cat)
+                Escribir("Total de empleados: " empl_cat)
+                empl_tec_suc := empl_tec_suc + empl_tec_cat
+                empl_notec_suc := empl_notec_suc + empl_notec_cat
+                empl_suc := empl_suc + empl_cat
+                empl_tec_cat := 0
+                empl_notec_cat := 0
+                empl_cat := 0
+                resg_cat := REG_EMPL.Clave.Categoría
+        Fin Procedimiento
+        
+        Procedimiento CorteSucursal() ES
+                CorteCategoría()
+                Escribir("Sucursal: " resg_suc)
+                Escribir("Total de empleados técnicos: " empl_tec_suc)
+                Escribir("Total de empleados no técnicos: " empl_notec_suc)
+                Escribir("Total de empleados: " empl_suc)
+                tot_empl_tec := tot_empl_tec + empl_tec_suc
+                tot_empl_notec := tot_empl_notec + empl_notec_suc
+                tot_empl := tot_empl + empl_suc
+                empl_tec_suc := 0
+                empl_notec_suc := 0
+                empl_suc := 0
+                resg_suc := REG_EMPL.Clave.NroSucursal
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH_EMPL)
+        ABRIR E/ (ARCH_CURSO)
+        LEER(ARCH_EMPL, REG_EMPL)
+        
+        Inicializar()
+        Escribir("| Sucursal | Categoría | Nombre del empleado | Nombre del curso a realizar |")
+
+        Mientras NFDA(ARCH_EMPL) Hacer
+                // Cosas de corte.
+                Si resg_suc <> REG_EMPL.Clave.NroSucursal Entonces
+                        CorteSucursal()
+                Contrario
+                        Si resg_cat <> REG_EMPL.Clave.Categoría Entonces
+                                CorteCategoría()
+                        Fin Si
+                Fin Si
+
+                Si REG_EMPL.Técnico Entonces
+                        empl_tec_cat := empl_tec_cat + 1
+                Contrario
+                        empl_notec_cat := empl_notec_cat + 1
+                Fin Si
+                
+                empl_cat := empl_cat + 1
+                
+                // Cosas de indexados.
+                REG_CURSO.CodCurso := REG_EMPL.CodCurso
+                LEER(ARCH_CURSO, REG_CURSO)
+                
+                Si existe Entonces
+                        Escribir(REG_EMPL.Clave.NroSucursal, REG_EMPL.Clave.Categoría, REG_EMPL.Nombre, REG_CURSO.Nombre)
+                Contrario
+                        Escribir("El empleado" REG_EMPL.Nombre "está inscripto a un curso inexistente.")
+                Fin Si
+                
+                // Avanzo al siguiente registro del secuencial.
+                LEER(ARCH_EMPL, REG_EMPL)
+        Fin Mientras
+        
+        CorteSucursal()
+        
+        Escribir("La empresa tiene un total de" tot_empl "empleados.")
+        Escribir("De dicho total, " tot_empl_tec "son empleados técnicos y" tot_empl_notec "son empleados no técnicos.")
+
+        CERRAR(ARCH_EMPL)
+        CERRAR(ARCH_CURSO)
+
+Fin Acción
