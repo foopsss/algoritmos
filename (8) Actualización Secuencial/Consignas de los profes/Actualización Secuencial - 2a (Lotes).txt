@@ -25,7 +25,7 @@
 // (*) IQ
 //
 // Se pide:
-// (*) Generar cuatro nuevos archivos maestros con las cantidades actualizadas
+// (a) Generar cuatro nuevos archivos maestros con las cantidades actualizadas
 //     según las compras y nuevos libros, y que no contenga los eliminados.
 //     Ahora la biblioteca quiere tener en archivos distintos los libros de
 //     materias básicas (MB), y los específicos de cada ingeniería (IEM, ISI, IQ).

@@ -105,6 +105,7 @@ Proceso
 				Si NO baja_física Entonces
 					GRABAR(ARCH3, REG3)
 				Fin Si
+				LEER_AMIGOS()
 			Fin Si
 		Fin Si
 	Fin Mientras
