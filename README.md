@@ -9,9 +9,9 @@ En este repositorio almaceno ejercicios hechos durante el cursado de la materia 
 
 Algunas cosas a considerar:
 
-* Mis resoluciones de la guía de trabajos prácticos son de la guía en formato PDF (disponible en el campus virtual), que es algo distinta a la guía en formato web, aunque siempre hago todas las versiones posibles.
+* Mis resoluciones de la guía de trabajos prácticos son de la guía en formato PDF disponible en el campus virtual, que es algo distinta a la guía en formato web, aunque siempre hago todas las versiones posibles. También hago aquellos ejercicios que son exclusivos de la guía web.
 * Para aquellos ejercicios que no se encuentran en la guía de trabajos prácticos, yo proveo sus enunciados en la cabecera de cada resolución, en caso de que el lector los quiera hacer por su cuenta.
-* Todos los ejercicios que no sean de la guía en formato PDF se encuentran en sus propias carpetas dentro de los directorios correspondientes a cada tema de la materia. Sin embargo, los ejercicios de parcial y aquellos hechos con lenguajes de programación se encuentran en la carpeta «Adicionales».
+* Todos los ejercicios que no sean de la guía en formato PDF se encuentran en sus propias carpetas dentro de los directorios correspondientes a cada tema de la materia (con la excepción siendo aquellos que son exclusivos de la guía web, localizados en las carpetas principales también). Sin embargo, los ejercicios de parcial y aquellos hechos con lenguajes de programación se encuentran en la carpeta «Adicionales».
 
 Algunos de los ejercicios cuentan además con una versión escrita en [Rust](https://www.rust-lang.org/), el lenguaje de programación de sistemas de Mozilla. Dichas versiones se encuentran disponibles en otro de mis repositorios, [algoritmos-rs](https://github.com/foopsss/algoritmos-rs).
 
