@@ -1,3 +1,7 @@
+// Este ejercicio es una parte del 2.3.1 que es exclusiva de la guía web.
+// Por no tratarse de algo que esté en el PDF también, lo subo directamente
+// a la carpeta principal sobre actualización indexada.
+
 Acción 2.3.1a ES
 
 Ambiente

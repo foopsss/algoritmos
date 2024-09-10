@@ -1,0 +1,102 @@
+Acción 2.3.3 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Tiempo = Registro
+                Hora: N(2)
+                Minutos: N(2)
+        Fin Registro
+
+        Peaje = Registro
+                Clave = Registro
+                        Patente: AN(7)
+                        FechaPase: Fecha
+                Fin Registro
+                HoraÚltimoPase: Tiempo
+                Costo: N(5)
+        Fin Registro
+        
+        ARCH: archivo de Peaje indexado por Clave
+        REG: Peaje
+        
+        FechaActual: Fecha
+        HoraActual: Tiempo
+        elección, patente: alfanumérico
+        cat_vehic: entero
+
+        Procedimiento ObtenerFechaUsuario() ES
+                Escribir("Introduzca el año actual: ")
+                Leer(FechaActual.Año)
+                Escribir("Introduzca el mes actual: ")
+                Leer(FechaActual.Mes)
+                Escribir("Introduzca el día actual: ")
+                Leer(FechaActual.Día)
+        Fin Procedimiento
+        
+        Procedimiento ObtenerHoraUsuario() ES
+                Escribir("Ingrese la hora: ")
+                Leer(HoraActual.Hora)
+                Escribir("Ingrese los minutos: ")
+                Leer(HoraActual.Minutos)
+        Fin Procedimiento
+
+        Procedimiento ObtenerElección() ES
+                Escribir("¿Desea registrar el paso de un vehículo? [S/N]: ")
+                Leer(elección)
+        Fin Procedimiento
+        
+        Función DeterminarCosto(entrada: entero): real ES
+                Según entrada Hacer
+                        = 1: DeterminarCosto := 1,20
+                        = 2: DeterminarCosto := 2,50
+                        = 3: DeterminarCosto := 4,00
+                        = 4: DeterminarCosto := 5,00
+                Fin Según
+        Fin Función
+
+Proceso
+
+        ABRIR E/S (ARCH)
+        
+        ObtenerFechaUsuario()
+        ObtenerHoraUsuario()
+        ObtenerElección()
+        
+        Mientras elección = "S" Hacer
+                Escribir("Ingrese la patente del vehículo: ")
+                Leer(patente)
+                
+                REG.Clave.Patente := patente
+                REG.Clave.FechaPase := FechaActual
+                LEER(ARCH, REG)
+                
+                Si existe Entonces
+                        REG.HoraÚltimoPase := HoraActual
+                        REGRABAR(ARCH, REG)
+                        Escribir("Este vehículo ya pasó anteriormente en el día.")
+                Contrario
+                        Escribir("Ingrese la categoría del vehículo: ")
+                        Leer(cat_vehic)
+                        
+                        REG.Clave.Patente := patente
+                        REG.Clave.FechaPase := FechaActual
+                        REG.HoraÚltimoPase := HoraActual
+                        REG.Costo := DeterminarCosto(cat_vehic)                        
+                        GRABAR(ARCH, REG)
+                        
+                        Escribir("| Patente del vehículo | Fecha del pase | Hora | Costo |")
+                        Escribir(REG.Clave.Patente, REG.Clave.FechaPase, REG.HoraÚltimoPase, REG.Costo)
+                Fin Si
+                
+                ObtenerElección()
+        Fin Mientras
+        
+        CERRAR(ARCH)
+
+Fin Acción

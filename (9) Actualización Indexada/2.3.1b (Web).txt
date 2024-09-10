@@ -1,3 +1,6 @@
+// Esta es la versión del ejercicio que se ve en el PDF, y también en una parte
+// del 2.3.1 en la guía web.
+
 Acción 2.3.1b ES
 
 Ambiente
