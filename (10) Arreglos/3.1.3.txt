@@ -1,0 +1,26 @@
+Acción 3.1.3(arr: arreglo de [1..100] de entero) ES
+
+Ambiente
+
+        i, cont_pares, suma_pares: entero
+
+        Procedimiento Inicializar() ES
+                cont_pares := 0
+                suma_pares := 0
+        Fin Procedimiento
+
+Proceso
+
+        Inicializar()
+        
+        Para i := 1 hasta 100 Hacer
+                Si arr[i] MOD 2 Entonces
+                        cont_pares := cont_pares + 1
+                        suma_pares := suma_pares + arr[i]
+                Fin Si
+        Fin Para
+        
+        Escribir("En el arreglo hay" cont_pares "números pares.")
+        Escribir("La suma de estos da un total de" suma_pares ".")
+
+Fin Acción

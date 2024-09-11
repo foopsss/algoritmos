@@ -1,0 +1,30 @@
+Acción 3.1.2(arr: arreglo de [1..100] de entero) ES
+
+Ambiente
+
+        mayor_val, menor_val: entero
+        pos_mayor, pos_menor: entero
+        
+        Procedimiento Inicializar() ES
+                mayor_val := LV
+                menor_val := HV
+        Fin Procedimiento
+       
+Proceso
+
+        Inicializar()
+
+        Para i := 1 hasta 100 Hacer                
+                Si arr[i] > mayor_val Entonces
+                        mayor_val := arr[i]
+                        pos_mayor := i
+                Contrario
+                        menor_val := arr[i]
+                        pos_menor := i
+                Fin Si
+        Fin Para
+
+        Escribir("El número de mayor valor es" mayor_val "y se encuentra en la posición" pos_mayor "del arreglo.")
+        Escribir("El número de menor valor es" menor_val "y se encuentra en la posición" pos_menor "del arreglo.")
+
+Fin Acción
