@@ -1,0 +1,192 @@
+// Consigna: la Secretaría de Turismo de la ciudad de Resistencia habilitó el
+// programa "EcoBici" para promover el uso de la bici con fines turísticos. Se
+// trata de 6 circuitos para recorrer 14 barrios de la ciudad. Se cuenta con un
+// archivo secuencial con la información de todas las bicicletas disponibles en
+// la ciudad:
+//
+// BICICLETAS (ordenado por nro_serie y modelo)
+// | Nro_serie | Modelo | Fecha_adquisición | Fecha_ult_mantenimiento | Disponibilidad |
+//
+// Además se cuenta con información de todas las novedades para una bicicleta.
+// Las mismas pueden tratarse de movimientos de préstamos, o bien de una novedad
+// respecto a un mantenimiento realizado a la unidad.
+//
+// NOVEDADES (ordenado por nro_serie, modelo, tipo_novedad y fecha_novedad)
+// | Nro_serie | Modelo | Tipo_novedad | Fecha_novedad | Hora_inicio | Hora_fin | Circuito_nro | ID_usuario |
+//
+// Tipo de novedad puede ser:
+// (*) 1 (Alta de una nueva unidad): cuando se da de alta, la fecha de último
+//     mantenimiento debe estar vacía y la disponibilidad debe ser verdadero.
+// (*) 2 (Préstamo): no afecta los datos de las bicicletas, la secretaría lo
+//     utiliza con fines estadísticos.
+// (*) 3 (Mantenimiento): implica que deberá actualizarse el campo de disponibilidad
+//     y marcarlo como falso, además de actualizar la fecha de último mantenimiento.
+//
+// La información de los usuarios que contratan el servicio se encuentra dentro
+// de un archivo indexado por ID_usuario.
+//
+// USUARIOS
+// | ID_usuario | DNI | Sexo (M o F) | Apellido y nombre | Domicilio | Localidad | Provincia | Edad |
+//
+// Se pide:
+// (a) Desarrollar un algoritmo que permita mantener actualizado el archivo de
+//     bicicletas, considerando que pueden existir múltiples novedades para un
+//     mismo número de serie. Considerar cualquier tipo de error informando por
+//     pantalla al usuario.
+// (b) Indicar la cantidad total de préstamos realizados por sexo.
+
+Acción ActualizaciónM1 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Bicicletas = Registro
+                Clave = Registro
+                        NroSerie: N(5)
+                        Modelo: N(4)
+                Fin Registro
+                FechaAdquisición: Fecha
+                FechaÚltimoMantenimiento: Fecha
+                Disponibilidad: lógico
+        Fin Registro
+        
+        ARCH_BIC, ARCH_SAL: archivo de Bicicletas ordenado por Clave 
+        REG_BIC, REG_SAL: Bicicletas
+        
+        Novedades = Registro
+                Clave = Registro
+                        NroSerie: N(5)
+                        Modelo: N(4)
+                Fin Registro
+                TipoNovedad: (1..3)
+                FechaNovedad: Fecha
+                HoraInicio: N(2)
+                HoraFin: N(2)
+                NroCircuito: N(1)
+                IDUsuario: N(5)
+        Fin Registro
+        
+        ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
+        REG_NOV: Novedades
+
+        Usuarios = Registro
+                IDUsuario: N(5)
+                DNI: N(8)
+                Sexo: ("M", "F")
+                NomAp: AN(100)
+                Domicilio: AN(100)
+                Localidad: AN(100)
+                Provincia: AN(100)
+                Edad: N(2)
+        Fin Registro
+        
+        ARCH_US: archivo de Usuarios indexado por IDUsuario
+        REG_US: Usuarios
+        
+        tot_prest_masc, tot_prest_fem: entero
+        
+        Procedimiento Inicializar() ES
+                tot_prest_masc := 0
+                tot_prest_fem := 0
+        Fin Procedimiento
+
+        Procedimiento LEER_BIC() ES
+                LEER(ARCH_BIC, REG_BIC)
+                Si FDA(ARCH_BIC) Entonces
+                        REG_BIC.Clave := HV
+                Fin Si
+        Fin Procedimiento
+
+        Procedimiento LEER_NOV() ES
+                LEER(ARCH_NOV, REG_NOV)
+                Si FDA(ARCH_NOV) Entonces
+                        REG_NOV.Clave := HV
+                Fin Si
+        Fin Procedimiento
+        
+        Procedimiento ChequearPréstamo() ES
+                REG_US.IDUsuario := REG_NOV.IDUsuario
+                
+                Si existe Entonces
+                        Si REG_US.Sexo = "M" Entonces
+                                tot_prest_masc := tot_prest_masc + 1
+                        Contrario
+                                tot_prest_fem := tot_prest_fem + 1
+                        Fin Si
+                Contrario
+                        Escribir("La persona indicada no figura en el registro de usuarios.")
+                Fin Si
+        Fin Procedimiento
+        
+        Procedimiento RealizarMantenimiento() ES
+                REG_SAL.Disponibilidad := F
+                REG_SAL.FechaÚltimoMantenimiento := REG_NOV.FechaNovedad
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH_BIC)
+        ABRIR E/ (ARCH_NOV)
+        ABRIR E/ (ARCH_US)
+        ABRIR S/ (ARCH_SAL)
+
+        LEER_BIC()
+        LEER_NOV()
+        Inicializar()
+
+        Mientras REG_BIC.Clave <> HV o REG_NOV.Clave <> HV Hacer
+                Si REG_BIC.Clave < REG_NOV.Clave Entonces
+                        GRABAR(ARCH_SAL, REG_BIC)
+                        LEER_BIC()
+                Contrario
+                        Si REG_BIC.Clave > REG_NOV.Clave Entonces
+                                REG_SAL.Clave := REG_NOV.Clave
+                                REG_SAL.FechaAdquisición := REG_NOV.FechaNovedad
+                                REG_SAL.FechaÚltimoMantenimiento.Año := ""
+                                REG_SAL.FechaÚltimoMantenimiento.Mes := ""
+                                REG_SAL.FechaÚltimoMantenimiento.Día := ""
+                                REG_SAL.Disponibilidad := V
+                                LEER_NOV()
+                                
+                                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
+                                        Según REG_NOV.TipoNovedad Hacer
+                                                = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
+                                                = 2: ChequearPréstamo()
+                                                = 3: RealizarMantenimiento()
+                                        Fin Según
+                                        LEER_NOV()
+                                Fin Mientras
+                                
+                                GRABAR(ARCH_SAL, REG_SAL)
+                        Contrario
+                                REG_SAL := REG_BIC
+                                
+                                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
+                                        Según REG_NOV.TipoNovedad Hacer
+                                                = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
+                                                = 2: ChequearPréstamo()
+                                                = 3: RealizarMantenimiento()
+                                        Fin Según
+                                        LEER_NOV()
+                                Fin Mientras
+                                
+                                GRABAR(ARCH_SAL, REG_SAL)
+                                LEER_BIC()
+                        Fin Si
+                Fin Si
+        Fin Mientras
+
+        Escribir("Se realizaron" tot_prest_masc "préstamos de bicicletas a hombres.")
+        Escribir("Se realizaron" tot_prest_fem "préstamos de bicicletas a mujeres.")
+
+        CERRAR(ARCH_BIC)
+        CERRAR(ARCH_NOV)
+        CERRAR(ARCH_US)
+        CERRAR(ARCH_SAL)
+
+Fin Acción

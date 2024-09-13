@@ -1,0 +1,141 @@
+// Consigna: considerando el escenario presentado en el ejercicio anterior, la
+// información suministrada en el archivo de NOVEDADES y también lo siguiente:
+//
+// Los paseos tienen un costo dependiendo de su duración:
+// (*) Paseos intensivos: superan las 6 hs. Tienen un costo fijo inicial de $1500
+//     más un costo variable dependiendo del circuito y cantidad de horas utilizadas.
+// (*) Paseos recreativos: duran 6 hs. o menos. Tienen un costo fijo inicial de
+//     $1000 más un costo variable dependiendo del circuito y cantidad de horas
+//     utilizadas.
+//
+// Los costos variables de los paseos se encuentran en un arreglo de dos dimensiones
+// donde cada posición corresponde al número de circuito y tipo de paseo, respectivamente.
+//
+// Se pide:
+// (a) Escribir un algoritmo que calcule:
+//     (a.1) Cantidad de préstamos.
+//     (a.2) Monto total recaudado por circuito y por tipo de paseo.
+// (b) Indicar:
+//     (b.1) El circuito con la mayor cantidad de paseos.
+//     (b.2) El total recaudado para un tipo de paseo y circuito ingresados por
+//           el usuario.
+//     (b.3) El importe total recaudado y la cantidad de paseos realizados.
+//
+// Consideraciones:
+// (*) Se provee una función "diff_horas" que recibe como parámetros una hora
+//     de inicio y una hora de fin (en formato de registros), y devuelve un
+//     entero indicando la diferencia de horas entre ambos registros.
+
+Acción EstadísticoM1(costos_var: arreglo de [1..6, 1..2] de entero) ES
+
+Ambiente
+
+        Novedades = Registro
+                Clave = Registro
+                        NroSerie: N(5)
+                        Modelo: N(4)
+                Fin Registro
+                TipoNovedad: (1..3)
+                FechaNovedad: Fecha
+                HoraInicio: N(2)
+                HoraFin: N(2)
+                NroCircuito: N(1)
+                IDUsuario: N(5)
+        Fin Registro
+        
+        ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
+        REG_NOV: Novedades
+
+        prest_paseos: arreglo de [1..7] de entero
+        recaud_paseos: arreglo de [1..7, 1..3] de entero
+        
+        i, j, circ_us, paseo_us, horas_paseo, costo_paseo: entero
+        cant_préstamos, mayor_cant_prest, circ_mayor_cant_prest: entero
+
+        Procedimiento Inicializar() ES
+                Para i := 1 hasta 6 Hacer
+                        prest_paseos[i] := 0
+                Fin Para
+        
+                Para i := 1 hasta 7 Hacer
+                        Para j := 1 hasta 3 Hacer
+                                recaud_paseos[i, j] := 0
+                        Fin Para
+                Fin Para
+                
+                cant_préstamos := 0
+        Fin Procedimiento
+
+        Procedimiento ObtenerDatosUsuario() ES
+                Escribir("Introduzca un circuito: ")
+                Leer(circ_us)
+                Escribir("Introduzca un tipo de paseo: ")
+                Leer(paseo_us)
+        Fin Procedimiento
+
+        Función ConvertirTipo(entrada: entero): alfanumérico ES
+                Si entrada = 1 Entonces
+                        ConvertirTipo := "Intensivo"
+                Contrario
+                        ConvertirTipo := "Recreativo"
+                Fin Si
+        Fin Función
+
+Proceso
+
+        ABRIR E/ (ARCH_NOV)
+        LEER(ARCH_NOV, REG_NOV)
+        
+        ObtenerDatosUsuario()
+        Inicializar()
+        
+        Mientras NFDA(ARCH_NOV) Hacer
+                Si REG_NOV.TipoNovedad = 2 Entonces
+                        cant_préstamos := cant_préstamos + 1
+                        horas_paseo := diff_horas(REG_NOV.HoraInicio, REG_NOV.HoraFin)
+                        i := REG_NOV.NroCircuito
+                        
+                        Si horas_paseo > 6 Entonces
+                                j := 1
+                                costo_paseo := 1500 + costos_var[i, j]
+                        Contrario
+                                j := 2
+                                costo_paseo := 1000 + costos_var[i, j]
+                        Fin Si
+                        
+                        // Matriz con la cantidad de paseos.
+                        prest_paseos[i] := prest_paseos[i] + 1
+                        prest_paseos[7] := prest_paseos[7] + 1
+                        
+                        // Matriz con la recaudación de los paseos.
+                        recaud_paseos[i, j] := recaud_paseos[i, j] + costo_paseo
+                        recaud_paseos[7, 3] := recaud_paseos[7, 3] + costo_paseo
+                Fin Si
+                
+                LEER(ARCH_NOV, REG_NOV)
+        Fin Mientras
+        
+        Para i := 1 hasta 6 Hacer
+                Escribir("Circuito: " i)
+                
+                Para j := 1 hasta 2 Hacer
+                        Escribir("Tipo de paseo: " ConvertirTipo(j))
+                        Escribir("Monto recaudado: $" recaud_paseos[i, j])
+                Fin Para
+        Fin Para
+        
+        Para i := 1 hasta 6 Hacer
+                Si prest_paseos[i] > mayor_cant_prest Entonces
+                        circ_mayor_cant_prest := i
+                        mayor_cant_prest := prest_paseos[i]
+                Fin Si
+        Fin Para
+        
+        Escribir("Se realizaron" cant_préstamos "préstamos.")
+        Escribir("El circuito con la mayor cantidad de paseos es el circuito" circ_mayor_cant_prest ".")
+        Escribir("Para el circuito y tipo de paseo indicados por el usuario se recaudaron" recaud_paseos[circ_us, paseo_us] "pesos.")
+        Escribir("Se recaudó un importe total de" recaud_paseos[7, 3] "pesos, habiéndose realizado" prest_paseos[7] "paseos.")
+        
+        CERRAR(ARCH_NOV)
+
+Fin Acción
