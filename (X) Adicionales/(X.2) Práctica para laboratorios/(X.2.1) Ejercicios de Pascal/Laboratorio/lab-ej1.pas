@@ -16,9 +16,6 @@ uses
 	functions in '../functions.pas',
 	math;
 
-type
-	sec = TextFile;
-
 var
 	entrada: TextFile;
 	v_ent: char;
