@@ -41,7 +41,7 @@ begin
 				end;
 			end;
 
-			writeln('Cantidad de palabras en el archivo: ', cont_palabras);
+			writeln('Cantidad de palabras en la secuencia: ', cont_palabras);
 			close(entrada);
 		end;
 end.
