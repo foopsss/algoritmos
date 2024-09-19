@@ -26,7 +26,7 @@ delete_files() {
 while getopts l:c:r:d: flag;
 do
 	case "${flag}" in
-		l) cd $OPTARG;;
+		l) cd "$OPTARG";;
 		c) fpc $OPTARG.pas;;
 		r) program=$OPTARG; run_program;;
 		d) program=$OPTARG; delete_files;;
