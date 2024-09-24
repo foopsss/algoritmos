@@ -72,7 +72,10 @@ Proceso
                         Escribir("Franja horaria": horario_caja)
                         Escribir("Total facturado: " totales[i, j])
                 Fin Para
-                
+        Fin Para
+        
+        Para i := 1 hasta 10 Hacer
+                Escribir("Caja: " i)
                 Escribir("Total facturado por la caja: " totales[i, 6])
         Fin Para
         
