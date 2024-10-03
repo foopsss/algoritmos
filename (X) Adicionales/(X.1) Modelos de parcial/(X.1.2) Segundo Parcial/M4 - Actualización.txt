@@ -1,0 +1,205 @@
+// Consigna: luego de la consagración de nuestra selección en el Mundial de
+// Fútbol, la famosa marca de ropa que viste a la Selección Argentina ha decidido
+// realizar la preventa, desde su página web, de sus nuevos lanzamientos con
+// las tres estrellas, y ha ofrecido importantes descuentos para la indumentaria
+// preexistente.
+//
+// La información de los productos se encuentra en un archivo secuencial ordenado
+// por id_producto, donde cada registro contiene los siguientes campos:
+//
+// | id_producto | nombre | descripción | categoría | nuevo_lanzamiento [("SI", "NO")] | porcentaje_descuento | stock |
+//
+// Donde la categoría puede ser:
+// (*) C (camisetas)
+// (*) R (remeras)
+// (*) G (gorras)
+// (*) S (shorts)
+//
+// porcentaje_descuento es un valor numérico entre 0 y 1, con decimales.
+//
+// La información de las preventas se encuentra en un archivo secuencial que
+// contiene los siguientes datos, y está ordenado por id_producto e id_cliente:
+//
+// | id_producto | id_cliente | cantidad | es_personalizado | nro_jugador [(1..26)] | nombre_jugador | talle |
+//
+// Se pide:
+// (a) Actualizar el stock del archivo de productos considerando que si algún
+//     producto queda con stock cero, no deberá figurar en el archivo actualizado.
+// (b) Emitir un mensaje de error por cada pedido que no haya podido concretarse
+//     por falta de stock.
+// (c) Informar el nombre del jugador que vendió más camisetas. Los nombres de
+//     los jugadores se encuentran en un arreglo, donde cada posición corresponde
+//     al número de camiseta.
+// (d) Cantidad de productos que no se han podido procesar por falta de stock.
+//     Para calcular tener en cuenta el siguiente criterio: si cantidad (preventa)
+//     supera la cantidad en stock, se contabiliza el faltante. Si el producto no
+//     existe, se contabiliza el total de la cantidad pedida.
+// (e) Nombre de la categoría menos solicitada.
+// (f) Informar el importe total vendido en la preventa lanzada, teniendo en
+//     cuenta los descuentos.
+//
+// Notas personales:
+// (*) No hice el último punto, dado que el ejercicio no provee los medios
+//     para calcular dicho importe.
+
+Acción ActualizaciónM4(nombre_jugadores: arreglo de [1..26] de alfanumérico) ES
+
+Ambiente
+
+        Productos = Registro
+                IDProducto: N(5)
+                Nombre: AN(100)
+                Descripción: AN(100)
+                Categoría: ("C", "R", "G", "S")
+                NuevoLanzamiento: ("SI", "NO")
+                PorcDesc: (0..1)
+                Stock: N(2)
+        Fin Registro
+
+        ARCH_PROD, ARCH_SAL: archivo de Productos ordenado por IDProducto
+        REG_PROD, REG_SAL: Productos
+        
+        Preventas = Registro
+                IDProducto: N(5)
+                IDCliente: N(5)
+                Cantidad: N(2)
+                es_personalizado: ("SI", "NO")
+                NroJugador: (1..26)
+                NombreJugador: AN(100)
+                Talle: AN(3)
+        Fin Registro
+        
+        ARCH_PREV: archivo de Preventas ordenado por IDProducto e IDCliente
+        REG_PREV: Preventas
+        
+        ventas_camisetas: arreglo de [1..26] de entero
+        ventas_categoría: arreglo de [1..4] de entero
+        
+        i, j, cont_falta_stock, max_camisetas, min_ventas_categoría: entero
+        jug_max_camisetas: alfanumérico
+        cat_min_ventas: carácter
+        
+        Procedimiento LEER_PRODUCTOS() ES
+                LEER(ARCH_PROD, REG_PROD)
+                Si FDA(ARCH_PROD) Entonces
+                        REG_PROD.IDProducto := HV
+                Fin Si
+        Fin Procedimiento
+        
+        Procedimiento LEER_PREVENTAS() ES
+                LEER(ARCH_PREV, REG_PREV)
+                Si FDA(ARCH_PREV) Entonces
+                        REG_PREV.IDProducto := HV
+                Fin Si
+        Fin Procedimiento
+        
+        Procedimiento Inicializar() ES
+                Para i := 1 hasta 26 Hacer
+                        ventas_camisetas[i] := 0
+                Fin Para
+                
+                Para i := 1 hasta 4 Hacer
+                        ventas_categoría[i] := 0
+                Fin Para
+                
+                cont_falta_stock := 0
+                max_camisetas := LV
+                min_ventas_categoría := HV
+        Fin Procedimiento
+
+        Función DeterminarÍndice(entrada: carácter): entero ES
+                Según entrada Hacer
+                        = "C": DeterminarÍndice := 1
+                        = "G": DeterminarÍndice := 2
+                        = "R": DeterminarÍndice := 3
+                        = "S": DeterminarÍndice := 4
+                Fin Según
+        Fin Función
+
+        Función DeterminarCategoría(entrada: entero): carácter ES
+                Según entrada Hacer
+                        = 1: DeterminarCategoría := "C"
+                        = 2: DeterminarCategoría := "G"
+                        = 3: DeterminarCategoría := "R"
+                        = 4: DeterminarCategoría := "S"
+                Fin Según
+        Fin Función
+
+Proceso
+
+        ABRIR E/ (ARCH_PROD)
+        ABRIR E/ (ARCH_PREV)
+        ABRIR S/ (ARCH_SAL)
+
+        LEER_PRODUCTOS()
+        LEER_PREVENTAS()
+        Inicializar()
+        
+        Mientras REG_PROD.IDProducto <> HV o REG_PREV.IDProducto <> HV Hacer
+                Si REG_PROD.IDProducto < REG_PREV.IDProducto Entonces
+                        GRABAR(ARCH_SAL, REG_PROD)
+                        LEER_PRODUCTOS()
+                Contrario
+                        Si REG_PROD.IDProducto > REG_PREV.IDProducto Entonces
+                                LEER_PREVENTAS()
+                        Contrario
+                                REG_SAL := REG_PROD
+                                
+                                Mientras REG_SAL.IDProducto = REG_PREV.IDProducto Hacer
+                                        Si REG_SAL.Stock > 0 Entonces
+                                                Si REG_SAL.Stock >= REG_PREV.Cantidad Entonces
+                                                        cantidad_vendida := REG_PREV.Cantidad
+                                                        REG_SAL.Stock := REG_SAL.Stock - cantidad_vendida
+                                                Contrario
+                                                        cantidad_vendida := REG_PREV.Cantidad - (REG_PREV.Cantidad - REG_SAL.Stock)
+                                                        cont_falta_stock := cont_falta_stock + (REG_PREV.Cantidad - REG_SAL.Stock)
+                                                        REG_SAL.Stock := 0
+                                                        Escribir("Solo se vendieron" cantidad_vendida "artículos por falta de stock.")
+                                                Fin Si
+                                                
+                                                i := DeterminarÍndice(REG_SAL.Categoría)
+                                                ventas_categoría[i] := ventas_categoría[i] + cantidad_vendida
+                                                
+                                                Si REG_SAL.Categoría = "C" Entonces
+                                                        j := REG_PREV.NroJugador
+                                                        ventas_camisetas[j] := ventas_camisetas[j] + cantidad_vendida
+                                                Fin Si
+                                        Contrario
+                                                cont_falta_stock := cont_falta_stock + REG_PREV.Cantidad
+                                                Escribir("El pedido no se puede concretar por falta de stock.")
+                                        Fin Si
+                                        
+                                        LEER_PREVENTAS()
+                                Fin Mientras
+                                
+                                Si REG_SAL.Stock > 0 Entonces
+                                        GRABAR(ARCH_SAL, REG_SAL)
+                                Fin Si
+                                
+                                LEER_PRODUCTOS()
+                        Fin Si
+                Fin Si
+        Fin Mientras
+        
+        Para i := 1 hasta 26 Hacer
+                Si max_camisetas < ventas_camisetas[i] Entonces
+                        max_camisetas := ventas_camisetas[i]
+                        jug_max_camisetas := nombre_jugadores[i]
+                Fin Si
+        Fin Para
+        
+        Para i := 1 hasta 4 Hacer
+                Si min_ventas_categoría > ventas_categoría[i] Entonces
+                        min_ventas_categoría := ventas_categoría[i]
+                        cat_min_ventas := DeterminarCategoría(i)
+                Fin Si
+        Fin Para
+        
+        Escribir("El nombre del jugador que más camisetas vendió es" jug_max_camisetas ".")
+        Escribir("La categoría menos solicitada fue la categoría" cat_min_ventas ".")
+
+        CERRAR(ARCH_PROD)
+        CERRAR(ARCH_PREV)
+        CERRAR(ARCH_SAL)
+
+Fin Acción

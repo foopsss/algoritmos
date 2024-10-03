@@ -1,0 +1,142 @@
+// Consigna: debido a la euforia desatada por las figuritas de Catar 2022, un grupo
+// de estudiantes de Algoritmos y Estructuras de Datos de Ingeniería de Sistemas ha
+// decidido desarrollar un algoritmo para poder administrar sus álbumes.
+//
+// Para esto, han generado un archivo secuencial de movimientos con las figuritas
+// disponibles para intercambios:
+//
+// INTERCAMBIOS (ordenado por cod_figurita, cod_amigo)
+// | cod_figurita [N(5)] | cod_amigo [N(5)] | fecha_solicitud |
+//
+// Cada estudiante dispone de la información de su álbum, con las figuritas disponibles
+// al momento, en un archivo secuencial con el siguiente formato:
+//
+// ÁLBUM (ordenado por cod_figurita)
+// | cod_figurita [N(5)] | cantidad [N(2)] | permitir_duplicados [("SI", "NO")] |
+//
+// Se necesita generar un algoritmo en pseudocódigo que permita actualizar el álbum
+// de figuritas de un estudiante, teniendo en cuenta que:
+// (*) En caso de no existir la figurita en ÁLBUM, se deberá crear un registro en
+//     el archivo, con la cantidad inicializada en 1 y con el campo permitir_duplicados
+//     en "NO", siempre y cuando la fecha de solicitud no haya expirado (debe ser
+//     inferior a siete días de la fecha actual). Caso contrario, el registro no
+//     debe ser incorporado al archivo, ni tampoco sus movimientos siguientes.
+//     (*) NOTA: considerar que existe una función diff_días que recibe como
+//         parámetro el número de días y una fecha, y devuelve verdadero o falso
+//         si la fecha actual supera en días a la fecha que recibe como parámetro.
+// (*) En caso de coincidencias, se deberá verificar si la figurita permite
+//     duplicados. En caso de permitirlo, se deberá incrementar la cantidad 
+//     disponible en el archivo ÁLBUM.
+// (*) Pueden existir múltiples solicitudes de intercambios con el mismo cod_figurita.
+//
+// Al finalizar, indicar la cantidad de figuritas duplicadas que se admitieron en
+// el álbum.
+
+Acción ActualizaciónM3 ES
+
+Ambiente
+
+        Fecha = Registro
+                Año: N(4)
+                Mes: (1..12)
+                Día: (1..31)
+        Fin Registro
+
+        Álbum = Registro
+                CodFigurita: N(5)
+                Cantidad: N(2)
+                PermitirDuplicados: ("SI", "NO")
+        Fin Registro
+        
+        ARCH_MAE, ARCH_SAL: archivo de Álbum ordenado por CodFigurita
+        REG_MAE, REG_SAL: Álbum
+
+        Intercambios = Registro
+                CodFigurita: N(5)
+                CodAmigo: N(5)
+                FechaSolicitud: Fecha
+        Fin Registro
+        
+        ARCH_MOV: archivo de Intercambios ordenado por CodFigurita y CodAmigo
+        REG_MOV: Intercambios
+        
+        resg_cod_figurita, cant_dup: entero
+        diferencia_días := lógico
+
+        Procedimiento LEER_MAE() ES
+                LEER(ARCH_MAE, REG_MAE)
+                Si FDA(ARCH_MAE) Entonces
+                        REG_MAE.CodFigurita := HV
+                Fin Si
+        Fin Procedimiento
+        
+        Procedimiento LEER_MOV() ES
+                LEER(ARCH_MOV, REG_MOV)
+                Si FDA(ARCH_MOV) Entonces
+                        REG_MOV.CodFigurita := HV
+                Fin Si
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH_MAE)
+        ABRIR E/ (ARCH_MOV)
+        ABRIR S/ (ARCH_SAL)
+        
+        LEER_MAE()
+        LEER_MOV()        
+        cant_dup := 0
+        
+        Mientras REG_MAE.CodFigurita <> HV o REG_MOV.CodFigurita <> HV Hacer
+                Si REG_MAE.CodFigurita < REG_MOV.CodFigurita Entonces
+                        GRABAR(ARCH_SAL, REG_MAE)
+                        LEER_MAE()
+                Contrario
+                        Si REG_MAE.CodFigurita > REG_MOV.CodFigurita Entonces
+                                resg_cod_figurita := REG_MOV.CodFigurita
+                                REG_SAL.CodFigurita := resg_cod_figurita
+                                REG_SAL.Cantidad := 1
+                                REG_SAL.PermitirDuplicados := "NO"
+                                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
+                                LEER_MOV()
+                                
+                                Mientras REG_MOV.CodFigurita = resg_cod_figurita Hacer
+                                        // Como no puedo permitir duplicados de figuritas nuevas
+                                        // creo que solo corresponde leer los demás movimientos.
+                                        LEER_MOV()
+                                Fin Mientras
+                                
+                                // Interpreto que si "diff_días = TRUE" la cantidad de días
+                                // es superior a 6, el máximo permitido de días que pueden
+                                // transcurrir desde la fecha de solicitud.
+                                Si NO diferencia_días Entonces
+                                        GRABAR(ARCH_SAL, REG_SAL)
+                                Fin Si
+                        Contrario
+                                REG_SAL := REG_MAE
+                                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
+                                
+                                Mientras REG_MAE.CodFigurita = REG_MOV.CodFigurita Entonces
+                                        Si REG_SAL.PermitirDuplicados = "SI" Entonces
+                                                REG_SAL.Cantidad := REG_SAL.Cantidad + 1
+                                                cant_dup := cant_dup + 1
+                                        Fin Si
+                                        LEER_MOV()
+                                Fin Mientras
+                                
+                                Si NO diferencia_días Entonces
+                                        GRABAR(ARCH_SAL, REG_SAL)
+                                Fin Si
+                                
+                                LEER_MAE()
+                        Fin Si
+                Fin Si
+        Fin Mientras
+        
+        Escribir("Se admitieron" cant_dup "figuritas duplicadas en el álbum del estudiante.")
+        
+        CERRAR(ARCH_MAE)
+        CERRAR(ARCH_MOV)
+        CERRAR(ARCH_SAL)
+
+Fin Acción

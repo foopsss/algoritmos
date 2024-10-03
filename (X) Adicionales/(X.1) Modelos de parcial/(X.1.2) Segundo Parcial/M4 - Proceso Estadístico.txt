@@ -1,0 +1,116 @@
+// Consigna: en la empresa de venta de electrodomésticos "La Cafetera está que Hierve"
+// se implementaron 5 promociones por el verano, y ahora nos solicitan desarrollar un
+// algoritmo para obtener información sobre las mismas implementadas en cada sucursal.
+//
+// Para ello, cuentan con información almacenada en un archivo, cuyo registro cuenta
+// con:
+//
+// | CodSuc [(1..10)] | CodPromocion [(0..5)] | CodProd [AN(7)] | Cantidad [N(4)] |
+//
+// Si el CodPromocion es igual a cero, significa que en esa venta no se aplicó
+// ninguna promoción. Existe además una función externa, ya desarrollada, llamada
+// getImporte, a la cual pasándole el código del producto, nos devuelve el importe
+// del mismo.
+//
+// Se pide:
+// (a) Importe promedio por venta de cada sucursal (solo venta con promociones).
+// (b) La promoción que mayor importe recaudó.
+// (c) Para cada promoción, indicar en qué sucursal obtuvo el mejor resultado (es
+//     decir, el mayor monto de ventas).
+
+Acción EstadísticoM4 ES
+
+Ambiente
+
+        Promociones = Registro
+                CodSuc: (1..10)
+                CodPromoción: (0..5)
+                CodProd: AN(7)
+                Cantidad: N(4)
+        Fin Registro
+        
+        ARCH: archivo de Promociones
+        REG: Promociones
+        
+        Ventas = Registro
+                Importe: N(5)
+                Cantidad: N(4)
+        Fin Registro
+        
+        totales: arreglo de [1..11, 1..6] de Ventas
+        
+        i, j, importe_venta: entero
+        max_importe, prom_max_importe: entero
+        max_ventas, suc_max_ventas: entero
+        prom_venta: real
+        
+        Procedimiento Inicializar() ES
+                Para i := 1 hasta 11 Hacer
+                        Para j := 1 hasta 6 Hacer
+                                totales[i, j].Importe := 0
+                                totales[i, j].Ventas := 0
+                        Fin Para
+                Fin Para
+                
+                max_importe := LV
+                max_ventas := LV
+        Fin Procedimiento
+
+Proceso
+
+        ABRIR E/ (ARCH)
+        
+        LEER(ARCH, REG)
+        Inicializar()
+        
+        Mientras NFDA(ARCH) Hacer
+                Si REG.CodPromocion <> 0 Entonces
+                        i := REG.CodSuc
+                        j := REG.CodPromoción
+                        importe_venta := getImporte(REG.CodProd) * REG.Cantidad
+                        
+                        totales[i, j].Importe := totales[i, j].Importe + importe_venta
+                        totales[11, j].Importe := totales[11, j].Importe + importe_venta
+                        totales[i, 6].Importe := totales[i, 6].Importe + importe_venta
+                        totales[11, 6].Importe := totales[11, 6].Importe + importe_venta
+                        totales[i, j].Cantidad := totales[i, j].Cantidad + REG.Cantidad
+                        totales[11, j].Cantidad := totales[11, j].Cantidad + REG.Cantidad
+                        totales[i, 6].Cantidad := totales[i, 6].Cantidad + REG.Cantidad
+                        totales[11, 6].Cantidad := totales[11, 6].Cantidad + REG.Cantidad
+                Fin Si
+                
+                LEER(ARCH, REG)
+        Fin Mientras
+        
+        Para i := 1 hasta 10 Hacer
+                Escribir("Sucursal: " i)
+                
+                Para j := 1 hasta 5 Hacer
+                        prom_venta := totales[i, j].Importe / totales[i, j].Cantidad
+                        Escribir("Promoción: " j)
+                        Escribir("El importe promedio por venta es de" prom_venta "pesos.")
+                Fin Para
+        Fin Para
+        
+        Para j := 1 hasta 5 Hacer
+                Si max_importe < totales[11, j].Importe Entonces
+                        max_importe := totales[11, j].Importe
+                        prom_max_importe := j
+                Fin Si
+                
+                Para i := 1 hasta 10 Hacer
+                        Si max_ventas < totales[i, j].Cantidad Entonces
+                                max_ventas := totales[i, j].Cantidad
+                                suc_max_ventas := i
+                        Fin Si
+                Fin Para
+                
+                Escribir("La promoción" j "obtuvo el mayor volumen de ventas en la sucursal" suc_max_ventas ".")
+                max_ventas := LV
+        Fin Para
+        
+        Escribir("La promoción que mayor importe recaudó fue la promoción" prom_max_importe ".")
+        
+        CERRAR(ARCH)
+
+Fin Acción
