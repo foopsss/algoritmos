@@ -1,0 +1,52 @@
+// La carga apilada implica que los datos se ingresan en la lista de manera tal
+// que, cuando se los recupere a través del puntero externo (cabecera), se estará
+// accediendo al último elemento cargado.
+//
+// Esto sucede porque una pila es una estructura en la que el modo de acceso a sus
+// elementos es LIFO (Last In First Out).
+
+Acción CargaApilada ES
+
+Ambiente
+
+    Nodo = Registro
+        Dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    // Mi puntero de cabecera es prim.
+    prim, p: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()    
+    prim := NIL
+    
+    // En este caso, tope representa un valor de fin que
+    // hará que se detenga el ciclo, el cual debe ser
+    // introducido por el usuario.
+    Mientras valor <> tope Hacer
+        Nuevo(p)
+        *p.Dato := valor
+        
+        // Al primer nodo de la lista, le indico que no
+        // tiene un siguiente elemento, ya que prim = NIL.
+        //
+        // Del segundo nodo en adelante, cada nodo apunta
+        // al nodo que le precede, o que se encuentra más
+        // "abajo".
+        *p.prox := prim
+        
+        // Luego hago que prim apunte al nodo más nuevo.
+        prim := p
+        
+        PedirValor()
+    Fin Mientras
+
+Fin Acción

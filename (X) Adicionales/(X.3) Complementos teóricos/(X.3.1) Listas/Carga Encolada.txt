@@ -1,0 +1,61 @@
+// La carga apilada implica que los datos se ingresan en la lista de manera tal
+// que, cuando se los recupere a través del puntero externo (cabecera), se estará
+// accediendo al primer elemento cargado.
+//
+// Esto sucede porque una cola es una estructura en la que el modo de acceso a sus
+// elementos es FIFO (First In First Out).
+
+Acción CargaEncolada ES
+
+Ambiente
+
+    Nodo = Registro
+        Dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    // Mi puntero de cabecera es prim.
+    prim, p, aux: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()    
+    prim := NIL
+    
+    // En este caso, tope representa un valor de fin que
+    // hará que se detenga el ciclo, el cual debe ser
+    // introducido por el usuario.
+    Mientras valor <> tope Hacer
+        Nuevo(p)
+        *p.Dato := valor
+        
+        // En un principio, hago que el puntero no enlace
+        // a ningún próximo elemento al crearlo.
+        *p.prox := NIL
+        
+        Si prim = NIL Entonces
+            // Si estoy creando el primer elemento de la
+            // lista, hago que prim apunte a dicho elemento.
+            prim := p
+        Contrario
+            // Por el contrario, si ya estoy creando más
+            // elementos, hago que el elemento creado en
+            // la iteración anterior apunte al elemento
+            // que acabo de crear.
+            *aux.prox := p
+        Fin Si
+        
+        // Resguardo el puntero creado en la iteración
+        // actual.
+        aux := p
+        
+        PedirValor()
+    Fin Mientras
+
+Fin Acción
