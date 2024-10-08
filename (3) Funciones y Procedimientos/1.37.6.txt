@@ -2,30 +2,30 @@ Acción 1.37.6 ES
 
 Ambiente
 
-	precio, unidades, monto_descuento: entero
+    precio, unidades, monto_descuento: entero
 
-	Función CalcularDescuento(precio_producto, unidades_producto: entero): entero ES
-	Ambiente
-		desc_docena = 0,4
-		desc_mayor_docena = 0,10
-	Proceso
-		Según unidades_producto Hacer
-			<= 6: CalcularDescuento := 0
-			<= 12: CalcularDescuento := (precio_producto * unidades_producto) * desc_docena
-			> 12: CalcularDescuento := (precio_producto * unidades_producto) * desc_mayor_docena
-		Fin Según
-	Fin Función
+    Función CalcularDescuento(precio_producto, unidades_producto: entero): entero ES
+    Ambiente
+        desc_docena = 0,4
+        desc_mayor_docena = 0,10
+    Proceso
+        Según unidades_producto Hacer
+            <= 6: CalcularDescuento := 0
+            <= 12: CalcularDescuento := (precio_producto * unidades_producto) * desc_docena
+            > 12: CalcularDescuento := (precio_producto * unidades_producto) * desc_mayor_docena
+        Fin Según
+    Fin Función
 
 Proceso
 
-	Escribir("Introduzca el precio del producto a llevar: ")
-	Leer(precio)
-	
-	Escribir("Introduzca las unidades a llevar: ")
-	Leer(unidades)
+    Escribir("Introduzca el precio del producto a llevar: ")
+    Leer(precio)
 
-	monto_descuento := CalcularDescuento(precio, unidades)
-	
-	Escribir("Le corresponde un descuento de" monto_descuento "pesos.")
+    Escribir("Introduzca las unidades a llevar: ")
+    Leer(unidades)
+
+    monto_descuento := CalcularDescuento(precio, unidades)
+
+    Escribir("Le corresponde un descuento de" monto_descuento "pesos.")
 
 Fin Acción
