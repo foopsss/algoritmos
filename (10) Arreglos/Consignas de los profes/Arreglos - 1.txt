@@ -29,71 +29,71 @@ Acción Arreglos1(nombre_materia: arreglo de [1..50] de alfanumérico) ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        NotasAED = Registro
-                Legajo: N(5)
-                NotaPP: N(2)
-                NotaRec: N(2)
-                Comisión: N(1)
-        Fin Registro
-        
-        ARCH_NOTAS: archivo de NotasAED ordenado por Legajo
-        REG_NOTAS: NotasAED
+    NotasAED = Registro
+        Legajo: N(5)
+        NotaPP: N(2)
+        NotaRec: N(2)
+        Comisión: N(1)
+    Fin Registro
 
-        SysAcad = Registro
-                Legajo: N(5)
-                NomAp: AN(100)
-                DNI: N(8)
-                FechaIngreso: Fecha
-                Carrera: AN(3)
-                CódigoMateria: (1..50)
-        Fin Registro
-        
-        ARCH_SYSA: archivo de SysAcad indexado por Legajo
-        REG_SYSA: SysAcad
-        
-        aprob_comd: arreglo de [1..150] de alfanumérico
-        i, cont_aprob: entero
+    ARCH_NOTAS: archivo de NotasAED ordenado por Legajo
+    REG_NOTAS: NotasAED
+
+    SysAcad = Registro
+        Legajo: N(5)
+        NomAp: AN(100)
+        DNI: N(8)
+        FechaIngreso: Fecha
+        Carrera: AN(3)
+        CódigoMateria: (1..50)
+    Fin Registro
+
+    ARCH_SYSA: archivo de SysAcad indexado por Legajo
+    REG_SYSA: SysAcad
+
+    aprob_comd: arreglo de [1..150] de alfanumérico
+    i, cont_aprob: entero
 
 Proceso
 
-        ABRIR E/ (ARCH_NOTAS)
-        LEER(ARCH_NOTAS, REG_NOTAS)
-        
-        cont_aprob := 0
-        
-        Escribir("Alumnos que no aprobaron el primer parcial: ")
-        Escribir("| Legajo | Nombre y apellido | Fecha de ingreso | Última materia aprobada |")
-        
-        Mientras NFDA(ARCH_NOTAS) Hacer                
-                REG_SYSA.Legajo := REG_NOTAS.Legajo
-                LEER(ARCH_SYSA, REG_SYSA)
-                
-                Si existe Entonces
-                        Si REG_NOTAS.NotaPP >= 6 o REG_NOTAS.NotaREC >= 6 Entonces
-                                Si REG_NOTAS.Comisión = "D" Entonces
-                                        cont_aprob := cont_aprob + 1
-                                        aprob_comd[cont_aprob] := REG_SYSA.NomAp
-                                Fin Si
-                        Contrario
-                                Escribir(REG_SYSA.Legajo, REG_SYSA.NomAp, REG_SYSA.FechaIngreso, nombre_materia[REG_SYSA.CódigoMateria])
-                        Fin Si
+    ABRIR E/ (ARCH_NOTAS)
+    LEER(ARCH_NOTAS, REG_NOTAS)
+
+    cont_aprob := 0
+
+    Escribir("Alumnos que no aprobaron el primer parcial: ")
+    Escribir("| Legajo | Nombre y apellido | Fecha de ingreso | Última materia aprobada |")
+
+    Mientras NFDA(ARCH_NOTAS) Hacer
+        REG_SYSA.Legajo := REG_NOTAS.Legajo
+        LEER(ARCH_SYSA, REG_SYSA)
+
+        Si existe Entonces
+            Si REG_NOTAS.NotaPP >= 6 o REG_NOTAS.NotaREC >= 6 Entonces
+                Si REG_NOTAS.Comisión = "D" Entonces
+                    cont_aprob := cont_aprob + 1
+                    aprob_comd[cont_aprob] := REG_SYSA.NomAp
                 Fin Si
-                
-                LEER(ARCH_NOTAS, REG_NOTAS)
-        Fin Mientras
-        
-        Escribir("Alumnos que aprobaron el primer parcial: ")
-        
-        Para i := 1 hasta cont_aprob Hacer
-                Escribir(aprob_comd[i])
-        Fin Para
-        
-        CERRAR(ARCH_NOTAS)
+            Contrario
+                Escribir(REG_SYSA.Legajo, REG_SYSA.NomAp, REG_SYSA.FechaIngreso, nombre_materia[REG_SYSA.CódigoMateria])
+            Fin Si
+        Fin Si
+
+        LEER(ARCH_NOTAS, REG_NOTAS)
+    Fin Mientras
+
+    Escribir("Alumnos que aprobaron el primer parcial: ")
+
+    Para i := 1 hasta cont_aprob Hacer
+        Escribir(aprob_comd[i])
+    Fin Para
+
+    CERRAR(ARCH_NOTAS)
 
 Fin Acción

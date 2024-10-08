@@ -2,14 +2,14 @@ Acción 3.1.1 ES
 
 Ambiente
 
-        arr: arreglo de [1..100] de entero
-        i: entero
+    arr: arreglo de [1..100] de entero
+    i: entero
 
 Proceso
 
-        Para i := 1 hasta 100 Hacer
-                Escribir("Ingrese un valor: ")
-                Leer(arr[i])
-        Fin Para
+    Para i := 1 hasta 100 Hacer
+        Escribir("Ingrese un valor: ")
+        Leer(arr[i])
+    Fin Para
 
 Fin Acción
