@@ -2,31 +2,31 @@ Acción 1.37.5 ES
 
 Ambiente
 
-	car_us: carácter
-	es_dígito: lógico
+    car_us: carácter
+    es_dígito: lógico
 
-	Función VerificarDígito(entrada: carácter): lógico ES
-	Ambiente
-		números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
-	Proceso
-		Si entrada en números Entonces
-			VerificarDígito := V
-		Contrario
-			VerificarDígito := F
-		Fin Si
-	Fin Función
+    Función VerificarDígito(entrada: carácter): lógico ES
+    Ambiente
+        números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    Proceso
+        Si entrada en números Entonces
+            VerificarDígito := V
+        Contrario
+            VerificarDígito := F
+        Fin Si
+    Fin Función
 
 Proceso
 
-	Escribir("Introduzca un carácter: ")
-	Leer(car_us)
+    Escribir("Introduzca un carácter: ")
+    Leer(car_us)
 
-	es_dígito := VerificarDígito(car_us)
+    es_dígito := VerificarDígito(car_us)
 
-	Si es_dígito Entonces
-		Escribir("El carácter" car_us "es un dígito.")
-	Contrario
-		Escribir("El carácter" car_us "NO es un dígito.")
-	Fin Si
+    Si es_dígito Entonces
+        Escribir("El carácter" car_us "es un dígito.")
+    Contrario
+        Escribir("El carácter" car_us "NO es un dígito.")
+    Fin Si
 
 Fin Acción

@@ -36,32 +36,28 @@ Fin Acción
 program EJ10;
 
 var
-	numero, auxiliar: integer;
-	esPrimo: boolean;
+    numero, auxiliar: integer;
+    esPrimo: boolean;
 
 begin
-	write('Introduzca un número: ');
-	readln(numero);
+    write('Introduzca un número: ');
+    readln(numero);
 
-	auxiliar := 2;
-	esPrimo := true;
+    auxiliar := 2;
+    esPrimo := true;
 
-	while (esPrimo) and (auxiliar < numero) do
-	begin
-		if numero mod auxiliar = 0 then
-		begin
-			esPrimo := false;
-		end;
-		auxiliar := auxiliar + 1;
-	end;
+    while (esPrimo) and (auxiliar < numero) do
+    begin
+        if numero mod auxiliar = 0 then
+        begin
+            esPrimo := false;
+        end;
+        auxiliar := auxiliar + 1;
+    end;
 
-	writeln();
-	if esPrimo then
-		begin
-			writeln('El número es primo.');
-		end
-	else
-		begin
-			writeln('El número NO es primo.');
-		end;
+    writeln();
+    if esPrimo then
+        writeln('El número es primo.')
+    else
+        writeln('El número NO es primo.');
 end.

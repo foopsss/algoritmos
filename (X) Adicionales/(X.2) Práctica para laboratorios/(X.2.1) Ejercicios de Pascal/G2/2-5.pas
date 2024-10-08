@@ -16,78 +16,82 @@ Se deben hacer las validaciones necesarias y mostrar por pantalla el mensaje
 program EJ5;
 
 uses
-	CRT,
-	math,
-	sysutils;
+    CRT,
+    math,
+    sysutils;
 
 var
-	ent: string[5];
-	ent2: string;
-	car: char;
+    ent: string[5];
+    ent2: string;
+    car: char;
 
-	num_us, pass_us: LongInt;
-	i, digitos_pass, dig_num, dig_pass: integer;
-	ult_dos_dig_num_us, mult, suma_prod: integer;
+    num_us, pass_us: LongInt;
+    i, digitos_pass, dig_num, dig_pass: integer;
+    ult_dos_dig_num_us, mult, suma_prod: integer;
+
+procedure inicializar();
+begin
+    digitos_pass := 0;
+    ult_dos_dig_num_us := 0;
+    mult := 0;
+    suma_prod := 0;
+end;
 
 procedure sumar_prod_digitos();
 begin
-	for i := digitos_pass downto 1 do
-	begin
-		dig_pass := pass_us div (10 ** (i - 1));
-		mult := mult + 1;
-		suma_prod := suma_prod + dig_pass * mult;
-		pass_us := pass_us - dig_pass * (10 ** (i - 1));
-	end;
+    for i := digitos_pass downto 1 do
+    begin
+        dig_pass := pass_us div (10 ** (i - 1));
+        mult := mult + 1;
+        suma_prod := suma_prod + dig_pass * mult;
+        pass_us := pass_us - dig_pass * (10 ** (i - 1));
+    end;
 end;
 
 begin
-	digitos_pass := 0;
-	ult_dos_dig_num_us := 0;
-	mult := 0;
-	suma_prod := 0;
+	inicializar();
 
-	write('Introduzca su número de usuario: ');
-	readln(ent);
-	num_us := StrToInt(ent);
+    write('Introduzca su número de usuario: ');
+    readln(ent);
+    num_us := StrToInt(ent);
 
-	write('Introduzca su clave: ');
-	ent2 := '';
+    write('Introduzca su clave: ');
+    ent2 := '';
 
-	repeat
-		car := ReadKey;
+    repeat
+        car := ReadKey;
 
-		if car <> #13 then
-		begin
-			ent2 := ent2 + car;
-			digitos_pass := digitos_pass + 1;
-			write(car);
-		end;
-	until car = #13;
+        if car <> #13 then
+        begin
+            ent2 := ent2 + car;
+            digitos_pass := digitos_pass + 1;
+            write(car);
+        end;
+    until car = #13;
 
-	pass_us := StrToInt(ent2);
+    pass_us := StrToInt(ent2);
 
-	for i := 1 to 2 do
-	begin
-		writeln();
-	end;
+    for i := 1 to 2 do
+    begin
+        writeln();
+    end;
 
-	for i := 5 downto 1 do
-	begin
-		dig_num := num_us div (10 ** (i - 1));
+    for i := 5 downto 1 do
+    begin
+        dig_num := num_us div (10 ** (i - 1));
 
-		case i of
-			2: ult_dos_dig_num_us := ult_dos_dig_num_us + dig_num * 10;
-			1: ult_dos_dig_num_us := ult_dos_dig_num_us + dig_num;
-		end;
+        case i of
+            2: ult_dos_dig_num_us := ult_dos_dig_num_us + dig_num * 10;
+            1: ult_dos_dig_num_us := ult_dos_dig_num_us + dig_num;
+        end;
 
-		num_us := num_us - dig_num * (10 ** (i - 1));
-	end;
+        num_us := num_us - dig_num * (10 ** (i - 1));
+    end;
 
-	sumar_prod_digitos();
+    sumar_prod_digitos();
 
-	if suma_prod > ult_dos_dig_num_us then
-		writeln('¡Contraseña válida!')
-	else
-		writeln('¡Contraseña inválida!');
-
+    if suma_prod > ult_dos_dig_num_us then
+        writeln('¡Contraseña válida!')
+    else
+        writeln('¡Contraseña inválida!');
 end.

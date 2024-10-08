@@ -2,26 +2,26 @@ Acción 1.5.6 ES
 
 Ambiente
 
-	n1_c1, n1_c2, n2_c1, n2_c2, prod_c1, prod_c2: entero
+    n1_c1, n1_c2, n2_c1, n2_c2, prod_c1, prod_c2: entero
 
 Proceso
 
-	Escribir("Introduzca la primera coordenada del primer número complejo: ")
-	Leer(n1_c1)
+    Escribir("Introduzca la primera coordenada del primer número complejo: ")
+    Leer(n1_c1)
 
-	Escribir("Introduzca la segunda coordenada del primer número complejo: ")
-	Leer(n1_c2)
-	
-	Escribir("Introduzca la primera coordenada del segundo número complejo: ")
-	Leer(n2_c1)
-	
-	Escribir("Introduzca la segunda coordenada del segundo número complejo: ")
-	Leer(n2_c2)
-	
-	prod_c1 := (n1_c1 * n2_c1) - (n1_c2 * n2_c2)
-	prod_c2 := (n1_c1 * n2_c2) + (n1_c2 * n2_c1)
-	
-	Escribir("La primera coordenada del producto es: " prod_c1)
-	Escribir("La segunda coordenada del producto es: " prod_c2)
+    Escribir("Introduzca la segunda coordenada del primer número complejo: ")
+    Leer(n1_c2)
+
+    Escribir("Introduzca la primera coordenada del segundo número complejo: ")
+    Leer(n2_c1)
+
+    Escribir("Introduzca la segunda coordenada del segundo número complejo: ")
+    Leer(n2_c2)
+
+    prod_c1 := (n1_c1 * n2_c1) - (n1_c2 * n2_c2)
+    prod_c2 := (n1_c1 * n2_c2) + (n1_c2 * n2_c1)
+
+    Escribir("La primera coordenada del producto es: " prod_c1)
+    Escribir("La segunda coordenada del producto es: " prod_c2)
 
 Fin Acción

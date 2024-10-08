@@ -2,55 +2,55 @@ Acción 1.37.4 ES
 
 Ambiente
 
-	elección: carácter
-	número, clave: entero
+    elección: carácter
+    número, clave: entero
 
-	Función es_negativo(entrada, long_entrada: entero): entero ES
-	Ambiente
-		divisor, dígito, suma_dígitos, i: entero
-	Proceso
-		Si entrada > 0 Entonces
-			suma_dígitos := 0
-			
-			Para i := 1 hasta long_entrada Hacer
-				divisor := 10 ** (long_entrada - i)
-				dígito := entrada DIV divisor
-				suma_dígitos := suma_dígitos + dígito
-				entrada := entrada - (dígito * divisor)
-			Fin Para
-			
-			es_negativo := suma_dígitos MOD 7
-		Contrario
-			Si entrada = 0 Entonces
-				es_negativo := 0
-			Contrario
-				es_negativo := -1
-			Fin Si
-		Fin Si
-	Fin Función
+    Función es_negativo(entrada, long_entrada: entero): entero ES
+    Ambiente
+        divisor, dígito, suma_dígitos, i: entero
+    Proceso
+        Si entrada > 0 Entonces
+            suma_dígitos := 0
+
+            Para i := 1 hasta long_entrada Hacer
+                divisor := 10 ** (long_entrada - i)
+                dígito := entrada DIV divisor
+                suma_dígitos := suma_dígitos + dígito
+                entrada := entrada - (dígito * divisor)
+            Fin Para
+
+            es_negativo := suma_dígitos MOD 7
+        Contrario
+            Si entrada = 0 Entonces
+                es_negativo := 0
+            Contrario
+                es_negativo := -1
+            Fin Si
+        Fin Si
+    Fin Función
 
 Proceso
 
-	Escribir("¿Desea comprobar si un número es negativo? [S/N]: ")
-	Leer(elección)
-	
-	Mientras elección = "S" Hacer
-		Escribir("Introduzca un número: ")
-		Leer(número)
-		
-		Escribir("Especifique la longitud del número: ")
-		Leer(longitud)
-		
-		clave := es_negativo(número, longitud)
-		
-		Según clave Hacer
-			< 0: Escribir("El número es negativo.")
-			= 0: Escribir("El número es 0.")
-			> 0: Escribir("El número es positivo. Clave: " clave)
-		Fin Según
-		
-		Escribir("¿Desea probar con otro número? [S/N]: ")
-		Leer(elección)
-	Fin Mientras
-	
+    Escribir("¿Desea comprobar si un número es negativo? [S/N]: ")
+    Leer(elección)
+
+    Mientras elección = "S" Hacer
+        Escribir("Introduzca un número: ")
+        Leer(número)
+
+        Escribir("Especifique la longitud del número: ")
+        Leer(longitud)
+
+        clave := es_negativo(número, longitud)
+
+        Según clave Hacer
+            < 0: Escribir("El número es negativo.")
+            = 0: Escribir("El número es 0.")
+            > 0: Escribir("El número es positivo. Clave: " clave)
+        Fin Según
+
+        Escribir("¿Desea probar con otro número? [S/N]: ")
+        Leer(elección)
+    Fin Mientras
+
 Fin Acción

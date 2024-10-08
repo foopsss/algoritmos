@@ -2,19 +2,19 @@ Acción 1.37.1 ES
 
 Ambiente
 
-	número: entero
+    número: entero
 
-	Función DevolverCuadrado(num: entero): entero ES
-		DevolverCuadrado := num ** 2
-	Fin Función
+    Función DevolverCuadrado(num: entero): entero ES
+        DevolverCuadrado := num ** 2
+    Fin Función
 
 Proceso
 
-	Escribir("Introduzca un número: ")
-	Leer(número)
-	
-	cuadrado := DevolverCuadrado(número)
+    Escribir("Introduzca un número: ")
+    Leer(número)
 
-	Escribir("El cuadrado de" número "es" cuadrado ".")
+    cuadrado := DevolverCuadrado(número)
+
+    Escribir("El cuadrado de" número "es" cuadrado ".")
 
 Fin Acción

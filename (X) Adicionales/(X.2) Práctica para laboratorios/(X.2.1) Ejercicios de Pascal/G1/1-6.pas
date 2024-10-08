@@ -13,20 +13,20 @@ siguientes frases:
 program EJ6;
 
 var
-	nota: integer;
+    nota: integer;
 
 begin
-	write('Introduzca la nota del alumno: ');
-	readln(nota);
+    write('Introduzca la nota del alumno: ');
+    readln(nota);
 
-	writeln();
-	case nota of
-		0..3: writeln('Mal.');
-		4..5: writeln('Insuficiente.');
-		6..7: writeln('Bien.');
-		8..9: writeln('Sobresaliente.');
-		10: writeln('Perfecto.');
-	else
-		writeln('Número fuera de rango.');
-	end;
+    writeln();
+    case nota of
+        0..3: writeln('Mal.');
+        4..5: writeln('Insuficiente.');
+        6..7: writeln('Bien.');
+        8..9: writeln('Sobresaliente.');
+        10: writeln('Perfecto.');
+    else
+        writeln('Número fuera de rango.');
+    end;
 end.

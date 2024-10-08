@@ -6,57 +6,57 @@ Acción 2.3.1a ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Facturas = Registro
-                Clave = Registro
-                        NroCliente: N(5)
-                        NroFactura: N(8)
-                Fin Registro
-                FechaFactura: Fecha
-                Importe: N(3)
+    Facturas = Registro
+        Clave = Registro
+            NroCliente: N(5)
+            NroFactura: N(8)
         Fin Registro
+        FechaFactura: Fecha
+        Importe: N(3)
+    Fin Registro
 
-        ARCH: archivo de Facturas ordenado por Clave
-        REG: Facturas
+    ARCH: archivo de Facturas ordenado por Clave
+    REG: Facturas
 
-        Clientes = Registro
-                NroCliente: N(5)
-                Nombre: AN(100)
-                DNI: N(8)
-                CUIT: AN(13)
-                Domicilio: AN(100)
-        Fin Registro
-        
-        ARCH2: archivo de Clientes indexado por NroCliente
-        REG2: Clientes
+    Clientes = Registro
+        NroCliente: N(5)
+        Nombre: AN(100)
+        DNI: N(8)
+        CUIT: AN(13)
+        Domicilio: AN(100)
+    Fin Registro
+
+    ARCH2: archivo de Clientes indexado por NroCliente
+    REG2: Clientes
 
 Proceso
 
-        ABRIR E/ (ARCH)
-        ABRIR E/ (ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Escribir("| Número de cliente | Nombre del cliente | Número de factura |")
+
+    Mientras NFDA(ARCH) Hacer
+        REG2.NroCliente := REG.Clave.NroCliente
+        LEER(ARCH2, REG2)
+
+        Si existe Entonces
+            Escribir(REG2.NroCliente, REG2.Nombre, REG.Clave.NroFactura)
+        Contrario
+            Escribir("El cliente con número" REG.Clave.NroCliente "no está registrado en el archivo de clientes.")
+        Fin Si
+
         LEER(ARCH, REG)
+    Fin Mientras
 
-        Escribir("| Número de cliente | Nombre del cliente | Número de factura |")
-
-        Mientras NFDA(ARCH) Hacer
-                REG2.NroCliente := REG.Clave.NroCliente
-                LEER(ARCH2, REG2)
-                
-                Si existe Entonces
-                        Escribir(REG2.NroCliente, REG2.Nombre, REG.Clave.NroFactura)
-                Contrario
-                        Escribir("El cliente con número" REG.Clave.NroCliente "no está registrado en el archivo de clientes.")
-                Fin Si
-                
-                LEER(ARCH, REG)
-        Fin Mientras
-
-        CERRAR(ARCH)
-        CERRAR(ARCH2)
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

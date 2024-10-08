@@ -2,78 +2,78 @@ Acción 1.37.10 ES
 
 Ambiente
 
-	número: entero
+    número: entero
 
-	Procedimiento mostrar_nro(entrada: entero) ES
-		Según entrada Hacer
-			= 0:
-				Escribir("****")
-				Escribir("*  *")
-				Escribir("*  *")
-				Escribir("*  *")
-				Escribir("****")
-			= 1:
-				Escribir("   *")
-				Escribir("   *")
-				Escribir("   *")
-				Escribir("   *")
-				Escribir("   *")
-			= 2:
-				Escribir("****")
-				Escribir("   *")
-				Escribir("****")
-				Escribir("*   ")
-				Escribir("****")
-			= 3:
-				Escribir("****")
-				Escribir("   *")
-				Escribir("****")
-				Escribir("   *")
-				Escribir("****")
-			= 4:
-				Escribir("*  *")
-				Escribir("*  *")
-				Escribir("****")
-				Escribir("   *")
-				Escribir("   *")
-			= 5:
-				Escribir("****")
-				Escribir("*   ")
-				Escribir("****")
-				Escribir("   *")
-				Escribir("****")
-			= 6:
-				Escribir("****")
-				Escribir("*   ")
-				Escribir("****")
-				Escribir("*  *")
-				Escribir("****")
-			= 7:
-				Escribir("****")
-				Escribir("   *")
-				Escribir("   *")
-				Escribir("   *")
-				Escribir("   *")
-			= 8:
-				Escribir("****")
-				Escribir("*  *")
-				Escribir("****")
-				Escribir("*  *")
-				Escribir("****")
-			= 9:
-				Escribir("****")
-				Escribir("*  *")
-				Escribir("****")
-				Escribir("   *")
-				Escribir("****")
-		Fin Según
-	Fin Procedimiento
+    Procedimiento mostrar_nro(entrada: entero) ES
+        Según entrada Hacer
+            = 0:
+                Escribir("****")
+                Escribir("*  *")
+                Escribir("*  *")
+                Escribir("*  *")
+                Escribir("****")
+            = 1:
+                Escribir("   *")
+                Escribir("   *")
+                Escribir("   *")
+                Escribir("   *")
+                Escribir("   *")
+            = 2:
+                Escribir("****")
+                Escribir("   *")
+                Escribir("****")
+                Escribir("*   ")
+                Escribir("****")
+            = 3:
+                Escribir("****")
+                Escribir("   *")
+                Escribir("****")
+                Escribir("   *")
+                Escribir("****")
+            = 4:
+                Escribir("*  *")
+                Escribir("*  *")
+                Escribir("****")
+                Escribir("   *")
+                Escribir("   *")
+            = 5:
+                Escribir("****")
+                Escribir("*   ")
+                Escribir("****")
+                Escribir("   *")
+                Escribir("****")
+            = 6:
+                Escribir("****")
+                Escribir("*   ")
+                Escribir("****")
+                Escribir("*  *")
+                Escribir("****")
+            = 7:
+                Escribir("****")
+                Escribir("   *")
+                Escribir("   *")
+                Escribir("   *")
+                Escribir("   *")
+            = 8:
+                Escribir("****")
+                Escribir("*  *")
+                Escribir("****")
+                Escribir("*  *")
+                Escribir("****")
+            = 9:
+                Escribir("****")
+                Escribir("*  *")
+                Escribir("****")
+                Escribir("   *")
+                Escribir("****")
+        Fin Según
+    Fin Procedimiento
 
 Proceso
 
-	Escribir("Introduzca un número del 0 al 9: ")
-	Leer(número)
-	
-	mostrar_nro(número)
+    Escribir("Introduzca un número del 0 al 9: ")
+    Leer(número)
+
+    mostrar_nro(número)
 
 Fin Acción

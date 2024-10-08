@@ -18,47 +18,47 @@ de las notas de estos. *}
 program EJ8;
 
 uses
-	functions in '../functions.pas';
+    functions in '../functions.pas';
 
 var
-	i, nota, suma_notas: integer;
-	prom_notas: real;
+    i, nota, suma_notas: integer;
+    prom_notas: real;
 
 procedure pedir_nota();
 begin
-	write('Introduzca la nota del alumno: ');
-	readln(nota);
+    write('Introduzca la nota del alumno: ');
+    readln(nota);
 end;
 
 begin
-	suma_notas := 0;
+    suma_notas := 0;
 
-	for i := 0 to 9 do
-	begin
-		repeat
-			pedir_nota();
+    for i := 0 to 9 do
+    begin
+        repeat
+            pedir_nota();
 
-			writeln();
-			if not (nota in [0..10]) then
-			begin
-				writeln('Número fuera de rango.');
-				writeln('Introduzca un número correcto.');
-				draw_line(35);
-			end;
-		until nota in [0..10];
+            writeln();
+            if not (nota in [0..10]) then
+            begin
+                writeln('Número fuera de rango.');
+                writeln('Introduzca un número correcto.');
+                draw_line(35);
+            end;
+        until nota in [0..10];
 
-		case nota of
-			0..3: writeln('Mal.');
-			4..5: writeln('Insuficiente.');
-			6..7: writeln('Bien.');
-			8..9: writeln('Sobresaliente.');
-			10: writeln('Perfecto.');
-		end;
+        case nota of
+            0..3: writeln('Mal.');
+            4..5: writeln('Insuficiente.');
+            6..7: writeln('Bien.');
+            8..9: writeln('Sobresaliente.');
+            10: writeln('Perfecto.');
+        end;
 
-		suma_notas := suma_notas + nota;
-		draw_line(35);
-	end;
+        suma_notas := suma_notas + nota;
+        draw_line(35);
+    end;
 
-	prom_notas := suma_notas / 10;
-	writeln('Promedio de las 10 notas: ', prom_notas:4:2);
+    prom_notas := suma_notas / 10;
+    writeln('Promedio de las 10 notas: ', prom_notas:4:2);
 end.

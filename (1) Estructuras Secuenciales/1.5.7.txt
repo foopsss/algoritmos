@@ -2,24 +2,24 @@ Acción 1.5.7 ES
 
 Ambiente
 
-	x, y, z, med_geo: entero
+    x, y, z, med_geo: entero
 
 Proceso
 
-	Escribir("Introduzca un valor para X: ")
-	Leer(x)
+    Escribir("Introduzca un valor para X: ")
+    Leer(x)
 
-	Escribir("Introduzca un valor para Y: ")
-	Leer(y)
-	
-	Escribir("Introduzca un valor para Z: ")
-	Leer(z)
+    Escribir("Introduzca un valor para Y: ")
+    Leer(y)
 
-	med_geo := (x * y * z) DIV 3
+    Escribir("Introduzca un valor para Z: ")
+    Leer(z)
 
-	Escribir("Valor de X: " x)
-	Escribir("Valor de Y: " y)
-	Escribir("Valor de Z: " z)
-	Escribir("Valor de la media geométrica: " med_geo)
+    med_geo := (x * y * z) DIV 3
+
+    Escribir("Valor de X: " x)
+    Escribir("Valor de Y: " y)
+    Escribir("Valor de Z: " z)
+    Escribir("Valor de la media geométrica: " med_geo)
 
 Fin Acción

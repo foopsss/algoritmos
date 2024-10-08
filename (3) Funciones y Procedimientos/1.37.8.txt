@@ -2,31 +2,31 @@ Acción 1.37.8 ES
 
 Ambiente
 
-	num_a, num_b: entero
+    num_a, num_b: entero
 
-	Procedimiento Intercambiar() ES
-	Ambiente
-		resguardo: entero
-	Proceso
-		resguardo := num_a
-		num_a := num_b
-		num_b := resguardo
-	Fin Procedimiento
+    Procedimiento Intercambiar() ES
+    Ambiente
+        resguardo: entero
+    Proceso
+        resguardo := num_a
+        num_a := num_b
+        num_b := resguardo
+    Fin Procedimiento
 
 Proceso
 
-	Escribir("Introduzca un número A: ")
-	Leer(num_a)
-	
-	Escribir("Introduzca un número B: ")
-	Leer(num_b)
-	
-	Escribir("Primer valor de A: " num_a)
-	Escribir("Primer valor de B: " num_b)
-	
-	Intercambiar()
-	
-	Escribir("Nuevo valor de A: " num_a)
-	Escribir("Nuevo valor de B: " num_b)
+    Escribir("Introduzca un número A: ")
+    Leer(num_a)
+
+    Escribir("Introduzca un número B: ")
+    Leer(num_b)
+
+    Escribir("Primer valor de A: " num_a)
+    Escribir("Primer valor de B: " num_b)
+
+    Intercambiar()
+
+    Escribir("Nuevo valor de A: " num_a)
+    Escribir("Nuevo valor de B: " num_b)
 
 Fin Acción

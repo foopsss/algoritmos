@@ -2,69 +2,69 @@ Acción 1.37.11 ES
 
 Ambiente
 
-	Función Suma(num1, num2: entero): entero ES
-	Ambiente
-		resultado: entero
-	Proceso
-		resultado := num1 + num2
-		Escribir("El resultado de la suma es: " resultado)
-	Fin Función
+    Función Suma(num1, num2: entero): entero ES
+    Ambiente
+        resultado: entero
+    Proceso
+        resultado := num1 + num2
+        Escribir("El resultado de la suma es: " resultado)
+    Fin Función
 
-	Función Resta(num1, num2: entero): entero ES
-	Ambiente
-		resultado: entero
-	Proceso
-		resultado := num1 - num2
-		Escribir("El resultado de la resta es: " resultado)
-	Fin Función
+    Función Resta(num1, num2: entero): entero ES
+    Ambiente
+        resultado: entero
+    Proceso
+        resultado := num1 - num2
+        Escribir("El resultado de la resta es: " resultado)
+    Fin Función
 
-	Función Multiplicación(num1, num2: entero): entero ES
-	Ambiente
-		resultado: entero
-	Proceso
-		resultado := num1 * num2
-		Escribir("El resultado de la multiplicación es: " resultado)
-	Fin Función
+    Función Multiplicación(num1, num2: entero): entero ES
+    Ambiente
+        resultado: entero
+    Proceso
+        resultado := num1 * num2
+        Escribir("El resultado de la multiplicación es: " resultado)
+    Fin Función
 
-	Función División(num1, num2: entero): entero ES
-	Ambiente
-		resultado: entero
-	Proceso
-		resultado := num1 DIV num2
-		Escribir("El resultado de la división es: " resultado)
-	Fin Función
+    Función División(num1, num2: entero): entero ES
+    Ambiente
+        resultado: entero
+    Proceso
+        resultado := num1 DIV num2
+        Escribir("El resultado de la división es: " resultado)
+    Fin Función
 
-	Procedimiento mostrar_menú() ES
-	Ambiente
-		operación, num_a, num_b: entero
-	Proceso
-		Escribir("Operaciones")
-		Escribir("-----------")
-		Escribir("")
-		Escribir("1. Sumar")
-		Escribir("2. Restar")
-		Escribir("3. Multiplicar")
-		Escribir("4. Dividir")
-		
-		Escribir("¿Qué operación desea realizar?: ")
-		Leer(operación)
-		
-		Escribir("Introduzca un número A: ")
-		Leer(num_a)
-		
-		Escribir("Introduzca un número B: ")
-		Leer(num_b)
-		
-		Según operación Hacer
-			= 1: Suma(num_a, num_b)
-			= 2: Resta(num_a, num_b)
-			= 3: Multiplicación(num_a, num_b)
-			= 4: División(num_a, num_b)
-		Fin Según
-	Fin Procedimiento
+    Procedimiento mostrar_menú() ES
+    Ambiente
+        operación, num_a, num_b: entero
+    Proceso
+        Escribir("Operaciones")
+        Escribir("-----------")
+        Escribir("")
+        Escribir("1. Sumar")
+        Escribir("2. Restar")
+        Escribir("3. Multiplicar")
+        Escribir("4. Dividir")
+
+        Escribir("¿Qué operación desea realizar?: ")
+        Leer(operación)
+
+        Escribir("Introduzca un número A: ")
+        Leer(num_a)
+
+        Escribir("Introduzca un número B: ")
+        Leer(num_b)
+
+        Según operación Hacer
+            = 1: Suma(num_a, num_b)
+            = 2: Resta(num_a, num_b)
+            = 3: Multiplicación(num_a, num_b)
+            = 4: División(num_a, num_b)
+        Fin Según
+    Fin Procedimiento
 
 Proceso
 
-	mostrar_menú()
+    mostrar_menú()
 
 Fin Acción

@@ -4,148 +4,148 @@ Acción 3.26 ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Facturas = Registro
-                NroFactura: N(5)
-                NroUsuario: N(5)
-                Zona: ("A", "B", "C", "D")
-                FechaConsumo: Fecha
-                Consumo: N(2)
-        Fin Registro
-        
-        ARCH: archivo de Facturas
-        REG: Facturas
+    Facturas = Registro
+        NroFactura: N(5)
+        NroUsuario: N(5)
+        Zona: ("A", "B", "C", "D")
+        FechaConsumo: Fecha
+        Consumo: N(2)
+    Fin Registro
 
-        totales: arreglo de [1..13, 1..5] de real
-        
-        i, j: entero
-        consumo_us: real
-        mes_total, zona_total: alfanumérico
+    ARCH: archivo de Facturas
+    REG: Facturas
 
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 13 Hacer
-                        Para j := 1 hasta 5 Hacer
-                                totales[i, j] := 0
-                        Fin Para
-                Fin Para
-        Fin Procedimiento
+    totales: arreglo de [1..13, 1..5] de real
 
-        Función DeterminarFila(entrada: alfanumérico): entero ES
-                Según entrada Hacer
-                        = "Enero": DeterminarFila := 1
-                        = "Febrero": DeterminarFila := 2
-                        = "Marzo": DeterminarFila := 3
-                        = "Abril": DeterminarFila := 4
-                        = "Mayo": DeterminarFila := 5
-                        = "Junio": DeterminarFila := 6
-                        = "Julio": DeterminarFila := 7
-                        = "Agosto": DeterminarFila := 8
-                        = "Septiembre": DeterminarFila := 9
-                        = "Octubre": DeterminarFila := 10
-                        = "Noviembre": DeterminarFila := 11
-                        = "Diciembre": DeterminarFila := 12
-                Fin Según
-        Fin Función
+    i, j: entero
+    consumo_us: real
+    mes_total, zona_total: alfanumérico
 
-        Función DeterminarColumna(entrada: alfanumérico): entero ES
-                Según entrada Hacer
-                        = "A": DeterminarColumna := 1
-                        = "B": DeterminarColumna := 2
-                        = "C": DeterminarColumna := 3
-                        = "D": DeterminarColumna := 4
-                Fin Según
-        Fin Función
-        
-        Función DeterminarImporte(zona: alfanumérico, consumo: entero): real ES
-        Ambiente
-                tarifa: real
-        Proceso
-                Según zona Hacer
-                        = "A": tarifa := 0,05
-                        = "B": tarifa := 0,07
-                        = "C": tarifa := 0,09
-                        = "D": tarifa := 0,13
-                Fin Según
-                
-                DeterminarImporte := consumo * tarifa
-        Fin Función
-        
-        Función DeterminarMes(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarMes := "Enero"
-                        = 2: DeterminarMes := "Febrero"
-                        = 3: DeterminarMes := "Marzo"
-                        = 4: DeterminarMes := "Abril"
-                        = 5: DeterminarMes := "Mayo"
-                        = 6: DeterminarMes := "Junio"
-                        = 7: DeterminarMes := "Julio"
-                        = 8: DeterminarMes := "Agosto"
-                        = 9: DeterminarMes := "Septiembre"
-                        = 10: DeterminarMes := "Octubre"
-                        = 11: DeterminarMes := "Noviembre"
-                        = 12: DeterminarMes := "Diciembre"
-                Fin Según
-        Fin Función
-        
-        Función DeterminarZona(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarZona := "A"
-                        = 2: DeterminarZona := "B"
-                        = 3: DeterminarZona := "C"
-                        = 4: DeterminarZona := "D"
-                Fin Según
-        Fin Función
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 13 Hacer
+            Para j := 1 hasta 5 Hacer
+                totales[i, j] := 0
+            Fin Para
+        Fin Para
+    Fin Procedimiento
+
+    Función DeterminarFila(entrada: alfanumérico): entero ES
+        Según entrada Hacer
+            = "Enero": DeterminarFila := 1
+            = "Febrero": DeterminarFila := 2
+            = "Marzo": DeterminarFila := 3
+            = "Abril": DeterminarFila := 4
+            = "Mayo": DeterminarFila := 5
+            = "Junio": DeterminarFila := 6
+            = "Julio": DeterminarFila := 7
+            = "Agosto": DeterminarFila := 8
+            = "Septiembre": DeterminarFila := 9
+            = "Octubre": DeterminarFila := 10
+            = "Noviembre": DeterminarFila := 11
+            = "Diciembre": DeterminarFila := 12
+        Fin Según
+    Fin Función
+
+    Función DeterminarColumna(entrada: alfanumérico): entero ES
+        Según entrada Hacer
+            = "A": DeterminarColumna := 1
+            = "B": DeterminarColumna := 2
+            = "C": DeterminarColumna := 3
+            = "D": DeterminarColumna := 4
+        Fin Según
+    Fin Función
+
+    Función DeterminarImporte(zona: alfanumérico, consumo: entero): real ES
+    Ambiente
+        tarifa: real
+    Proceso
+        Según zona Hacer
+            = "A": tarifa := 0,05
+            = "B": tarifa := 0,07
+            = "C": tarifa := 0,09
+            = "D": tarifa := 0,13
+        Fin Según
+
+        DeterminarImporte := consumo * tarifa
+    Fin Función
+
+    Función DeterminarMes(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarMes := "Enero"
+            = 2: DeterminarMes := "Febrero"
+            = 3: DeterminarMes := "Marzo"
+            = 4: DeterminarMes := "Abril"
+            = 5: DeterminarMes := "Mayo"
+            = 6: DeterminarMes := "Junio"
+            = 7: DeterminarMes := "Julio"
+            = 8: DeterminarMes := "Agosto"
+            = 9: DeterminarMes := "Septiembre"
+            = 10: DeterminarMes := "Octubre"
+            = 11: DeterminarMes := "Noviembre"
+            = 12: DeterminarMes := "Diciembre"
+        Fin Según
+    Fin Función
+
+    Función DeterminarZona(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarZona := "A"
+            = 2: DeterminarZona := "B"
+            = 3: DeterminarZona := "C"
+            = 4: DeterminarZona := "D"
+        Fin Según
+    Fin Función
 
 Proceso
 
-        ABRIR E/ (ARCH)
-        LEER(ARCH, REG)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
 
-        Inicializar()
-        
-        Mientras NFDA(ARCH) Hacer
-                i := DeterminarFila(REG.FechaConsumo.Mes)
-                j := DeterminarColumna(REG.Zona)
-                consumo_us := DeterminarConsumo(REG.Zona, REG.Consumo)
-                
-                totales[i, j] := totales[i, j] + consumo_us
-                totales[13, j] := totales[13, j] + consumo_us
-                totales[i, 5] := totales[i, 5] + consumo_us
-                totales[13, 5] := totales[13, 5] + consumo_us
-                
-                LEER(ARCH, REG)
-        Fin Mientras
-        
-        Para i := 1 hasta 12 Hacer
-                mes_total := DeterminarMes(i)
-                Escribir("Mes: ")
-                
-                Para j := 1 hasta 4 Hacer
-                        zona_total := DeterminarZona(j)
-                        Escribir("Zona: " zona_total)
-                        Escribir("Total facturado: " totales[i, j])
-                Fin Para
-        Fin Para
-        
-        Para i := 1 hasta 12 Hacer
-                mes_total := DeterminarMes(i)
-                Escribir("Mes: ")
-                Escribir("Total facturado en el mes: " totales[i, 5])
-        Fin Para
-        
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        i := DeterminarFila(REG.FechaConsumo.Mes)
+        j := DeterminarColumna(REG.Zona)
+        consumo_us := DeterminarConsumo(REG.Zona, REG.Consumo)
+
+        totales[i, j] := totales[i, j] + consumo_us
+        totales[13, j] := totales[13, j] + consumo_us
+        totales[i, 5] := totales[i, 5] + consumo_us
+        totales[13, 5] := totales[13, 5] + consumo_us
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    Para i := 1 hasta 12 Hacer
+        mes_total := DeterminarMes(i)
+        Escribir("Mes: ")
+
         Para j := 1 hasta 4 Hacer
-                zona_total := DeterminarZona(j)
-                Escribir("Zona: " zona_total)
-                Escribir("Total facturado en la zona: " totales[13, j])
+            zona_total := DeterminarZona(j)
+            Escribir("Zona: " zona_total)
+            Escribir("Total facturado: " totales[i, j])
         Fin Para
-        
-        Escribir("Total general facturado: " totales[13, 5])
-        
-        CERRAR(ARCH)
+    Fin Para
+
+    Para i := 1 hasta 12 Hacer
+        mes_total := DeterminarMes(i)
+        Escribir("Mes: ")
+        Escribir("Total facturado en el mes: " totales[i, 5])
+    Fin Para
+
+    Para j := 1 hasta 4 Hacer
+        zona_total := DeterminarZona(j)
+        Escribir("Zona: " zona_total)
+        Escribir("Total facturado en la zona: " totales[13, j])
+    Fin Para
+
+    Escribir("Total general facturado: " totales[13, 5])
+
+    CERRAR(ARCH)
 
 Fin Acción

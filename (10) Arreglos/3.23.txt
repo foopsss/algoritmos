@@ -2,65 +2,65 @@ Acción 3.23(temp: arreglo de [1..4, 1..7, 1..50] de real) ES
 
 Ambiente
 
-        prom_temp: arreglo de [1..50, 1..7] de real
+    prom_temp: arreglo de [1..50, 1..7] de real
 
-        i, j, k, max_lect, min_lect: entero
-        max_temp, min_temp, suma_temp: real
-        max_día, min_día: alfanumérico
-        
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 50 Hacer
-                        Para j := 1 hasta 7 Hacer
-                                prom_temp[i, j] := 0
-                        Fin Para
-                Fin Para
-        Fin Procedimiento
+    i, j, k, max_lect, min_lect: entero
+    max_temp, min_temp, suma_temp: real
+    max_día, min_día: alfanumérico
 
-        Función DeterminarDía(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarDía := "Domingo"
-                        = 2: DeterminarDía := "Lunes"
-                        = 3: DeterminarDía := "Martes"
-                        = 4: DeterminarDía := "Miércoles"
-                        = 5: DeterminarDía := "Jueves"
-                        = 6: DeterminarDía := "Viernes"
-                        = 7: DeterminarDía := "Sábado"
-                Fin Según
-        Fin Función
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 50 Hacer
+            Para j := 1 hasta 7 Hacer
+                prom_temp[i, j] := 0
+            Fin Para
+        Fin Para
+    Fin Procedimiento
+
+    Función DeterminarDía(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarDía := "Domingo"
+            = 2: DeterminarDía := "Lunes"
+            = 3: DeterminarDía := "Martes"
+            = 4: DeterminarDía := "Miércoles"
+            = 5: DeterminarDía := "Jueves"
+            = 6: DeterminarDía := "Viernes"
+            = 7: DeterminarDía := "Sábado"
+        Fin Según
+    Fin Función
 
 Proceso
 
-        Inicializar()
+    Inicializar()
 
-        Para k := 1 hasta 50 Hacer
-                max_temp := LV
-                min_temp := HV
-        
-                Para j := 1 hasta 7 Hacer
-                        suma_temp := 0
-                        
-                        Para i := 1 hasta 4 Hacer
-                                Si temp[i, j] > max_temp Entonces
-                                        max_temp := temp[i, j]
-                                        max_lect := i
-                                        max_día := DeterminarDía(j)
-                                Contrario
-                                        Si temp[i, j] < min_temp Entonces
-                                                min_temp := temp[i, j]
-                                                min_lect := i
-                                                min_día := DeterminarDía(j)
-                                        Fin Si
-                                Fin Si
-                                
-                                suma_temp := suma_temp + temp[i, j]
-                        Fin Para
-                        
-                        prom_temp[k, j] := suma_temp / 4
-                Fin Para
-        
-                Escribir("Paciente: " k)
-                Escribir("El paciente alcanzó un máximo de" max_temp "grados el día" max_día ", en la lectura nro. " max_lect ".")
-                Escribir("El paciente alcanzó un mínimo de" min_temp "grados el día" min_día ", en la lectura nro. " min_lect ".")
+    Para k := 1 hasta 50 Hacer
+        max_temp := LV
+        min_temp := HV
+
+        Para j := 1 hasta 7 Hacer
+            suma_temp := 0
+
+            Para i := 1 hasta 4 Hacer
+                Si temp[i, j] > max_temp Entonces
+                    max_temp := temp[i, j]
+                    max_lect := i
+                    max_día := DeterminarDía(j)
+                Contrario
+                    Si temp[i, j] < min_temp Entonces
+                        min_temp := temp[i, j]
+                        min_lect := i
+                        min_día := DeterminarDía(j)
+                    Fin Si
+                Fin Si
+
+                suma_temp := suma_temp + temp[i, j]
+            Fin Para
+
+            prom_temp[k, j] := suma_temp / 4
         Fin Para
+
+        Escribir("Paciente: " k)
+        Escribir("El paciente alcanzó un máximo de" max_temp "grados el día" max_día ", en la lectura nro. " max_lect ".")
+        Escribir("El paciente alcanzó un mínimo de" min_temp "grados el día" min_día ", en la lectura nro. " min_lect ".")
+    Fin Para
 
 Fin Acción

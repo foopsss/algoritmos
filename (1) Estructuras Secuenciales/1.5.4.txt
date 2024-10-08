@@ -2,24 +2,24 @@ Acción 1.5.4 ES
 
 Ambiente
 
-	b_mayor, b_menor, altura, superficie: entero
+    b_mayor, b_menor, altura, superficie: entero
 
 Proceso
 
-	Escribir("Ingrese la longitud de la base mayor: ")
-	Leer(b_mayor)
+    Escribir("Ingrese la longitud de la base mayor: ")
+    Leer(b_mayor)
 
-	Escribir("Ingrese la longitud de la base menor: ")
-	Leer(b_menor)
+    Escribir("Ingrese la longitud de la base menor: ")
+    Leer(b_menor)
 
-	Escribir("Ingrese la altura: ")
-	Leer(altura)
-	
-	superficie := ( (b_mayor + b_menor) * altura ) / 2
-	
-	Escribir("La superficie del trapecio es de" superficie "metros cuadrados.")
-	Escribir("La longitud de la base mayor es de" b_mayor "metros.")
-	Escribir("La longitud de la base menor es de" b_menor "metros.")
-	Escribir("La altura es de" altura "metros.")
+    Escribir("Ingrese la altura: ")
+    Leer(altura)
+
+    superficie := ( (b_mayor + b_menor) * altura ) / 2
+
+    Escribir("La superficie del trapecio es de" superficie "metros cuadrados.")
+    Escribir("La longitud de la base mayor es de" b_mayor "metros.")
+    Escribir("La longitud de la base menor es de" b_menor "metros.")
+    Escribir("La altura es de" altura "metros.")
 
 Fin Acción
