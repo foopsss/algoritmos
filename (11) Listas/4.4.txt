@@ -1,0 +1,32 @@
+Acción 4.4(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        Clave: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, prim_seg, p: puntero
+
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_seg := NIL
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+
+    Mientras q <> NIL Hacer
+        // Cargo la nueva lista.
+        Nuevo(p)
+        *p.Clave := *q.Clave
+        *p.prox := prim_seg
+        prim_seg := p
+        
+        // Avanzo la lista antigua.
+        q := *q.prox    
+    Fin Mientras
+
+Fin Acción
