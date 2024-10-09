@@ -69,45 +69,47 @@ Proceso
 
     PedirValor()
     Inicializar()
-    
-    Nuevo(p)
-    *p.Dato := valor
-    
-    // Utilizo q como una suerte de "ventana", para enlazar
-    // al primer elemento de la lista que voy a trabajar.
-    //
-    // Si prim = NIL, es porque mi lista está vacía.
-    q := prim
-    
-    Mientras q <> NIL y *q.Dato < valor Hacer
-        // Resguardo el puntero actual en mi auxiliar
-        // y avanzo hacia el siguiente.
-        aux := q
-        q := *q.prox
-    Fin Mientras
-    
-    Si a = NIL Entonces
-        // Si mi auxiliar es igual a NIL, es porque no resguardé
-        // ningún puntero, lo que implica que la lista estaba vacía.
+
+    Mientras valor <> tope Hacer        
+        Nuevo(p)
+        *p.Dato := valor
+        
+        // Utilizo q como una suerte de "ventana", para enlazar
+        // al primer elemento de la lista que voy a trabajar.
         //
-        // De esta forma, no existe nada después del primer
-        // elemento, que acabo de crear, y hago que mi puntero
-        // de cabecera enlace al puntero recién creado.
-        *p.prox := prim
-        prim := p
-    Contrario
-        // Si mi auxiliar es distinto de NIL, es porque lo estoy
-        // usando para resguardar el puntero anterior al puntero
-        // que tengo en q.
-        // 
-        // Esto implica que cubro las siguientes situaciones:
-        // (2) Inserción previo al primer nodo.
-        // (3) Inserción después del último nodo.
-        // (4) Inserción en el medio de la lista.
-        *p.prox := q
-        *aux.prox := p
-    Fin Si
-    
-    PedirValor()
+        // Si prim = NIL, es porque mi lista está vacía.
+        q := prim
+        
+        Mientras q <> NIL y *q.Dato < valor Hacer
+            // Resguardo el puntero actual en mi auxiliar
+            // y avanzo hacia el siguiente.
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si aux = NIL Entonces
+            // Si mi auxiliar es igual a NIL, es porque no resguardé
+            // ningún puntero, lo que implica que la lista estaba vacía.
+            //
+            // De esta forma, no existe nada después del primer
+            // elemento, que acabo de crear, y hago que mi puntero
+            // de cabecera enlace al puntero recién creado.
+            *p.prox := prim
+            prim := p
+        Contrario
+            // Si mi auxiliar es distinto de NIL, es porque lo estoy
+            // usando para resguardar el puntero anterior al puntero
+            // que tengo en q.
+            // 
+            // Esto implica que cubro las siguientes situaciones:
+            // (2) Inserción previo al primer nodo.
+            // (3) Inserción después del último nodo.
+            // (4) Inserción en el medio de la lista.
+            *p.prox := q
+            *aux.prox := p
+        Fin Si
+        
+        PedirValor()
+    Fin Mientras
 
 Fin Acción
