@@ -1,0 +1,36 @@
+Acción 4.3(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        Número: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q: puntero a Nodo
+    suma_pares, suma_impares: entero
+
+    Procedimiento Inicializar() ES
+        q := prim
+        suma_pares := 0
+        suma_impares := 0
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    
+    Mientras q <> NIL Hacer
+        Si *q.Número MOD 2 = 0 Entonces
+            suma_pares := suma_pares + *q.Número
+        Contrario
+            suma_impares := suma_impares + *q.Número
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+    Escribir("El resultado de la suma de números pares de la lista es: " suma_pares)
+    Escribir("El resultado de la suma de números impares de la lista es: " suma_impares)
+
+Fin Acción
