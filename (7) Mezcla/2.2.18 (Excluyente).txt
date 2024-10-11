@@ -2,71 +2,71 @@ Acción 2.2.18 ES
 
 Ambiente
 
-	Sucursales = Registro
-		CodProd: N(5)
-		Tipo: AN(100)
-		Marca: AN(100)
-		Descripción: AN(100)
-		Unidades: N(2)
-	Fin Registro
-	
-	ARCH, ARCH2, ARCH3: archivo de Sucursales ordenado por CodProd
-	REG, REG2, REG3: Sucursales
-	
-	suma_unidades: entero
+    Sucursales = Registro
+        CodProd: N(5)
+        Tipo: AN(100)
+        Marca: AN(100)
+        Descripción: AN(100)
+        Unidades: N(2)
+    Fin Registro
+
+    ARCH, ARCH2, ARCH3: archivo de Sucursales ordenado por CodProd
+    REG, REG2, REG3: Sucursales
+
+    suma_unidades: entero
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR E/ (ARCH2)
-	ABRIR S/ (ARCH3)
-	
-	LEER(ARCH, REG)
-	LEER(ARCH2, REG2)
-	
-	Escribir("| CodProd | Tipo | Marca | Descripción | Cantidad SUC1 | Cantidad SUC2 | Total de unidades |")
+    ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH2)
+    ABRIR S/ (ARCH3)
 
-	Mientras NFDA(ARCH) y NFDA(ARCH2) Hacer
-		Si REG.CodProd < REG2.CodProd Entonces
-			Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
-			GRABAR(ARCH3, REG)
-			LEER(ARCH, REG)
-		Contrario
-			Si REG.CodProd > REG2.CodProd Entonces
-				Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
-				GRABAR(ARCH3, REG2)
-				LEER(ARCH2, REG2)
-			Contrario
-				suma_unidades := REG.Unidades + REG2.Unidades
-				Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, REG2.Unidades, suma_unidades)
-				
-				REG3.CodProd := REG.CodProd
-				REG3.Tipo := REG.Tipo
-				REG3.Marca := REG.Marca
-				REG3.Descripción := REG.Descripción
-				REG3.Unidades := suma_unidades
-				GRABAR(ARCH3, REG3)
-				
-				LEER(ARCH, REG)
-				LEER(ARCH2, REG2)
-			Fin Si
-		Fin Si
-	Fin Mientras
-	
-	Mientras NFDA(ARCH) Hacer
-		Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
-		GRABAR(ARCH3, REG)
-		LEER(ARCH, REG)
-	Fin Mientras
+    LEER(ARCH, REG)
+    LEER(ARCH2, REG2)
 
-	Mientras NFDA(ARCH2) Hacer
-		Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
-		GRABAR(ARCH3, REG2)
-		LEER(ARCH2, REG2)
-	Fin Mientras
+    Escribir("| CodProd | Tipo | Marca | Descripción | Cantidad SUC1 | Cantidad SUC2 | Total de unidades |")
 
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
-	CERRAR(ARCH3)
+    Mientras NFDA(ARCH) y NFDA(ARCH2) Hacer
+        Si REG.CodProd < REG2.CodProd Entonces
+            Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
+            GRABAR(ARCH3, REG)
+            LEER(ARCH, REG)
+        Contrario
+            Si REG.CodProd > REG2.CodProd Entonces
+                Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
+                GRABAR(ARCH3, REG2)
+                LEER(ARCH2, REG2)
+            Contrario
+                suma_unidades := REG.Unidades + REG2.Unidades
+                Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, REG2.Unidades, suma_unidades)
+
+                REG3.CodProd := REG.CodProd
+                REG3.Tipo := REG.Tipo
+                REG3.Marca := REG.Marca
+                REG3.Descripción := REG.Descripción
+                REG3.Unidades := suma_unidades
+                GRABAR(ARCH3, REG3)
+
+                LEER(ARCH, REG)
+                LEER(ARCH2, REG2)
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Mientras NFDA(ARCH) Hacer
+        Escribir(REG.CodProd, REG.Tipo, REG.Marca, REG.Descripción, REG.Unidades, "0", REG.Unidades)
+        GRABAR(ARCH3, REG)
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    Mientras NFDA(ARCH2) Hacer
+        Escribir(REG2.CodProd, REG2.Tipo, REG2.Marca, REG2.Descripción, "0", REG2.Unidades, REG2.Unidades)
+        GRABAR(ARCH3, REG2)
+        LEER(ARCH2, REG2)
+    Fin Mientras
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
+    CERRAR(ARCH3)
 
 Fin Acción
