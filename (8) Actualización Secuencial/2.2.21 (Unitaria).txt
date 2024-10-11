@@ -2,105 +2,105 @@ Acción 2.2.21 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Registro
-	
-	Amigos = Registro
-		Clave = Registro
-			CodUsuario: N(5)
-			CodAmigo: N(5)
-		Fin Registro
-		FechaAmistad: Fecha
-		MensajeMuro: AN(200)
-	Fin Registro
-	
-	ARCH, ARCH3: archivo de Amigos ordenado por Clave
-	REG, REG3: Amigos
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-	Notificaciones = Registro
-		Clave = Registro
-			CodUsuario: N(5)
-			CodAmigo: N(5)
-		Fin Registro
-		CodMov: AN(1)
-		FechaAmistad: Fecha
-		MensajeMuro: AN(200)
-	Fin Registro
-	
-	ARCH2: archivo de Notificaciones ordenado por Clave y CodMov
-	REG2: Notificaciones
-	
-	Procedimiento LEER_AMIGOS() ES
-		LEER(ARCH, REG)
-		Si FDA(ARCH) Entonces
-			REG.Clave := HV
-		Fin Si
-	Fin Procedimiento
+    Amigos = Registro
+        Clave = Registro
+            CodUsuario: N(5)
+            CodAmigo: N(5)
+        Fin Registro
+        FechaAmistad: Fecha
+        MensajeMuro: AN(200)
+    Fin Registro
 
-	Procedimiento LEER_NOTIFICACIONES() ES
-		LEER(ARCH2, REG2)
-		Si FDA(ARCH2) Entonces
-			REG2.Clave := HV
-		Fin Si
-	Fin Procedimiento
+    ARCH, ARCH3: archivo de Amigos ordenado por Clave
+    REG, REG3: Amigos
 
-	Procedimiento AñadirAmigo() ES
-		REG3.CodUsuario := REG2.CodUsuario
-		REG3.CodAmistad := REG2.CodAmistad
-		REG3.FechaAmistad := REG2.FechaAmistad
-		REG3.MensajeMuro := REG2.MensajeMuro
-		GRABAR(ARCH3, REG3)
-	Fin Procedimiento
-	
-	Procedimiento AmistadExistente() ES
-		Escribir("Error. No se puede dar de alta una amistad existente.")
-		GRABAR(ARCH3, REG)
-	Fin Procedimiento
-	
-	Procedimiento NuevoMensajeMuro() ES
-		REG3 := REG
-		REG3.MensajeMuro := REG2.MensajeMuro
-		GRABAR(ARCH3, REG3)
-	Fin Procedimiento
+    Notificaciones = Registro
+        Clave = Registro
+            CodUsuario: N(5)
+            CodAmigo: N(5)
+        Fin Registro
+        CodMov: AN(1)
+        FechaAmistad: Fecha
+        MensajeMuro: AN(200)
+    Fin Registro
+
+    ARCH2: archivo de Notificaciones ordenado por Clave y CodMov
+    REG2: Notificaciones
+
+    Procedimiento LEER_AMIGOS() ES
+        LEER(ARCH, REG)
+        Si FDA(ARCH) Entonces
+            REG.Clave := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento LEER_NOTIFICACIONES() ES
+        LEER(ARCH2, REG2)
+        Si FDA(ARCH2) Entonces
+            REG2.Clave := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento AñadirAmigo() ES
+        REG3.CodUsuario := REG2.CodUsuario
+        REG3.CodAmistad := REG2.CodAmistad
+        REG3.FechaAmistad := REG2.FechaAmistad
+        REG3.MensajeMuro := REG2.MensajeMuro
+        GRABAR(ARCH3, REG3)
+    Fin Procedimiento
+
+    Procedimiento AmistadExistente() ES
+        Escribir("Error. No se puede dar de alta una amistad existente.")
+        GRABAR(ARCH3, REG)
+    Fin Procedimiento
+
+    Procedimiento NuevoMensajeMuro() ES
+        REG3 := REG
+        REG3.MensajeMuro := REG2.MensajeMuro
+        GRABAR(ARCH3, REG3)
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR E/ (ARCH2)
-	ABRIR S/ (ARCH3)
-	
-	LEER_AMIGOS()
-	LEER_NOTIFICACIONES()
-	
-	Mientras REG.Clave <> HV o REG2.Clave <> HV Hacer
-		Si REG.Clave < REG2.Clave Entonces
-			GRABAR(ARCH3, REG)
-			LEER_AMIGOS()
-		Contrario
-			Si REG.Clave > REG2.Clave Entonces
-				Según REG2.CodMov Hacer
-					= "A": AñadirAmigo()
-					= "B": Escribir("Error. No se puede dar de baja una amistad inexistente.")
-					= "M": Escribir("Error. No se puede escribir mensajes en muros de usuarios que no sean amigos.")
-				Fin Según
-				LEER_NOTIFICACIONES()
-			Contrario
-				Según REG2.CodMov Hacer
-					= "A": AmistadExistente()
-					= "B": Escribir("El amigo ha sido borrado.")
-					= "M": NuevoMensajeMuro()
-				Fin Según
-				LEER_AMIGOS()
-				LEER_NOTIFICACIONES()
-			Fin Si
-		Fin Si
-	Fin Mientras
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
-	CERRAR(ARCH3)
+    ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH2)
+    ABRIR S/ (ARCH3)
+
+    LEER_AMIGOS()
+    LEER_NOTIFICACIONES()
+
+    Mientras REG.Clave <> HV o REG2.Clave <> HV Hacer
+        Si REG.Clave < REG2.Clave Entonces
+            GRABAR(ARCH3, REG)
+            LEER_AMIGOS()
+        Contrario
+            Si REG.Clave > REG2.Clave Entonces
+                Según REG2.CodMov Hacer
+                    = "A": AñadirAmigo()
+                    = "B": Escribir("Error. No se puede dar de baja una amistad inexistente.")
+                    = "M": Escribir("Error. No se puede escribir mensajes en muros de usuarios que no sean amigos.")
+                Fin Según
+                LEER_NOTIFICACIONES()
+            Contrario
+                Según REG2.CodMov Hacer
+                    = "A": AmistadExistente()
+                    = "B": Escribir("El amigo ha sido borrado.")
+                    = "M": NuevoMensajeMuro()
+                Fin Según
+                LEER_AMIGOS()
+                LEER_NOTIFICACIONES()
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
+    CERRAR(ARCH3)
 
 Fin Acción
