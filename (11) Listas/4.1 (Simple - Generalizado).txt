@@ -1,0 +1,75 @@
+Acción 4.1(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        Dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    p, q, aux: puntero a Nodo
+    k, dato: entero
+
+    Procedimiento MenúOpciones() ES
+        Escribir("Operaciones disponibles")
+        Escribir("-----------------------")
+        Escribir("1. Acceder a un elemento")
+        Escribir("2. Eliminar un elemento")
+        Escribir("3. Insertar un elemento")
+        Escribir("")
+        Escribir("Introduzca la operación que desea realizar: ")
+        Leer(operación)
+
+        Escribir("Introduzca una posición: ")
+        Leer(k)
+    Fin Procedimiento
+
+    Procedimiento ERROR(código: entero) ES
+        Si código = 1 Entonces
+            Escribir("ERROR. La lista está vacía.")
+        Contrario
+            Escribir("ERROR. NO existe esa posición en la lista.")
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento Eliminar() ES
+        *aux.prox := *q.prox
+        Disponer(q)
+    Fin Procedimiento
+
+    Procedimiento Insertar() ES
+        Escribir("Inserte un valor a almacenar en la posición: ")
+        Leer(dato)
+        
+        Nuevo(p)
+        *p.Dato := dato
+        *p.prox := q
+        *aux.prox := p
+    Fin Procedimiento
+
+Proceso
+
+    MenúOpciones()
+    q := prim
+    
+    Si q = NIL Entonces
+        ERROR(1)
+    Contrario
+        Mientras q <> NIL y k <> 0 Hacer
+            k := k - 1
+            aux := q
+            q := *q.prox
+        Fin Mientras
+
+        Si q = NIL y k <> 0 Entonces
+            ERROR(2)
+        Contrario
+            Según operación Hacer
+                = 1: Escribir("El dato almacenado en la posición k es: " *q.Dato)
+                = 2: Eliminar()
+                = 3: Insertar()
+            Fin Según
+        Fin Si
+    Fin Si
+
+Fin Acción
