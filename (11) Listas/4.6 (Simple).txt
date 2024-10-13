@@ -1,0 +1,122 @@
+Acción 4.6 ES
+
+Ambiente
+
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
+
+    Nodo = Registro
+        nombre: AN(100)
+        fecha_consumo: fecha
+        nro_mesa: N(5)
+        consumo: N(3)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    prim, p, q, aux: puntero a Nodo
+    elección, nombre_cli: alfanumérico
+    operación: entero
+
+    FechaActual: Fecha
+
+    Procedimiento Inicializar() ES
+        prim := NIL
+        aux := NIL
+    Fin Procedimiento
+
+    Procedimiento ObtenerFechaUsuario() ES
+        Escribir("Introduzca el año actual: ")
+        Leer(FechaActual.Año)
+        Escribir("Introduzca el mes actual: ")
+        Leer(FechaActual.Mes)
+        Escribir("Introduzca el día actual: ")
+        Leer(FechaActual.Día)
+    Fin Procedimiento
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea realizar una operación? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Procedimiento MenúOpciones() ES
+        Escribir("Dispone de las siguientes opciones: ")
+        Escribir("1. Añadir a un cliente a la lista.")
+        Escribir("2. Registrar el consumo de un cliente.")
+        Escribir("3. Realizar el cobro a un cliente.")
+        Escribir("")
+        Escribir("Introduzca una operación a realizar: ")
+        Leer(operación)
+    Fin Procedimiento
+
+    Procedimiento AñadirCliente() ES
+        q := prim
+        Nuevo(p)
+        
+        Escribir("Introduzca el nombre del cliente: ")
+        Leer(nombre_cli)
+        Escribir("Introduzca el número de mesa del cliente: ")
+        Leer(*p.nro_mesa)
+        *p.nombre := nombre_cli
+        *p.fecha_consumo := FechaActual
+        *p.consumo := 0
+        
+        Mientras q <> NIL y *q.nombre < nombre_cli Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si aux = NIL
+            *p.prox := prim
+            prim := p
+        Contrario
+            *p.prox := q
+            *aux.prox := p
+        Fin Si
+    Fin Procedimiento
+    
+    Procedimiento TicketsConsumos(op: entero) ES
+        q := prim
+        
+        Escribir("Introduzca el nombre del cliente: ")
+        Leer(nombre_cli)
+        
+        Mientras q <> NIL y *q.nombre <> nombre_cli Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si op = 1 Entonces
+            Escribir("Introduzca el monto a cobrarle al cliente: ")
+            Leer(*q.consumo)
+        Contrario
+            Escribir("Nombre del cliente: " *q.nombre)
+            Escribir("Fecha del consumo: " *q.fecha_consumo)
+            Escribir("Número de mesa: " *q.nro_mesa)
+            Escribir("Monto total del consumo: " *q.consumo)
+            *aux.prox := *q.prox
+            Disponer(q)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ObtenerFechaUsuario()
+    ObtenerElecciónUsuario()
+    Inicializar()
+
+    Mientras elección = "S" Hacer
+        MenúOpciones()
+        
+        Según operación Hacer
+            = 1: AñadirCliente()
+            = 2: TicketsConsumos(1)
+            = 3: TicketsConsumos(2)
+        Fin Según
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+Fin Acción
