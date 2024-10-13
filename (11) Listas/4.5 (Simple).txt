@@ -3,19 +3,19 @@ Acción 4.5(prim: puntero a NodoEntrada) ES
 Ambiente
 
     NodoEntrada = Registro
-        Nombre: AN(100)
-        Capital: AN(100)
-        CantHab: N(5)
-        CantAn: N(5)
+        nombre: AN(100)
+        capital: AN(100)
+        cant_hab: N(5)
+        cant_an: N(5)
         prox: puntero a NodoEntrada
     Fin Registro
 
     q: puntero a NodoEntrada
 
     NodoSalida = Registro
-        Nombre: AN(100)
-        Capital: AN(100)
-        PorcAn: N(3)
+        nombre: AN(100)
+        capital: AN(100)
+        porc_an: N(3)
         prox: puntero a NodoSalida
     Fin Registro
     
@@ -48,15 +48,15 @@ Proceso
     Inicializar()
 
     Mientras q <> NIL Hacer
-        porc_analfab := (*q.CantAn * 100) / *q.CantHab
+        porc_analfab := (*q.cant_an * 100) / *q.cant_hab
         
         // Como quiero respetar el orden de carga
         // decreciente de los datos de entrada en mis
         // listas de salida, uso una carga encolada.
         Nuevo(p)
-        *p.Nombre := *q.Nombre
-        *p.Capital := *q.Capital
-        *p.PorcAn := porc_analfab
+        *p.nombre := *q.nombre
+        *p.capital := *q.capital
+        *p.porc_an := porc_analfab
         *p.prox := NIL
         
         Según porc_analfab Hacer

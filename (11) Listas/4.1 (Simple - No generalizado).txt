@@ -3,12 +3,12 @@ Acción 4.1(prim: puntero a Nodo) ES
 Ambiente
 
     Nodo = Registro
-        Dato: N(2)
+        dato: N(2)
         prox: puntero a Nodo
     Fin Registro
 
     p, q, aux: puntero a Nodo
-    k, dato: entero
+    k, dato_us: entero
 
     Procedimiento MenúOpciones() ES
         Escribir("Operaciones disponibles")
@@ -42,7 +42,7 @@ Ambiente
         Si q = NIL y k <> 0 Entonces
             ERROR(2)
         Contrario
-            Escribir("El dato almacenado en la posición k es: " *q.Dato)
+            Escribir("El dato almacenado en la posición k es: " *q.dato)
         Fin Si
     Fin Procedimiento
 
@@ -72,10 +72,10 @@ Ambiente
             ERROR(2)
         Contrario
             Escribir("Inserte un valor a almacenar en la posición: ")
-            Leer(dato)
+            Leer(dato_us)
             
             Nuevo(p)
-            *p.Dato := dato
+            *p.dato := dato_us
             *p.prox := q
             *aux.prox := p
         Fin Si

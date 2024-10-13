@@ -3,7 +3,7 @@ Acción 4.4(prim: puntero a Nodo) ES
 Ambiente
 
     Nodo = Registro
-        Clave: N(2)
+        clave: N(2)
         prox: puntero a Nodo
     Fin Registro
 
@@ -21,7 +21,7 @@ Proceso
     Mientras q <> NIL Hacer
         // Cargo la nueva lista.
         Nuevo(p)
-        *p.Clave := *q.Clave
+        *p.clave := *q.clave
         *p.prox := prim_seg
         prim_seg := p
         

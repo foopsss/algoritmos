@@ -3,7 +3,7 @@ Acción 4.2(prim: puntero a Nodo) ES
 Ambiente
 
     Nodo = Registro
-        Número: N(2)
+        número: N(2)
         prox: puntero a Nodo
     Fin Registro
 
@@ -19,14 +19,14 @@ Proceso
     Inicializar()
 
     Mientras q <> NIL Hacer
-        Si *q.Número MOD 10 = 0 Entonces
+        Si *q.número MOD 10 = 0 Entonces
             // Cargo la nueva lista realizando una carga
             // encolada, simplemente por preferencia propia.
             //
             // De esta forma, respeto el orden en el que voy
             // cargando los elementos a la hora de recuperarlos.
             Nuevo(p)
-            *p.Número := *q.Número
+            *p.número := *q.número
             *p.prox := NIL
             
             Si prim_seg = NIL Entonces

@@ -3,7 +3,7 @@ Acción 4.3(prim: puntero a Nodo) ES
 Ambiente
 
     Nodo = Registro
-        Número: N(2)
+        número: N(2)
         prox: puntero a Nodo
     Fin Registro
 
@@ -21,10 +21,10 @@ Proceso
     Inicializar()
     
     Mientras q <> NIL Hacer
-        Si *q.Número MOD 2 = 0 Entonces
-            suma_pares := suma_pares + *q.Número
+        Si *q.número MOD 2 = 0 Entonces
+            suma_pares := suma_pares + *q.número
         Contrario
-            suma_impares := suma_impares + *q.Número
+            suma_impares := suma_impares + *q.número
         Fin Si
         
         q := *q.prox
