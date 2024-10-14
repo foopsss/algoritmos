@@ -2,24 +2,24 @@ Acción 1.11 ES
 
 Proceso
 
-	año_act, año_usuario: entero
+    año_act, año_usuario: entero
 
 Ambiente
 
-	Escribir("Ingrese el año actual: ")
-	Leer(año_act)
-	
-	Escribir("Ingrese un año a elección: ")
-	Leer(año_usuario)
-	
-	Si año_usuario > año_act Entonces
-		Escribir("FUTURO.")
-	Contrario
-		Si año_usuario = año_act Entonces
-			Escribir("ACTUAL.")
-		Contrario
-			Escribir("PASADO.")
-		Fin Si
-	Fin Si
+    Escribir("Ingrese el año actual: ")
+    Leer(año_act)
+
+    Escribir("Ingrese un año a elección: ")
+    Leer(año_usuario)
+
+    Si año_usuario > año_act Entonces
+        Escribir("FUTURO.")
+    Contrario
+        Si año_usuario = año_act Entonces
+            Escribir("ACTUAL.")
+        Contrario
+            Escribir("PASADO.")
+        Fin Si
+    Fin Si
 
 Fin Acción

@@ -2,26 +2,25 @@ Acción 1.15 ES
 
 Ambiente
 
-	metro_a_pie = 3,28
-
-	i, pisos, alt_prom: entero
-	alt_edificio: real
+    metro_a_pie = 3,28
+    i, pisos, alt_prom: entero
+    alt_edificio: real
 
 Proceso
 
-	Para i := 1 hasta 50 Hacer
-		Escribir("----------------------------------------------")
-		Escribir("Número de edificio: " i)
-		
-		Escribir("Introduzca el número de pisos del edificio: ")
-		Leer(pisos)
-		
-		Escribir("Introduzca la altura promedio de cada piso (en metros): ")
-		Leer(alt_prom)
+    Para i := 1 hasta 50 Hacer
+        Escribir("----------------------------------------------")
+        Escribir("Número de edificio: " i)
 
-		alt_edificio := (pisos * alt_prom) * metro_a_pie
-		
-		Escribir("La altura del edificio es de" alt_edificio "pies.")
-	Fin Para
+        Escribir("Introduzca el número de pisos del edificio: ")
+        Leer(pisos)
+
+        Escribir("Introduzca la altura promedio de cada piso (en metros): ")
+        Leer(alt_prom)
+
+        alt_edificio := (pisos * alt_prom) * metro_a_pie
+
+        Escribir("La altura del edificio es de" alt_edificio "pies.")
+    Fin Para
 
 Fin Acción

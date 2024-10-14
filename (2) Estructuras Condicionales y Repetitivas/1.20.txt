@@ -2,20 +2,20 @@ Acción 1.20 ES
 
 Ambiente
 
-	número, i, cuadrado, cubo: entero
+    número, i, cuadrado, cubo: entero
 
 Proceso
 
-	Escribir("Ingrese un número: ")
-	Leer(número)
-	
-	Para i := 1 hasta 10 Hacer
-		cuadrado := número ** 2
-		cubo := número ** 3
-		Escribir("Número: " número)
-		Escribir("Cuadrado: " cuadrado)
-		Escribir("Cubo:" cubo)
-		número := número + 1
-	Fin Para
+    Escribir("Ingrese un número: ")
+    Leer(número)
+
+    Para i := 1 hasta 10 Hacer
+        cuadrado := número ** 2
+        cubo := número ** 3
+        Escribir("Número: " número)
+        Escribir("Cuadrado: " cuadrado)
+        Escribir("Cubo:" cubo)
+        número := número + 1
+    Fin Para
 
 Fin Acción

@@ -2,23 +2,23 @@ Acción 1.7 ES
 
 Ambiente
 
-	a, b, suma: entero
+    a, b, suma: entero
 
 Proceso
 
-	Escribir("Ingrese un valor para a: ")
-	Leer(a)
-	
-	Escribir("Ingrese un valor para b: ")
-	Leer(b)
+    Escribir("Ingrese un valor para a: ")
+    Leer(a)
 
-	suma := a + b
+    Escribir("Ingrese un valor para b: ")
+    Leer(b)
 
-	Según suma Hacer
-		<= 50: Escribir("La suma es menor o igual a 50.")
-		<= 100: Escribir("La suma es mayor que 50 pero menor o igual a 100.")
-		<= 200: Escribir("La suma es mayor que 100 pero menor o igual a 200.")
-		> 200: Escribir("La suma es mayor que 200.")
-	Fin Según
+    suma := a + b
+
+    Según suma Hacer
+        <= 50: Escribir("La suma es menor o igual a 50.")
+        <= 100: Escribir("La suma es mayor que 50 pero menor o igual a 100.")
+        <= 200: Escribir("La suma es mayor que 100 pero menor o igual a 200.")
+        > 200: Escribir("La suma es mayor que 200.")
+    Fin Según
 
 Fin Acción

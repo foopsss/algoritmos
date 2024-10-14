@@ -2,20 +2,20 @@ Acción 1.17 ES
 
 Ambiente
 
-	multiplicando, multiplicador, i, suma: entero
+    multiplicando, multiplicador, i, suma: entero
 
 Proceso
 
-	Escribir("Ingrese un valor para el multiplicando: ")
-	Leer(multiplicando)
+    Escribir("Ingrese un valor para el multiplicando: ")
+    Leer(multiplicando)
 
-	Escribir("Ingrese un valor para el multiplicador: ")
-	Leer(multiplicador)
+    Escribir("Ingrese un valor para el multiplicador: ")
+    Leer(multiplicador)
 
-	Para i := 1 hasta multiplicador Hacer
-		suma := suma + multiplicando
-	Fin Para
-	
-	Escribir("El valor del producto es" suma ".")
+    Para i := 1 hasta multiplicador Hacer
+        suma := suma + multiplicando
+    Fin Para
+
+    Escribir("El valor del producto es" suma ".")
 
 Fin Acción

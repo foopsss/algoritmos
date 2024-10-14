@@ -2,18 +2,18 @@ Acción 1.19 ES
 
 Ambiente
 
-	v: entero
+    v: entero
 
 Proceso
 
-	Escribir("Ingrese un número entero: ")
-	Leer(v)
-	
-	cuadrado := v ** 2
-	cubo := v ** 3
-	
-	Escribir("El número es" v ".")
-	Escribir("El cuadrado de dicho número es" cuadrado ".")
-	Escribir("El cubo de dicho número es" cubo ".")
+    Escribir("Ingrese un número entero: ")
+    Leer(v)
+
+    cuadrado := v ** 2
+    cubo := v ** 3
+
+    Escribir("El número es" v ".")
+    Escribir("El cuadrado de dicho número es" cuadrado ".")
+    Escribir("El cubo de dicho número es" cubo ".")
 
 Fin Acción

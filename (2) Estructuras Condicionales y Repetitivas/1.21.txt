@@ -2,28 +2,28 @@ Acción 1.21 ES
 
 Ambiente
 
-	número, incremento, suma_cuadrados, i, cuadrado, cubo: entero
+    número, incremento, suma_cuadrados, i, cuadrado, cubo: entero
 
 Proceso
 
-	Escribir("Ingrese un número: ")
-	Leer(número)
+    Escribir("Ingrese un número: ")
+    Leer(número)
 
-	Escribir("Ingrese la cantidad de veces a incrementarlo: ")
-	Leer(incremento)
+    Escribir("Ingrese la cantidad de veces a incrementarlo: ")
+    Leer(incremento)
 
-	suma_cuadrados := 0
+    suma_cuadrados := 0
 
-	Para i := 1 hasta incremento Hacer
-		cuadrado := número ** 2
-		cubo := número ** 3
-		Escribir("Número: " número)
-		Escribir("Cuadrado: " cuadrado)
-		Escribir("Cubo:" cubo)
-		suma_cuadrados := suma_cuadrados + cuadrado
-		número := número + 1
-	Fin Para
+    Para i := 1 hasta incremento Hacer
+        cuadrado := número ** 2
+        cubo := número ** 3
+        Escribir("Número: " número)
+        Escribir("Cuadrado: " cuadrado)
+        Escribir("Cubo:" cubo)
+        suma_cuadrados := suma_cuadrados + cuadrado
+        número := número + 1
+    Fin Para
 
-	Escribir("El resultado de la suma de cuadrados es" suma_cuadrados ".")
+    Escribir("El resultado de la suma de cuadrados es" suma_cuadrados ".")
 
 Fin Acción

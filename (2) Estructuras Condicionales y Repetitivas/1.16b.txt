@@ -2,54 +2,54 @@ Acción 1.16 ES
 
 Ambiente
 
-	elección: carácter
-	nro_facu, eg_isi, eg_iem, eg_iq, total_isi, total_iem, total_iq, total_facu, total_general: entero
-	porc_isi, porc_iem, porc_iq: real
+    elección: carácter
+    nro_facu, eg_isi, eg_iem, eg_iq, total_isi, total_iem, total_iq, total_facu, total_general: entero
+    porc_isi, porc_iem, porc_iq: real
 
 Proceso
 
-	Escribir("¿Desea calcular el porcentaje de alumnos por carrera de varias facultades? [S/N]: ")
-	Leer(elección)
-	
-	nro_facu := 0
-	total_isi := 0
-	total_iem := 0
-	total_iq := 0
-	total_general := 0
+    Escribir("¿Desea calcular el porcentaje de alumnos por carrera de varias facultades? [S/N]: ")
+    Leer(elección)
 
-	Mientras elección = "S" Hacer
-		nro_facu := nro_facu + 1
+    nro_facu := 0
+    total_isi := 0
+    total_iem := 0
+    total_iq := 0
+    total_general := 0
 
-		Escribir("Ingrese la cantidad de egresados de ISI: ")
-		Leer(eg_isi)
+    Mientras elección = "S" Hacer
+        nro_facu := nro_facu + 1
 
-		Escribir("Ingrese la cantidad de egresados de IEM: ")
-		Leer(eg_iem)
+        Escribir("Ingrese la cantidad de egresados de ISI: ")
+        Leer(eg_isi)
 
-		Escribir("Ingrese la cantidad de egresados de IQ: ")
-		Leer(eg_iq)
+        Escribir("Ingrese la cantidad de egresados de IEM: ")
+        Leer(eg_iem)
 
-		total_isi := total_isi + eg_isi
-		total_iem := total_iem + eg_iem
-		total_iq := total_iq + eg_iq
-		total_facu := eg_isi + eg_iem + eg_iq
-		total_general := total_general + total_facu
-		porc_isi := (eg_isi * 100) / total_facu
-		porc_iem := (eg_iem * 100) / total_facu
-		porc_iq := (eg_iq * 100) / total_facu
+        Escribir("Ingrese la cantidad de egresados de IQ: ")
+        Leer(eg_iq)
 
-		Escribir("Facultad: " nro_facu)
-		Escribir("Los egresados de ISI componen el" porc_isi "% de los egresados.")
-		Escribir("Los egresados de IEM componen el" porc_iem "% de los egresados.")
-		Escribir("Los egresados de IQ componen el" porc_iq "% de los egresados.")
+        total_isi := total_isi + eg_isi
+        total_iem := total_iem + eg_iem
+        total_iq := total_iq + eg_iq
+        total_facu := eg_isi + eg_iem + eg_iq
+        total_general := total_general + total_facu
+        porc_isi := (eg_isi * 100) / total_facu
+        porc_iem := (eg_iem * 100) / total_facu
+        porc_iq := (eg_iq * 100) / total_facu
 
-		Escribir("¿Desea añadir otra facultad? [S/N]: ")
-		Leer(elección)
-	Fin Mientras
+        Escribir("Facultad: " nro_facu)
+        Escribir("Los egresados de ISI componen el" porc_isi "% de los egresados.")
+        Escribir("Los egresados de IEM componen el" porc_iem "% de los egresados.")
+        Escribir("Los egresados de IQ componen el" porc_iq "% de los egresados.")
 
-	Escribir("El total de egresados de todas las facultades es de" total_general "estudiantes.")
-	Escribir("El total de egresados de ISI es de" total_isi "estudiantes.")
-	Escribir("El total de egresados de IEM es de" total_iem "estudiantes.")
-	Escribir("El total de egresados de IQ es de" total_iq "estudiantes.")
+        Escribir("¿Desea añadir otra facultad? [S/N]: ")
+        Leer(elección)
+    Fin Mientras
+
+    Escribir("El total de egresados de todas las facultades es de" total_general "estudiantes.")
+    Escribir("El total de egresados de ISI es de" total_isi "estudiantes.")
+    Escribir("El total de egresados de IEM es de" total_iem "estudiantes.")
+    Escribir("El total de egresados de IQ es de" total_iq "estudiantes.")
 
 Fin Acción

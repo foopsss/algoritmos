@@ -2,27 +2,27 @@ Acción 1.18 ES
 
 Ambiente
 
-	dividendo, divisor, resto, cociente: entero
+    dividendo, divisor, resto, cociente: entero
 
 Proceso
 
-	Escribir("Ingrese el valor del dividendo: ")
-	Leer(dividendo)
+    Escribir("Ingrese el valor del dividendo: ")
+    Leer(dividendo)
 
-	Escribir("Ingrese el valor del divisor: ")
-	Leer(divisor)
+    Escribir("Ingrese el valor del divisor: ")
+    Leer(divisor)
 
-	resto := dividendo
-	cociente := 0
+    resto := dividendo
+    cociente := 0
 
-	Mientras resto - divisor >= 0 Hacer
-		resto := resto - divisor
-		cociente := cociente + 1
-	Fin Mientras
+    Mientras resto - divisor >= 0 Hacer
+        resto := resto - divisor
+        cociente := cociente + 1
+    Fin Mientras
 
-	Escribir("El valor del dividendo es" dividendo ".")
-	Escribir("El valor del divisor es" divisor ".")
-	Escribir("El valor del cociente es" cociente ".")
-	Escribir("El valor del resto es" resto ".")
+    Escribir("El valor del dividendo es" dividendo ".")
+    Escribir("El valor del divisor es" divisor ".")
+    Escribir("El valor del cociente es" cociente ".")
+    Escribir("El valor del resto es" resto ".")
 
 Fin Acción
