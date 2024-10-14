@@ -2,33 +2,33 @@ Acción 2.2.3 ES
 
 Ambiente
 
-	Socios = Registro
-		NroSocio: N(5)
-		NroTeléfono: N(12)
-		NomAp: AN(50)
-		Carrera: ("ISI", "IEM", "IQ", "LAR")
-		Domicilio: AN(50)
-		UnidadesPrestadas: N(2)
-	Fin Registro
+    Socios = Registro
+        NroSocio: N(5)
+        NroTeléfono: N(12)
+        NomAp: AN(50)
+        Carrera: ("ISI", "IEM", "IQ", "LAR")
+        Domicilio: AN(50)
+        UnidadesPrestadas: N(2)
+    Fin Registro
 
-	ARCH, ARCH2: archivo de Socios
-	REG, REG2: Socios
+    ARCH, ARCH2: archivo de Socios
+    REG, REG2: Socios
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Mientras NFDA(ARCH) Hacer
-		Si REG.Carrera = "ISI" y REG.UnidadesPrestadas > 4 Entonces
-			GRABAR(ARCH2, REG)
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Mientras NFDA(ARCH) Hacer
+        Si REG.Carrera = "ISI" y REG.UnidadesPrestadas > 4 Entonces
+            GRABAR(ARCH2, REG)
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción
