@@ -38,137 +38,134 @@ Acción Secuencias10 ES
 
 Ambiente
 
-	sec_fac, sec_det: secuencia de carácter
-	v_fac, v_det: carácter
-	
-	sec_sal: secuencia de entero
-	v_sal, cant_facturas, cant_facturas_a, cant_art, monto_art, monto_total, i: entero
-	porc_fact_a: real
-	es_tipo_a: lógico
+    sec_fac, sec_det: secuencia de carácter
+    v_fac, v_det: carácter
 
-	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
-	
-	Procedimiento Inicializar() ES
-		cant_facturas := 0
-		cant_facturas_a := 0
-		monto_art := 0
-		monto_total := 0
-	Fin Procedimiento
-	
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    sec_sal: secuencia de entero
+    v_sal, cant_facturas, cant_facturas_a, cant_art, monto_art, monto_total, i: entero
+    porc_fact_a: real
+    es_tipo_a: lógico
+
+    números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
+    Procedimiento Inicializar() ES
+        cant_facturas := 0
+        cant_facturas_a := 0
+        monto_art := 0
+        monto_total := 0
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec_fac)
-	AVZ(sec_fac, v_fac)
-	ARR(sec_det)
-	AVZ(sec_det, v_det)
-	CREAR(sec_sal)
-	
-	Inicializar()
+    ARR(sec_fac)
+    AVZ(sec_fac, v_fac)
+    ARR(sec_det)
+    AVZ(sec_det, v_det)
+    CREAR(sec_sal)
 
-	Mientras NFDS(sec_fac) Hacer
-		// Cuento la cantidad de facturas.
-		cant_facturas := cant_facturas + 1
-		
-		// Avanzo los datos innecesarios.
-		Para i := 1 hasta 13 Hacer
-			AVZ(sec_fac, v_fac)
-		Fin Para
-		
-		// Si la factura es del tipo A,
-		// hago lo que corresponde.
-		Si v_fac = "A" Entonces
-			es_tipo_a := V
-			cant_facturas_a := cant_facturas_a + 1
-		Contrario
-			es_tipo_a := F
-		Fin Si
-		
-		// El resto de los datos de la 
-		// factura no me importan.
-		Mientras v_fac <> "#" Hacer
-			AVZ(sec_fac, v_fac)
-		Fin Mientras
-		
-		Para i := 1 hasta 12 Hacer
-			AVZ(sec_fac, v_fac)
-		Fin Para
-		
-		// Proceso la secuencia con los detalles.
-		Mientras v_det <> "!" Hacer
-			// Salto los datos que no me importan.
-			Para i := 1 hasta 6 Hacer
-				AVZ(sec_det, v_det)
-			Fin Para
-			
-			Mientras v_det NO en números Hacer
-				AVZ(sec_det, v_det)
-			Fin Mientras
+    Inicializar()
 
-			Si es_tipo_a Entonces
-				// Resguardo la cantidad comprada
-				// de artículos.
-				cant_art := CharToInt(v_det)
-				AVZ(sec_det, v_det)
-			
-				// Estoy parado en el precio de un artículo.
-				monto_art := monto_art + CharToInt(v_det) * 100
-				AVZ(sec_det, v_det)
-				
-				monto_art := monto_art + CharToInt(v_det) * 10
-				AVZ(sec_det, v_det)
-				
-				monto_art := monto_art + CharToInt(v_det) * 1
-				AVZ(sec_det, v_det)
-			Contrario
-				Para i := 1 hasta 3 Hacer
-					AVZ(sec_det, v_det)
-				Fin Para
-			Fin Si
-			
-			// Si estoy parado en "!", ya llegué al final
-			// de la factura. Sino, tengo más detalles de
-			// la factura que cubrir.
-			// Si ya terminó la factura, esto funciona igual.
-			monto_total := monto_total + (monto_art * cant_art)
-		Fin Mientras
-		
-		// Cuando estoy acá, ya llegué al fin del
-		// detalle de la factura actual, porque la
-		// ventana es igual a "!". Grabo en la
-		// salida y reseteo los valores necesarios 
-		// para la siguiente factura tipo A que
-		// encuentre.
-		GRABAR(sec_sal, monto_total)
-		monto_art := 0
-		monto_total := 0
-		
-		// Avanzo la secuencia de detalles.
-		// La otra no porque ya quedé parado en
-		// el primer carácter de la siguiente
-		// tras avanzar el CUIT/CUIL.
-		AVZ(sec_det, v_det)
-	Fin Mientras
-	
-	porc_fac_a := (cant_facturas_a * 100) / cant_facturas
-	
-	Escribir("Las facturas de tipo A conforman el" porc_fac_a "% de las facturas.")
+    Mientras NFDS(sec_fac) Hacer
+        // Cuento la cantidad de facturas.
+        cant_facturas := cant_facturas + 1
 
-	CERRAR(sec_fac)
-	CERRAR(sec_det)
-	CERRAR(sec_sal)
+        // Avanzo los datos innecesarios.
+        Para i := 1 hasta 13 Hacer
+            AVZ(sec_fac, v_fac)
+        Fin Para
+
+        // Si la factura es del tipo A,
+        // hago lo que corresponde.
+        Si v_fac = "A" Entonces
+            es_tipo_a := V
+            cant_facturas_a := cant_facturas_a + 1
+        Contrario
+            es_tipo_a := F
+        Fin Si
+
+        // El resto de los datos de la 
+        // factura no me importan.
+        Mientras v_fac <> "#" Hacer
+            AVZ(sec_fac, v_fac)
+        Fin Mientras
+
+        Para i := 1 hasta 12 Hacer
+            AVZ(sec_fac, v_fac)
+        Fin Para
+
+        // Proceso la secuencia con los detalles.
+        Mientras v_det <> "!" Hacer
+            // Salto los datos que no me importan.
+            Para i := 1 hasta 6 Hacer
+                AVZ(sec_det, v_det)
+            Fin Para
+
+            Mientras v_det NO en números Hacer
+                AVZ(sec_det, v_det)
+            Fin Mientras
+
+            Si es_tipo_a Entonces
+                // Resguardo la cantidad comprada
+                // de artículos.
+                cant_art := CharToInt(v_det)
+                AVZ(sec_det, v_det)
+
+                // Estoy parado en el precio de un artículo.
+                monto_art := monto_art + CharToInt(v_det) * 100
+                AVZ(sec_det, v_det)
+                monto_art := monto_art + CharToInt(v_det) * 10
+                AVZ(sec_det, v_det)
+                monto_art := monto_art + CharToInt(v_det) * 1
+                AVZ(sec_det, v_det)
+            Contrario
+                Para i := 1 hasta 3 Hacer
+                    AVZ(sec_det, v_det)
+                Fin Para
+            Fin Si
+
+            // Si estoy parado en "!", ya llegué al final
+            // de la factura. Sino, tengo más detalles de
+            // la factura que cubrir.
+            // Si ya terminó la factura, esto funciona igual.
+            monto_total := monto_total + (monto_art * cant_art)
+        Fin Mientras
+
+        // Cuando estoy acá, ya llegué al fin del
+        // detalle de la factura actual, porque la
+        // ventana es igual a "!". Grabo en la
+        // salida y reseteo los valores necesarios 
+        // para la siguiente factura tipo A que
+        // encuentre.
+        GRABAR(sec_sal, monto_total)
+        monto_art := 0
+        monto_total := 0
+
+        // Avanzo la secuencia de detalles.
+        // La otra no porque ya quedé parado en
+        // el primer carácter de la siguiente
+        // tras avanzar el CUIT/CUIL.
+        AVZ(sec_det, v_det)
+    Fin Mientras
+
+    porc_fac_a := (cant_facturas_a * 100) / cant_facturas
+    Escribir("Las facturas de tipo A conforman el" porc_fac_a "% de las facturas.")
+
+    CERRAR(sec_fac)
+    CERRAR(sec_det)
+    CERRAR(sec_sal)
 
 Fin Acción

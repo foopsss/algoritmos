@@ -5,32 +5,32 @@ Acción Secuencias2 ES
 
 Ambiente
 
-	sec: secuencia de entero
-	v, cant_car, suma_car: entero
+    sec: secuencia de entero
+    v, cant_car, suma_car: entero
 
-	Procedimiento Inicializar() ES
-		cant_car := 0
-		suma_car := 0
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        cant_car := 0
+        suma_car := 0
+    Fin Procedimiento
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
+    ARR(sec)
+    AVZ(sec, v)
 
-	Inicializar()
+    Inicializar()
 
-	// Opto por un Mientras porque el carácter final es 0.
-	Mientras v <> 0 Hacer
-		cant_car := cant_car + 1
-		suma_car := suma_car + v
-		AVZ(sec, v)
-	Fin Mientras
+    // Opto por un Mientras porque el carácter final es 0.
+    Mientras v <> 0 Hacer
+        cant_car := cant_car + 1
+        suma_car := suma_car + v
+        AVZ(sec, v)
+    Fin Mientras
 
-	promedio := suma_car DIV cant_car
+    promedio := suma_car DIV cant_car
 
-	Escribir("El promedio de los elementos de la secuencia es" promedio ".")
+    Escribir("El promedio de los elementos de la secuencia es" promedio ".")
 
-	CERRAR(sec)
+    CERRAR(sec)
 
 Fin Acción

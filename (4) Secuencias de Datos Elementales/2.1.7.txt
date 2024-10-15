@@ -2,29 +2,29 @@ Acción 2.1.7 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de entero
-	v_ent, ult_num, dni: entero
+    sec_ent, sec_sal: secuencia de entero
+    v_ent, ult_num, dni: entero
 
-	dígitos = {0, 1, 2, 3}
+    dígitos = {0, 1, 2, 3}
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v_ent)
+    CREAR(sec_sal)
 
-	Mientras v_ent <> 0 Hacer
-		dni := v_ent DIV 10
-		ult_num := dni MOD 10
-		
-		Si ult_num en dígitos Entonces
-			GRABAR(sec_sal, v_ent)
-		Fin Si
-		
-		AVZ(sec_ent, v_ent)
-	Fin Mientras
+    Mientras v_ent <> 0 Hacer
+        dni := v_ent DIV 10
+        ult_num := dni MOD 10
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+        Si ult_num en dígitos Entonces
+            GRABAR(sec_sal, v_ent)
+        Fin Si
+
+        AVZ(sec_ent, v_ent)
+    Fin Mientras
+
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción

@@ -42,141 +42,140 @@ Acción Secuencias12 ES
 
 Ambiente
 
-	sec_ent1, sec_ent2: secuencia de carácter
-	v_ent1, v_ent2: carácter
-	
-	cant_hogares, cant_deptos, cant_casas, hogares_alquilados, hogares_propios: entero
-	habitantes_ciudad, habitantes_país, edad, suma_edades, promedio_edad, i: entero
-	porc_hogares_alquilados, porc_hogares_propios: real
-	
-	Procedimiento Inicializar() ES
-		cant_hogares := 0
-		cant_deptos := 0
-		cant_casas := 0
-		hogares_alquilados := 0
-		hogares_propios := 0
-		habitantes_ciudad := 0
-		habitantes_país := 0
-		suma_edades := 0
-	Fin Procedimiento
-	
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    sec_ent1, sec_ent2: secuencia de carácter
+    v_ent1, v_ent2: carácter
+
+    cant_hogares, cant_deptos, cant_casas, hogares_alquilados, hogares_propios: entero
+    habitantes_ciudad, habitantes_país, edad, suma_edades, promedio_edad, i: entero
+    porc_hogares_alquilados, porc_hogares_propios: real
+
+    Procedimiento Inicializar() ES
+        cant_hogares := 0
+        cant_deptos := 0
+        cant_casas := 0
+        hogares_alquilados := 0
+        hogares_propios := 0
+        habitantes_ciudad := 0
+        habitantes_país := 0
+        suma_edades := 0
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec_ent1)
-	ARR(sec_ent2)
-	AVZ(v_ent1)
-	AVZ(v_ent2)
-	
-	Inicializar()
-	
-	Mientras NFDS(sec_ent1) Hacer
-		Escribir("Ciudad: ")
-		
-		Mientras v_ent1 <> "#" Hacer
-			Escribir(v_ent1)
-			AVZ(sec_ent1, v_ent1)
-		Fin Mientras
-		AVZ(sec_ent1, v_ent1)
-	
-		Mientras v_ent1 <> "$" Hacer
-			// Estoy en el identificador
-			// de hogar. No me sirve, pero
-			// aprovecho para aumentar los
-			// contadores necesarios.
-			cant_hogares := cant_hogares + 1
-			
-			Para i := 1 hasta 4 Hacer
-				AVZ(sec_ent1, v_ent1)
-			Fin Para
-			
-			// Estoy parado en el tipo de
-			// hogar.
-			Si v_ent1 = "D" Entonces
-				cant_deptos := cant_deptos + 1
-			Contrario
-				cant_casas := cant_casas + 1
-			Fin Si
-			AVZ(sec_ent1, v_ent1)
-			
-			// Estoy parado en el tipo de
-			// propietario.
-			Si v_ent1 = "A" Entonces
-				hogares_alquilados := hogares_alquilados + 1
-			Contrario
-				hogares_propios := hogares_propios + 1
-			Fin Si
-			AVZ(sec_ent1, v_ent1)
-			
-			// Trato la cantidad de habitantes
-			// del hogar.
-			habitantes_ciudad := habitantes_ciudad + (CharToInt(v_ent1) * 10)
-			AVZ(sec_ent1, v_ent1)
-			habitantes_ciudad := habitantes_ciudad + CharToInt(v_ent1)
-			AVZ(sec_ent1, v_ent1)
-		Fin Mientras
-		
-		// Obtengo el promedio de edad por ciudad.
-		// Utilizo la cantidad de habitantes por
-		// ciudad como el límite superior.
-		Para i := 1 hasta habitantes_ciudad Hacer
-			edad := CharToInt(v_ent2) * 10
-			AVZ(sec_ent2, v_ent2)
-			edad := edad + CharToInt(v_ent2)
-			
-			suma_edades := suma_edades + edad
-			
-			// El género no me importa.
-			Para i := 1 hasta 2 Hacer
-				AVZ(sec_ent2, v_ent2)
-			Fin Para
-		Fin Para
-		
-		// Hago una división entera para
-		// el promedio de edades, porque
-		// no me interesa lo que esté
-		// después de la coma.
-		promedio_edad := suma_edades DIV habitantes_ciudad
-		
-		// Acumulo el total de habitantes
-		// por ciudad para el total de
-		// habitantes del país.
-		habitantes_país := habitantes_país + habitantes_ciudad
-		
-		Escribir("Cantidad de habitantes: " habitantes_ciudad)
-		Escribir("Cantidad de departamentos:" cant_deptos)
-		Escribir("Cantidad de casas:" cant_casas)
-		Escribir("Promedio de edad de las personas: " promedio_edad)
-		
-		habitantes_ciudad := 0
-		cant_deptos := 0
-		cant_casas := 0
-		suma_edades := 0
-		
-		AVZ(sec_ent1, v_ent1)
-	Fin Mientras
-	
-	porc_hogares_alquilados := (hogares_alquilados * 100) / cant_hogares
-	porc_hogares_propios := (hogares_propios * 100) / cant_hogares
-	
-	Escribir("Total de habitantes del país: " habitantes_país)
-	Escribir("Porcentaje de hogares alquilados en el país: " porc_hogares_alquilados)
-	Escribir("Porcentaje de hogares propios en el país: " porc_hogares_propios)
-	
-	CERRAR(sec_ent1)
-	CERRAR(sec_ent2)
+    ARR(sec_ent1)
+    ARR(sec_ent2)
+    AVZ(v_ent1)
+    AVZ(v_ent2)
+
+    Inicializar()
+
+    Mientras NFDS(sec_ent1) Hacer
+        Escribir("Ciudad: ")
+
+        Mientras v_ent1 <> "#" Hacer
+            Escribir(v_ent1)
+            AVZ(sec_ent1, v_ent1)
+        Fin Mientras
+        AVZ(sec_ent1, v_ent1)
+
+        Mientras v_ent1 <> "$" Hacer
+            // Estoy en el identificador
+            // de hogar. No me sirve, pero
+            // aprovecho para aumentar los
+            // contadores necesarios.
+            cant_hogares := cant_hogares + 1
+
+            Para i := 1 hasta 4 Hacer
+                AVZ(sec_ent1, v_ent1)
+            Fin Para
+
+            // Estoy parado en el tipo de
+            // hogar.
+            Si v_ent1 = "D" Entonces
+                cant_deptos := cant_deptos + 1
+            Contrario
+                cant_casas := cant_casas + 1
+            Fin Si
+            AVZ(sec_ent1, v_ent1)
+
+            // Estoy parado en el tipo de
+            // propietario.
+            Si v_ent1 = "A" Entonces
+                hogares_alquilados := hogares_alquilados + 1
+            Contrario
+                hogares_propios := hogares_propios + 1
+            Fin Si
+            AVZ(sec_ent1, v_ent1)
+
+            // Trato la cantidad de habitantes
+            // del hogar.
+            habitantes_ciudad := habitantes_ciudad + (CharToInt(v_ent1) * 10)
+            AVZ(sec_ent1, v_ent1)
+            habitantes_ciudad := habitantes_ciudad + CharToInt(v_ent1)
+            AVZ(sec_ent1, v_ent1)
+        Fin Mientras
+
+        // Obtengo el promedio de edad por ciudad.
+        // Utilizo la cantidad de habitantes por
+        // ciudad como el límite superior.
+        Para i := 1 hasta habitantes_ciudad Hacer
+            edad := CharToInt(v_ent2) * 10
+            AVZ(sec_ent2, v_ent2)
+            edad := edad + CharToInt(v_ent2)
+            suma_edades := suma_edades + edad
+
+            // El género no me importa.
+            Para i := 1 hasta 2 Hacer
+                AVZ(sec_ent2, v_ent2)
+            Fin Para
+        Fin Para
+
+        // Hago una división entera para
+        // el promedio de edades, porque
+        // no me interesa lo que esté
+        // después de la coma.
+        promedio_edad := suma_edades DIV habitantes_ciudad
+
+        // Acumulo el total de habitantes
+        // por ciudad para el total de
+        // habitantes del país.
+        habitantes_país := habitantes_país + habitantes_ciudad
+
+        Escribir("Cantidad de habitantes: " habitantes_ciudad)
+        Escribir("Cantidad de departamentos:" cant_deptos)
+        Escribir("Cantidad de casas:" cant_casas)
+        Escribir("Promedio de edad de las personas: " promedio_edad)
+
+        habitantes_ciudad := 0
+        cant_deptos := 0
+        cant_casas := 0
+        suma_edades := 0
+
+        AVZ(sec_ent1, v_ent1)
+    Fin Mientras
+
+    porc_hogares_alquilados := (hogares_alquilados * 100) / cant_hogares
+    porc_hogares_propios := (hogares_propios * 100) / cant_hogares
+
+    Escribir("Total de habitantes del país: " habitantes_país)
+    Escribir("Porcentaje de hogares alquilados en el país: " porc_hogares_alquilados)
+    Escribir("Porcentaje de hogares propios en el país: " porc_hogares_propios)
+
+    CERRAR(sec_ent1)
+    CERRAR(sec_ent2)
 
 Fin Acción

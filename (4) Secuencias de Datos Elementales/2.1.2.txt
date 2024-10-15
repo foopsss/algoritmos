@@ -2,29 +2,29 @@ Acción 2.1.2 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v: carácter
+    sec: secuencia de carácter
+    v: carácter
 
-	cant_cons: alfanumérico
-	vocales = {"A", "E", "I", "O", "U"}
+    cant_cons: alfanumérico
+    vocales = {"A", "E", "I", "O", "U"}
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
-	
-	cant_cons := 0
-	
-	Repetir
-		Si v NO en vocales Entonces
-			cant_cons := cant_cons + 1
-		Fin Si
+    ARR(sec)
+    AVZ(sec, v)
 
-		AVZ(sec, v)
-	Hasta que v = "Z"
-	
-	Escribir("En la secuencia hay una cantidad de" cant_cons "consonantes.")
-	
-	CERRAR(sec)
+    cant_cons := 0
+
+    Repetir
+        Si v NO en vocales Entonces
+            cant_cons := cant_cons + 1
+        Fin Si
+
+        AVZ(sec, v)
+    Hasta que v = "Z"
+
+    Escribir("En la secuencia hay una cantidad de" cant_cons "consonantes.")
+
+    CERRAR(sec)
 
 Fin Acción

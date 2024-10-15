@@ -30,87 +30,87 @@ Acción Secuencias5 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v, car1_año, car2_año: carácter
+    sec: secuencia de carácter
+    v, car1_año, car2_año: carácter
 
-	cant_com1, cant_com2, cant_com3, cant_com4, cant_com5, cant_com6, i, año_ing: entero
+    cant_com1, cant_com2, cant_com3, cant_com4, cant_com5, cant_com6, i, año_ing: entero
 
-	Procedimiento Inicializar() ES
-		cant_com1 := 0
-		cant_com2 := 0
-		cant_com3 := 0
-		cant_com4 := 0
-		cant_com5 := 0
-		cant_com6 := 0
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        cant_com1 := 0
+        cant_com2 := 0
+        cant_com3 := 0
+        cant_com4 := 0
+        cant_com5 := 0
+        cant_com6 := 0
+    Fin Procedimiento
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
-	
-	Inicializar()
+    ARR(sec)
+    AVZ(sec, v)
 
-	Escribir("Alumnos que ingresaron en 2024: ")
+    Inicializar()
 
-	Mientras NFDS(sec) Hacer
-		Mientras v <> "%" Hacer
-			Según v Hacer
-				= "1": cant_com1 := cant_com1 + 1
-				= "2": cant_com2 := cant_com2 + 1
-				= "3": cant_com3 := cant_com3 + 1
-				= "4": cant_com4 := cant_com4 + 1
-				= "5": cant_com5 := cant_com5 + 1
-				= "6": cant_com6 := cant_com6 + 1
-			Fin Según
-			
-			// Hasta acá sigo en el primer carácter.
-			// Esto me va a dejar parado en el año de ingreso.
-			Para i := 1 hasta 18 Hacer
-				AVZ(sec, v)
-			Fin Para
-			
-			// Hallo el año de ingreso.
-			// Estoy parado en el tercer dígito del año.
-			// Solo me importan los últimos dos.
-			car1_año := v
-			AVZ(sec, v)
-			car2_año := v
-			AVZ(sec, v)
-			
-			// Estoy parado en el primer carácter del nombre.
-			// Hago lo correspondiente según el año de ingreso.
-			Si car1_año = "2" y car2_año = "4" Entonces
-				Mientras v <> "!" Hacer
-					Escribir(v)
-					AVZ(sec, v)
-				Fin Mientras
-			Contrario
-				Mientras v <> "!" Hacer
-					AVZ(sec, v)
-				Fin Mientras
-			Fin Si
-			
-			// Estoy parado en "!".
-			// Tras escribir (o no) un nombre por pantalla
-			// avanzo los caracteres necesarios para llegar
-			// al primer carácter del próximo día de ingreso
-			// de un alumno.
-			Para i := 1 hasta 5 Hacer
-				AVZ(sec, v)
-			Fin Para
-		Fin Mientras
-		
-		AVZ(sec, v)
-	Fin Mientras
+    Escribir("Alumnos que ingresaron en 2024: ")
 
-	Escribir("En la comisión 1 se inscribieron un total de" cant_com1 "alumnos.")
-	Escribir("En la comisión 2 se inscribieron un total de" cant_com2 "alumnos.")
-	Escribir("En la comisión 3 se inscribieron un total de" cant_com3 "alumnos.")
-	Escribir("En la comisión 4 se inscribieron un total de" cant_com4 "alumnos.")
-	Escribir("En la comisión 5 se inscribieron un total de" cant_com5 "alumnos.")
-	Escribir("En la comisión 6 se inscribieron un total de" cant_com6 "alumnos.")
+    Mientras NFDS(sec) Hacer
+        Mientras v <> "%" Hacer
+            Según v Hacer
+                = "1": cant_com1 := cant_com1 + 1
+                = "2": cant_com2 := cant_com2 + 1
+                = "3": cant_com3 := cant_com3 + 1
+                = "4": cant_com4 := cant_com4 + 1
+                = "5": cant_com5 := cant_com5 + 1
+                = "6": cant_com6 := cant_com6 + 1
+            Fin Según
 
-	CERRAR(sec)
+            // Hasta acá sigo en el primer carácter.
+            // Esto me va a dejar parado en el año de ingreso.
+            Para i := 1 hasta 18 Hacer
+                AVZ(sec, v)
+            Fin Para
+
+            // Hallo el año de ingreso.
+            // Estoy parado en el tercer dígito del año.
+            // Solo me importan los últimos dos.
+            car1_año := v
+            AVZ(sec, v)
+            car2_año := v
+            AVZ(sec, v)
+
+            // Estoy parado en el primer carácter del nombre.
+            // Hago lo correspondiente según el año de ingreso.
+            Si car1_año = "2" y car2_año = "4" Entonces
+                Mientras v <> "!" Hacer
+                    Escribir(v)
+                    AVZ(sec, v)
+                Fin Mientras
+            Contrario
+                Mientras v <> "!" Hacer
+                    AVZ(sec, v)
+                Fin Mientras
+            Fin Si
+
+            // Estoy parado en "!".
+            // Tras escribir (o no) un nombre por pantalla
+            // avanzo los caracteres necesarios para llegar
+            // al primer carácter del próximo día de ingreso
+            // de un alumno.
+            Para i := 1 hasta 5 Hacer
+                AVZ(sec, v)
+            Fin Para
+        Fin Mientras
+
+        AVZ(sec, v)
+    Fin Mientras
+
+    Escribir("En la comisión 1 se inscribieron un total de" cant_com1 "alumnos.")
+    Escribir("En la comisión 2 se inscribieron un total de" cant_com2 "alumnos.")
+    Escribir("En la comisión 3 se inscribieron un total de" cant_com3 "alumnos.")
+    Escribir("En la comisión 4 se inscribieron un total de" cant_com4 "alumnos.")
+    Escribir("En la comisión 5 se inscribieron un total de" cant_com5 "alumnos.")
+    Escribir("En la comisión 6 se inscribieron un total de" cant_com6 "alumnos.")
+
+    CERRAR(sec)
 
 Fin Acción

@@ -22,47 +22,46 @@ Acción Secuencias7 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v: carácter
+    sec: secuencia de carácter
+    v: carácter
 
-	total_estudiantes, est_prom, i: entero
-	
-	Procedimiento Inicializar() ES
-		total_estudiantes := 0
-		est_prom := 0
-	Fin Procedimiento
+    total_estudiantes, est_prom, i: entero
 
-	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    Procedimiento Inicializar() ES
+        total_estudiantes := 0
+        est_prom := 0
+    Fin Procedimiento
+
+    números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
+    ARR(sec)
+    AVZ(sec, v)
 
-	Inicializar()
+    Inicializar()
 
-	Mientras NFDS(sec) Hacer
-		Mientras v NO en números Hacer
-			AVZ(sec, v)
-		Fin Mientras
-		
-		Para i := 1 hasta 5 Hacer
-			AVZ(sec, v)	
-		Fin Para
-		
-		Si v = "6" Entonces
-			est_prom := est_prom + 1
-		Fin Si
-		
-		total_estudiantes := total_estudiantes + 1
-		
-		AVZ(sec, v)
-	Fin Mientras
+    Mientras NFDS(sec) Hacer
+        Mientras v NO en números Hacer
+            AVZ(sec, v)
+        Fin Mientras
 
-	porc_prom := (est_prom * 100) / total_estudiantes
-	
-	Escribir("El" porc_prom "% de los estudiantes promocionaron la materia.")
+        Para i := 1 hasta 5 Hacer
+            AVZ(sec, v)	
+        Fin Para
 
-	CERRAR(sec)
+        Si v = "6" Entonces
+            est_prom := est_prom + 1
+        Fin Si
+
+        total_estudiantes := total_estudiantes + 1
+
+        AVZ(sec, v)
+    Fin Mientras
+
+    porc_prom := (est_prom * 100) / total_estudiantes
+    Escribir("El" porc_prom "% de los estudiantes promocionaron la materia.")
+
+    CERRAR(sec)
 
 Fin Acción

@@ -7,28 +7,28 @@ Acción Secuencias3 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de entero
-	v_ent, ult_num: entero
+    sec_ent, sec_sal: secuencia de entero
+    v_ent, ult_num: entero
 
-	dígitos = {5, 6, 7}
+    dígitos = {5, 6, 7}
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v_ent)
+    CREAR(sec_sal)
 
-	Mientras NFDS(sec_ent) Hacer
-		ult_dig := v_ent MOD 10
-		
-		Si ult_num en dígitos Entonces
-			GRABAR(sec_sal, v_ent)
-		Fin Si
-		
-		AVZ(sec_ent, v_ent)
-	Fin Mientras
+    Mientras NFDS(sec_ent) Hacer
+        ult_dig := v_ent MOD 10
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+        Si ult_num en dígitos Entonces
+            GRABAR(sec_sal, v_ent)
+        Fin Si
+
+        AVZ(sec_ent, v_ent)
+    Fin Mientras
+
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción
