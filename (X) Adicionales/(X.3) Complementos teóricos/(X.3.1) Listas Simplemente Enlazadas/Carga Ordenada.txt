@@ -105,8 +105,8 @@ Proceso
             // (2) Inserción previo al primer nodo.
             // (3) Inserción después del último nodo.
             // (4) Inserción en el medio de la lista.
-            *p.prox := q
             *aux.prox := p
+            *p.prox := q
         Fin Si
         
         PedirValor()
