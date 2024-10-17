@@ -24,142 +24,142 @@ Acción EstadísticoM2 ES
 
 Ambiente
 
-        Novedades = Registro
-                Clave = Registro
-                        NroSerie: N(5)
-                        Modelo: N(4)
-                Fin Registro
-                TipoNovedad: (1..4)
-                FechaNovedad: Fecha
-                HoraInicio: (0..23)
-                HoraFin: (0..23)
-                NroCircuito: N(1)
-                IDUsuario: N(5)
+    Novedades = Registro
+        Clave = Registro
+            NroSerie: N(5)
+            Modelo: N(4)
         Fin Registro
-        
-        ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
-        REG_NOV: Novedades
+        TipoNovedad: (1..4)
+        FechaNovedad: Fecha
+        HoraInicio: (0..23)
+        HoraFin: (0..23)
+        NroCircuito: N(1)
+        IDUsuario: N(5)
+    Fin Registro
 
-        Usuarios = Registro
-                IDUsuario: N(5)
-                DNI: N(8)
-                Sexo: ("M", "F")
-                NomAp: AN(100)
-                Domicilio: AN(100)
-                Localidad: AN(100)
-                Provincia: AN(100)
-                Edad: N(2)
-        Fin Registro
-        
-        ARCH_USU: archivo de Usuarios indexado por IDUsuario
-        REG_USU: Usuarios
-        
-        // Filas: tipos de paseos (intensivos y luego recreativos)
-        // Columnas: rangos etarios
-        totales: arreglo de [1..3, 1..5] de entero
-        
-        i, j, max_pas_rec, max_pas_rec_grp: entero
-        tipo_paseo, grupo_et: alfanumérico
-        
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 3 Hacer
-                        Para j := 1 hasta 5 Hacer
-                                totales[i, j] := 0
-                        Fin Para
-                Fin Para
-                
-                max_pas_rec := LV
-        Fin Procedimiento
-        
-        Función DeterminarFila(h_in, h_fin: entero): entero
-        Ambiente
-                horas: entero
-        Proceso
-                horas := diff_horas(h_in, h_fin)
-                
-                Según horas Hacer
-                        > 6: DeterminarFila := 1
-                        <= 6: DeterminarFila := 2
-                Fin Según
-        Fin Función
-        
-        Función DeterminarColumna(entrada: entero): entero ES
-                Según entrada Hacer
-                        < 18: DeterminarColumna := 1
-                        >= 18: DeterminarColumna := 2
-                        >= 35: DeterminarColumna := 3
-                        > 75: DeterminarColumna := 4
-                Fin Según
-        Fin Función
-        
-        Función DeterminarPaseo(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarPaseo := "Intensivo"
-                        = 2: DeterminarPaseo := "Recreativo"
-                Fin Según
-        Fin Función
+    ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
+    REG_NOV: Novedades
 
-        Función DeterminarGrupoEtario(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarGrupoEtario := "Menores de 18 años"
-                        = 2: DeterminarGrupoEtario := "Entre 18 y 35 años"
-                        = 3: DeterminarGrupoEtario := "Entre 35 y 75 años"
-                        = 4: DeterminarGrupoEtario := "Mayores de 75 años"
-                Fin Según
-        Fin Función
+    Usuarios = Registro
+        IDUsuario: N(5)
+        DNI: N(8)
+        Sexo: ("M", "F")
+        NomAp: AN(100)
+        Domicilio: AN(100)
+        Localidad: AN(100)
+        Provincia: AN(100)
+        Edad: N(2)
+    Fin Registro
+
+    ARCH_USU: archivo de Usuarios indexado por IDUsuario
+    REG_USU: Usuarios
+
+    // Filas: tipos de paseos (intensivos y luego recreativos)
+    // Columnas: rangos etarios
+    totales: arreglo de [1..3, 1..5] de entero
+
+    i, j, max_pas_rec, max_pas_rec_grp: entero
+    tipo_paseo, grupo_et: alfanumérico
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 3 Hacer
+            Para j := 1 hasta 5 Hacer
+                totales[i, j] := 0
+            Fin Para
+        Fin Para
+
+        max_pas_rec := LV
+    Fin Procedimiento
+
+    Función DeterminarFila(h_in, h_fin: entero): entero
+    Ambiente
+        horas: entero
+    Proceso
+        horas := diff_horas(h_in, h_fin)
+
+        Según horas Hacer
+            > 6: DeterminarFila := 1
+            <= 6: DeterminarFila := 2
+        Fin Según
+    Fin Función
+
+    Función DeterminarColumna(entrada: entero): entero ES
+        Según entrada Hacer
+            < 18: DeterminarColumna := 1
+            >= 18: DeterminarColumna := 2
+            >= 35: DeterminarColumna := 3
+            > 75: DeterminarColumna := 4
+        Fin Según
+    Fin Función
+
+    Función DeterminarPaseo(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarPaseo := "Intensivo"
+            = 2: DeterminarPaseo := "Recreativo"
+        Fin Según
+    Fin Función
+
+    Función DeterminarGrupoEtario(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarGrupoEtario := "Menores de 18 años"
+            = 2: DeterminarGrupoEtario := "Entre 18 y 35 años"
+            = 3: DeterminarGrupoEtario := "Entre 35 y 75 años"
+            = 4: DeterminarGrupoEtario := "Mayores de 75 años"
+        Fin Según
+    Fin Función
 
 Proceso
 
-        ABRIR E/ (ARCH_NOV)
-        ABRIR E/ (ARCH_USU)
-        
+    ABRIR E/ (ARCH_NOV)
+    ABRIR E/ (ARCH_USU)
+
+    LEER(ARCH_NOV, REG_NOV)
+    Inicializar()
+
+    Mientras NFDA(ARCH_NOV) Hacer
+        Si REG_NOV.TipoNovedad = 2 Entonces
+            REG_USU.IDUsuario := REG_NOV.IDUsuario
+            LEER(ARCH_USU, REG_USU)
+
+            // Si el usuario no está en el indexado, entonces no
+            // corresponde tratar el registro de ARCH_NOV ya que
+            // me faltaría la edad del usuario.
+            Si existe Entonces
+                i := DeterminarFila(REG_NOV.HoraInicio, REG_NOV.HoraFin)
+                j := DeterminarColumna(REG_USU.Edad)
+
+                totales[i, j] := totales[i, j] + 1
+                totales[i, 5] := totales[i, 5] + 1
+                totales[3, j] := totales[3, j] + 1
+                totales[3, 5] := totales[3, 5] + 1
+            Fin Si
+        Fin Si
+
         LEER(ARCH_NOV, REG_NOV)
-        Inicializar()
-        
-        Mientras NFDA(ARCH_NOV) Hacer
-                Si REG_NOV.TipoNovedad = 2 Entonces
-                        REG_USU.IDUsuario := REG_NOV.IDUsuario
-                        LEER(ARCH_USU, REG_USU)
-                        
-                        // Si el usuario no está en el indexado, entonces no
-                        // corresponde tratar el registro de ARCH_NOV ya que
-                        // me faltaría la edad del usuario.
-                        Si existe Entonces
-                                i := DeterminarFila(REG_NOV.HoraInicio, REG_NOV.HoraFin)
-                                j := DeterminarColumna(REG_USU.Edad)
-                                
-                                totales[i, j] := totales[i, j] + 1
-                                totales[i, 5] := totales[i, 5] + 1
-                                totales[3, j] := totales[3, j] + 1
-                                totales[3, 5] := totales[3, 5] + 1
-                        Fin Si
-                Fin Si
-                
-                LEER(ARCH_NOV, REG_NOV)
-        Fin Mientras
-        
-        Para i := 1 hasta 2 Hacer
-                tipo_paseo := DeterminarPaseo(i)
-                Escribir("Tipo de paseo: " tipo_paseo)
-        
-                Para j := 1 hasta 4 Hacer
-                        grupo_et := DeterminarGrupoEtario(j)
-                        Escribir("Grupo etario: " grupo_et)
-                        Escribir("Total de préstamos realizados: " totales[i, j])
-                Fin Para
-        Fin Para
+    Fin Mientras
+
+    Para i := 1 hasta 2 Hacer
+        tipo_paseo := DeterminarPaseo(i)
+        Escribir("Tipo de paseo: " tipo_paseo)
 
         Para j := 1 hasta 4 Hacer
-                Si max_pas_rec < totales[2, j] Entonces
-                        max_pas_rec := totales[2, j]
-                        max_pas_rec_grp := j
-                Fin Si
+            grupo_et := DeterminarGrupoEtario(j)
+            Escribir("Grupo etario: " grupo_et)
+            Escribir("Total de préstamos realizados: " totales[i, j])
         Fin Para
-        
-        Escribir("El rango etario que más paseos recreativos realizó es el de" DeterminarGrupoEtario(max_pas_rec_grp) ".")
-        Escribir("Se realizaron" totales[1, 4] "préstamos a mayores de 75 años para paseos intensivos.")
+    Fin Para
 
-        CERRAR(ARCH_NOV)
-        CERRAR(ARCH_USU)
+    Para j := 1 hasta 4 Hacer
+        Si max_pas_rec < totales[2, j] Entonces
+            max_pas_rec := totales[2, j]
+            max_pas_rec_grp := j
+        Fin Si
+    Fin Para
+
+    Escribir("El rango etario que más paseos recreativos realizó es el de" DeterminarGrupoEtario(max_pas_rec_grp) ".")
+    Escribir("Se realizaron" totales[1, 4] "préstamos a mayores de 75 años para paseos intensivos.")
+
+    CERRAR(ARCH_NOV)
+    CERRAR(ARCH_USU)
 
 Fin Acción

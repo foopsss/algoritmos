@@ -37,147 +37,147 @@ Acción ActualizaciónM5(nombres_pokemon: arreglo de [1..151] de alfanumérico) 
 
 Ambiente
 
-        Clave = Registro
-                CodReg: N(4)
-                CodUs: N(10)
-        Fin Registro
+    Clave = Registro
+        CodReg: N(4)
+        CodUs: N(10)
+    Fin Registro
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Usuarios = Registro
-                Clave_US: Clave
-                Correo: AN(50)
-                Experiencia: N(7)
-        Fin Registro
-        
-        ARCH_US, ARCH_SAL: archivo de Usuarios ordenado por Clave_US
-        REG_US, REG_SAL: Usuarios
-        
-        Capturas = Registro
-                Clave_CAP: Clave
-                CodPok: (1..151)
-                PuntosExp: N(5)
-                FechaCaptura: Fecha
-                EstadoPokemon: ("E", "I", "D")
-                EstadoUsuario: ("A", "S", "B")
-        Fin Registro
-        
-        ARCH_CAP: archivo de Capturas ordenado por Clave_CAP y CodPok
-        REG_CAP: Capturas
-        
-        cantidad_pokemon: arreglo de [1..151] de entero
-        
-        i, resg_cod_reg, resg_cod_us, max_desc, pos_max_desc: entero
-        us_habilitado: lógico
-        
-        Procedimiento LEER_USUARIOS() ES
-                LEER(ARCH_US, REG_US)
-                Si FDA(ARCH_US) Entonces
-                        REG_US.ClaveUS := HV
-                Fin Si
-        Fin Procedimiento
-        
-        Procedimiento LEER_CAPTURAS() ES
-                LEER(ARCH_CAP, REG_CAP)
-                Si FDA(ARCH_CAP) Entonces
-                        REG_CAP.ClaveCAP := HV
-                Fin Si
-        Fin Procedimiento
-        
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 151 Hacer
-                        cantidad_pokemon[i] := 0
-                Fin Para
-                
-                max_desc := LV
-        Fin Procedimiento
-        
-        Procedimiento EstadosPokemon() ES
-                Si REG_CAP.EstadoPokemon = "E" Entonces
-                        REG_SAL.Experiencia := REG_SAL.Experiencia + (2 * REG_CAP.PuntosExp)
-                Contrario
-                        REG_SAL.Experiencia := REG_SAL.Experiencia + REG_CAP.PuntosExp
-                        Si REG_CAP.EstadoPokemon = "D" Entonces
-                                cantidad_pokemon[REG_CAP.CodPok] := cantidad_pokemon[REG_CAP.CodPok] + 1
-                        Fin Si
-                Fin Si
-        Fin Procedimiento
+    Usuarios = Registro
+        Clave_US: Clave
+        Correo: AN(50)
+        Experiencia: N(7)
+    Fin Registro
+
+    ARCH_US, ARCH_SAL: archivo de Usuarios ordenado por Clave_US
+    REG_US, REG_SAL: Usuarios
+
+    Capturas = Registro
+        Clave_CAP: Clave
+        CodPok: (1..151)
+        PuntosExp: N(5)
+        FechaCaptura: Fecha
+        EstadoPokemon: ("E", "I", "D")
+        EstadoUsuario: ("A", "S", "B")
+    Fin Registro
+
+    ARCH_CAP: archivo de Capturas ordenado por Clave_CAP y CodPok
+    REG_CAP: Capturas
+
+    cantidad_pokemon: arreglo de [1..151] de entero
+
+    i, resg_cod_reg, resg_cod_us, max_desc, pos_max_desc: entero
+    us_habilitado: lógico
+
+    Procedimiento LEER_USUARIOS() ES
+        LEER(ARCH_US, REG_US)
+        Si FDA(ARCH_US) Entonces
+            REG_US.ClaveUS := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento LEER_CAPTURAS() ES
+        LEER(ARCH_CAP, REG_CAP)
+        Si FDA(ARCH_CAP) Entonces
+            REG_CAP.ClaveCAP := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 151 Hacer
+            cantidad_pokemon[i] := 0
+        Fin Para
+
+        max_desc := LV
+    Fin Procedimiento
+
+    Procedimiento EstadosPokemon() ES
+        Si REG_CAP.EstadoPokemon = "E" Entonces
+            REG_SAL.Experiencia := REG_SAL.Experiencia + (2 * REG_CAP.PuntosExp)
+        Contrario
+            REG_SAL.Experiencia := REG_SAL.Experiencia + REG_CAP.PuntosExp
+            Si REG_CAP.EstadoPokemon = "D" Entonces
+                cantidad_pokemon[REG_CAP.CodPok] := cantidad_pokemon[REG_CAP.CodPok] + 1
+            Fin Si
+        Fin Si
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH_US)
-        ABRIR E/ (ARCH_CAP)
-        ABRIR S/ (ARCH_SAL)
-        
-        LEER_USUARIOS()
-        LEER_CAPTURAS()
-        Inicializar()
-        
-        Mientras REG_US.ClaveUS <> HV o REG_CAP.ClaveCAP <> HV Hacer
-                Si REG_US.ClaveUS < REG_CAP.ClaveCAP Entonces
-                        GRABAR(ARCH_SAL, REG_US)
-                        LEER_USUARIOS()
+    ABRIR E/ (ARCH_US)
+    ABRIR E/ (ARCH_CAP)
+    ABRIR S/ (ARCH_SAL)
+
+    LEER_USUARIOS()
+    LEER_CAPTURAS()
+    Inicializar()
+
+    Mientras REG_US.ClaveUS <> HV o REG_CAP.ClaveCAP <> HV Hacer
+        Si REG_US.ClaveUS < REG_CAP.ClaveCAP Entonces
+            GRABAR(ARCH_SAL, REG_US)
+            LEER_USUARIOS()
+        Contrario
+            Si REG_US.ClaveUS > REG_CAP.ClaveCAP Entonces
+                Si REG_CAP.EstadoUsuario = "A" Entonces
+                    resg_cod_reg := REG_CAP.ClaveCAP.CodReg
+                    resg_cod_us := REG_CAP.ClaveCAP.CodUs
+                    REG_SAL.ClaveUS.CodReg := resg_cod_reg
+                    REG_SAL.ClaveUS.CodUs := resg_cod_us
+                    REG_SAL.Correo := ""
+                    REG_SAL.Experiencia := 0
+                    EstadoPokemon()
+                    LEER_CAPTURAS()
+
+                    Mientras REG_CAP.ClaveCAP.CodReg = resg_cod_reg y REG_CAP.ClaveCAP.CodUs = resg_cod_us Hacer
+                        EstadosPokemon()
+                        LEER_CAPTURAS()
+                    Fin Mientras
+
+                    GRABAR(ARCH_SAL, REG_SAL)
                 Contrario
-                        Si REG_US.ClaveUS > REG_CAP.ClaveCAP Entonces
-                                Si REG_CAP.EstadoUsuario = "A" Entonces
-                                        resg_cod_reg := REG_CAP.ClaveCAP.CodReg
-                                        resg_cod_us := REG_CAP.ClaveCAP.CodUs
-                                        REG_SAL.ClaveUS.CodReg := resg_cod_reg
-                                        REG_SAL.ClaveUS.CodUs := resg_cod_us
-                                        REG_SAL.Correo := ""
-                                        REG_SAL.Experiencia := 0
-                                        EstadoPokemon()
-                                        LEER_CAPTURAS()
-                                        
-                                        Mientras REG_CAP.ClaveCAP.CodReg = resg_cod_reg y REG_CAP.ClaveCAP.CodUs = resg_cod_us Hacer
-                                                EstadosPokemon()
-                                                LEER_CAPTURAS()
-                                        Fin Mientras
-                                        
-                                        GRABAR(ARCH_SAL, REG_SAL)
-                                Contrario
-                                        Escribir("Error. No se puede dar de alta al usuario porque no está activo.")
-                                        LEER_CAPTURAS()
-                                Fin Si
-                        Contrario
-                                REG_SAL := REG_US
-                                
-                                Mientras REG_SAL.ClaveUS = REG_CAP.ClaveCAP Entonces
-                                        Si REG_CAP.EstadoUsuario = "A" Entonces
-                                                us_habilitado := V
-                                                EstadosPokemon()
-                                        Contrario
-                                                us_habilitado := F
-                                        Fin Si
-                                        
-                                        LEER_CAPTURAS()
-                                Fin Mientras
-                                
-                                Si us_habilitado Entonces
-                                        GRABAR(ARCH_SAL, REG_SAL)
-                                Fin Si
-                                
-                                LEER_USUARIOS()
-                        Fin Si
+                    Escribir("Error. No se puede dar de alta al usuario porque no está activo.")
+                    LEER_CAPTURAS()
                 Fin Si
-        Fin Mientras
-        
-        Para i := 1 hasta 151 Hacer
-                Si max_desc < cantidad_pokemon[i] Entonces
-                        max_desc := cantidad_pokemon[i]
-                        pos_max_desc := i
+            Contrario
+                REG_SAL := REG_US
+
+                Mientras REG_SAL.ClaveUS = REG_CAP.ClaveCAP Entonces
+                    Si REG_CAP.EstadoUsuario = "A" Entonces
+                        us_habilitado := V
+                        EstadosPokemon()
+                    Contrario
+                        us_habilitado := F
+                    Fin Si
+
+                    LEER_CAPTURAS()
+                Fin Mientras
+
+                Si us_habilitado Entonces
+                    GRABAR(ARCH_SAL, REG_SAL)
                 Fin Si
-        Fin Para
-        
-        Escribir("El pokemon que mayor cantidad de usuarios tienen en descanso se llama" nombres_pokemon[pos_max_desc] ".")
-        Escribir("Lo poseen" max_desc "usuarios.")
-        
-        CERRAR(ARCH_US)
-        CERRAR(ARCH_CAP)
-        CERRAR(ARCH_SAL)
+
+                LEER_USUARIOS()
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Para i := 1 hasta 151 Hacer
+        Si max_desc < cantidad_pokemon[i] Entonces
+            max_desc := cantidad_pokemon[i]
+            pos_max_desc := i
+        Fin Si
+    Fin Para
+
+    Escribir("El pokemon que mayor cantidad de usuarios tienen en descanso se llama" nombres_pokemon[pos_max_desc] ".")
+    Escribir("Lo poseen" max_desc "usuarios.")
+
+    CERRAR(ARCH_US)
+    CERRAR(ARCH_CAP)
+    CERRAR(ARCH_SAL)
 
 Fin Acción

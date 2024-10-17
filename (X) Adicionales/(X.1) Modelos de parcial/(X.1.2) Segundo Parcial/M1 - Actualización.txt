@@ -39,154 +39,153 @@ Acción ActualizaciónM1 ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Bicicletas = Registro
-                Clave = Registro
-                        NroSerie: N(5)
-                        Modelo: N(4)
-                Fin Registro
-                FechaAdquisición: Fecha
-                FechaÚltimoMantenimiento: Fecha
-                Disponibilidad: lógico
+    Bicicletas = Registro
+        Clave = Registro
+            NroSerie: N(5)
+            Modelo: N(4)
         Fin Registro
-        
-        ARCH_BIC, ARCH_SAL: archivo de Bicicletas ordenado por Clave 
-        REG_BIC, REG_SAL: Bicicletas
-        
-        Novedades = Registro
-                Clave = Registro
-                        NroSerie: N(5)
-                        Modelo: N(4)
-                Fin Registro
-                TipoNovedad: (1..3)
-                FechaNovedad: Fecha
-                HoraInicio: N(2)
-                HoraFin: N(2)
-                NroCircuito: N(1)
-                IDUsuario: N(5)
+        FechaAdquisición: Fecha
+        FechaÚltimoMantenimiento: Fecha
+        Disponibilidad: lógico
+    Fin Registro
+
+    ARCH_BIC, ARCH_SAL: archivo de Bicicletas ordenado por Clave 
+    REG_BIC, REG_SAL: Bicicletas
+
+    Novedades = Registro
+        Clave = Registro
+            NroSerie: N(5)
+            Modelo: N(4)
         Fin Registro
-        
-        ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
-        REG_NOV: Novedades
+        TipoNovedad: (1..3)
+        FechaNovedad: Fecha
+        HoraInicio: N(2)
+        HoraFin: N(2)
+        NroCircuito: N(1)
+        IDUsuario: N(5)
+    Fin Registro
 
-        Usuarios = Registro
-                IDUsuario: N(5)
-                DNI: N(8)
-                Sexo: ("M", "F")
-                NomAp: AN(100)
-                Domicilio: AN(100)
-                Localidad: AN(100)
-                Provincia: AN(100)
-                Edad: N(2)
-        Fin Registro
-        
-        ARCH_US: archivo de Usuarios indexado por IDUsuario
-        REG_US: Usuarios
-        
-        tot_prest_masc, tot_prest_fem: entero
-        
-        Procedimiento Inicializar() ES
-                tot_prest_masc := 0
-                tot_prest_fem := 0
-        Fin Procedimiento
+    ARCH_NOV: archivo de Novedades ordenado por Clave, TipoNovedad y FechaNovedad
+    REG_NOV: Novedades
 
-        Procedimiento LEER_BIC() ES
-                LEER(ARCH_BIC, REG_BIC)
-                Si FDA(ARCH_BIC) Entonces
-                        REG_BIC.Clave := HV
-                Fin Si
-        Fin Procedimiento
+    Usuarios = Registro
+        IDUsuario: N(5)
+        DNI: N(8)
+        Sexo: ("M", "F")
+        NomAp: AN(100)
+        Domicilio: AN(100)
+        Localidad: AN(100)
+        Provincia: AN(100)
+        Edad: N(2)
+    Fin Registro
 
-        Procedimiento LEER_NOV() ES
-                LEER(ARCH_NOV, REG_NOV)
-                Si FDA(ARCH_NOV) Entonces
-                        REG_NOV.Clave := HV
-                Fin Si
-        Fin Procedimiento
-        
-        Procedimiento ChequearPréstamo() ES
-                REG_US.IDUsuario := REG_NOV.IDUsuario
-                
-                Si existe Entonces
-                        Si REG_US.Sexo = "M" Entonces
-                                tot_prest_masc := tot_prest_masc + 1
-                        Contrario
-                                tot_prest_fem := tot_prest_fem + 1
-                        Fin Si
-                Contrario
-                        Escribir("La persona indicada no figura en el registro de usuarios.")
-                Fin Si
-        Fin Procedimiento
-        
-        Procedimiento RealizarMantenimiento() ES
-                REG_SAL.Disponibilidad := F
-                REG_SAL.FechaÚltimoMantenimiento := REG_NOV.FechaNovedad
-        Fin Procedimiento
+    ARCH_US: archivo de Usuarios indexado por IDUsuario
+    REG_US: Usuarios
+
+    tot_prest_masc, tot_prest_fem: entero
+
+    Procedimiento Inicializar() ES
+        tot_prest_masc := 0
+        tot_prest_fem := 0
+    Fin Procedimiento
+
+    Procedimiento LEER_BIC() ES
+        LEER(ARCH_BIC, REG_BIC)
+        Si FDA(ARCH_BIC) Entonces
+            REG_BIC.Clave := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento LEER_NOV() ES
+        LEER(ARCH_NOV, REG_NOV)
+        Si FDA(ARCH_NOV) Entonces
+            REG_NOV.Clave := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento ChequearPréstamo() ES
+        REG_US.IDUsuario := REG_NOV.IDUsuario
+        Si existe Entonces
+            Si REG_US.Sexo = "M" Entonces
+                tot_prest_masc := tot_prest_masc + 1
+            Contrario
+                tot_prest_fem := tot_prest_fem + 1
+            Fin Si
+        Contrario
+            Escribir("La persona indicada no figura en el registro de usuarios.")
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento RealizarMantenimiento() ES
+        REG_SAL.Disponibilidad := F
+        REG_SAL.FechaÚltimoMantenimiento := REG_NOV.FechaNovedad
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH_BIC)
-        ABRIR E/ (ARCH_NOV)
-        ABRIR E/ (ARCH_US)
-        ABRIR S/ (ARCH_SAL)
+    ABRIR E/ (ARCH_BIC)
+    ABRIR E/ (ARCH_NOV)
+    ABRIR E/ (ARCH_US)
+    ABRIR S/ (ARCH_SAL)
 
-        LEER_BIC()
-        LEER_NOV()
-        Inicializar()
+    LEER_BIC()
+    LEER_NOV()
+    Inicializar()
 
-        Mientras REG_BIC.Clave <> HV o REG_NOV.Clave <> HV Hacer
-                Si REG_BIC.Clave < REG_NOV.Clave Entonces
-                        GRABAR(ARCH_SAL, REG_BIC)
-                        LEER_BIC()
-                Contrario
-                        Si REG_BIC.Clave > REG_NOV.Clave Entonces
-                                REG_SAL.Clave := REG_NOV.Clave
-                                REG_SAL.FechaAdquisición := REG_NOV.FechaNovedad
-                                REG_SAL.FechaÚltimoMantenimiento.Año := ""
-                                REG_SAL.FechaÚltimoMantenimiento.Mes := ""
-                                REG_SAL.FechaÚltimoMantenimiento.Día := ""
-                                REG_SAL.Disponibilidad := V
-                                LEER_NOV()
-                                
-                                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
-                                        Según REG_NOV.TipoNovedad Hacer
-                                                = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
-                                                = 2: ChequearPréstamo()
-                                                = 3: RealizarMantenimiento()
-                                        Fin Según
-                                        LEER_NOV()
-                                Fin Mientras
-                                
-                                GRABAR(ARCH_SAL, REG_SAL)
-                        Contrario
-                                REG_SAL := REG_BIC
-                                
-                                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
-                                        Según REG_NOV.TipoNovedad Hacer
-                                                = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
-                                                = 2: ChequearPréstamo()
-                                                = 3: RealizarMantenimiento()
-                                        Fin Según
-                                        LEER_NOV()
-                                Fin Mientras
-                                
-                                GRABAR(ARCH_SAL, REG_SAL)
-                                LEER_BIC()
-                        Fin Si
-                Fin Si
-        Fin Mientras
+    Mientras REG_BIC.Clave <> HV o REG_NOV.Clave <> HV Hacer
+        Si REG_BIC.Clave < REG_NOV.Clave Entonces
+            GRABAR(ARCH_SAL, REG_BIC)
+            LEER_BIC()
+        Contrario
+            Si REG_BIC.Clave > REG_NOV.Clave Entonces
+                REG_SAL.Clave := REG_NOV.Clave
+                REG_SAL.FechaAdquisición := REG_NOV.FechaNovedad
+                REG_SAL.FechaÚltimoMantenimiento.Año := ""
+                REG_SAL.FechaÚltimoMantenimiento.Mes := ""
+                REG_SAL.FechaÚltimoMantenimiento.Día := ""
+                REG_SAL.Disponibilidad := V
+                LEER_NOV()
 
-        Escribir("Se realizaron" tot_prest_masc "préstamos de bicicletas a hombres.")
-        Escribir("Se realizaron" tot_prest_fem "préstamos de bicicletas a mujeres.")
+                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
+                    Según REG_NOV.TipoNovedad Hacer
+                        = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
+                        = 2: ChequearPréstamo()
+                        = 3: RealizarMantenimiento()
+                    Fin Según
+                    LEER_NOV()
+                Fin Mientras
 
-        CERRAR(ARCH_BIC)
-        CERRAR(ARCH_NOV)
-        CERRAR(ARCH_US)
-        CERRAR(ARCH_SAL)
+                GRABAR(ARCH_SAL, REG_SAL)
+            Contrario
+                REG_SAL := REG_BIC
+
+                Mientras REG_SAL.Clave = REG_NOV.Clave Entonces
+                    Según REG_NOV.TipoNovedad Hacer
+                        = 1: Escribir("Error. No se puede volver a dar de alta la bicicleta.")
+                        = 2: ChequearPréstamo()
+                        = 3: RealizarMantenimiento()
+                    Fin Según
+                    LEER_NOV()
+                Fin Mientras
+
+                GRABAR(ARCH_SAL, REG_SAL)
+                LEER_BIC()
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Escribir("Se realizaron" tot_prest_masc "préstamos de bicicletas a hombres.")
+    Escribir("Se realizaron" tot_prest_fem "préstamos de bicicletas a mujeres.")
+
+    CERRAR(ARCH_BIC)
+    CERRAR(ARCH_NOV)
+    CERRAR(ARCH_US)
+    CERRAR(ARCH_SAL)
 
 Fin Acción

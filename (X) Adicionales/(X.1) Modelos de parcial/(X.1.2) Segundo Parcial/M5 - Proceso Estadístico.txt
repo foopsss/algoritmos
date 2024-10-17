@@ -25,72 +25,72 @@ Acción EstadísticoM5(regionales: arreglo de [1..31] de alfanumérico, categor�
 
 Ambiente
 
-        Papers = Registro
-                DNI: N(8)
-                NomAp: AN(100)
-                Correo: AN(100)
-                Regional: (1..31)
-                Categoría: (1..16)
-                Título: AN(100)
-        Fin Registro
-        
-        ARCH: archivo de Papers
-        REG: Papers
-        
-        totales: arreglo de [1..32, 1..17] de entero
-        i, j, max_papers: entero
+    Papers = Registro
+        DNI: N(8)
+        NomAp: AN(100)
+        Correo: AN(100)
+        Regional: (1..31)
+        Categoría: (1..16)
+        Título: AN(100)
+    Fin Registro
 
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 32 Hacer
-                        Para j := 1 hasta 17 Hacer
-                                totales[i, j] := 0
-                        Fin Para
-                Fin Para
-                
-                max_papers := LV
-        Fin Procedimiento
+    ARCH: archivo de Papers
+    REG: Papers
+
+    totales: arreglo de [1..32, 1..17] de entero
+    i, j, max_papers: entero
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 32 Hacer
+            Para j := 1 hasta 17 Hacer
+                totales[i, j] := 0
+            Fin Para
+        Fin Para
+
+        max_papers := LV
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        i := REG.Regional
+        j := REG.Categoría
+
+        totales[i, j] := totales[i, j] + 1
+        totales[32, j] := totales[32, j] + 1
+        totales[i, 17] := totales[i, 17] + 1
+        totales[32, 17] := totales[32, 17] + 1
+
         LEER(ARCH, REG)
-        
-        Inicializar()
-        
-        Mientras NFDA(ARCH) Hacer
-                i := REG.Regional
-                j := REG.Categoría
-                
-                totales[i, j] := totales[i, j] + 1
-                totales[32, j] := totales[32, j] + 1
-                totales[i, 17] := totales[i, 17] + 1
-                totales[32, 17] := totales[32, 17] + 1
-                
-                LEER(ARCH, REG)
-        Fin Mientras
-        
-        Para i := 1 hasta 31 Hacer
-                Si max_papers < totales[i, 17] Entonces
-                        max_papers := totales[i, 17]
-                Fin Si
-                
-                Escribir("Regional: " regionales[i])
-                
-                Para j := 1 hasta 16 Hacer
-                        Escribir("Categoría: " categorías[j])
-                        Escribir("Total de papers: " totales[i, j])
-                Fin Para
+    Fin Mientras
+
+    Para i := 1 hasta 31 Hacer
+        Si max_papers < totales[i, 17] Entonces
+            max_papers := totales[i, 17]
+        Fin Si
+
+        Escribir("Regional: " regionales[i])
+
+        Para j := 1 hasta 16 Hacer
+            Escribir("Categoría: " categorías[j])
+            Escribir("Total de papers: " totales[i, j])
         Fin Para
-        
-        Escribir("El máximo de papers entregados por una regional es de" max_papers "trabajos.")
-        Escribir("Dicha cantidad de trabajos fue entregada por las siguientes regionales: ")
-        
-        Para i := 1 hasta 31 Hacer
-                Si totales[i, 17] = max_papers Entonces
-                        Escribir(regionales[i])
-                Fin Si
-        Fin Para
-        
-        CERRAR(ARCH)
+    Fin Para
+
+    Escribir("El máximo de papers entregados por una regional es de" max_papers "trabajos.")
+    Escribir("Dicha cantidad de trabajos fue entregada por las siguientes regionales: ")
+
+    Para i := 1 hasta 31 Hacer
+        Si totales[i, 17] = max_papers Entonces
+            Escribir(regionales[i])
+        Fin Si
+    Fin Para
+
+    CERRAR(ARCH)
 
 Fin Acción
