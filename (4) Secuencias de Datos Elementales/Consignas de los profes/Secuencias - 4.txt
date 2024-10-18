@@ -8,40 +8,40 @@ Acción Secuencias4 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de carácter
-	v_ent, num_us: carácter
-	i: entero
+    sec_ent, sec_sal: secuencia de carácter
+    v_ent, num_us: carácter
+    i: entero
 
-	Procedimiento NúmeroUsuario() ES
-		Escribir("Introduzca un dígito: ")
-		Leer(num_us)
-	Fin Procedimiento
+    Procedimiento NúmeroUsuario() ES
+        Escribir("Introduzca un dígito: ")
+        Leer(num_us)
+    Fin Procedimiento
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v_ent)
+    CREAR(sec_sal)
 
-	NúmeroUsuario()
+    NúmeroUsuario()
 
-	Mientras NFDS(sec_ent) Hacer
-		Si v_ent = num_us Entonces
-			Para i := 1 hasta 10 Hacer
-				GRABAR(sec_sal, v_ent)
-				// Si quisiera mostrar los números por pantalla
-				// voy mostrando a medida que grabo, haciendo:
-				// Escribir(v_ent)
-				AVZ(sec_ent, v_ent)
-			Fin Para
-		Contrario
-			Para i := 1 hasta 10 Hacer
-				AVZ(sec_ent, v_ent)
-			Fin Para
-		Fin Si
-	Fin Mientras
+    Mientras NFDS(sec_ent) Hacer
+        Si v_ent = num_us Entonces
+            Para i := 1 hasta 10 Hacer
+                GRABAR(sec_sal, v_ent)
+                // Si quisiera mostrar los números por pantalla
+                // voy mostrando a medida que grabo, haciendo:
+                // Escribir(v_ent)
+                AVZ(sec_ent, v_ent)
+            Fin Para
+        Contrario
+            Para i := 1 hasta 10 Hacer
+                AVZ(sec_ent, v_ent)
+            Fin Para
+        Fin Si
+    Fin Mientras
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción

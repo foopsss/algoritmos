@@ -16,64 +16,64 @@ Acción Secuencias6 ES
 
 Ambiente
 
-	sec_ent: secuencia de carácter
-	sec_sal: secuencia de entero
+    sec_ent: secuencia de carácter
+    sec_sal: secuencia de entero
 
-	v_ent: carácter
-	i, unidades_vendidas: entero
-	
-	meses_pares = {"2", "4", "6", "8"}
+    v_ent: carácter
+    i, unidades_vendidas: entero
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    meses_pares = {"2", "4", "6", "8"}
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v_ent)
+    CREAR(sec_sal)
 
-	Mientras NFDS(sec_ent) Hacer
-		// Salto los caracteres correspondientes al día.
-		Para i := 1 hasta 3 Hacer
-			AVZ(sec, v_ent)
-		Fin Para
+    Mientras NFDS(sec_ent) Hacer
+        // Salto los caracteres correspondientes al día.
+        Para i := 1 hasta 3 Hacer
+            AVZ(sec, v_ent)
+        Fin Para
 
-		// Estoy parado en el segundo carácter del mes.
-		// Controlo si el mes es par.
-		Si v_ent en meses_pares Entonces
-			// Recorro los caracteres del año.
-			Para i := 1 hasta 5 Hacer
-				AVZ(sec, v_ent)
-			Fin Para
+        // Estoy parado en el segundo carácter del mes.
+        // Controlo si el mes es par.
+        Si v_ent en meses_pares Entonces
+            // Recorro los caracteres del año.
+            Para i := 1 hasta 5 Hacer
+                AVZ(sec, v_ent)
+            Fin Para
 
-			// Estoy parado en las unidades vendidas.
-			// Grabo en la salida.
-			unidades_vendidas := CharToInt(v_ent)
-			GRABAR(sec_sal, unidades_vendidas)
+            // Estoy parado en las unidades vendidas.
+            // Grabo en la salida.
+            unidades_vendidas := CharToInt(v_ent)
+            GRABAR(sec_sal, unidades_vendidas)
 
-			// Quedo en el primer carácter de la siguiente fecha.
-			AVZ(sec, v_ent)
-		Contrario
-			// Quedo en el primer carácter de la siguiente fecha.
-			Para i := 1 hasta 6 Hacer
-				AVZ(sec, v_ent)
-			Fin Para
-		Fin Si
-	Fin Mientras
+            // Quedo en el primer carácter de la siguiente fecha.
+            AVZ(sec, v_ent)
+        Contrario
+            // Quedo en el primer carácter de la siguiente fecha.
+            Para i := 1 hasta 6 Hacer
+                AVZ(sec, v_ent)
+            Fin Para
+        Fin Si
+    Fin Mientras
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción

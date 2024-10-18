@@ -2,28 +2,28 @@ Acción 2.1.1 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v: carácter
+    sec: secuencia de carácter
+    v: carácter
 
-	cant_a: alfanumérico
+    cant_a: alfanumérico
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
-	
-	cant_a := 0
-	
-	Mientras v <> "*" Hacer
-		Si v = "A" Entonces
-			cant_a := cant_a + 1
-		Fin Si
+    ARR(sec)
+    AVZ(sec, v)
 
-		AVZ(sec, v)
-	Fin Mientras
-	
-	Escribir("En la secuencia hay una cantidad de" cant_a "letras A.")
-	
-	CERRAR(sec)
+    cant_a := 0
+
+    Mientras v <> "*" Hacer
+        Si v = "A" Entonces
+        cant_a := cant_a + 1
+    Fin Si
+
+    AVZ(sec, v)
+    Fin Mientras
+
+    Escribir("En la secuencia hay una cantidad de" cant_a "letras A.")
+
+    CERRAR(sec)
 
 Fin Acción

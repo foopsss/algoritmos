@@ -18,108 +18,108 @@ Acción CorteM9 ES
 
 Ambiente
 
-	Jubilar = Registro
-		Clave = Registro
-			Regional: AN(50)
-			Carrera: ("ISI", "IQ", "IEM", "LAR")
-			Legajo: N(5)
-		Fin Registro
-		Sexo: ("M", "F")
-		Nombre: AN(100)
-	Fin Registro
-	
-	ARCH: archivo de Jubilar ordenado por Clave
-	REG: Jubilar
+    Jubilar = Registro
+        Clave = Registro
+            Regional: AN(50)
+            Carrera: ("ISI", "IQ", "IEM", "LAR")
+            Legajo: N(5)
+        Fin Registro
+        Sexo: ("M", "F")
+        Nombre: AN(100)
+    Fin Registro
 
-	Salida = Registro
-		Regional: AN(50)
-		CantidadJubilados: N(3)
-	Fin Registro
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
+    ARCH: archivo de Jubilar ordenado por Clave
+    REG: Jubilar
 
-	resg_regional, resg_carrera, reg_mas_jubilables: alfanumérico
-	tot_carrera_masc, tot_carrera_fem, tot_regional, tot_general, mayor_cant_jubilables: entero
+    Salida = Registro
+        Regional: AN(50)
+        CantidadJubilados: N(3)
+    Fin Registro
 
-	Procedimiento Inicializar() ES
-		resg_regional := REG.Clave.Regional
-		resg_carrera := REG.Clave.Carrera
-		tot_carrera_masc := 0
-		tot_carrera_fem := 0
-		tot_regional := 0
-		tot_general := 0
-		mayor_cant_jubilables := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteCarrera() ES
-		Escribir("Regional: " resg_regional)
-		Escribir("Carrera: " resg_carrera)
-		Escribir("Cantidad de docentes masculinos que pueden jubilarse: " tot_carrera_masc)
-		Escribir("Cantidad de docentes femeninos que pueden jubilarse: " tot_carrera_fem)
-		tot_regional := tot_regional + tot_carrera_masc + tot_carrera_fem
-		tot_carrera_masc := 0
-		tot_carrera_fem := 0
-		resg_carrera := REG.Clave.Carrera
-	Fin Procedimiento
-	
-	Procedimiento CorteRegional() ES
-		// Algunas cosas de corte.
-		CorteCarrera()
-		Escribir("Regional: " resg_regional)
-		Escribir("Cantidad de docentes que pueden jubilarse: " tot_regional)
-		
-		// Determino la regional con la mayor cantidad
-		// de docentes que pueden jubilarse.
-		Si tot_regional > mayor_cant_jubilables Entonces
-			reg_mas_jubilables := resg_regional
-			mayor_cant_jubilables := tot_regional
-		Fin Si
-		
-		// Grabo el archivo de salida.
-		REG2.Regional := resg_regional
-		REG2.CantidadJubilados := tot_regional
-		GRABAR(ARCH2, REG2)
-		
-		// Resto de las cosas de corte.
-		tot_general := tot_general + tot_regional
-		tot_regional := 0
-		resg_regional := REG.Clave.Regional
-	Fin Procedimiento
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_regional, resg_carrera, reg_mas_jubilables: alfanumérico
+    tot_carrera_masc, tot_carrera_fem, tot_regional, tot_general, mayor_cant_jubilables: entero
+
+    Procedimiento Inicializar() ES
+        resg_regional := REG.Clave.Regional
+        resg_carrera := REG.Clave.Carrera
+        tot_carrera_masc := 0
+        tot_carrera_fem := 0
+        tot_regional := 0
+        tot_general := 0
+        mayor_cant_jubilables := 0
+    Fin Procedimiento
+
+    Procedimiento CorteCarrera() ES
+        Escribir("Regional: " resg_regional)
+        Escribir("Carrera: " resg_carrera)
+        Escribir("Cantidad de docentes masculinos que pueden jubilarse: " tot_carrera_masc)
+        Escribir("Cantidad de docentes femeninos que pueden jubilarse: " tot_carrera_fem)
+        tot_regional := tot_regional + tot_carrera_masc + tot_carrera_fem
+        tot_carrera_masc := 0
+        tot_carrera_fem := 0
+        resg_carrera := REG.Clave.Carrera
+    Fin Procedimiento
+
+    Procedimiento CorteRegional() ES
+        // Algunas cosas de corte.
+        CorteCarrera()
+        Escribir("Regional: " resg_regional)
+        Escribir("Cantidad de docentes que pueden jubilarse: " tot_regional)
+
+        // Determino la regional con la mayor cantidad
+        // de docentes que pueden jubilarse.
+        Si tot_regional > mayor_cant_jubilables Entonces
+            reg_mas_jubilables := resg_regional
+            mayor_cant_jubilables := tot_regional
+        Fin Si
+
+        // Grabo el archivo de salida.
+        REG2.Regional := resg_regional
+        REG2.CantidadJubilados := tot_regional
+        GRABAR(ARCH2, REG2)
+
+        // Resto de las cosas de corte.
+        tot_general := tot_general + tot_regional
+        tot_regional := 0
+        resg_regional := REG.Clave.Regional
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_regional <> REG.Clave.Regional Entonces
-			CorteRegional()
-		Contrario
-			Si resg_carrera <> REG.Clave.Carrera Entonces
-				CorteCarrera()
-			Fin Si
-		Fin Si
-		
-		Si REG.Sexo = "M" Entonces
-			tot_carrera_masc := tot_carrera_masc + 1
-		Contrario
-			tot_carrera_fem := tot_carrera_fem + 1
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteRegional()
-	
-	Escribir("Hay un total de" tot_general "docentes que pueden jubilarse.")
-	Escribir("La regional con la mayor cantidad de docentes en condiciones de jubilarse es" reg_mas_jubilables ".")
-	Escribir("Dicha regional tiene" mayor_cant_jubilables "docentes en condiciones de jubilarse.")
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_regional <> REG.Clave.Regional Entonces
+            CorteRegional()
+        Contrario
+            Si resg_carrera <> REG.Clave.Carrera Entonces
+                CorteCarrera()
+            Fin Si
+        Fin Si
+
+        Si REG.Sexo = "M" Entonces
+            tot_carrera_masc := tot_carrera_masc + 1
+        Contrario
+            tot_carrera_fem := tot_carrera_fem + 1
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteRegional()
+
+    Escribir("Hay un total de" tot_general "docentes que pueden jubilarse.")
+    Escribir("La regional con la mayor cantidad de docentes en condiciones de jubilarse es" reg_mas_jubilables ".")
+    Escribir("Dicha regional tiene" mayor_cant_jubilables "docentes en condiciones de jubilarse.")
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

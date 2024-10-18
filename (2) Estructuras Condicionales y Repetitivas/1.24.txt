@@ -2,33 +2,31 @@ Acción 1.24 ES
 
 Ambiente
 
-	tasa_impuesto = 0,10
-
-	importe, impuesto, valor_cuotas: real
-	cant_cuotas: entero
+    tasa_impuesto = 0,10
+    importe, impuesto, valor_cuotas: real
+    cant_cuotas: entero
 
 Proceso
 
-	Escribir("Introduzca un importe de dinero: ")
-	Leer(importe)
-	
-	Mientras importe < 9999 Hacer
-		impuesto := importe * tasa_impuesto
-		
-		Según importe Hacer
-			<= 500: cant_cuotas := 1
-			> 500: cant_cuotas := 2
-			> 1000: cant_cuotas := 3
-		Fin Según
-		
-		valor_cuotas := impuesto / cant_cuotas
-		
-		Escribir("Importe a pagar por el impuesto: " impuesto)
-		Escribir("Cuotas a pagar: " cant_cuotas)
-		Escribir("Valor de cada cuota: " valor_cuotas)
-		
-		Escribir("Introduzca otro importe de dinero: ")
-		Leer(importe)
-	Fin Si
+    Escribir("Introduzca un importe de dinero: ")
+    Leer(importe)
+
+    Mientras importe < 9999 Hacer
+        impuesto := importe * tasa_impuesto
+
+        Según importe Hacer
+            <= 500: cant_cuotas := 1
+            > 500: cant_cuotas := 2
+            > 1000: cant_cuotas := 3
+        Fin Según
+
+        valor_cuotas := impuesto / cant_cuotas
+        Escribir("Importe a pagar por el impuesto: " impuesto)
+        Escribir("Cuotas a pagar: " cant_cuotas)
+        Escribir("Valor de cada cuota: " valor_cuotas)
+
+        Escribir("Introduzca otro importe de dinero: ")
+        Leer(importe)
+    Fin Mientras
 
 Fin Acción

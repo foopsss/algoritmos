@@ -2,91 +2,91 @@ Acción 3.24 ES
 
 Ambiente
 
-        Empleados = Registro
-                NomAp: AN(100)
-                NroCaja: N(2)
-                Importe: N(3)
-                HorarioFacturación: N(2)
-        Fin Registro
-        
-        ARCH: archivo de Empleados ordenado por NomAp
-        REG: Empleados
+    Empleados = Registro
+        NomAp: AN(100)
+        NroCaja: N(2)
+        Importe: N(3)
+        HorarioFacturación: N(2)
+    Fin Registro
 
-        totales: arreglo de [1..11, 1..6] de entero
-        
-        i, j: entero
-        horario_caja: alfanumérico
-        
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 11 Hacer
-                        Para j := 1 hasta 6 Hacer
-                                totales[i, j] := 0
-                        Fin Para
-                Fin Para
-        Fin Procedimiento
-        
-        Función DeterminarColumna(entrada: entero): entero ES
-                Según entrada Hacer
-                        < 10: DeterminarColumna := 1
-                        < 12: DeterminarColumna := 2
-                        < 16: DeterminarColumna := 3
-                        < 18: DeterminarColumna := 4
-                        < 20: DeterminarColumna := 5
-                Fin Según
-        Fin Función
-        
-        Función DeterminarHorario(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarHorario := "8-10"
-                        = 2: DeterminarHorario := "10-12"
-                        = 3: DeterminarHorario := "12-16"
-                        = 4: DeterminarHorario := "16-18"
-                        = 5: DeterminarHorario := "18-20"
-                Fin Según
-        Fin Función
+    ARCH: archivo de Empleados ordenado por NomAp
+    REG: Empleados
+
+    totales: arreglo de [1..11, 1..6] de entero
+
+    i, j: entero
+    horario_caja: alfanumérico
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 11 Hacer
+            Para j := 1 hasta 6 Hacer
+                totales[i, j] := 0
+            Fin Para
+        Fin Para
+    Fin Procedimiento
+
+    Función DeterminarColumna(entrada: entero): entero ES
+        Según entrada Hacer
+            < 10: DeterminarColumna := 1
+            < 12: DeterminarColumna := 2
+            < 16: DeterminarColumna := 3
+            < 18: DeterminarColumna := 4
+            < 20: DeterminarColumna := 5
+        Fin Según
+    Fin Función
+
+    Función DeterminarHorario(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarHorario := "8-10"
+            = 2: DeterminarHorario := "10-12"
+            = 3: DeterminarHorario := "12-16"
+            = 4: DeterminarHorario := "16-18"
+            = 5: DeterminarHorario := "18-20"
+        Fin Según
+    Fin Función
 
 Proceso
 
-        ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        i := REG.NroCaja
+        j := DeterminarColumna(REG.HorarioFacturación)
+
+        totales[i, j] := totales[i, j] + REG.Importe
+        totales[i, 6] := totales[i, 6] + REG.Importe
+        totales[11, j] := totales[11, j] + REG.Importe
+        totales[11, 6] := totales[11, 6] + REG.Importe
+
         LEER(ARCH, REG)
+    Fin Mientras
         
-        Inicializar()
-        
-        Mientras NFDA(ARCH) Hacer
-                i := REG.NroCaja
-                j := DeterminarColumna(REG.HorarioFacturación)
-                
-                totales[i, j] := totales[i, j] + REG.Importe
-                totales[i, 6] := totales[i, 6] + REG.Importe
-                totales[11, j] := totales[11, j] + REG.Importe
-                totales[11, 6] := totales[11, 6] + REG.Importe
-                
-                LEER(ARCH, REG)
-        Fin Mientras
-        
-        Para i := 1 hasta 10 Hacer
-                Escribir("Caja: " i)
-                
-                Para j := 1 hasta 5 Hacer
-                        horario_caja := DeterminarHorario(j)
-                        Escribir("Franja horaria": horario_caja)
-                        Escribir("Total facturado: " totales[i, j])
-                Fin Para
-        Fin Para
-        
-        Para i := 1 hasta 10 Hacer
-                Escribir("Caja: " i)
-                Escribir("Total facturado por la caja: " totales[i, 6])
-        Fin Para
-        
+    Para i := 1 hasta 10 Hacer
+        Escribir("Caja: " i)
+
         Para j := 1 hasta 5 Hacer
-                horario_caja := DeterminarHorario(j)
-                Escribir("Franja horaria": horario_caja)
-                Escribir("Total facturado en la franja: " totales[11, j])
+            horario_caja := DeterminarHorario(j)
+            Escribir("Franja horaria": horario_caja)
+            Escribir("Total facturado: " totales[i, j])
         Fin Para
-        
-        Escribir("Total general facturado: " totales[11, 6])
-        
-        CERRAR(ARCH)
+    Fin Para
+
+    Para i := 1 hasta 10 Hacer
+        Escribir("Caja: " i)
+        Escribir("Total facturado por la caja: " totales[i, 6])
+    Fin Para
+
+    Para j := 1 hasta 5 Hacer
+        horario_caja := DeterminarHorario(j)
+        Escribir("Franja horaria": horario_caja)
+        Escribir("Total facturado en la franja: " totales[11, j])
+    Fin Para
+
+    Escribir("Total general facturado: " totales[11, 6])
+
+    CERRAR(ARCH)
 
 Fin Acción

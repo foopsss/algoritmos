@@ -14,35 +14,34 @@ de altura y edad y cargue el resultado del cálculo en una variable. *}
 program EJ2;
 
 uses
-	math;
+    math;
 
 type
-	rango_edad = 4..140;
-	rango_peso = 10..300;
-	rango_altura_cm = 10..240;
+    rango_edad = 4..140;
+    rango_peso = 10..300;
+    rango_altura_cm = 10..240;
 
 const
-	cm_a_m = 100;
+    cm_a_m = 100;
 
 var
-	edad, peso, altura_cm, imc: integer;
-	altura_m: real;
+    edad, peso, altura_cm, imc: integer;
+    altura_m: real;
 
 procedure calcular_imc();
 begin
-	edad := High(rango_edad);
-	peso := High(rango_peso);
-	altura_cm := High(rango_altura_cm);
+    edad := High(rango_edad);
+    peso := High(rango_peso);
+    altura_cm := High(rango_altura_cm);
 
-	altura_m := altura_cm / cm_a_m;
-	imc := round(peso / (altura_m ** 2));
+    altura_m := altura_cm / cm_a_m;
+    imc := round(peso / (altura_m ** 2));
 end;
 
 begin
-	calcular_imc();
-
-	writeln('Su edad es: ', edad);
-	writeln('Su peso es: ', peso);
-	writeln('Su altura (en centímetros) es: ', altura_cm);
-	writeln('Su IMC es: ', imc);
+    calcular_imc();
+    writeln('Su edad es: ', edad);
+    writeln('Su peso es: ', peso);
+    writeln('Su altura (en centímetros) es: ', altura_cm);
+    writeln('Su IMC es: ', imc);
 end.

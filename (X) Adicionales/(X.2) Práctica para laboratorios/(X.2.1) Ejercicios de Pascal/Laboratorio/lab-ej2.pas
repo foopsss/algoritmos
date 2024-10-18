@@ -10,82 +10,73 @@ sobre el total de operaciones? *}
 program EJ2;
 
 uses
-	functions in '../functions.pas';
+    functions in '../functions.pas';
 
 type
-	sec = TextFile;
+    sec = TextFile;
 
 var
-	entrada: TextFile;
-	v_ent: char;
+    entrada: TextFile;
+    v_ent: char;
 
-	es_dep, no_val: boolean;
-	cont_op, noval_dep: integer;
-	porc_noval_dep: real;
+    es_dep, no_val: boolean;
+    cont_op, noval_dep: integer;
+    porc_noval_dep: real;
 
 procedure inicializar();
 begin
-	cont_op := 0;
-	noval_dep := 0;
+    cont_op := 0;
+    noval_dep := 0;
 end;
 
 begin
-	assign(entrada, 'Materiales/entrada-lab-ej2.txt');
+    assign(entrada, 'Materiales/entrada-lab-ej2.txt');
 
-	{$I-}
-	reset(entrada);
-	{$I+}
+    {$I-}
+    reset(entrada);
+    {$I+}
 
-	if IOResult <> 0 then
-		error_lectura_archivo()
-	else
-		begin
-			inicializar();
-			read(entrada, v_ent);
+    if IOResult <> 0 then
+        error_lectura_archivo()
+    else
+        begin
+            inicializar();
+            read(entrada, v_ent);
 
-			while not eof(entrada) do
-			begin
-				cont_op := cont_op + 1;
+            while not eof(entrada) do
+            begin
+                cont_op := cont_op + 1;
 
-				while v_ent <> '#' do
-				begin
-					read(entrada, v_ent);
-				end;
+                while v_ent <> '#' do
+                begin
+                    read(entrada, v_ent);
+                end;
 
-				// Avanzo el numeral.
-				read(entrada, v_ent);
+                // Avanzo el numeral.
+                read(entrada, v_ent);
 
-				if v_ent = 'D' then
-					begin
-						es_dep := true;
-					end
-				else
-					begin
-						es_dep := false;
-					end;
+                if v_ent = 'D' then
+                    es_dep := true
+                else
+                    es_dep := false;
 
-				read(entrada, v_ent);
+                read(entrada, v_ent);
 
-				if v_ent = 'N' then
-					begin
-						no_val := true;
-					end
-				else
-					begin
-						no_val := false;
-					end;
+                if v_ent = 'N' then
+                    no_val := true
+                else
+                    no_val := false;
 
-				if (es_dep) and (no_val) then
-				begin
-					noval_dep := noval_dep + 1;
-				end;
+                if (es_dep) and (no_val) then
+                begin
+                    noval_dep := noval_dep + 1;
+                end;
 
-				read(entrada, v_ent);
-			end;
+                read(entrada, v_ent);
+            end;
 
-			porc_noval_dep := (noval_dep * 100) / cont_op;
-			writeln('Porcentaje de operaciones no válidas del tipo depósito: ', porc_noval_dep:4:2);
-
-			close(entrada)
-		end;
+            porc_noval_dep := (noval_dep * 100) / cont_op;
+            writeln('Porcentaje de operaciones no válidas del tipo depósito: ', porc_noval_dep:4:2);
+            close(entrada)
+        end;
 end.

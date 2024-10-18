@@ -16,106 +16,105 @@ jugador y en base a ella determinar al ganador. *}
 program EJ15;
 
 uses
-	functions in '../functions.pas';
+    functions in '../functions.pas';
 
 var
-	i, turnos, num_j1, num_j2: integer;
-	pts_turno_j1, pts_turno_j2: integer;
-	pts_j1, pts_j2: integer;
+    i, turnos, num_j1, num_j2: integer;
+    pts_turno_j1, pts_turno_j2: integer;
+    pts_j1, pts_j2: integer;
 
 procedure pedir_num_j1();
 begin
-	write('Número del jugador 1: ');
-	readln(num_j1);
+    write('Número del jugador 1: ');
+    readln(num_j1);
 end;
 
 procedure pedir_num_j2();
 begin
-	write('Número del jugador 2: ');
-	readln(num_j2);
+    write('Número del jugador 2: ');
+    readln(num_j2);
 end;
 
 procedure pedir_numeros();
 begin
-	pedir_num_j1();
-	while (num_j1 < 1) or (num_j1 > 100) do
-	begin
-		writeln('Ingrese un número entre 1 y 100.');
-		writeln();
-		pedir_num_j1();
-	end;
+    pedir_num_j1();
+    while (num_j1 < 1) or (num_j1 > 100) do
+    begin
+        writeln('Ingrese un número entre 1 y 100.');
+        writeln();
+        pedir_num_j1();
+    end;
+    writeln();
 
-	writeln();
-
-	pedir_num_j2();
-	while (num_j2 < 1) or (num_j2 > 100) do
-	begin
-		writeln('Ingrese un número entre 1 y 100.');
-		writeln();
-		pedir_num_j2();
-	end;
+    pedir_num_j2();
+    while (num_j2 < 1) or (num_j2 > 100) do
+    begin
+        writeln('Ingrese un número entre 1 y 100.');
+        writeln();
+        pedir_num_j2();
+    end;
 end;
 
 begin
-	pts_j1 := 0;
-	pts_j2 := 0;
+    pts_j1 := 0;
+    pts_j2 := 0;
 
-	write('Número de turnos a jugarse: ');
-	readln(turnos);
+    write('Número de turnos a jugarse: ');
+    readln(turnos);
 
-	for i := 1 to turnos do
-	begin
-		draw_line(50);
+    for i := 1 to turnos do
+    begin
+        draw_line(50);
 
-		writeln('Turno Nº: ', i);
-		writeln();
+        writeln('Turno Nº: ', i);
+        writeln();
 
-		pedir_numeros();
+        pedir_numeros();
 
-		writeln();
-		if num_j1 > num_j2 then
-			begin
-				pts_turno_j1 := 100 - num_j1;
-				pts_j1 := pts_j1 + pts_turno_j1;
-				writeln('El ganador de este turno es el jugador 1.');
-				writeln('Obtuvo ', pts_turno_j1, ' puntos.');
-			end
-		else
-			if num_j1 < num_j2 then
-				begin
-					pts_turno_j2 := 100 - num_j2;
-					pts_j2 := pts_j2 + pts_turno_j2;
-					writeln('El ganador de este turno es el jugador 2.');
-					writeln('Obtuvo ', pts_turno_j2, ' puntos.');
-				end
-			else
-				begin
-					pts_turno_j1 := 0;
-					pts_turno_j2 := 0;
-					writeln('¡Empate!');
-					writeln('Ningún jugador obtuvo puntos en este turno.');
-				end;
+        writeln();
+        if num_j1 > num_j2 then
+            begin
+                pts_turno_j1 := 100 - num_j1;
+                pts_j1 := pts_j1 + pts_turno_j1;
+                writeln('El ganador de este turno es el jugador 1.');
+                writeln('Obtuvo ', pts_turno_j1, ' puntos.');
+            end
+        else
+            if num_j1 < num_j2 then
+                begin
+                    pts_turno_j2 := 100 - num_j2;
+                    pts_j2 := pts_j2 + pts_turno_j2;
+                    writeln('El ganador de este turno es el jugador 2.');
+                    writeln('Obtuvo ', pts_turno_j2, ' puntos.');
+                end
+            else
+                begin
+                    pts_turno_j1 := 0;
+                    pts_turno_j2 := 0;
+                    writeln('¡Empate!');
+                    writeln('Ningún jugador obtuvo puntos en este turno.');
+                end;
 
-		if i = turnos then
-		begin
-			draw_line(50);
-		end;
-	end;
+        if i = turnos then
+        begin
+            draw_line(50);
+        end;
+    end;
 
-	if pts_j1 > pts_j2 then
-		begin
-			writeln('El ganador es el jugador 1.');
-			writeln('Obtuvo un total de ', pts_j1, ' puntos.');
-		end
-	else
-		if pts_j1 < pts_j2 then
-			begin
-				writeln('El ganador es el jugador 2.');
-				writeln('Obtuvo un total de ', pts_j2, ' puntos.');
-			end
-		else
-			begin
-				writeln('¡Empate!');
-				writeln('Ambos jugadores obtuvieron un total de ', pts_j1, ' puntos.');
-			end;
+    if pts_j1 > pts_j2 then
+        begin
+            writeln('El ganador es el jugador 1.');
+            writeln('Obtuvo un total de ', pts_j1, ' puntos.');
+        end
+    else
+        if pts_j1 < pts_j2 then
+            begin
+                writeln('El ganador es el jugador 2.');
+                writeln('Obtuvo un total de ', pts_j2, ' puntos.');
+            end
+        else
+            begin
+                writeln('¡Empate!');
+                writeln('Ambos jugadores obtuvieron un total de ', pts_j1, ' puntos.');
+            end;
 end.

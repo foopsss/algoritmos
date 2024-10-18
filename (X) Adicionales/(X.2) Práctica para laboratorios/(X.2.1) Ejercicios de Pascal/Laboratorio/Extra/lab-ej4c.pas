@@ -21,94 +21,92 @@ utilizar el pie derecho para patear? *}
 program EJ4;
 
 uses
-	// Provee el tipo de dato "TStringList".
-	classes,
-	sysutils;
+    // Provee el tipo de dato "TStringList".
+    classes,
+    sysutils;
 
 type
-	info_jugadora = record
-		id: integer;
-		version_fifa: real;
-		nombre: string[150];
-		edad: integer;
-		altura: integer;
-		peso: integer;
-		nacionalidad: string[100];
-		pie_preferido: string[50];
-	end;
+    info_jugadora = record
+        id: integer;
+        version_fifa: real;
+        nombre: string[150];
+        edad: integer;
+        altura: integer;
+        peso: integer;
+        nacionalidad: string[100];
+        pie_preferido: string[50];
+    end;
 
 var
-	// TStringList es un tipo de dato compuesto, que consiste
-	// básicamente en un arreglo dinámico de strings. Este tipo
-	// de dato está definido en la librería "classes".
-	//
-	// TStringList se puede utilizar con archivos CSV pero está
-	// pensado para el formato de archivos SDF, que se parece
-	// mucho a CSV pero no es exactamente igual.
-	entrada_csv: TStringList;
-	v_csv: TStringList;
-	jugadora: info_jugadora;
+    // TStringList es un tipo de dato compuesto, que consiste
+    // básicamente en un arreglo dinámico de strings. Este tipo
+    // de dato está definido en la librería "classes".
+    //
+    // TStringList se puede utilizar con archivos CSV pero está
+    // pensado para el formato de archivos SDF, que se parece
+    // mucho a CSV pero no es exactamente igual.
+    entrada_csv: TStringList;
+    v_csv: TStringList;
+    jugadora: info_jugadora;
 
-	i: integer;
-	cant_jugadoras, der_treinta: integer;
-	porc_der_treinta: real;
+    i: integer;
+    cant_jugadoras, der_treinta: integer;
+    porc_der_treinta: real;
 
 procedure inicializar();
 begin
-	entrada_csv := TStringList.Create();
-	v_csv := TStringList.Create();
-	cant_jugadoras := 0;
-	der_treinta := 0;
+    entrada_csv := TStringList.Create();
+    v_csv := TStringList.Create();
+    cant_jugadoras := 0;
+    der_treinta := 0;
 end;
 
 begin
-	inicializar();
+    inicializar();
 
-	try
-		// Establezo el separador de campos para la ventana.
-		//
-		// También indico que no quiero separar líneas si estas
-		// consisten en oraciones con palabras y espacios.
-		v_csv.Delimiter := ';';
-		v_csv.StrictDelimiter := true;
+    try
+        // Establezo el separador de campos para la ventana.
+        //
+        // También indico que no quiero separar líneas si estas
+        // consisten en oraciones con palabras y espacios.
+        v_csv.Delimiter := ';';
+        v_csv.StrictDelimiter := true;
+        entrada_csv.LoadFromFile('../Materiales/entrada-lab-ej4.csv');
 
-		entrada_csv.LoadFromFile('../Materiales/entrada-lab-ej4.csv');
+        // Cuento desde uno en adelante porque la primer línea
+        // del archivo no me interesa, ya que es la cabecera del
+        // archivo.
+        // El límite es "entrada_csv.count - 1" ya que así lo
+        // estipula la propiedad "TString.Count".
+        for i := 1 to (entrada_csv.count - 1) do
+        begin
+            cant_jugadoras := cant_jugadoras + 1;
 
-		// Cuento desde uno en adelante porque la primer línea
-		// del archivo no me interesa, ya que es la cabecera del
-		// archivo.
-		// El límite es "entrada_csv.count - 1" ya que así lo
-		// estipula la propiedad "TString.Count".
-		for i := 1 to (entrada_csv.count - 1) do
-		begin
-			cant_jugadoras := cant_jugadoras + 1;
+            // Leo una línea del archivo.
+            //
+            // La propiedad DelimitedText separa los campos en cada
+            // línea en función del delimitador que especifiqué con
+            // anterioridad.
+            v_csv.DelimitedText := entrada_csv[i];
+            jugadora.id := StrToInt(v_csv[0]);
+            jugadora.version_fifa := StrToFloat(v_csv[1]);
+            jugadora.nombre := v_csv[2];
+            jugadora.edad := StrToInt(v_csv[3]);
+            jugadora.altura := StrToInt(v_csv[4]);
+            jugadora.peso := StrToInt(v_csv[5]);
+            jugadora.nacionalidad := v_csv[6];
+            jugadora.pie_preferido := v_csv[7];
 
-			// Leo una línea del archivo.
-			//
-			// La propiedad DelimitedText separa los campos en cada
-			// línea en función del delimitador que especifique con
-			// anterioridad.
-			v_csv.DelimitedText := entrada_csv[i];
+            if (jugadora.edad >= 30) and (jugadora.pie_preferido = 'Right') then
+            begin
+                der_treinta := der_treinta + 1;
+            end;
+        end;
 
-			jugadora.id := StrToInt(v_csv[0]);
-			jugadora.version_fifa := StrToFloat(v_csv[1]);
-			jugadora.nombre := v_csv[2];
-			jugadora.edad := StrToInt(v_csv[3]);
-			jugadora.altura := StrToInt(v_csv[4]);
-			jugadora.peso := StrToInt(v_csv[5]);
-			jugadora.nacionalidad := v_csv[6];
-			jugadora.pie_preferido := v_csv[7];
-
-			if (jugadora.edad >= 30) and (jugadora.pie_preferido = 'Right') then
-			begin
-				der_treinta := der_treinta + 1;
-			end;
-		end;
-
-		porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
-		writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
-	finally
-		entrada_csv.free;
-		v_csv.free;
-	end;
+        porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
+        writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
+    finally
+        entrada_csv.free;
+        v_csv.free;
+    end;
 end.

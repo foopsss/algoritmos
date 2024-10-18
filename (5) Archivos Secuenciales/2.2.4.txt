@@ -2,62 +2,61 @@ Acción 2.2.4 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Fecha
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Fecha
 
-	Alumnos = Registro
-		NomAp: AN(50)
-		Carrera: ("ISI", "IEM", "IQ")
-		Legajo: N(5)
-		FechaNacimiento: Fecha
-		FechaIngreso: Fecha
-		DNI: N(8)
-		Sexo: ("M", "F")
-		FechaUltExAprob: Fecha
-		Nota: (1..100)
-	Fin Registro
-	
-	ARCH, ARCH2: archivo de Alumnos
-	REG, REG2: Alumnos
-	
-	FechaUsuario: Fecha
-	
-	carrera_us: alfanumérico
-	año_us: entero
-	
-	Procedimiento ObtenerCarrera() ES
-		Escribir("Ingrese una carrera: ")
-		Leer(carrera_us)
-	Fin Procedimiento
-	
-	Procedimiento ObtenerAñoUsuario() ES
-		Escribir("Ingrese el año actual: ")
-		Leer(año_us)
-	Fin Procedimiento
+    Alumnos = Registro
+        NomAp: AN(50)
+        Carrera: ("ISI", "IEM", "IQ")
+        Legajo: N(5)
+        FechaNacimiento: Fecha
+        FechaIngreso: Fecha
+        DNI: N(8)
+        Sexo: ("M", "F")
+        FechaUltExAprob: Fecha
+        Nota: (1..100)
+    Fin Registro
+
+    ARCH, ARCH2: archivo de Alumnos
+    REG, REG2: Alumnos
+
+    FechaUsuario: Fecha
+    carrera_us: alfanumérico
+    año_us: entero
+
+    Procedimiento ObtenerCarrera() ES
+        Escribir("Ingrese una carrera: ")
+        Leer(carrera_us)
+    Fin Procedimiento
+
+    Procedimiento ObtenerAñoUsuario() ES
+        Escribir("Ingrese el año actual: ")
+        Leer(año_us)
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	ObtenerCarrera()
-	ObtenerAñoUsuario()
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
 
-	Mientras NFDA(ARCH) Hacer
-		Si REG.Carrera = carrera_us Entonces
-			Si REG.FechaUltExAprob.Año = año_us y REG.Nota > 7 Entonces
-				GRABAR(ARCH2, REG)
-			Fin Si
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
+    ObtenerCarrera()
+    ObtenerAñoUsuario()
 
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    Mientras NFDA(ARCH) Hacer
+        Si REG.Carrera = carrera_us Entonces
+            Si REG.FechaUltExAprob.Año = año_us y REG.Nota > 7 Entonces
+                GRABAR(ARCH2, REG)
+            Fin Si
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

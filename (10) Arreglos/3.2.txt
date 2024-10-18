@@ -2,42 +2,42 @@ Acción 3.2 ES
 
 Ambiente
 
-        arr: arreglo de [1..100] de entero
-        
-        i, mayor_val, menor_val: entero
-        pos_mayor, pos_menor: entero
-        cont_pares, suma_pares: entero
+    arr: arreglo de [1..100] de entero
 
-        Procedimiento Inicializar() ES
-                mayor_val := LV
-                menor_val := HV
-                cont_pares := 0
-                suma_pares := 0
-        Fin Procedimiento
+    i, mayor_val, menor_val: entero
+    pos_mayor, pos_menor: entero
+    cont_pares, suma_pares: entero
+
+    Procedimiento Inicializar() ES
+        mayor_val := LV
+        menor_val := HV
+        cont_pares := 0
+        suma_pares := 0
+    Fin Procedimiento
 
 Proceso
 
-        Para i := 1 hasta 100 Hacer
-                Escribir("Ingrese un valor: ")
-                Leer(arr[i])
-                
-                Si arr[i] > mayor_val Entonces
-                        mayor_val := arr[i]
-                        pos_mayor := i
-                Contrario
-                        menor_val := arr[i]
-                        pos_menor := i
-                Fin Si
-                
-                Si arr[i] MOD 2 Entonces
-                        cont_pares := cont_pares + 1
-                        suma_pares := suma_pares + arr[i]
-                Fin Si
-        Fin Para
+    Para i := 1 hasta 100 Hacer
+        Escribir("Ingrese un valor: ")
+        Leer(arr[i])
 
-        Escribir("El número de mayor valor es" mayor_val "y se encuentra en la posición" pos_mayor "del arreglo.")
-        Escribir("El número de menor valor es" menor_val "y se encuentra en la posición" pos_menor "del arreglo.")
-        Escribir("En el arreglo hay" cont_pares "números pares.")
-        Escribir("La suma de estos da un total de" suma_pares ".")
+        Si arr[i] > mayor_val Entonces
+            mayor_val := arr[i]
+            pos_mayor := i
+        Contrario
+            menor_val := arr[i]
+            pos_menor := i
+        Fin Si
+
+        Si arr[i] MOD 2 Entonces
+            cont_pares := cont_pares + 1
+            suma_pares := suma_pares + arr[i]
+        Fin Si
+    Fin Para
+
+    Escribir("El número de mayor valor es" mayor_val "y se encuentra en la posición" pos_mayor "del arreglo.")
+    Escribir("El número de menor valor es" menor_val "y se encuentra en la posición" pos_menor "del arreglo.")
+    Escribir("En el arreglo hay" cont_pares "números pares.")
+    Escribir("La suma de estos da un total de" suma_pares ".")
 
 Fin Acción

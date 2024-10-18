@@ -36,107 +36,107 @@ Acción ActualizaciónM3 ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Álbum = Registro
-                CodFigurita: N(5)
-                Cantidad: N(2)
-                PermitirDuplicados: ("SI", "NO")
-        Fin Registro
-        
-        ARCH_MAE, ARCH_SAL: archivo de Álbum ordenado por CodFigurita
-        REG_MAE, REG_SAL: Álbum
+    Álbum = Registro
+        CodFigurita: N(5)
+        Cantidad: N(2)
+        PermitirDuplicados: ("SI", "NO")
+    Fin Registro
 
-        Intercambios = Registro
-                CodFigurita: N(5)
-                CodAmigo: N(5)
-                FechaSolicitud: Fecha
-        Fin Registro
-        
-        ARCH_MOV: archivo de Intercambios ordenado por CodFigurita y CodAmigo
-        REG_MOV: Intercambios
-        
-        resg_cod_figurita, cant_dup: entero
-        diferencia_días := lógico
+    ARCH_MAE, ARCH_SAL: archivo de Álbum ordenado por CodFigurita
+    REG_MAE, REG_SAL: Álbum
 
-        Procedimiento LEER_MAE() ES
-                LEER(ARCH_MAE, REG_MAE)
-                Si FDA(ARCH_MAE) Entonces
-                        REG_MAE.CodFigurita := HV
-                Fin Si
-        Fin Procedimiento
-        
-        Procedimiento LEER_MOV() ES
-                LEER(ARCH_MOV, REG_MOV)
-                Si FDA(ARCH_MOV) Entonces
-                        REG_MOV.CodFigurita := HV
-                Fin Si
-        Fin Procedimiento
+    Intercambios = Registro
+        CodFigurita: N(5)
+        CodAmigo: N(5)
+        FechaSolicitud: Fecha
+    Fin Registro
+
+    ARCH_MOV: archivo de Intercambios ordenado por CodFigurita y CodAmigo
+    REG_MOV: Intercambios
+
+    resg_cod_figurita, cant_dup: entero
+    diferencia_días := lógico
+
+    Procedimiento LEER_MAE() ES
+        LEER(ARCH_MAE, REG_MAE)
+        Si FDA(ARCH_MAE) Entonces
+            REG_MAE.CodFigurita := HV
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento LEER_MOV() ES
+        LEER(ARCH_MOV, REG_MOV)
+        Si FDA(ARCH_MOV) Entonces
+            REG_MOV.CodFigurita := HV
+        Fin Si
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH_MAE)
-        ABRIR E/ (ARCH_MOV)
-        ABRIR S/ (ARCH_SAL)
-        
-        LEER_MAE()
-        LEER_MOV()        
-        cant_dup := 0
-        
-        Mientras REG_MAE.CodFigurita <> HV o REG_MOV.CodFigurita <> HV Hacer
-                Si REG_MAE.CodFigurita < REG_MOV.CodFigurita Entonces
-                        GRABAR(ARCH_SAL, REG_MAE)
-                        LEER_MAE()
-                Contrario
-                        Si REG_MAE.CodFigurita > REG_MOV.CodFigurita Entonces
-                                resg_cod_figurita := REG_MOV.CodFigurita
-                                REG_SAL.CodFigurita := resg_cod_figurita
-                                REG_SAL.Cantidad := 1
-                                REG_SAL.PermitirDuplicados := "NO"
-                                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
-                                LEER_MOV()
-                                
-                                Mientras REG_MOV.CodFigurita = resg_cod_figurita Hacer
-                                        // Como no puedo permitir duplicados de figuritas nuevas
-                                        // creo que solo corresponde leer los demás movimientos.
-                                        LEER_MOV()
-                                Fin Mientras
-                                
-                                // Interpreto que si "diff_días = TRUE" la cantidad de días
-                                // es superior a 6, el máximo permitido de días que pueden
-                                // transcurrir desde la fecha de solicitud.
-                                Si NO diferencia_días Entonces
-                                        GRABAR(ARCH_SAL, REG_SAL)
-                                Fin Si
-                        Contrario
-                                REG_SAL := REG_MAE
-                                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
-                                
-                                Mientras REG_MAE.CodFigurita = REG_MOV.CodFigurita Entonces
-                                        Si REG_SAL.PermitirDuplicados = "SI" Entonces
-                                                REG_SAL.Cantidad := REG_SAL.Cantidad + 1
-                                                cant_dup := cant_dup + 1
-                                        Fin Si
-                                        LEER_MOV()
-                                Fin Mientras
-                                
-                                Si NO diferencia_días Entonces
-                                        GRABAR(ARCH_SAL, REG_SAL)
-                                Fin Si
-                                
-                                LEER_MAE()
-                        Fin Si
+    ABRIR E/ (ARCH_MAE)
+    ABRIR E/ (ARCH_MOV)
+    ABRIR S/ (ARCH_SAL)
+
+    LEER_MAE()
+    LEER_MOV()        
+    cant_dup := 0
+
+    Mientras REG_MAE.CodFigurita <> HV o REG_MOV.CodFigurita <> HV Hacer
+        Si REG_MAE.CodFigurita < REG_MOV.CodFigurita Entonces
+            GRABAR(ARCH_SAL, REG_MAE)
+            LEER_MAE()
+        Contrario
+            Si REG_MAE.CodFigurita > REG_MOV.CodFigurita Entonces
+                resg_cod_figurita := REG_MOV.CodFigurita
+                REG_SAL.CodFigurita := resg_cod_figurita
+                REG_SAL.Cantidad := 1
+                REG_SAL.PermitirDuplicados := "NO"
+                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
+                LEER_MOV()
+
+                Mientras REG_MOV.CodFigurita = resg_cod_figurita Hacer
+                    // Como no puedo permitir duplicados de figuritas nuevas
+                    // creo que solo corresponde leer los demás movimientos.
+                    LEER_MOV()
+                Fin Mientras
+
+                // Interpreto que si "diff_días = TRUE" la cantidad de días
+                // es superior a 6, el máximo permitido de días que pueden
+                // transcurrir desde la fecha de solicitud.
+                Si NO diferencia_días Entonces
+                    GRABAR(ARCH_SAL, REG_SAL)
                 Fin Si
-        Fin Mientras
-        
-        Escribir("Se admitieron" cant_dup "figuritas duplicadas en el álbum del estudiante.")
-        
-        CERRAR(ARCH_MAE)
-        CERRAR(ARCH_MOV)
-        CERRAR(ARCH_SAL)
+            Contrario
+                REG_SAL := REG_MAE
+                diferencia_días := diff_días(6, REG_MOV.FechaSolicitud)
+
+                Mientras REG_MAE.CodFigurita = REG_MOV.CodFigurita Entonces
+                    Si REG_SAL.PermitirDuplicados = "SI" Entonces
+                        REG_SAL.Cantidad := REG_SAL.Cantidad + 1
+                        cant_dup := cant_dup + 1
+                    Fin Si
+                    LEER_MOV()
+                Fin Mientras
+
+                Si NO diferencia_días Entonces
+                    GRABAR(ARCH_SAL, REG_SAL)
+                Fin Si
+
+                LEER_MAE()
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Escribir("Se admitieron" cant_dup "figuritas duplicadas en el álbum del estudiante.")
+
+    CERRAR(ARCH_MAE)
+    CERRAR(ARCH_MOV)
+    CERRAR(ARCH_SAL)
 
 Fin Acción

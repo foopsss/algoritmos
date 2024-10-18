@@ -5,68 +5,68 @@ Acción 2.3.1b ES
 
 Ambiente
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Facturas = Registro
-                Clave = Registro
-                        NroCliente: N(5)
-                        NroFactura: N(8)
-                Fin Registro
-                FechaFactura: Fecha
-                Importe: N(3)
+    Facturas = Registro
+        Clave = Registro
+            NroCliente: N(5)
+            NroFactura: N(8)
         Fin Registro
+        FechaFactura: Fecha
+        Importe: N(3)
+    Fin Registro
 
-        ARCH: archivo de Facturas ordenado por Clave
-        REG: Facturas
+    ARCH: archivo de Facturas ordenado por Clave
+    REG: Facturas
 
-        Clientes = Registro
-                NroCliente: N(5)
-                Nombre: AN(100)
-                DNI: N(8)
-                CUIT: AN(13)
-                Domicilio: AN(100)
-        Fin Registro
-        
-        ARCH2: archivo de Clientes indexado por NroCliente
-        REG2: Clientes
-        
-        Procedimiento Inicializar() ES
-                cant_facturas_cliente := 0
-                monto_facturas_cliente := 0
-        Fin Procedimiento
+    Clientes = Registro
+        NroCliente: N(5)
+        Nombre: AN(100)
+        DNI: N(8)
+        CUIT: AN(13)
+        Domicilio: AN(100)
+    Fin Registro
+
+    ARCH2: archivo de Clientes indexado por NroCliente
+    REG2: Clientes
+
+    Procedimiento Inicializar() ES
+        cant_facturas_cliente := 0
+        monto_facturas_cliente := 0
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH)
-        ABRIR E/ (ARCH2)
-        LEER(ARCH, REG)
+    ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH2)
+    LEER(ARCH, REG)
 
-        Inicializar()        
-        Escribir("| Número de cliente | Nombre del cliente | Total facturado | Cantidad de facturas |")
+    Inicializar()
+    Escribir("| Número de cliente | Nombre del cliente | Total facturado | Cantidad de facturas |")
 
-        Mientras NFDA(ARCH) Hacer
-                REG2.NroCliente := REG.Clave.NroCliente
-                LEER(ARCH2, REG2)
-                
-                Si existe Entonces
-                        Mientras REG.Clave.NroCliente = REG2.NroCliente Hacer
-                                cant_facturas_cliente := cant_facturas_cliente + 1
-                                monto_facturas_cliente := monto_facturas_cliente + REG.Importe
-                                LEER(ARCH, REG)
-                        Fin Mientras
-                        
-                        Escribir(REG2.NroCliente, REG2.Nombre, monto_facturas_cliente, cant_facturas_cliente)
-                Contrario
-                        Escribir("El cliente con número" REG.Clave.NroCliente "no está registrado en el archivo de clientes.")
-                        LEER(ARCH, REG)
-                Fin Si
-        Fin Mientras
+    Mientras NFDA(ARCH) Hacer
+        REG2.NroCliente := REG.Clave.NroCliente
+        LEER(ARCH2, REG2)
 
-        CERRAR(ARCH)
-        CERRAR(ARCH2)
+        Si existe Entonces
+            Mientras REG.Clave.NroCliente = REG2.NroCliente Hacer
+                cant_facturas_cliente := cant_facturas_cliente + 1
+                monto_facturas_cliente := monto_facturas_cliente + REG.Importe
+                LEER(ARCH, REG)
+            Fin Mientras
+
+            Escribir(REG2.NroCliente, REG2.Nombre, monto_facturas_cliente, cant_facturas_cliente)
+        Contrario
+            Escribir("El cliente con número" REG.Clave.NroCliente "no está registrado en el archivo de clientes.")
+            LEER(ARCH, REG)
+        Fin Si
+    Fin Mientras
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

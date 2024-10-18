@@ -15,125 +15,125 @@ Acción CorteM4 ES
 
 Ambiente
 
-	Estadios = Registro
-		Clave = Registro
-			AnfitriónEdición: AN(50)
-			AñoEdición: N(4)
-			Sede: AN(50)
-			NombreEstadio: AN(100)
-		Fin Registro
-		Capacidad: N(5)
-		PartidosJugados: N(2)
-	Fin Registro
-	
-	ARCH: archivo de Estadios ordenado por Clave
-	REG: Estadios
+    Estadios = Registro
+        Clave = Registro
+            AnfitriónEdición: AN(50)
+            AñoEdición: N(4)
+            Sede: AN(50)
+            NombreEstadio: AN(100)
+        Fin Registro
+        Capacidad: N(5)
+        PartidosJugados: N(2)
+    Fin Registro
 
-	Salida = Registro
-		AnfitriónEdición: AN(50)
-		AñoEdición: N(4)
-		PartidosJugados: N(2)
-	Fin Registro
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
+    ARCH: archivo de Estadios ordenado por Clave
+    REG: Estadios
 
-	resg_sede, resg_anfitrión: alfanumérico
-	resg_año: entero
-	partidos_sede, partidos_año, partidos_anfitrión: entero
-	partidos_sede_masivos, partidos_año_masivos, partidos_anfitrión_masivos: entero
+    Salida = Registro
+        AnfitriónEdición: AN(50)
+        AñoEdición: N(4)
+        PartidosJugados: N(2)
+    Fin Registro
 
-	Procedimiento Inicializar() ES
-		resg_sede := REG.Clave.Sede
-		resg_año := REG.Clave.AñoEdición
-		resg_anfitrión := REG.Clave.AnfitriónEdición
-		partidos_sede := 0
-		partidos_sede_masivos := 0
-		partidos_año := 0
-		partidos_año_masivos := 0
-		partidos_anfitrión := 0
-		partidos_anfitrión_masivos := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteSede() ES
-		Escribir("Ciudad sede: " resg_sede)
-		Escribir("Cantidad de partidos jugados en la ciudad: " partidos_sede)
-		Escribir("Cantidad de partidos jugados en estadios con capacidad para 40.000 o más personas: " partidos_sede_masivos)
-		partidos_año := partidos_año + partidos_sede
-		partidos_año_masivos := partidos_año_masivos + partidos_sede_masivos
-		partidos_sede := 0
-		partidos_sede_masivos := 0
-		resg_sede := REG.Clave.Sede
-	Fin Procedimiento
-	
-	Procedimiento CorteAño() ES
-		// Algunas cosas de corte.
-		CorteSede()
-		Escribir("Año de la edición de Copa América: " resg_año)
-		Escribir("Cantidad de partidos jugados en el año: " partidos_año)
-		
-		// Grabo el archivo de salida.
-		REG2.AnfitriónEdición := resg_anfitrión
-		REG2.AñoEdición := resg_año
-		REG2.PartidosJugados := partidos_año
-		GRABAR(ARCH2, REG2)
-		
-		// Resto de las cosas de corte.
-		partidos_anfitrión := partidos_anfitrión + partidos_año
-		partidos_anfitrión_masivos := partidos_anfitrión_masivos + partidos_año_masivos
-		partidos_año := 0
-		partidos_año_masivos := 0
-		resg_año := REG.Clave.AñoEdición
-	Fin Procedimiento
-	
-	Procedimiento CorteAnfitrión() ES
-		CorteAño()
-		Escribir("País anfitrión de la Copa América: " resg_anfitrión)
-		Escribir("Cantidad de partidos jugados en el país: " partidos_anfitrión)
-		Escribir("Cantidad de partidos jugados en estadios con capacidad para 40.000 o más personas: " partidos_anfitrión_masivos)
-		partidos_anfitrión := 0
-		partidos_anfitrión_masivos := 0
-		resg_anfitrión := REG.Clave.AnfitriónEdición
-	Fin Procedimiento
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_sede, resg_anfitrión: alfanumérico
+    resg_año: entero
+    partidos_sede, partidos_año, partidos_anfitrión: entero
+    partidos_sede_masivos, partidos_año_masivos, partidos_anfitrión_masivos: entero
+
+    Procedimiento Inicializar() ES
+        resg_sede := REG.Clave.Sede
+        resg_año := REG.Clave.AñoEdición
+        resg_anfitrión := REG.Clave.AnfitriónEdición
+        partidos_sede := 0
+        partidos_sede_masivos := 0
+        partidos_año := 0
+        partidos_año_masivos := 0
+        partidos_anfitrión := 0
+        partidos_anfitrión_masivos := 0
+    Fin Procedimiento
+
+    Procedimiento CorteSede() ES
+        Escribir("Ciudad sede: " resg_sede)
+        Escribir("Cantidad de partidos jugados en la ciudad: " partidos_sede)
+        Escribir("Cantidad de partidos jugados en estadios con capacidad para 40.000 o más personas: " partidos_sede_masivos)
+        partidos_año := partidos_año + partidos_sede
+        partidos_año_masivos := partidos_año_masivos + partidos_sede_masivos
+        partidos_sede := 0
+        partidos_sede_masivos := 0
+        resg_sede := REG.Clave.Sede
+    Fin Procedimiento
+
+    Procedimiento CorteAño() ES
+        // Algunas cosas de corte.
+        CorteSede()
+        Escribir("Año de la edición de Copa América: " resg_año)
+        Escribir("Cantidad de partidos jugados en el año: " partidos_año)
+
+        // Grabo el archivo de salida.
+        REG2.AnfitriónEdición := resg_anfitrión
+        REG2.AñoEdición := resg_año
+        REG2.PartidosJugados := partidos_año
+        GRABAR(ARCH2, REG2)
+
+        // Resto de las cosas de corte.
+        partidos_anfitrión := partidos_anfitrión + partidos_año
+        partidos_anfitrión_masivos := partidos_anfitrión_masivos + partidos_año_masivos
+        partidos_año := 0
+        partidos_año_masivos := 0
+        resg_año := REG.Clave.AñoEdición
+    Fin Procedimiento
+
+    Procedimiento CorteAnfitrión() ES
+        CorteAño()
+        Escribir("País anfitrión de la Copa América: " resg_anfitrión)
+        Escribir("Cantidad de partidos jugados en el país: " partidos_anfitrión)
+        Escribir("Cantidad de partidos jugados en estadios con capacidad para 40.000 o más personas: " partidos_anfitrión_masivos)
+        partidos_anfitrión := 0
+        partidos_anfitrión_masivos := 0
+        resg_anfitrión := REG.Clave.AnfitriónEdición
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_anfitrión <> REG.Clave.AnfitriónEdición Entonces
-			CorteAnfitrión()
-		Contrario
-			Si resg_año <> REG.Clave.AñoEdición Entonces
-				CorteAño()
-			Contrario
-				Si resg_sede <> REG.Clave.Sede Entonces
-					CorteSede()
-				Fin Si
-			Fin Si
-		Fin Si
-		
-		// Primera consigna.
-		Si REG.Capacidad > 40000 Entonces
-			partidos_sede_masivos := partidos_sede_masivos + REG.PartidosJugados
-		Fin Si
-		
-		// Tercer consigna.
-		partidos_sede := partidos_sede + REG.PartidosJugados
-		
-		Escribir("Estadio: " REG.NombreEstadio)
-		Escribir("Partidos jugados en el estadio: " REG.PartidosJugados)
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteAnfitrión()
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_anfitrión <> REG.Clave.AnfitriónEdición Entonces
+            CorteAnfitrión()
+        Contrario
+            Si resg_año <> REG.Clave.AñoEdición Entonces
+                CorteAño()
+            Contrario
+                Si resg_sede <> REG.Clave.Sede Entonces
+                    CorteSede()
+                Fin Si
+            Fin Si
+        Fin Si
+
+        // Primera consigna.
+        Si REG.Capacidad > 40000 Entonces
+            partidos_sede_masivos := partidos_sede_masivos + REG.PartidosJugados
+        Fin Si
+
+        // Tercer consigna.
+        partidos_sede := partidos_sede + REG.PartidosJugados
+
+        Escribir("Estadio: " REG.NombreEstadio)
+        Escribir("Partidos jugados en el estadio: " REG.PartidosJugados)
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteAnfitrión()
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

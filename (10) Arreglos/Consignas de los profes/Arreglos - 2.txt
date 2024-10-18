@@ -24,89 +24,89 @@ Acción Arreglos2(arr_pelis: arreglo de [1..150] de Películas) ES
 
 Ambiente
 
-        Películas = Registro
-                ID: N(5)
-                Título: AN(100)
-                Director: AN(100)
-                AñoEstreno: N(4)
-                Duración: N(3)
-        Fin Registro
+    Películas = Registro
+        ID: N(5)
+        Título: AN(100)
+        Director: AN(100)
+        AñoEstreno: N(4)
+        Duración: N(3)
+    Fin Registro
 
-        PremiosPelículas = Registro
-                ID: N(5)
-                Director: AN(100)
-                Título: AN(100)
-                CantidadPremios: N(2)
-        Fin Registro
-        
-        ARCH: archivo de PremiosPelículas indexado por ID
-        REG: PremiosPelículas
-        
-        arr_nolan: arreglo de [1..150] de alfanumérico
-        
-        título_us, director_us, tit_may_dur_tarant: alfanumérico
-        año_est_us, premios_pel_us: entero
-        i, pos_mg, cont_nolan, may_dur_tarant: entero
+    PremiosPelículas = Registro
+        ID: N(5)
+        Director: AN(100)
+        Título: AN(100)
+        CantidadPremios: N(2)
+    Fin Registro
 
-        Procedimiento Inicializar() ES
-                cont_nolan := 0
-                may_dur_tarant := 0
-        Fin Procedimiento
+    ARCH: archivo de PremiosPelículas indexado por ID
+    REG: PremiosPelículas
 
-        Procedimiento ObtenerDatosUsuario() ES
-                Escribir("Introduzca el título de una película: ")
-                Leer(título_us)
-                Escribir("Introduzca el director de dicha película: ")
-                Leer(director_us)
-        Fin Procedimiento
+    arr_nolan: arreglo de [1..150] de alfanumérico
+
+    título_us, director_us, tit_may_dur_tarant: alfanumérico
+    año_est_us, premios_pel_us: entero
+    i, pos_mg, cont_nolan, may_dur_tarant: entero
+
+    Procedimiento Inicializar() ES
+        cont_nolan := 0
+        may_dur_tarant := 0
+    Fin Procedimiento
+
+    Procedimiento ObtenerDatosUsuario() ES
+        Escribir("Introduzca el título de una película: ")
+        Leer(título_us)
+        Escribir("Introduzca el director de dicha película: ")
+        Leer(director_us)
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH)
-        ObtenerDatosUsuario()
-        Inicializar()
+    ABRIR E/ (ARCH)
+    ObtenerDatosUsuario()
+    Inicializar()
 
-        Para i := 1 hasta 150 Hacer
-                Si arr_pelis[i].Director = "Christopher Nolan" Entonces
-                        cont_nolan := cont_nolan + 1
-                        arr_nolan[cont_nolan] := arr_pelis[cont_nolan].Título
-                Contrario
-                        Si arr_pelis[i].Director = "Quentin Tarantino" Entonces
-                                Si arr_pelis[i].Duración > may_dur_tarant Entonces
-                                        may_dur_tarant := arr_pelis[i].Duración
-                                        tit_may_dur_tarant := arr_pelis[i].Título
-                                Fin Si
-                        Fin Si
+    Para i := 1 hasta 150 Hacer
+        Si arr_pelis[i].Director = "Christopher Nolan" Entonces
+            cont_nolan := cont_nolan + 1
+            arr_nolan[cont_nolan] := arr_pelis[cont_nolan].Título
+        Contrario
+            Si arr_pelis[i].Director = "Quentin Tarantino" Entonces
+                Si arr_pelis[i].Duración > may_dur_tarant Entonces
+                    may_dur_tarant := arr_pelis[i].Duración
+                    tit_may_dur_tarant := arr_pelis[i].Título
                 Fin Si
-        
-                Si arr_pelis[i].Título = "Mean Girls" Entonces
-                        pos_mg := i
-                Fin Si
-                
-                Si arr_pelis[i].Título = título_us y arr_pelis[i].Director = director_us Entonces
-                        año_est_us := arr_pelis[i].AñoEstreno
-                        REG.ID := arr_pelis[i].ID
-                        LEER(ARCH, REG)
-                        
-                        Si existe Entonces
-                                premios_pel_us := REG.CantidadPremios
-                        Contrario
-                                premios_pel_us := 0
-                        Fin Si
-                Fin Si
-        Fin Para
-                
-        Escribir("Hubo un total de" cont_nolan "películas producidas por Christopher Nolan, que son: ")
-        
-        Para i := 1 hasta cont_nolan Hacer
-                Escribir(arr_nolan[i])
-        Fin Para
-        
-        Escribir("La película 'Mean Girls' se encuentra en la posición" pos_mg "del arreglo de entrada.")
-        Escribir("La película ingresada por el usuario se estrenó en el año" año_est_us ".")
-        Escribir("Dicha película ganó" premios_pel_us "premios.")
-        Escribir("La película de mayor duración de Quentin Tarantino es" tit_may_dur_tarant ".")
+            Fin Si
+        Fin Si
 
-        CERRAR(ARCH)
+        Si arr_pelis[i].Título = "Mean Girls" Entonces
+            pos_mg := i
+        Fin Si
+
+        Si arr_pelis[i].Título = título_us y arr_pelis[i].Director = director_us Entonces
+            año_est_us := arr_pelis[i].AñoEstreno
+            REG.ID := arr_pelis[i].ID
+            LEER(ARCH, REG)
+
+            Si existe Entonces
+                premios_pel_us := REG.CantidadPremios
+            Contrario
+                premios_pel_us := 0
+            Fin Si
+        Fin Si
+    Fin Para
+
+    Escribir("Hubo un total de" cont_nolan "películas producidas por Christopher Nolan, que son: ")
+
+    Para i := 1 hasta cont_nolan Hacer
+        Escribir(arr_nolan[i])
+    Fin Para
+
+    Escribir("La película 'Mean Girls' se encuentra en la posición" pos_mg "del arreglo de entrada.")
+    Escribir("La película ingresada por el usuario se estrenó en el año" año_est_us ".")
+    Escribir("Dicha película ganó" premios_pel_us "premios.")
+    Escribir("La película de mayor duración de Quentin Tarantino es" tit_may_dur_tarant ".")
+
+    CERRAR(ARCH)
 
 Fin Acción

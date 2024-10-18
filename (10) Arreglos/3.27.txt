@@ -2,103 +2,102 @@ Acción 3.27 ES
 
 Ambiente
 
-        Facturas = Registro
-                NroFactura: N(5)
-                NroCliente: N(5)
-                ZonaCliente: N(1)
-                TipoMercadería: N(1)
-                CantidadUnidades: N(2)
-                TotalGravado: N(3)
-                TotalExento: N(3)
-                ValorIVA: N(3)
-        Fin Registro
-        
-        ARCH: archivo de Facturas
-        REG: Facturas
-        
-        Totales = Registro
-                TotalGravado: N(4)
-                TotalExento: N(4)
-                TotalIVA: N(4)
-        Fin Registro
-        
-        tot: arreglo de [1..10, 1..5] de Totales
-        
-        i, j: entero
-        
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 10 Hacer
-                        Para j := 1 hasta 5 Hacer
-                                tot[i, j].TotalGravado := 0
-                                tot[i, j].TotalExento := 0
-                                tot[i, j].TotalIVA := 0
-                        Fin Para
-                Fin Para
-        Fin Procedimiento
+    Facturas = Registro
+        NroFactura: N(5)
+        NroCliente: N(5)
+        ZonaCliente: N(1)
+        TipoMercadería: N(1)
+        CantidadUnidades: N(2)
+        TotalGravado: N(3)
+        TotalExento: N(3)
+        ValorIVA: N(3)
+    Fin Registro
+
+    ARCH: archivo de Facturas
+    REG: Facturas
+
+    Totales = Registro
+        TotalGravado: N(4)
+        TotalExento: N(4)
+        TotalIVA: N(4)
+    Fin Registro
+
+    tot: arreglo de [1..10, 1..5] de Totales
+    i, j: entero
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 10 Hacer
+            Para j := 1 hasta 5 Hacer
+                tot[i, j].TotalGravado := 0
+                tot[i, j].TotalExento := 0
+                tot[i, j].TotalIVA := 0
+            Fin Para
+        Fin Para
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        i := REG.ZonaCliente
+        j := REG.TipoMercadería
+
+        // Sumo en la celda.
+        tot[i, j].TotalGravado := tot[i, j].TotalGravado + REG.TotalGravado
+        tot[i, j].TotalExento := tot[i, j].TotalExento + REG.TotalExento
+        tot[i, j].TotalIVA := tot[i, j].TotalIVA + REG.ValorIVA
+
+        // Sumo en los totales por zona.
+        tot[i, 5].TotalGravado := tot[i, 5].TotalGravado + REG.TotalGravado
+        tot[i, 5].TotalExento := tot[i, 5].TotalExento + REG.TotalExento
+        tot[i, 5].TotalIVA := tot[i, 5].TotalIVA + REG.ValorIVA
+
+        // Sumo en los totales por tipo de mercadería.
+        tot[10, j].TotalGravado := tot[10, j].TotalGravado + REG.TotalGravado
+        tot[10, j].TotalExento := tot[10, j].TotalExento + REG.TotalExento
+        tot[10, j].TotalIVA := tot[10, j].TotalIVA + REG.ValorIVA
+
+        // Sumo en el total general.
+        tot[10, 5].TotalGravado := tot[10, 5].TotalGravado + REG.TotalGravado
+        tot[10, 5].TotalExento := tot[10, 5].TotalGravado + REG.TotalExento
+        tot[10, 5].TotalIVA := tot[10, 5].TotalGravado + REG.ValorIVA
+
         LEER(ARCH, REG)
+    Fin Mientras
 
-        Inicializar()
-        
-        Mientras NFDA(ARCH) Hacer
-                i := REG.ZonaCliente
-                j := REG.TipoMercadería
-                
-                // Sumo en la celda.
-                tot[i, j].TotalGravado := tot[i, j].TotalGravado + REG.TotalGravado
-                tot[i, j].TotalExento := tot[i, j].TotalExento + REG.TotalExento
-                tot[i, j].TotalIVA := tot[i, j].TotalIVA + REG.ValorIVA
-                
-                // Sumo en los totales por zona.
-                tot[i, 5].TotalGravado := tot[i, 5].TotalGravado + REG.TotalGravado
-                tot[i, 5].TotalExento := tot[i, 5].TotalExento + REG.TotalExento
-                tot[i, 5].TotalIVA := tot[i, 5].TotalIVA + REG.ValorIVA
-                
-                // Sumo en los totales por tipo de mercadería.
-                tot[10, j].TotalGravado := tot[10, j].TotalGravado + REG.TotalGravado
-                tot[10, j].TotalExento := tot[10, j].TotalExento + REG.TotalExento
-                tot[10, j].TotalIVA := tot[10, j].TotalIVA + REG.ValorIVA
-                
-                // Sumo en el total general.
-                tot[10, 5].TotalGravado := tot[10, 5].TotalGravado + REG.TotalGravado
-                tot[10, 5].TotalExento := tot[10, 5].TotalGravado + REG.TotalExento
-                tot[10, 5].TotalIVA := tot[10, 5].TotalGravado + REG.ValorIVA
-                
-                LEER(ARCH, REG)
-        Fin Mientras
-
-        Para i := 1 hasta 9 Hacer
-                Escribir("Zona: " i)
-                
-                Para j := 1 hasta 4 Hacer
-                        Escribir("Tipo de mercadería: " j)
-                        Escribir("Total gravado: " tot[i, j].TotalGravado)
-                        Escribir("Total exento: " tot[i, j].TotalExento)
-                        Escribir("Total de IVA: " tot[i, j].TotalIVA)
-                Fin Para
-        Fin Para
-
-        Para i := 1 hasta 9 Hacer
-                Escribir("Zona: " i)
-                Escribir("Total gravado por zona: " tot[i, 5].TotalGravado)
-                Escribir("Total exento por zona: " tot[i, 5].TotalExento)
-                Escribir("Total por zona de IVA: " tot[i, 5].TotalIVA)
-        Fin Para
+    Para i := 1 hasta 9 Hacer
+        Escribir("Zona: " i)
 
         Para j := 1 hasta 4 Hacer
-                Escribir("Tipo de mercadería: " j)
-                Escribir("Total gravado por tipo: " tot[10, j].TotalGravado)
-                Escribir("Total exento por tipo: " tot[10, j].TotalExento)
-                Escribir("Total por tipo de IVA: " tot[10, j].TotalIVA)
+            Escribir("Tipo de mercadería: " j)
+            Escribir("Total gravado: " tot[i, j].TotalGravado)
+            Escribir("Total exento: " tot[i, j].TotalExento)
+            Escribir("Total de IVA: " tot[i, j].TotalIVA)
         Fin Para
+    Fin Para
 
-        Escribir("Total general gravado: " tot[10, 5].TotalGravado)
-        Escribir("Total general exento: " tot[10, 5].TotalExento)
-        Escribir("Total general de IVA: " tot[10, 5].TotalIVA)
+    Para i := 1 hasta 9 Hacer
+        Escribir("Zona: " i)
+        Escribir("Total gravado por zona: " tot[i, 5].TotalGravado)
+        Escribir("Total exento por zona: " tot[i, 5].TotalExento)
+        Escribir("Total por zona de IVA: " tot[i, 5].TotalIVA)
+    Fin Para
 
-        CERRAR(ARCH)
+    Para j := 1 hasta 4 Hacer
+        Escribir("Tipo de mercadería: " j)
+        Escribir("Total gravado por tipo: " tot[10, j].TotalGravado)
+        Escribir("Total exento por tipo: " tot[10, j].TotalExento)
+        Escribir("Total por tipo de IVA: " tot[10, j].TotalIVA)
+    Fin Para
+
+    Escribir("Total general gravado: " tot[10, 5].TotalGravado)
+    Escribir("Total general exento: " tot[10, 5].TotalExento)
+    Escribir("Total general de IVA: " tot[10, 5].TotalIVA)
+
+    CERRAR(ARCH)
 
 Fin Acción

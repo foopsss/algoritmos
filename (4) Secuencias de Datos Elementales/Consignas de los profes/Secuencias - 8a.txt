@@ -24,101 +24,101 @@ Acción Secuencias8 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v: carácter
+    sec: secuencia de carácter
+    v: carácter
 
-	resg_mov, ventas_sup, ventas_far, ventas_tec, ventas_otros, importe, i: entero
+    resg_mov, ventas_sup, ventas_far, ventas_tec, ventas_otros, importe, i: entero
 
-	Procedimiento Inicializar() ES
-		ventas_sup := 0
-		ventas_far := 0
-		ventas_tec := 0
-		ventas_otros := 0
-		importe := 0
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        ventas_sup := 0
+        ventas_far := 0
+        ventas_tec := 0
+        ventas_otros := 0
+        importe := 0
+    Fin Procedimiento
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
-	
-	Inicializar()
+    ARR(sec)
+    AVZ(sec, v)
 
-	Mientras NFDS(sec) Hacer
-		// Salto la categoría del cliente.
-		// No me interesa.
-		AVZ(sec, v)
-		
-		// Muestro el nombre del cliente.
-		Escribir("Cliente: ")
-		Mientras v <> "#" Hacer
-			Escribir(v)
-			AVZ(sec, v)
-		Fin Mientras
-		
-		// Resguardo la cantidad de movimientos.
-		AVZ(sec, v)
-		resg_mov := CharToInt(v)
-		
-		// Parto desde la cantidad de movimientos.
-		// Trato cada movimiento según a la consigna.
-		Para i := 1 hasta resg_mov Hacer
-			// Avanzo el detalle del movimiento
-			// porque no me importa.
-			Mientras v <> "%" Hacer
-				AVZ(sec, v)
-			Fin Mientras
-			
-			// Según el rubro, hago la acción correspondiente.
-			AVZ(sec, v)
-			Según v Hacer
-				= "S": ventas_sup := ventas_sup + 1
-				= "F": ventas_far := ventas_far + 1
-				= "T": ventas_tec := ventas_tec + 1
-				= "O": ventas_otros := ventas_otros + 1
-			Fin Según
-			
-			// Obtengo el importe para mostrar.
-			// Cuando termino de avanzar quedo
-			// parado en el siguiente movimiento
-			// si es que este existe. De lo contrario,
-			// quedo parado en el siguiente cliente.
-			AVZ(sec, v)
-			Escribir("Importe: ")
-			
-			Para i := 1 hasta 4 Hacer
-				Según i Hacer
-					= 1: importe := importe + CharToInt(v) * 1000
-					= 2: importe := importe + CharToInt(v) * 100
-					= 3: importe := importe + CharToInt(v) * 10
-					= 4: importe := importe + CharToInt(v) * 1
-				Fin Según
-				AVZ(sec, v)
-			Fin Para
-		Fin Para
-		
-		Escribir("Importe pagado por el cliente: " importe)
-	Fin Mientras
-	
-	Escribir("En el rubro 'Supermercado' se produjo un total de" ventas_sup "ventas.")
-	Escribir("En el rubro 'Farmacia' se produjo un total de" ventas_far "ventas.")
-	Escribir("En el rubro 'Tecnología' se produjo un total de" ventas_tec "ventas.")
-	Escribir("En el rubro 'Otros' se produjo un total de" ventas_otros "ventas.")
-	
-	CERRAR(sec)
+    Inicializar()
+
+    Mientras NFDS(sec) Hacer
+        // Salto la categoría del cliente.
+        // No me interesa.
+        AVZ(sec, v)
+
+        // Muestro el nombre del cliente.
+        Escribir("Cliente: ")
+        Mientras v <> "#" Hacer
+            Escribir(v)
+            AVZ(sec, v)
+        Fin Mientras
+
+        // Resguardo la cantidad de movimientos.
+        AVZ(sec, v)
+        resg_mov := CharToInt(v)
+
+        // Parto desde la cantidad de movimientos.
+        // Trato cada movimiento según a la consigna.
+        Para i := 1 hasta resg_mov Hacer
+            // Avanzo el detalle del movimiento
+            // porque no me importa.
+            Mientras v <> "%" Hacer
+                AVZ(sec, v)
+            Fin Mientras
+
+            // Según el rubro, hago la acción correspondiente.
+            AVZ(sec, v)
+            Según v Hacer
+                = "S": ventas_sup := ventas_sup + 1
+                = "F": ventas_far := ventas_far + 1
+                = "T": ventas_tec := ventas_tec + 1
+                = "O": ventas_otros := ventas_otros + 1
+            Fin Según
+
+            // Obtengo el importe para mostrar.
+            // Cuando termino de avanzar quedo
+            // parado en el siguiente movimiento
+            // si es que este existe. De lo contrario,
+            // quedo parado en el siguiente cliente.
+            AVZ(sec, v)
+            Escribir("Importe: ")
+
+            Para i := 1 hasta 4 Hacer
+                Según i Hacer
+                    = 1: importe := importe + CharToInt(v) * 1000
+                    = 2: importe := importe + CharToInt(v) * 100
+                    = 3: importe := importe + CharToInt(v) * 10
+                    = 4: importe := importe + CharToInt(v) * 1
+                Fin Según
+                AVZ(sec, v)
+            Fin Para
+        Fin Para
+
+        Escribir("Importe pagado por el cliente: " importe)
+    Fin Mientras
+
+    Escribir("En el rubro 'Supermercado' se produjo un total de" ventas_sup "ventas.")
+    Escribir("En el rubro 'Farmacia' se produjo un total de" ventas_far "ventas.")
+    Escribir("En el rubro 'Tecnología' se produjo un total de" ventas_tec "ventas.")
+    Escribir("En el rubro 'Otros' se produjo un total de" ventas_otros "ventas.")
+
+    CERRAR(sec)
 
 Fin Acción

@@ -2,51 +2,51 @@ Acción 2.2.5 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Fecha
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Fecha
 
-	Alumnos = Registro
-		NomAp: AN(50)
-		Carrera: ("ISI", "IEM", "IQ")
-		Legajo: N(5)
-		FechaNacimiento: Fecha
-		FechaIngreso: Fecha
-		DNI: N(8)
-		Sexo: ("M", "F")
-		FechaUltExAprob: Fecha
-		Nota: (1..100)
-	Fin Registro
-	
-	ARCH: archivo de Alumnos
-	REG: Alumnos
+    Alumnos = Registro
+        NomAp: AN(50)
+        Carrera: ("ISI", "IEM", "IQ")
+        Legajo: N(5)
+        FechaNacimiento: Fecha
+        FechaIngreso: Fecha
+        DNI: N(8)
+        Sexo: ("M", "F")
+        FechaUltExAprob: Fecha
+        Nota: (1..100)
+    Fin Registro
 
-	año_us: entero
+    ARCH: archivo de Alumnos
+    REG: Alumnos
 
-	Procedimiento ObtenerAñoUsuario() ES
-		Escribir("Ingrese el año actual: ")
-		Leer(año_us)
-	Fin Procedimiento
+    año_us: entero
+
+    Procedimiento ObtenerAñoUsuario() ES
+        Escribir("Ingrese el año actual: ")
+        Leer(año_us)
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	LEER(ARCH, REG)
-	
-	ObtenerAñoUsuario()
-	
-	Escribir("| Nro. de legajo | Apellido y nombre | Carrera |")
-	
-	Mientras NFDA(ARCH) Hacer
-		Si año_us - REG.FechaIngreso.Año = 1 y REG.Nota > 7 Entonces
-			Escribir(REG.Legajo, REG.NomAp, REG.Carrera)
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CERRAR(ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    ObtenerAñoUsuario()
+
+    Escribir("| Nro. de legajo | Apellido y nombre | Carrera |")
+
+    Mientras NFDA(ARCH) Hacer
+        Si año_us - REG.FechaIngreso.Año = 1 y REG.Nota > 7 Entonces
+            Escribir(REG.Legajo, REG.NomAp, REG.Carrera)
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CERRAR(ARCH)
 
 Fin Acción

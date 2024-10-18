@@ -30,121 +30,120 @@ Acción EstadísticoM3 ES
 
 Ambiente
 
-        Álbum = Registro
-                CodUsuario: (1..10)
-                CodFigurita: N(5)
-                Cantidad: N(2)
-                Tipo: ("C", "D", "V")
-        Fin Registro
-        
-        ARCH_AL: archivo de Álbum ordenado por CodUsuario
-        REG_AL: Álbum
+    Álbum = Registro
+        CodUsuario: (1..10)
+        CodFigurita: N(5)
+        Cantidad: N(2)
+        Tipo: ("C", "D", "V")
+    Fin Registro
 
-        Amigos = Registro
-                CodUsuario: (1..10)
-                Apellido: AN(100)
-                Nombre: AN(100)
-                Celular: N(10)
-        Fin Registro
-        
-        ARCH_AMI: archivo de Amigos indexado por CodUsuario
-        REG_AMI: Amigos
+    ARCH_AL: archivo de Álbum ordenado por CodUsuario
+    REG_AL: Álbum
 
-        totales: arreglo de [1..11, 1..4] de entero
-        
-        i, j, resg_us, max_fig: entero
-        porc_fig_us: real
-        tipo_álbum, resg_us_nom, resg_us_ap: alfanumérico
+    Amigos = Registro
+        CodUsuario: (1..10)
+        Apellido: AN(100)
+        Nombre: AN(100)
+        Celular: N(10)
+    Fin Registro
 
-        Procedimiento Inicializar() ES
-                Para i := 1 hasta 11 Hacer
-                        Para j := 1 hasta 4 Hacer
-                                totales[i, j] := 0
-                        Fin Para
-                Fin Para
-                
-                max_fig := LV
-        Fin Procedimiento
-        
-        Función DeterminarColumna(entrada: carácter): entero ES
-                Según entrada Hacer
-                        = "C": DeterminarColumna := 1
-                        = "D": DeterminarColumna := 2
-                        = "V": DeterminarColumna := 3
-                Fin Según
-        Fin Función
-        
-        Función DeterminarÁlbum(entrada: entero): alfanumérico ES
-                Según entrada Hacer
-                        = 1: DeterminarÁlbum := "Común"
-                        = 2: DeterminarÁlbum := "Dorado"
-                        = 3: DeterminarÁlbum := "Virtual"
-                Fin Según
-        Fin Función
+    ARCH_AMI: archivo de Amigos indexado por CodUsuario
+    REG_AMI: Amigos
+
+    totales: arreglo de [1..11, 1..4] de entero
+
+    i, j, resg_us, max_fig: entero
+    porc_fig_us: real
+    tipo_álbum, resg_us_nom, resg_us_ap: alfanumérico
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 11 Hacer
+            Para j := 1 hasta 4 Hacer
+                totales[i, j] := 0
+            Fin Para
+        Fin Para
+
+        max_fig := LV
+    Fin Procedimiento
+
+    Función DeterminarColumna(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "C": DeterminarColumna := 1
+            = "D": DeterminarColumna := 2
+            = "V": DeterminarColumna := 3
+        Fin Según
+    Fin Función
+
+    Función DeterminarÁlbum(entrada: entero): alfanumérico ES
+        Según entrada Hacer
+            = 1: DeterminarÁlbum := "Común"
+            = 2: DeterminarÁlbum := "Dorado"
+            = 3: DeterminarÁlbum := "Virtual"
+        Fin Según
+    Fin Función
 
 Proceso
 
-        ABRIR E/ (ARCH_AL)
-        ABRIR E/ (ARCH_AMI)
-        
+    ABRIR E/ (ARCH_AL)
+    ABRIR E/ (ARCH_AMI)
+
+    LEER(ARCH_AL, REG_AL)
+    Inicializar()
+
+    Mientras NFDA(ARCH_AL) Hacer
+        i := REG_AL.CodUsuario
+        j := DeterminarColumna(REG_AL.Tipo)
+
+        totales[i, j] := totales[i, j] + REG_AL.Cantidad
+        totales[i, 4] := totales[i, 4] + REG_AL.Cantidad
+        totales[11, j] := totales[11, j] + REG_AL.Cantidad
+        totales[11, 4] := totales[11, 4] + REG_AL.Cantidad
+
         LEER(ARCH_AL, REG_AL)
-        Inicializar()
-        
-        Mientras NFDA(ARCH_AL) Hacer
-                i := REG_AL.CodUsuario
-                j := DeterminarColumna(REG_AL.Tipo)
-                
-                totales[i, j] := totales[i, j] + REG_AL.Cantidad
-                totales[i, 4] := totales[i, 4] + REG_AL.Cantidad
-                totales[11, j] := totales[11, j] + REG_AL.Cantidad
-                totales[11, 4] := totales[11, 4] + REG_AL.Cantidad
-                
-                LEER(ARCH_AL, REG_AL)
-        Fin Mientras
-        
-        Para i := 1 hasta 10 Hacer
-                Escribir("Usuario: " i)
-                
-                Para j := 1 hasta 3 Hacer
-                        tipo_álbum := DeterminarÁlbum(j)
-                        Escribir("Tipo de álbum: " tipo_álbum)
-                        Escribir("Total de figuritas: " totales[i, j])
-                Fin Para
-        Fin Para
-        
-        Para i := 1 hasta 10 Hacer
-                // Nombre y apellido del usuario que más figuritas coleccionó.
-                Si max_fig < totales[i, 4] Entonces
-                        resg_us := i
-                        max_fig := totales[i, 4]
-                        
-                        REG_AMI.CodUsuario := resg_us
-                        LEER(ARCH_AMI, REG_AMI)
-                        
-                        Si existe Entonces
-                                resg_us_nom := REG_AMI.Nombre
-                                resg_us_ap := REG_AMI.Apellido
-                        Fin Si
-                Fin Si
-                
-                // Porcentaje de figuritas descubierto por cada usuario.
-                porc_fig_us := (totales[i, 4] * 100) / totales[11, 4]
-                
-                // Totales generales por usuario de figuritas.
-                Escribir("Usuario: " i)
-                Escribir("Total de figuritas coleccionadas: " totales[i, 4])
-                Escribir("Porcentaje de figuritas descubiertas por el usuario: " porc_fig_us)
-        Fin Para
-        
+    Fin Mientras
+
+    Para i := 1 hasta 10 Hacer
+        Escribir("Usuario: " i)
+
         Para j := 1 hasta 3 Hacer
-                tipo_álbum := DeterminarÁlbum(j)
-                Escribir("Tipo de álbum: " tipo_álbum)
-                Escribir("Total de figuritas del álbum: " totales[11, j])
+            tipo_álbum := DeterminarÁlbum(j)
+            Escribir("Tipo de álbum: " tipo_álbum)
+            Escribir("Total de figuritas: " totales[i, j])
         Fin Para
-        
-        Escribir("El usuario que más figuritas coleccionó se llama" resg_us_nom "y su apellido es" resg_us_ap ".")
-        
-        CERRAR(ARCH_AL)
-        CERRAR(ARCH_AMI)
+    Fin Para
+
+    Para i := 1 hasta 10 Hacer
+        // Nombre y apellido del usuario que más figuritas coleccionó.
+        Si max_fig < totales[i, 4] Entonces
+            resg_us := i
+            max_fig := totales[i, 4]
+            REG_AMI.CodUsuario := resg_us
+            LEER(ARCH_AMI, REG_AMI)
+
+            Si existe Entonces
+                resg_us_nom := REG_AMI.Nombre
+                resg_us_ap := REG_AMI.Apellido
+            Fin Si
+        Fin Si
+
+        // Porcentaje de figuritas descubierto por cada usuario.
+        porc_fig_us := (totales[i, 4] * 100) / totales[11, 4]
+
+        // Totales generales por usuario de figuritas.
+        Escribir("Usuario: " i)
+        Escribir("Total de figuritas coleccionadas: " totales[i, 4])
+        Escribir("Porcentaje de figuritas descubiertas por el usuario: " porc_fig_us)
+    Fin Para
+
+    Para j := 1 hasta 3 Hacer
+        tipo_álbum := DeterminarÁlbum(j)
+        Escribir("Tipo de álbum: " tipo_álbum)
+        Escribir("Total de figuritas del álbum: " totales[11, j])
+    Fin Para
+
+    Escribir("El usuario que más figuritas coleccionó se llama" resg_us_nom "y su apellido es" resg_us_ap ".")
+
+    CERRAR(ARCH_AL)
+    CERRAR(ARCH_AMI)
 
 Fin Acción

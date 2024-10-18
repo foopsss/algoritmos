@@ -31,107 +31,107 @@ Acción ActualizaciónSecuencial2 ES
 
 Ambiente
 
-        Libros = Registro
-                IDLibro: N(5)
-                Tema: ("MB", "ISI", "IEM", "IQ")
-                Título: AN(100)
-                CantActual: N(2)
-        Fin Registro
+    Libros = Registro
+        IDLibro: N(5)
+        Tema: ("MB", "ISI", "IEM", "IQ")
+        Título: AN(100)
+        CantActual: N(2)
+    Fin Registro
 
-        LIBROS_ENT, LIBROS_SAL: archivo de Libros ordenado por IDLibro
-        REG_MAE, REG_SAL: Libros
+    LIBROS_ENT, LIBROS_SAL: archivo de Libros ordenado por IDLibro
+    REG_MAE, REG_SAL: Libros
 
-        Movimientos = Registro
-                IDLibro: N(5)
-                CodMov: AN(1)
-                Tema: ("MB", "ISI", "IEM", "IQ")
-                Título: AN(100)
-        Fin Registro
+    Movimientos = Registro
+        IDLibro: N(5)
+        CodMov: AN(1)
+        Tema: ("MB", "ISI", "IEM", "IQ")
+        Título: AN(100)
+    Fin Registro
 
-        ARCH_MOV: archivo de Movimientos ordenado por IDLibro y CodMov
-        REG_MOV: Movimientos
-        
-        resg_id_libro: entero
+    ARCH_MOV: archivo de Movimientos ordenado por IDLibro y CodMov
+    REG_MOV: Movimientos
 
-        Procedimiento LEER_LIBROS() ES
-                LEER(LIBROS_ENT, REG_MAE)
-                Si FDA(LIBROS_ENT) Entonces
-                        REG_MAE.IDLibro := HV
-                Fin Si
-        Fin Procedimiento
+    resg_id_libro: entero
 
-        Procedimiento LEER_MOVIMIENTOS() ES
-                LEER(ARCH_MOV, REG_MOV)
-                Si FDA(ARCH_MOV) Entonces
-                        REG_MOV.IDLibro := HV
-                Fin Si
-        Fin Procedimiento
+    Procedimiento LEER_LIBROS() ES
+        LEER(LIBROS_ENT, REG_MAE)
+        Si FDA(LIBROS_ENT) Entonces
+            REG_MAE.IDLibro := HV
+        Fin Si
+    Fin Procedimiento
 
-        Procedimiento ModificarLibro() ES
-                Si REG_MOV.Tema <> "" Entonces
-                        REG_SAL.Tema := REG_MOV.Tema
-                Fin Si
+    Procedimiento LEER_MOVIMIENTOS() ES
+        LEER(ARCH_MOV, REG_MOV)
+        Si FDA(ARCH_MOV) Entonces
+            REG_MOV.IDLibro := HV
+        Fin Si
+    Fin Procedimiento
 
-                Si REG_MOV.Título <> "" Entonces
-                        REG_SAL.Título := REG_MOV.Título
-                Fin Si
-        Fin Procedimiento
+    Procedimiento ModificarLibro() ES
+        Si REG_MOV.Tema <> "" Entonces
+            REG_SAL.Tema := REG_MOV.Tema
+        Fin Si
+
+        Si REG_MOV.Título <> "" Entonces
+            REG_SAL.Título := REG_MOV.Título
+        Fin Si
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (LIBROS_ENT)
-        ABRIR E/ (ARCH_MOV)
-        ABRIR S/ (LIBROS_SAL)
+    ABRIR E/ (LIBROS_ENT)
+    ABRIR E/ (ARCH_MOV)
+    ABRIR S/ (LIBROS_SAL)
 
-        LEER_LIBROS()
-        LEER_MOVIMIENTOS()
-        
-        Mientras REG_MAE.IDLibro <> HV o REG_MOV.IDLibro <> HV Hacer
-                Si REG_MAE.IDLibro < REG_MOV.IDLibro Entonces
-                        GRABAR(LIBROS_SAL, REG_MAE)
-                        LEER_LIBROS()
-                Contrario
-                        Si REG_MAE.IDLibro > REG_MOV.IDLibro Entonces
-                                resg_id_libro := REG_MOV.IDLibro
-                                REG_SAL.IDLibro := resg_id_libro
-                                REG_SAL.Tema := REG_MOV.Tema
-                                REG_SAL.Título := REG_MOV.Título
-                                REG_SAL.CantActual := 1
-                                LEER_MOVIMIENTOS()
-                                
-                                Mientras resg_id_libro = REG_MOV.IDLibro Hacer
-                                        Según REG_MOV.CodMov Hacer
-                                                = "A": REG_SAL.CantActual := REG_SAL.CantActual + 1
-                                                = "B": REG_SAL.CantActual := REG_SAL.CantActual - 1
-                                                = "M": ModificarLibro()
-                                        Fin Según
-                                        LEER_MOVIMIENTOS()
-                                Fin Mientras
-                                
-                                Si REG_SAL.CantActual > 0 Entonces
-                                        GRABAR(LIBROS_SAL, REG_SAL)
-                                Fin Si
-                        Contrario
-                                REG_SAL := REG_MAE
-                                
-                                Mientras REG_SAL.IDLibro = REG_MOV.IDLibro Hacer
-                                        Según REG_MOV.CodMov Hacer
-                                                = "A": REG_SAL.CantActual := REG_SAL.CantActual + 1
-                                                = "B": REG_SAL.CantActual := REG_SAL.CantActual - 1
-                                                = "M": ModificarLibro()
-                                        Fin Según
-                                        LEER_MOVIMIENTOS()
-                                Fin Mientras
-                                
-                                Si REG_SAL.CantActual > 0 Entonces
-                                        GRABAR(LIBROS_SAL, REG_SAL)
-                                Fin Si
-                        Fin Si
+    LEER_LIBROS()
+    LEER_MOVIMIENTOS()
+
+    Mientras REG_MAE.IDLibro <> HV o REG_MOV.IDLibro <> HV Hacer
+        Si REG_MAE.IDLibro < REG_MOV.IDLibro Entonces
+            GRABAR(LIBROS_SAL, REG_MAE)
+            LEER_LIBROS()
+        Contrario
+            Si REG_MAE.IDLibro > REG_MOV.IDLibro Entonces
+                resg_id_libro := REG_MOV.IDLibro
+                REG_SAL.IDLibro := resg_id_libro
+                REG_SAL.Tema := REG_MOV.Tema
+                REG_SAL.Título := REG_MOV.Título
+                REG_SAL.CantActual := 1
+                LEER_MOVIMIENTOS()
+
+                Mientras resg_id_libro = REG_MOV.IDLibro Hacer
+                    Según REG_MOV.CodMov Hacer
+                        = "A": REG_SAL.CantActual := REG_SAL.CantActual + 1
+                        = "B": REG_SAL.CantActual := REG_SAL.CantActual - 1
+                        = "M": ModificarLibro()
+                    Fin Según
+                    LEER_MOVIMIENTOS()
+                Fin Mientras
+
+                Si REG_SAL.CantActual > 0 Entonces
+                    GRABAR(LIBROS_SAL, REG_SAL)
                 Fin Si
-        Fin Mientras
-        
-        CERRAR(LIBROS_ENT)
-        CERRAR(ARCH_MOV)
-        CERRAR(LIBROS_SAL)
+            Contrario
+                REG_SAL := REG_MAE
+
+                Mientras REG_SAL.IDLibro = REG_MOV.IDLibro Hacer
+                    Según REG_MOV.CodMov Hacer
+                        = "A": REG_SAL.CantActual := REG_SAL.CantActual + 1
+                        = "B": REG_SAL.CantActual := REG_SAL.CantActual - 1
+                        = "M": ModificarLibro()
+                    Fin Según
+                    LEER_MOVIMIENTOS()
+                Fin Mientras
+
+                Si REG_SAL.CantActual > 0 Entonces
+                    GRABAR(LIBROS_SAL, REG_SAL)
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    CERRAR(LIBROS_ENT)
+    CERRAR(ARCH_MOV)
+    CERRAR(LIBROS_SAL)
 
 Fin Acción

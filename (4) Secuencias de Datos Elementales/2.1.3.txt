@@ -2,24 +2,24 @@ Acción 2.1.3 ES
 
 Ambiente
 
-	sec_ent, sec_sal: secuencia de carácter
-	v_ent: carácter
+    sec_ent, sec_sal: secuencia de carácter
+    v_ent: carácter
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v)
-	CREAR(sec_sal)
-	
-	Mientras NFDS(sec) Hacer
-		Si v_ent <> "$" Entonces
-			GRABAR(sec_sal, v_ent)
-		Fin Si
-		
-		AVZ(sec_ent, v_ent)
-	Fin Mientras
-	
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v)
+    CREAR(sec_sal)
+
+    Mientras NFDS(sec) Hacer
+        Si v_ent <> "$" Entonces
+            GRABAR(sec_sal, v_ent)
+        Fin Si
+
+        AVZ(sec_ent, v_ent)
+    Fin Mientras
+
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción

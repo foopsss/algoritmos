@@ -2,23 +2,23 @@ Acción 2.1.4 ES
 
 Ambiente
 
-	sec: secuencia de entero
-	v, cant_socios: entero
+    sec: secuencia de entero
+    v, cant_socios: entero
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
+    ARR(sec)
+    AVZ(sec, v)
 
-	cant_socios := 0
+    cant_socios := 0
 
-	Mientras NFDS(sec) Hacer
-		cant_socios := cant_socios + 1
-		AVZ(sec, v)
-	Fin Mientras
+    Mientras NFDS(sec) Hacer
+        cant_socios := cant_socios + 1
+        AVZ(sec, v)
+    Fin Mientras
 
-	Escribir("Hay" cant_socios "socios registrados.")
+    Escribir("Hay" cant_socios "socios registrados.")
 
-	CERRAR(sec)
+    CERRAR(sec)
 
 Fin Acción

@@ -18,108 +18,108 @@ Acción CorteM2 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-	Ventas = Registro
-		Clave = Registro
-			Provincia: AN(100)
-			Ciudad: AN(100)
-			Plataforma: AN(100)
-			FechaVentas: Fecha
-		Fin Registro
-		Entradas: N(4)
-	Fin Registro
-	
-	ARCH: archivo de Ventas ordenado por Clave
-	REG: Ventas
-	
-	Salida = Registro
-		Provincia: AN(100)
-		Ciudad: AN(100)
-		Entradas: N(4)
-	Fin Registro
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
-	
-	resg_plataforma, resg_ciudad, resg_provincia: alfanumérico
-	ventas_plat, ventas_ciudad: entero
-	
-	Procedimiento Inicializar() ES
-		resg_plataforma := REG.Clave.Plataforma
-		resg_ciudad := REG.Clave.Ciudad
-		resg_provincia := REG.Clave.Provincia
-		ventas_plat := 0
-		ventas_ciudad := 0
-	Fin Procedimiento
-	
-	Procedimiento CortePlataforma() ES
-		Escribir("Plataforma: " resg_plataforma)
-		Escribir("Entradas vendidas: " ventas_plat)
-		ventas_ciudad := ventas_ciudad + ventas_plat
-		ventas_plat := 0
-		resg_plataforma := REG.Clave.Plataforma
-	Fin Procedimiento
+    Ventas = Registro
+        Clave = Registro
+            Provincia: AN(100)
+            Ciudad: AN(100)
+            Plataforma: AN(100)
+            FechaVentas: Fecha
+        Fin Registro
+        Entradas: N(4)
+    Fin Registro
 
-	Procedimiento CorteCiudad() ES
-		// Algunas cosas de corte.
-		CortePlataforma()
-		Escribir("Ciudad: " resg_ciudad)
-		Escribir("Entradas vendidas: " ventas_ciudad)
-		
-		// Grabo el archivo de salida.
-		Si ventas_ciudad > 1000 Entonces
-			REG2.Provincia := resg_provincia
-			REG2.Ciudad := resg_ciudad
-			REG2.Entradas := ventas_ciudad
-			GRABAR(ARCH2, REG2)
-		Fin Si
-		
-		// Resto de las cosas de corte.
-		ventas_ciudad := 0
-		resg_ciudad := REG.Clave.Ciudad
-	Fin Procedimiento
+    ARCH: archivo de Ventas ordenado por Clave
+    REG: Ventas
 
-	Procedimiento CorteProvincia() ES
-		CorteCiudad()
-		resg_provincia := REG.Clave.Provincia
-	Fin Procedimiento
+    Salida = Registro
+        Provincia: AN(100)
+        Ciudad: AN(100)
+        Entradas: N(4)
+    Fin Registro
+
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_plataforma, resg_ciudad, resg_provincia: alfanumérico
+    ventas_plat, ventas_ciudad: entero
+
+    Procedimiento Inicializar() ES
+        resg_plataforma := REG.Clave.Plataforma
+        resg_ciudad := REG.Clave.Ciudad
+        resg_provincia := REG.Clave.Provincia
+        ventas_plat := 0
+        ventas_ciudad := 0
+    Fin Procedimiento
+
+    Procedimiento CortePlataforma() ES
+        Escribir("Plataforma: " resg_plataforma)
+        Escribir("Entradas vendidas: " ventas_plat)
+        ventas_ciudad := ventas_ciudad + ventas_plat
+        ventas_plat := 0
+        resg_plataforma := REG.Clave.Plataforma
+    Fin Procedimiento
+
+    Procedimiento CorteCiudad() ES
+        // Algunas cosas de corte.
+        CortePlataforma()
+        Escribir("Ciudad: " resg_ciudad)
+        Escribir("Entradas vendidas: " ventas_ciudad)
+
+        // Grabo el archivo de salida.
+        Si ventas_ciudad > 1000 Entonces
+            REG2.Provincia := resg_provincia
+            REG2.Ciudad := resg_ciudad
+            REG2.Entradas := ventas_ciudad
+            GRABAR(ARCH2, REG2)
+        Fin Si
+
+        // Resto de las cosas de corte.
+        ventas_ciudad := 0
+        resg_ciudad := REG.Clave.Ciudad
+    Fin Procedimiento
+
+    Procedimiento CorteProvincia() ES
+        CorteCiudad()
+        resg_provincia := REG.Clave.Provincia
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_prov <> REG.Clave.Provincia Entonces
-			CorteProvincia()
-		Contrario
-			Si resg_ciudad <> REG.Clave.Ciudad Entonces
-				CorteCiudad()
-			Contrario
-				Si resg_plat <> REG.Clave.Plataforma Entonces
-					CortePlataforma()
-				Fin Si
-			Fin Si
-		Fin Si
-		
-		Si REG.Clave.FechaVentas.Mes >= 6 Entonces
-			ventas_plat := ventas_plat + REG.Entradas
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteProvincia()
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_prov <> REG.Clave.Provincia Entonces
+            CorteProvincia()
+        Contrario
+            Si resg_ciudad <> REG.Clave.Ciudad Entonces
+                CorteCiudad()
+            Contrario
+                Si resg_plat <> REG.Clave.Plataforma Entonces
+                    CortePlataforma()
+                Fin Si
+            Fin Si
+        Fin Si
+
+        Si REG.Clave.FechaVentas.Mes >= 6 Entonces
+            ventas_plat := ventas_plat + REG.Entradas
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteProvincia()
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

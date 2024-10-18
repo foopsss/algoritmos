@@ -2,75 +2,75 @@ Acción 2.2.9 ES
 
 Ambiente
 
-	inc_cal = 0,1
-	inc_ind = 0,25
-	inc_acc = 0,5
+    inc_cal = 0,1
+    inc_ind = 0,25
+    inc_acc = 0,5
 
-	Productos = Registro
-		CodProd: N(5)
-		Tipo: (1, 2, 3)
-		Marca: AN(50)
-		Modelo: AN(50)
-		Descripción: AN(100)
-		CantidadExistente: N(2)
-		PrecioUnitario: N(2)
-	Fin Registro
-	
-	ARCH, ARCH2: archivo de Productos ordenado por CodProd
-	REG, REG2: Productos
-	
-	cant_art, cant_cal, cant_ind, cant_acc: entero
-	
-	Procedimiento Inicializar() ES
-		cant_art := 0
-		cant_cal := 0
-		cant_ind := 0
-		cant_acc := 0
-	Fin Procedimiento
-	
-	Procedimiento TratamientoCalzados() ES
-		cant_cal := cant_cal + 1
-		REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_cal)
-	Fin Procedimiento
-	
-	Procedimiento TratamientoIndumentaria() ES
-		cant_ind := cant_ind + 1
-		REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_ind)
-	Fin Procedimiento
-	
-	Procedimiento TratamientoAccesorios() ES
-		cant_acc := cant_acc + 1
-		REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_acc)
-	Fin Procedimiento
+    Productos = Registro
+        CodProd: N(5)
+        Tipo: (1, 2, 3)
+        Marca: AN(50)
+        Modelo: AN(50)
+        Descripción: AN(100)
+        CantidadExistente: N(2)
+        PrecioUnitario: N(2)
+    Fin Registro
+
+    ARCH, ARCH2: archivo de Productos ordenado por CodProd
+    REG, REG2: Productos
+
+    cant_art, cant_cal, cant_ind, cant_acc: entero
+
+    Procedimiento Inicializar() ES
+        cant_art := 0
+        cant_cal := 0
+        cant_ind := 0
+        cant_acc := 0
+    Fin Procedimiento
+
+    Procedimiento TratamientoCalzados() ES
+        cant_cal := cant_cal + 1
+        REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_cal)
+    Fin Procedimiento
+
+    Procedimiento TratamientoIndumentaria() ES
+        cant_ind := cant_ind + 1
+        REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_ind)
+    Fin Procedimiento
+
+    Procedimiento TratamientoAccesorios() ES
+        cant_acc := cant_acc + 1
+        REG2.PrecioUnitario := REG.PrecioUnitario + (REG.PrecioUnitario * inc_acc)
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		cant_art := cant_art + 1
-		REG2 := REG
-		
-		Según REG.Tipo Hacer
-			= 1: TratamientoCalzados()
-			= 2: TratamientoIndumentaria()
-			= 3: TratamientoAccesorios()
-		Fin Según
-		
-		GRABAR(ARCH2, REG2)
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	Escribir("Cantidad de artículos pertenecientes al rubro calzados: " cant_cal)
-	Escribir("Cantidad de artículos pertenecientes al rubro indumentaria: " cant_ind)
-	Escribir("Cantidad de artículos pertenecientes al rubro accesorios: " cant_acc)
-	Escribir("Cantidad total de artículos: " cant_art)
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        cant_art := cant_art + 1
+        REG2 := REG
+
+        Según REG.Tipo Hacer
+            = 1: TratamientoCalzados()
+            = 2: TratamientoIndumentaria()
+            = 3: TratamientoAccesorios()
+        Fin Según
+
+        GRABAR(ARCH2, REG2)
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    Escribir("Cantidad de artículos pertenecientes al rubro calzados: " cant_cal)
+    Escribir("Cantidad de artículos pertenecientes al rubro indumentaria: " cant_ind)
+    Escribir("Cantidad de artículos pertenecientes al rubro accesorios: " cant_acc)
+    Escribir("Cantidad total de artículos: " cant_art)
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

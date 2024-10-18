@@ -53,108 +53,106 @@ Acción SecuenciasM9 ES
 
 Ambiente
 
-	doc: secuencia de carácter
-	vd: carácter
-	
-	edad: secuencia de entero
-	ve: entero
-	
-	región_us: carácter
-	coincide_región: lógico
-	i, jubilables, no_jubilables, edad_doc, aportes_doc: entero
-	
-	Procedimiento Inicializar() ES
-		jubilables := 0
-		no_jubilables := 0
-	Fin Procedimiento
-	
-	Procedimiento ObtenerRegiónUsuario() ES
-		Escribir("Introduzca una región: ")
-		Leer(región_us)
-	Fin Procedimiento
+    doc: secuencia de carácter
+    vd: carácter
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    edad: secuencia de entero
+    ve: entero
+
+    región_us: carácter
+    coincide_región: lógico
+    i, jubilables, no_jubilables, edad_doc, aportes_doc: entero
+
+    Procedimiento Inicializar() ES
+        jubilables := 0
+        no_jubilables := 0
+    Fin Procedimiento
+
+    Procedimiento ObtenerRegiónUsuario() ES
+        Escribir("Introduzca una región: ")
+        Leer(región_us)
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(doc)
-	ARR(edad)
-	CREAR(jubilar)
+    ARR(doc)
+    ARR(edad)
+    CREAR(jubilar)
 
-	AVZ(doc, vd)
-	AVZ(edad, ve)
-	
-	Inicializar()
-	ObtenerRegiónUsuario()
+    AVZ(doc, vd)
+    AVZ(edad, ve)
 
-	Mientras NFDS(doc) Hacer
-		Escribir("Regional: ")
-		
-		Para i := 1 hasta 3 Hacer
-			Si i = 3 Entonces
-				Si vd = región_us Entonces
-					coincide_región := V
-				Contrario
-					coincide_región := F
-				Fin Si
-			Fin Si
-			
-			Escribir(vd)
-			AVZ(doc, vd)
-		Fin Para
-		
-		AVZ(doc, vd)
-		
-		Mientras vd <> "+" Hacer
-			edad_doc := ve
-			AVZ(edad, ve)
-			aportes_doc := ve
-			
-			Si edad_doc >= 60 y edad_doc <= 70 y aportes_doc >= 30 Entonces
-				jubilables := jubilables + 1
-				
-				Si coincide_región Entonces
-					Mientras vd <> "#" y vd <> "+" Hacer
-						GRABAR(jubilar, vd)
-						AVZ(doc, vd)
-					Fin Mientras
-				Fin Si
-			Contrario
-				no_jubilables := no_jubilables + 1
-				
-				Mientras vd <> "#" y vd <> "+" Hacer
-					AVZ(doc, vd)
-				Fin Mientras
-			Fin Si
-			
-			Si vd <> "+" Entonces
-				AVZ(doc, vd)
-			Fin Si
-		Fin Mientras
-		
-		Escribir("La cantidad de docentes que pueden jubilarse es de" jubilables "docentes.")
-		Escribir("La cantidad de docentes que no pueden jubilarse es de" no_jubilables "docentes.")
-		
-		Inicializar()
-		AVZ(doc, vd)
-		AVZ(edad, ve)
-	Fin Mientras
+    Inicializar()
+    ObtenerRegiónUsuario()
 
-	CERRAR(doc)
-	CERRAR(edad)
-	CERRAR(jubilar)
+    Mientras NFDS(doc) Hacer
+        Escribir("Regional: ")
+
+        Para i := 1 hasta 3 Hacer
+            Si i = 3 Entonces
+                Si vd = región_us Entonces
+                    coincide_región := V
+                Contrario
+                    coincide_región := F
+                Fin Si
+            Fin Si
+
+            Escribir(vd)
+            AVZ(doc, vd)
+        Fin Para
+
+        AVZ(doc, vd)
+
+        Mientras vd <> "+" Hacer
+            edad_doc := ve
+            AVZ(edad, ve)
+            aportes_doc := ve
+
+            Si edad_doc >= 60 y edad_doc <= 70 y aportes_doc >= 30 Entonces
+                jubilables := jubilables + 1
+                Si coincide_región Entonces
+                    Mientras vd <> "#" y vd <> "+" Hacer
+                        GRABAR(jubilar, vd)
+                        AVZ(doc, vd)
+                    Fin Mientras
+                Fin Si
+            Contrario
+                no_jubilables := no_jubilables + 1
+                Mientras vd <> "#" y vd <> "+" Hacer
+                    AVZ(doc, vd)
+                Fin Mientras
+            Fin Si
+
+            Si vd <> "+" Entonces
+                AVZ(doc, vd)
+            Fin Si
+        Fin Mientras
+
+        Escribir("La cantidad de docentes que pueden jubilarse es de" jubilables "docentes.")
+        Escribir("La cantidad de docentes que no pueden jubilarse es de" no_jubilables "docentes.")
+
+        Inicializar()
+        AVZ(doc, vd)
+        AVZ(edad, ve)
+    Fin Mientras
+
+    CERRAR(doc)
+    CERRAR(edad)
+    CERRAR(jubilar)
 
 Fin Acción

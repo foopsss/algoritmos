@@ -24,105 +24,105 @@ Acción Arreglos3(proyectos: arreglo de [1..40] de Proyecto) ES
 
 Ambiente
 
-        veinte_porc = 0,20
+    veinte_porc = 0,20
 
-        Fecha = Registro
-                Año: N(4)
-                Mes: (1..12)
-                Día: (1..31)
-        Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-        Proyecto = Registro
-                ID: N(5)
-                Nombre: AN(100)
-                Líder: AN(100)
-                FechaInicio: Fecha
-                DuraciónMeses: N(2)
-        Fin Registro
+    Proyecto = Registro
+        ID: N(5)
+        Nombre: AN(100)
+        Líder: AN(100)
+        FechaInicio: Fecha
+        DuraciónMeses: N(2)
+    Fin Registro
 
-        Presupuesto = Registro
-                ID: N(5)
-                PresupuestoTotal: N(6)
-                PresupuestoDisponible: N(6)
-        Fin Registro
-        
-        ARCH: archivo de Presupuesto indexado por ID
-        REG: Presupuesto
+    Presupuesto = Registro
+        ID: N(5)
+        PresupuestoTotal: N(6)
+        PresupuestoDisponible: N(6)
+    Fin Registro
 
-        FechaActual: Fecha
-        poco_presupuesto: arreglo de [1..40] de entero
+    ARCH: archivo de Presupuesto indexado por ID
+    REG: Presupuesto
 
-        líder_us, proy_mayor_dur: alfanumérico
-        i, proy_líder_us, mayor_dur, cont_poco_presup: entero
+    FechaActual: Fecha
+    poco_presupuesto: arreglo de [1..40] de entero
 
-        Procedimiento Inicializar() ES
-                proy_líder_us := 0
-                mayor_dur := LV
-                cont_poco_presup := 0
-        Fin Procedimiento
+    líder_us, proy_mayor_dur: alfanumérico
+    i, proy_líder_us, mayor_dur, cont_poco_presup: entero
 
-	Procedimiento ObtenerFechaUsuario() ES
-		Escribir("Introduzca el año actual: ")
-		Leer(FechaActual.Año)
-		Escribir("Introduzca el mes actual: ")
-		Leer(FechaActual.Mes)
-		Escribir("Introduzca el día actual: ")
-		Leer(FechaActual.Día)
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        proy_líder_us := 0
+        mayor_dur := LV
+        cont_poco_presup := 0
+    Fin Procedimiento
 
-        Procedimiento ObtenerDatosUsuario() ES
-                Escribir("Introduzca el nombre de un líder de proyecto: ")
-                Leer(líder_us)
-        Fin Procedimiento
+    Procedimiento ObtenerFechaUsuario() ES
+        Escribir("Introduzca el año actual: ")
+        Leer(FechaActual.Año)
+        Escribir("Introduzca el mes actual: ")
+        Leer(FechaActual.Mes)
+        Escribir("Introduzca el día actual: ")
+        Leer(FechaActual.Día)
+    Fin Procedimiento
+
+    Procedimiento ObtenerDatosUsuario() ES
+        Escribir("Introduzca el nombre de un líder de proyecto: ")
+        Leer(líder_us)
+    Fin Procedimiento
 
 Proceso
 
-        ABRIR E/ (ARCH)
-        ObtenerFechaUsuario()
-        ObtenerDatosUsuario()
-        Inicializar()
-                
-        Para i := 1 hasta 40 Hacer
-                Si proyectos[i].Líder = líder_us Entonces
-                        Escribir("El proyecto" proyectos[i].Nombre "es dirigido por" líder_us ".")
-                        proy_líder_us := proy_líder_us + 1
+    ABRIR E/ (ARCH)
+    ObtenerFechaUsuario()
+    ObtenerDatosUsuario()
+    Inicializar()
+
+    Para i := 1 hasta 40 Hacer
+        Si proyectos[i].Líder = líder_us Entonces
+            Escribir("El proyecto" proyectos[i].Nombre "es dirigido por" líder_us ".")
+            proy_líder_us := proy_líder_us + 1
+        Fin Si
+
+        Si proyectos[i].DuraciónMeses > mayor_dur Entonces
+            mayor_dur := proyectos[i].DuraciónMeses
+            proy_mayor_dur := proyectos[i].Nombre
+        Fin Si
+
+        Si proyectos[i].FechaInicio.Año = FechaActual.Año y proyectos[i].FechaInicio.Mes = FechaActual.Mes Entonces
+            REG.ID := proyectos[i].ID
+            LEER(ARCH, REG)
+
+            Si existe Entonces
+                Escribir("El proyecto" REG.ID "tiene disponible un presupuesto de" REG.PresupuestoDisponible "pesos.")
+            Contrario
+                Escribir("El proyecto" proyectos[i].ID "no está registrado en el archivo de presupuestos.")
+            Fin Si
+        Fin Si
+
+        Si proyectos[i].DuraciónMeses > 6 Entonces
+            REG.ID := proyectos[i].ID
+            LEER(ARCH, REG)
+
+            Si existe Entonces
+                Si REG.PresupuestoDisponible < (REG.PresupuestoTotal * veinte_porc) Entonces
+                    cont_poco_presup := cont_poco_presup + 1
+                    poco_presupuesto[cont_poco_presup] := REG.ID
                 Fin Si
-                
-                Si proyectos[i].DuraciónMeses > mayor_dur Entonces
-                        mayor_dur := proyectos[i].DuraciónMeses
-                        proy_mayor_dur := proyectos[i].Nombre
-                Fin Si
-                
-                Si proyectos[i].FechaInicio.Año = FechaActual.Año y proyectos[i].FechaInicio.Mes = FechaActual.Mes Entonces
-                        REG.ID := proyectos[i].ID
-                        LEER(ARCH, REG)
-                        
-                        Si existe Entonces
-                                Escribir("El proyecto" REG.ID "tiene disponible un presupuesto de" REG.PresupuestoDisponible "pesos.")
-                        Contrario
-                                Escribir("El proyecto" proyectos[i].ID "no está registrado en el archivo de presupuestos.")
-                        Fin Si
-                Fin Si
-                
-                Si proyectos[i].DuraciónMeses > 6 Entonces
-                        REG.ID := proyectos[i].ID
-                        LEER(ARCH, REG)
-                        
-                        Si existe Entonces
-                                Si REG.PresupuestoDisponible < (REG.PresupuestoTotal * veinte_porc) Entonces
-                                        cont_poco_presup := cont_poco_presup + 1
-                                        poco_presupuesto[cont_poco_presup] := REG.ID
-                                Fin Si
-                        Contrario
-                                Escribir("El proyecto" proyectos[i].ID "no está registrado en el archivo de presupuestos.")
-                        Fin Si
-                Fin Si
-        Fin Para
-        
-        Escribir("Un total de" proy_líder_us "proyectos son dirigidos por" líder_us ".")
-        Escribir("El proyecto vigente con mayor duración es" proy_mayor_dur ".")
-        Escribir("Dicho proyecto lleva" mayor_dur "meses en desarrollo.")
-        
-        CERRAR(ARCH)
+            Contrario
+                Escribir("El proyecto" proyectos[i].ID "no está registrado en el archivo de presupuestos.")
+            Fin Si
+        Fin Si
+    Fin Para
+
+    Escribir("Un total de" proy_líder_us "proyectos son dirigidos por" líder_us ".")
+    Escribir("El proyecto vigente con mayor duración es" proy_mayor_dur ".")
+    Escribir("Dicho proyecto lleva" mayor_dur "meses en desarrollo.")
+
+    CERRAR(ARCH)
 
 Fin Acción

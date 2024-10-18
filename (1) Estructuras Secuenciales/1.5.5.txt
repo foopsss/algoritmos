@@ -2,20 +2,19 @@ Acción 1.5.5 ES
 
 Ambiente
 
-	tasa_seg = 0,25
-
-	sección, corriente, conductividad: real
+    tasa_seg = 0,25
+    sección, corriente, conductividad: real
 
 Proceso
 
-	Escribir("Introduzca el valor de la corriente eléctrica del conductor: ")
-	Leer(corriente)
+    Escribir("Introduzca el valor de la corriente eléctrica del conductor: ")
+    Leer(corriente)
 
-	Escribir("Introduzca el valor de la conductividad eléctrica del conductor: ")
-	Leer(conductividad)
+    Escribir("Introduzca el valor de la conductividad eléctrica del conductor: ")
+    Leer(conductividad)
 
-	sección = (corriente / conductividad) + (corriente / conductividad) * tasa_seg
-	
-	Escribir("La sección del conductor es: " sección)
+    sección = (corriente / conductividad) + (corriente / conductividad) * tasa_seg
+
+    Escribir("La sección del conductor es: " sección)
 
 Fin Acción

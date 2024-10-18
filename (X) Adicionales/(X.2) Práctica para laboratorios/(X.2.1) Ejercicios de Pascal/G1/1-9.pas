@@ -18,64 +18,68 @@ luego calcular el promedio de las notas de estos. *}
 program EJ9;
 
 uses
-	functions in '../functions.pas';
+    functions in '../functions.pas';
 
 var
-	eleccion: char;
-	nota, cant_notas, suma_notas: integer;
-	prom_notas: real;
+    eleccion: char;
+    nota, cant_notas, suma_notas: integer;
+    prom_notas: real;
 
 procedure pedir_eleccion();
 begin
-	write('¿Desea introducir una nota? [S/N]: ');
-	read(eleccion);
+    write('¿Desea introducir una nota? [S/N]: ');
+    read(eleccion);
 end;
 
 procedure pedir_nota();
 begin
-	write('Introduzca la nota del alumno: ');
-	readln(nota);
+    write('Introduzca la nota del alumno: ');
+    readln(nota);
 end;
 
 begin
-	suma_notas := 0;
-	cant_notas := 0;
-	pedir_eleccion();
+    suma_notas := 0;
+    cant_notas := 0;
+    pedir_eleccion();
 
-	while eleccion = 'S' do
-	begin
-		repeat
-			pedir_nota();
+    while eleccion = 'S' do
+    begin
+        repeat
+            pedir_nota();
 
-			writeln();
-			if not (nota in [0..10]) then
-			begin
-				writeln('Número fuera de rango.');
-				writeln('Introduzca un número correcto.');
-				draw_line(35);
-			end;
-		until nota in [0..10];
+            writeln();
+            if not (nota in [0..10]) then
+            begin
+                writeln('Número fuera de rango.');
+                writeln('Introduzca un número correcto.');
+                draw_line(35);
+            end;
+        until nota in [0..10];
 
-		case nota of
-			0..3: writeln('Mal.');
-			4..5: writeln('Insuficiente.');
-			6..7: writeln('Bien.');
-			8..9: writeln('Sobresaliente.');
-			10: writeln('Perfecto.');
-		end;
+        case nota of
+            0..3: writeln('Mal.');
+            4..5: writeln('Insuficiente.');
+            6..7: writeln('Bien.');
+            8..9: writeln('Sobresaliente.');
+            10: writeln('Perfecto.');
+        end;
 
-		cant_notas := cant_notas + 1;
-		suma_notas := suma_notas + nota;
+        cant_notas := cant_notas + 1;
+        suma_notas := suma_notas + nota;
 
-		draw_line(35);
-		pedir_eleccion();
-	end;
+        draw_line(35);
+        pedir_eleccion();
+    end;
 
-	if eleccion = 'N' then
-	begin
-		draw_line(35);
-	end;
-
-	prom_notas := suma_notas / cant_notas;
-	writeln('Promedio de las notas: ', prom_notas:4:2);
+    if (cant_notas <> 0) and (suma_notas <> 0) then
+        begin
+            draw_line(35);
+            prom_notas := suma_notas / cant_notas;
+            writeln('Promedio de las notas: ', prom_notas:4:2);
+        end
+    else
+        begin
+            draw_line(50);
+            writeln('No se introdujeron notas. Saliendo del programa...');
+        end;
 end.

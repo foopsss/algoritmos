@@ -15,50 +15,50 @@ Acción Secuencias6 ES
 
 Ambiente
 
-	sec: secuencia de carácter
-	v: carácter
+    sec: secuencia de carácter
+    v: carácter
 
-	más_de_tres, i, unidades: entero
+    más_de_tres, i, unidades: entero
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec)
-	AVZ(sec, v)
+    ARR(sec)
+    AVZ(sec, v)
 
-	más_de_tres := 0
+    más_de_tres := 0
 
-	Mientras NFDS(sec) Hacer
-		Para i := 1 hasta 8 Hacer
-			AVZ(sec, v)
-		Fin Para
-		
-		// Estoy parado en el número de unidades.
-		unidades := CharToInt(v)
-		
-		Si unidades > 3 Entonces
-			más_de_tres := más_de_tres + 1
-		Fin Si
+    Mientras NFDS(sec) Hacer
+        Para i := 1 hasta 8 Hacer
+            AVZ(sec, v)
+        Fin Para
 
-		// Avanzo a la siguiente fecha.
-		AVZ(sec, v)
-	Fin Mientras
+        // Estoy parado en el número de unidades.
+        unidades := CharToInt(v)
 
-	Escribir("Se vendieron más de 3 unidades en" más_de_tres "transacciones.")
+        Si unidades > 3 Entonces
+            más_de_tres := más_de_tres + 1
+        Fin Si
 
-	CERRAR(sec)
+        // Avanzo a la siguiente fecha.
+        AVZ(sec, v)
+    Fin Mientras
+
+    Escribir("Se vendieron más de 3 unidades en" más_de_tres "transacciones.")
+
+    CERRAR(sec)
 
 Fin Acción

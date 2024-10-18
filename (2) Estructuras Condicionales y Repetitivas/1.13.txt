@@ -2,23 +2,23 @@ Acción 1.13 ES
 
 Ambiente
 
-	dinero: entero
+    dinero: entero
 
 Proceso
 
-	Escribir("Inserte una suma de dinero que sea mayor que 100 y menor que 1000: ")
-	Leer(dinero)
-	
-	Si dinero > 100 y dinero < 1000 Entonces
-		centenas := dinero DIV 100
-		decenas := (dinero - centenas * 100) DIV 10
-		unidades := dinero - (centenas * 100) - (decenas * 10)
-		
-		Escribir("Se necesitan" centenas "billetes de 100 pesos.")
-		Escribir("Se necesitan" decenas "billetes de 10 pesos.")
-		Escribir("Se necesitan" unidades "billetes de 1 peso.")
-	Contrario
-		Escribir("La suma de dinero no es mayor que 100 y menor que 1000.")
-	Fin Si
+    Escribir("Inserte una suma de dinero que sea mayor que 100 y menor que 1000: ")
+    Leer(dinero)
+
+    Si dinero > 100 y dinero < 1000 Entonces
+        centenas := dinero DIV 100
+        decenas := (dinero - centenas * 100) DIV 10
+        unidades := dinero - (centenas * 100) - (decenas * 10)
+
+        Escribir("Se necesitan" centenas "billetes de 100 pesos.")
+        Escribir("Se necesitan" decenas "billetes de 10 pesos.")
+        Escribir("Se necesitan" unidades "billetes de 1 peso.")
+    Contrario
+        Escribir("La suma de dinero no es mayor que 100 y menor que 1000.")
+    Fin Si
 
 Fin Acción

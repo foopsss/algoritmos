@@ -2,76 +2,76 @@ Acción 1.6 ES
 
 Ambiente
 
-	a, b, c, mayor, intermedio, menor: entero
+    a, b, c, mayor, intermedio, menor: entero
 
 Proceso
 
-	Escribir("Ingrese un valor para el número a: ")
-	Leer(a)
-	
-	Escribir("Ingrese un valor para el número b: ")
-	Leer(b)
+    Escribir("Ingrese un valor para el número a: ")
+    Leer(a)
 
-	Escribir("Ingrese un valor para el número c: ")
-	Leer(c)
+    Escribir("Ingrese un valor para el número b: ")
+    Leer(b)
 
-	Si a > b y a > c Entonces
-		mayor := a
-		
-		Según b Hacer
-			< c:
-			    intermedio := c
-			    menor := b
-			= c:
-			    intermedio := b
-			    menor := intermedio
-			> c:
-			    intermedio := b
-			    menor := c
-		Fin Según
-	Fin Si
+    Escribir("Ingrese un valor para el número c: ")
+    Leer(c)
 
-	Si b > a y b > c Entonces
-		mayor := b
-		
-		Según a Hacer
-			< c:
-			    intermedio := c
-			    menor := a
-			= c:
-			    intermedio := a
-			    menor := intermedio
-			> c:
-			    intermedio := a
-			    menor := c
-		Fin Según
-	Fin Si
+    Si a > b y a > c Entonces
+        mayor := a
 
-	Si c > a y c > b Entonces
-		mayor := c
-		
-		Según a Hacer
-			< b:
-			    intermedio := b
-			    menor := a
-			= b:
-			    intermedio := a
-			    menor := intermedio
-			> b:
-			    intermedio := a
-			    menor := b
-		Fin Según
-	Fin Si
+        Según b Hacer
+            < c:
+                intermedio := c
+                menor := b
+            = c:
+                intermedio := b
+                menor := intermedio
+            > c:
+                intermedio := b
+                menor := c
+        Fin Según
+    Fin Si
 
-	Si a = b y b = c Entonces
-		Escribir("¡Los tres números coinciden!")
-	Contrario
-		Escribir("El número más grande es" mayor ".")
-		Escribir("El número más pequeño es" menor ".")
-	
-		Si intermedio <> menor Entonces
-			Escribir("Entre ellos se encuentra el número" intermedio ".")
-		Fin Si
-	Fin Si
+    Si b > a y b > c Entonces
+        mayor := b
+
+        Según a Hacer
+            < c:
+                intermedio := c
+                menor := a
+            = c:
+                intermedio := a
+                menor := intermedio
+            > c:
+                intermedio := a
+                menor := c
+        Fin Según
+    Fin Si
+
+    Si c > a y c > b Entonces
+        mayor := c
+
+        Según a Hacer
+            < b:
+                intermedio := b
+                menor := a
+            = b:
+                intermedio := a
+                menor := intermedio
+            > b:
+                intermedio := a
+                menor := b
+        Fin Según
+    Fin Si
+
+    Si a = b y b = c Entonces
+        Escribir("¡Los tres números coinciden!")
+    Contrario
+        Escribir("El número más grande es" mayor ".")
+        Escribir("El número más pequeño es" menor ".")
+
+        Si intermedio <> menor Entonces
+            Escribir("Entre ellos se encuentra el número" intermedio ".")
+        Fin Si
+    Fin Si
 
 Fin Acción

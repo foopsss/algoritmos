@@ -26,94 +26,94 @@ Acción CorteM7 ES
 
 Ambiente
 
-	Cadenas = Registro
-		Clave = Registro
-			código_cadena: AN(15)
-			nivel_hotel: (1..5)
-		Fin Registro
-		código_hotel: N(4)
-		nombre_hotel: AN(50)
-		es_ciudad_sede: lógico
-		cantidad_habitaciones: N(4)
-	Fin Registro
-	
-	ARCH: archivo de Cadenas ordenado por Clave
-	REG: Cadenas
+    Cadenas = Registro
+        Clave = Registro
+            código_cadena: AN(15)
+            nivel_hotel: (1..5)
+        Fin Registro
+        código_hotel: N(4)
+        nombre_hotel: AN(50)
+        es_ciudad_sede: lógico
+        cantidad_habitaciones: N(4)
+    Fin Registro
 
-	Salida = Registro
-		código_cadena: AN(15)
-		cantidad_habitaciones: N(4)
-	Fin Registro
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
-	
-	resg_nivel, resg_cadena: entero
-	tot_nivel, tot_cadena, tot_general: entero
-	
-	Procedimiento Inicializar() ES
-		resg_nivel := REG.Clave.nivel_hotel
-		resg_cadena := REG.Clave.código_cadena
-		tot_nivel := 0
-		tot_cadena := 0
-		tot_general := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteNivel() ES
-		Escribir("Cadena: " resg_cadena)
-		Escribir("Nivel: " resg_nivel)
-		Escribir("Cantidad de habitaciones en ciudades sede del Mundial: " tot_nivel)
-		tot_cadena := tot_cadena + tot_nivel
-		tot_nivel := 0
-		resg_nivel := REG.Clave.nivel_hotel
-	Fin Procedimiento
-	
-	Procedimiento CorteCadena() ES
-		// Algunas cosas de corte.
-		CorteNivel()
-		Escribir("Cadena: " resg_cadena)
-		Escribir("Cantidad de habitaciones en ciudades sede del Mundial: " tot_cadena)
-	
-		// Grabo el archivo de salida.
-		REG2.código_cadena := resg_cadena
-		REG2.cantidad_habitaciones := tot_cadena
-		GRABAR(ARCH2, REG2)
-		
-		// Resto de las cosas de corte.
-		tot_general := tot_general + tot_cadena
-		tot_cadena := 0
-		resg_cadena := REG.Clave.código_cadena
-	Fin Procedimiento
+    ARCH: archivo de Cadenas ordenado por Clave
+    REG: Cadenas
+
+    Salida = Registro
+        código_cadena: AN(15)
+        cantidad_habitaciones: N(4)
+    Fin Registro
+
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_nivel, resg_cadena: entero
+    tot_nivel, tot_cadena, tot_general: entero
+
+    Procedimiento Inicializar() ES
+        resg_nivel := REG.Clave.nivel_hotel
+        resg_cadena := REG.Clave.código_cadena
+        tot_nivel := 0
+        tot_cadena := 0
+        tot_general := 0
+    Fin Procedimiento
+
+    Procedimiento CorteNivel() ES
+        Escribir("Cadena: " resg_cadena)
+        Escribir("Nivel: " resg_nivel)
+        Escribir("Cantidad de habitaciones en ciudades sede del Mundial: " tot_nivel)
+        tot_cadena := tot_cadena + tot_nivel
+        tot_nivel := 0
+        resg_nivel := REG.Clave.nivel_hotel
+    Fin Procedimiento
+
+    Procedimiento CorteCadena() ES
+        // Algunas cosas de corte.
+        CorteNivel()
+        Escribir("Cadena: " resg_cadena)
+        Escribir("Cantidad de habitaciones en ciudades sede del Mundial: " tot_cadena)
+
+        // Grabo el archivo de salida.
+        REG2.código_cadena := resg_cadena
+        REG2.cantidad_habitaciones := tot_cadena
+        GRABAR(ARCH2, REG2)
+
+        // Resto de las cosas de corte.
+        tot_general := tot_general + tot_cadena
+        tot_cadena := 0
+        resg_cadena := REG.Clave.código_cadena
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
 
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_cadena <> REG.Clave.código_cadena Entonces
-			CorteCadena()
-		Contrario
-			Si resg_nivel <> REG.Clave.nivel_hotel Entonces
-				CorteNivel()
-			Fin Si
-		Fin Si
-		
-		Si REG.es_ciudad_sede Entonces
-			tot_nivel := tot_nivel + REG.cantidad_habitaciones
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteCadena()
-	
-	Escribir("El total de habitaciones en ciudades sede del Mundial es de" tot_general "habitaciones.")
+    Inicializar()
 
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    Mientras NFDA(ARCH) Hacer
+        Si resg_cadena <> REG.Clave.código_cadena Entonces
+            CorteCadena()
+        Contrario
+            Si resg_nivel <> REG.Clave.nivel_hotel Entonces
+                CorteNivel()
+            Fin Si
+        Fin Si
+
+        Si REG.es_ciudad_sede Entonces
+            tot_nivel := tot_nivel + REG.cantidad_habitaciones
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteCadena()
+
+    Escribir("El total de habitaciones en ciudades sede del Mundial es de" tot_general "habitaciones.")
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

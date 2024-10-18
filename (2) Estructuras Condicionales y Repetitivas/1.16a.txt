@@ -2,27 +2,27 @@ Acción 1.16 ES
 
 Ambiente
 
-	eg_isi, eg_iem, eg_iq, total: entero
-	porc_isi, porc_iem, porc_iq: real
+    eg_isi, eg_iem, eg_iq, total: entero
+    porc_isi, porc_iem, porc_iq: real
 
 Proceso
 
-	Escribir("Ingrese la cantidad de egresados de ISI: ")
-	Leer(eg_isi)
+    Escribir("Ingrese la cantidad de egresados de ISI: ")
+    Leer(eg_isi)
 
-	Escribir("Ingrese la cantidad de egresados de IEM: ")
-	Leer(eg_iem)
+    Escribir("Ingrese la cantidad de egresados de IEM: ")
+    Leer(eg_iem)
 
-	Escribir("Ingrese la cantidad de egresados de IQ: ")
-	Leer(eg_iq)
+    Escribir("Ingrese la cantidad de egresados de IQ: ")
+    Leer(eg_iq)
 
-	total := eg_isi + eg_iem + eg_iq
-	porc_isi := (eg_isi * 100) / total
-	porc_iem := (eg_iem * 100) / total
-	porc_iq := (eg_iq * 100) / total
+    total := eg_isi + eg_iem + eg_iq
+    porc_isi := (eg_isi * 100) / total
+    porc_iem := (eg_iem * 100) / total
+    porc_iq := (eg_iq * 100) / total
 
-	Escribir("Los egresados de ISI componen el" porc_isi "% de los egresados.")
-	Escribir("Los egresados de IEM componen el" porc_iem "% de los egresados.")
-	Escribir("Los egresados de IQ componen el" porc_iq "% de los egresados.")
+    Escribir("Los egresados de ISI componen el" porc_isi "% de los egresados.")
+    Escribir("Los egresados de IEM componen el" porc_iem "% de los egresados.")
+    Escribir("Los egresados de IQ componen el" porc_iq "% de los egresados.")
 
 Fin Acción

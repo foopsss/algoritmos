@@ -1,71 +1,71 @@
 // Uso de las variables:
-	// dni: resguardar el CUIT sin el último caracter, que se encuentra luego del
-	// 	último dígito del DNI.
-	// cuit: resguardar el CUIT entero para ir tratándolo con el fin de guardarlo
-	//	 como un caracter.
+// dni: resguardar el CUIT sin el último caracter, que se encuentra luego del
+//      último dígito del DNI.
+// cuit: resguardar el CUIT entero para ir tratándolo con el fin de guardarlo
+//       como un caracter.
 
 // Para convertir número por número a carácter:
-	// 1. Resguardo el CUIT.
-	// 2. Obtengo el primer dígito del CUIT, leyendo desde la izquierda.
-	// 3. Grabo en la salida.
-	// 4. Actualizo la variable del CUIT para restarle el producto del primer dígito
-	//    por el divisor, haciendo que el dígito que se encontraba en segundo lugar
-	//    sea ahora el primero.
-	// 5. Actualizo el divisor para seguir con los siguientes dígitos.
+// 1. Resguardo el CUIT.
+// 2. Obtengo el primer dígito del CUIT, leyendo desde la izquierda.
+// 3. Grabo en la salida.
+// 4. Actualizo la variable del CUIT para restarle el producto del primer dígito
+//    por el divisor, haciendo que el dígito que se encontraba en segundo lugar
+//    sea ahora el primero.
+// 5. Actualizo el divisor para seguir con los siguientes dígitos.
 
 Acción 2.1.8 ES
 
 Ambiente
 
-	sec_ent: secuencia de entero
-	v_ent, ult_num, dni, divisor, cuit, i: entero
+    sec_ent: secuencia de entero
+    v_ent, ult_num, dni, divisor, cuit, i: entero
 
-	sec_sal: secuencia de carácter
-	v_sal: carácter
+    sec_sal: secuencia de carácter
+    v_sal: carácter
 
-	dígitos = {0, 1, 2, 3}
+    dígitos = {0, 1, 2, 3}
 
-	Función IntToChar(entrada: entero): carácter ES
-		Según entrada Hacer
-			= 0: IntToChar := "0"
-			= 1: IntToChar := "1"
-			= 2: IntToChar := "2"
-			= 3: IntToChar := "3"
-			= 4: IntToChar := "4"
-			= 5: IntToChar := "5"
-			= 6: IntToChar := "6"
-			= 7: IntToChar := "7"
-			= 8: IntToChar := "8"
-			= 9: IntToChar := "9"
-		Fin Según
-	Fin Función
+    Función IntToChar(entrada: entero): carácter ES
+        Según entrada Hacer
+            = 0: IntToChar := "0"
+            = 1: IntToChar := "1"
+            = 2: IntToChar := "2"
+            = 3: IntToChar := "3"
+            = 4: IntToChar := "4"
+            = 5: IntToChar := "5"
+            = 6: IntToChar := "6"
+            = 7: IntToChar := "7"
+            = 8: IntToChar := "8"
+            = 9: IntToChar := "9"
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(sec_ent)
-	AVZ(sec_ent, v_ent)
-	CREAR(sec_sal)
+    ARR(sec_ent)
+    AVZ(sec_ent, v_ent)
+    CREAR(sec_sal)
 
-	Mientras v_ent <> 0 Hacer
-		dni := v_ent DIV 10
-		ult_num := dni MOD 10
+    Mientras v_ent <> 0 Hacer
+        dni := v_ent DIV 10
+        ult_num := dni MOD 10
 
-		Si ult_num en dígitos Entonces
-			cuit := v_ent
-			Para i := 11 hasta 1, -1 Hacer
-				divisor := 10 ** (i - 1)
-				dígito := cuit DIV divisor
-				v_sal := IntToChar(dígito)
-				GRABAR(sec_sal, v_sal)
-				cuit := cuit - (dígito * divisor)
-			Fin Para
-			GRABAR(sec_sal, "-")
-		Fin Si
-		
-		AVZ(sec_ent, v_ent)
-	Fin Mientras
+        Si ult_num en dígitos Entonces
+            cuit := v_ent
+            Para i := 11 hasta 1, -1 Hacer
+                divisor := 10 ** (i - 1)
+                dígito := cuit DIV divisor
+                v_sal := IntToChar(dígito)
+                GRABAR(sec_sal, v_sal)
+                cuit := cuit - (dígito * divisor)
+            Fin Para
+            GRABAR(sec_sal, "-")
+        Fin Si
 
-	CERRAR(sec_ent)
-	CERRAR(sec_sal)
+        AVZ(sec_ent, v_ent)
+    Fin Mientras
+
+    CERRAR(sec_ent)
+    CERRAR(sec_sal)
 
 Fin Acción

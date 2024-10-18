@@ -14,47 +14,39 @@ salga (número fuera de rango) y se debe volver a solicitar una nota. *}
 
 program EJ7;
 
-var
-	nota: integer;
+uses
+    functions in '../functions.pas';
 
-procedure draw_line(length: integer);
 var
-	i: integer;
-begin
-	for i := 0 to (length - 1) do
-	begin
-		write('-');
-	end;
-	writeln('-');
-end;
+    nota: integer;
 
 procedure pedir_nota;
 begin
-	write('Introduzca la nota del alumno: ');
-	readln(nota);
+    write('Introduzca la nota del alumno: ');
+    readln(nota);
 end;
 
 procedure procesar_nota(ent: integer);
 begin
-	case ent of
-		0..3: writeln('Mal.');
-		4..5: writeln('Insuficiente.');
-		6..7: writeln('Bien.');
-		8..9: writeln('Sobresaliente.');
-		10: writeln('Perfecto.');
-	else
-		writeln('Número fuera de rango.');
-		writeln('Introduzca un número correcto.');
+    case ent of
+        0..3: writeln('Mal.');
+        4..5: writeln('Insuficiente.');
+        6..7: writeln('Bien.');
+        8..9: writeln('Sobresaliente.');
+        10: writeln('Perfecto.');
+    else
+        writeln('Número fuera de rango.');
+        writeln('Introduzca un número correcto.');
 
-		draw_line(35);
-		pedir_nota;
-		writeln();
-		procesar_nota(nota);
-	end;
+        draw_line(35);
+        pedir_nota;
+        writeln();
+        procesar_nota(nota);
+    end;
 end;
 
 begin
-	pedir_nota;
-	writeln();
-	procesar_nota(nota);
+    pedir_nota;
+    writeln();
+    procesar_nota(nota);
 end.
