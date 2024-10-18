@@ -2,130 +2,130 @@ Acción 2.2.15 ES
 
 Ambiente
 
-	Alumnos = Registro
-		Clave = Registro
-			Escuela: AN(100)
-			Año: N(4)
-			División: AN(1)
-		Fin Registro
-		Nombre: AN(100)
-		Inasistencias: N(3)
-	Fin Registro
-	
-	ARCH: archivo de Alumnos ordenado por Clave
-	REG: Alumnos
+    Alumnos = Registro
+        Clave = Registro
+            Escuela: AN(100)
+            Año: N(4)
+            División: AN(1)
+        Fin Registro
+        Nombre: AN(100)
+        Inasistencias: N(3)
+    Fin Registro
 
-	resg_año: entero
-	resg_división, resg_escuela: alfanumérico
-	nro_distrito, clases_dictadas, suma_inasist: entero
-	porc_inasist, porc_libres: real
-	cant_div_libres, cant_div_regulares, cant_div: entero
-	cant_año_libres, cant_año_regulares, cant_año: entero
-	cant_esc_libres, cant_esc_regulares: entero
-	cant_gen, cant_gen_libres: entero
-	prom_inasist: real
+    ARCH: archivo de Alumnos ordenado por Clave
+    REG: Alumnos
 
-	Procedimiento Inicializar() ES
-		resg_año := REG.Clave.Año
-		resg_división := REG.Clave.División
-		resg_escuela := REG.Clave.Escuela
-		suma_inasist := 0
-		cant_div_libres := 0
-		cant_div_regulares := 0
-		cant_div := 0
-		cant_año_libres := 0
-		cant_año_regulares := 0
-		cant_año := 0
-		cant_esc_libres := 0
-		cant_esc_regulares := 0
-		cant_gen := 0
-		cant_gen_libres := 0
-	Fin Procedimiento
+    resg_año: entero
+    resg_división, resg_escuela: alfanumérico
+    nro_distrito, clases_dictadas, suma_inasist: entero
+    porc_inasist, porc_libres: real
+    cant_div_libres, cant_div_regulares, cant_div: entero
+    cant_año_libres, cant_año_regulares, cant_año: entero
+    cant_esc_libres, cant_esc_regulares: entero
+    cant_gen, cant_gen_libres: entero
+    prom_inasist: real
 
-	Procedimiento PedirDatos() ES
-		Escribir("Introduzca el número de distrito: ")
-		Leer(nro_distrito)
-		Escribir("Introduzca la cantidad de días de clase dictados en el año: ")
-		Leer(clases_dictadas)
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        resg_año := REG.Clave.Año
+        resg_división := REG.Clave.División
+        resg_escuela := REG.Clave.Escuela
+        suma_inasist := 0
+        cant_div_libres := 0
+        cant_div_regulares := 0
+        cant_div := 0
+        cant_año_libres := 0
+        cant_año_regulares := 0
+        cant_año := 0
+        cant_esc_libres := 0
+        cant_esc_regulares := 0
+        cant_gen := 0
+        cant_gen_libres := 0
+    Fin Procedimiento
 
-	Procedimiento CorteDivisión() ES
-		Escribir("División: " resg_división)
-		cant_div := cant_div_regulares + cant_div_libres
-		Escribir("Cantidad de alumnos: " cant_div)
-		cant_año_regulares := cant_año_regulares + cant_div_regulares
-		cant_año_libres := cant_año_libres + cant_div_libres
-		cant_año := cant_div
-		cant_div_libres := 0
-		cant_div_regulares := 0
-		cant_div := 0
-		resg_división := REG.Clave.División
-	Fin Procedimiento
-	
-	Procedimiento CorteAño() ES
-		CorteDivisión()
-		Escribir("Año: " resg_año)
-		Escribir("Cantidad de alumnos regulares: " cant_año_regulares)
-		Escribir("Cantidad de alumnos libres: " cant_año_libres)
-		Escribir("Cantidad total de alumnos: " cant_año)
-		cant_esc_regulares := cant_esc_regulares + cant_año_regulares
-		cant_esc_libres := cant_esc_libres + cant_año_libres
-		cant_año_libres := 0
-		cant_año_regulares := 0
-		cant_año := 0
-		resg_año := REG.Clave.Año
-	Fin Procedimiento
-	
-	Procedimiento CorteEscuela() ES
-		CorteAño()
-		cant_gen := cant_gen + cant_esc_regulares + cant_esc_libres
-		cant_gen_libres := cant_gen_libres + cant_esc_libres
-		cant_esc_regulares := 0
-		cant_esc_libres := 0
-		resg_esc := REG.Clave.Escuela
-	Fin Procedimiento
+    Procedimiento PedirDatos() ES
+        Escribir("Introduzca el número de distrito: ")
+        Leer(nro_distrito)
+        Escribir("Introduzca la cantidad de días de clase dictados en el año: ")
+        Leer(clases_dictadas)
+    Fin Procedimiento
+
+    Procedimiento CorteDivisión() ES
+        Escribir("División: " resg_división)
+        cant_div := cant_div_regulares + cant_div_libres
+        Escribir("Cantidad de alumnos: " cant_div)
+        cant_año_regulares := cant_año_regulares + cant_div_regulares
+        cant_año_libres := cant_año_libres + cant_div_libres
+        cant_año := cant_div
+        cant_div_libres := 0
+        cant_div_regulares := 0
+        cant_div := 0
+        resg_división := REG.Clave.División
+    Fin Procedimiento
+
+    Procedimiento CorteAño() ES
+        CorteDivisión()
+        Escribir("Año: " resg_año)
+        Escribir("Cantidad de alumnos regulares: " cant_año_regulares)
+        Escribir("Cantidad de alumnos libres: " cant_año_libres)
+        Escribir("Cantidad total de alumnos: " cant_año)
+        cant_esc_regulares := cant_esc_regulares + cant_año_regulares
+        cant_esc_libres := cant_esc_libres + cant_año_libres
+        cant_año_libres := 0
+        cant_año_regulares := 0
+        cant_año := 0
+        resg_año := REG.Clave.Año
+    Fin Procedimiento
+
+    Procedimiento CorteEscuela() ES
+        CorteAño()
+        cant_gen := cant_gen + cant_esc_regulares + cant_esc_libres
+        cant_gen_libres := cant_gen_libres + cant_esc_libres
+        cant_esc_regulares := 0
+        cant_esc_libres := 0
+        resg_esc := REG.Clave.Escuela
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	PedirDatos()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_esc <> REG.Clave.Escuela Entonces
-			CorteEscuela()
-		Contrario
-			Si resg_año <> REG.Clave.Año Entonces
-				CorteAño()
-			Contrario
-				Si resg_división <> REG.Clave.División Entonces
-					CorteDivisión()
-				Fin Si
-			Fin Si
-		Fin Si
-		
-		porc_inasist := (REG.Inasistencias * 100) / clases_dictadas
-		suma_inasist := suma_inasist + REG.Inasistencias
-		
-		Si porc_inasist > 20 Entonces
-			cant_div_libres := cant_div_libres +  1
-		Contrario
-			cant_div_regulares := cant_div_regulares + 1
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteEscuela()
-	
-	porc_libres := (cant_gen_libres * 100) / cant_gen
-	prom_inasist := suma_inasist / cant_gen
-	Escribir("Total de alumnos en todas las escuelas: " cant_gen)
-	Escribir("Porcentaje de alumnos libres en todas las escuelas: " porc_libres)
-	Escribir("Cada alumno tiene en promedio" prom_inasist "inasistencias.")
-	
-	CERRAR(ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    Inicializar()
+    PedirDatos()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_esc <> REG.Clave.Escuela Entonces
+            CorteEscuela()
+        Contrario
+            Si resg_año <> REG.Clave.Año Entonces
+                CorteAño()
+            Contrario
+                Si resg_división <> REG.Clave.División Entonces
+                    CorteDivisión()
+                Fin Si
+            Fin Si
+        Fin Si
+
+        porc_inasist := (REG.Inasistencias * 100) / clases_dictadas
+        suma_inasist := suma_inasist + REG.Inasistencias
+
+        Si porc_inasist > 20 Entonces
+            cant_div_libres := cant_div_libres +  1
+        Contrario
+            cant_div_regulares := cant_div_regulares + 1
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteEscuela()
+
+    porc_libres := (cant_gen_libres * 100) / cant_gen
+    prom_inasist := suma_inasist / cant_gen
+    Escribir("Total de alumnos en todas las escuelas: " cant_gen)
+    Escribir("Porcentaje de alumnos libres en todas las escuelas: " porc_libres)
+    Escribir("Cada alumno tiene en promedio" prom_inasist "inasistencias.")
+
+    CERRAR(ARCH)
 
 Fin Acción

@@ -2,96 +2,96 @@ Acción 2.2.11 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-	Alumnos = Registro
-		Clave = Registro
-			Sexo: ("M", "F")
-			Carrera: ("ISI", "IEM", "IQ", "LAR")
-			Legajo: N(5)
-		Fin Registro
-		FechaIngreso: Fecha
-		MateriasAprobadas: N(2)
-	Fin Registro
-	
-	ARCH: archivo de Alumnos ordenado por Clave
-	REG: Alumnos
+    Alumnos = Registro
+        Clave = Registro
+            Sexo: ("M", "F")
+            Carrera: ("ISI", "IEM", "IQ", "LAR")
+            Legajo: N(5)
+        Fin Registro
+        FechaIngreso: Fecha
+        MateriasAprobadas: N(2)
+    Fin Registro
 
-	resg_carrera, resg_sexo: alfanumérico
-	tot_carr_más20, tot_carr_menos20: entero
-	tot_sexo_más20, tot_sexo_menos20: entero
-	tot_gral_más20, tot_gral_menos20: entero
+    ARCH: archivo de Alumnos ordenado por Clave
+    REG: Alumnos
 
-	Procedimiento Inicializar() ES
-		resg_carrera := REG.Clave.Carrera
-		resg_sexo := REG.Clave.Sexo
-		tot_carr_más20 := 0
-		tot_carr_menos20 := 0
-		tot_sexo_más20 := 0
-		tot_sexo_menos20 := 0
-		tot_gral_más20 := 0
-		tot_gral_menos20 := 0
-	Fin Procedimiento
+    resg_carrera, resg_sexo: alfanumérico
+    tot_carr_más20, tot_carr_menos20: entero
+    tot_sexo_más20, tot_sexo_menos20: entero
+    tot_gral_más20, tot_gral_menos20: entero
 
-	Procedimiento CorteCarrera() ES
-		Escribir("Carrera: " resg_carrera)
-		Escribir("Cantidad de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " tot_carrera_más20)
-		Escribir("Cantidad de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " tot_carrera_menos20)
-		tot_sexo_más20 := tot_sexo_más20 + tot_carrera_más20
-		tot_sexo_menos20 := tot_sexo_menos20 + tot_carrera_menos20
-		tot_carr_más20 := 0
-		tot_carr_menos20 := 0
-		resg_carrera := REG.Clave.Carrera
-	Fin Procedimiento
-	
-	Procedimiento CorteSexo() ES
-		CorteCarrera()
-		Escribir("Sexo: " resg_sexo)
-		Escribir("Cantidad de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " tot_sexo_más20)
-		Escribir("Cantidad de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " tot_sexo_menos20)
-		tot_gral_más20 := tot_gral_más20 + tot_sexo_más20
-		tot_gral_menos20 := tot_gral_menos20 + tot_sexo_menos20
-		tot_sexo_más20 := 0
-		tot_sexo_menos20 := 0
-		resg_sexo := REG.Clave.Sexo
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        resg_carrera := REG.Clave.Carrera
+        resg_sexo := REG.Clave.Sexo
+        tot_carr_más20 := 0
+        tot_carr_menos20 := 0
+        tot_sexo_más20 := 0
+        tot_sexo_menos20 := 0
+        tot_gral_más20 := 0
+        tot_gral_menos20 := 0
+    Fin Procedimiento
+
+    Procedimiento CorteCarrera() ES
+        Escribir("Carrera: " resg_carrera)
+        Escribir("Cantidad de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " tot_carrera_más20)
+        Escribir("Cantidad de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " tot_carrera_menos20)
+        tot_sexo_más20 := tot_sexo_más20 + tot_carrera_más20
+        tot_sexo_menos20 := tot_sexo_menos20 + tot_carrera_menos20
+        tot_carr_más20 := 0
+        tot_carr_menos20 := 0
+        resg_carrera := REG.Clave.Carrera
+    Fin Procedimiento
+
+    Procedimiento CorteSexo() ES
+        CorteCarrera()
+        Escribir("Sexo: " resg_sexo)
+        Escribir("Cantidad de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " tot_sexo_más20)
+        Escribir("Cantidad de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " tot_sexo_menos20)
+        tot_gral_más20 := tot_gral_más20 + tot_sexo_más20
+        tot_gral_menos20 := tot_gral_menos20 + tot_sexo_menos20
+        tot_sexo_más20 := 0
+        tot_sexo_menos20 := 0
+        resg_sexo := REG.Clave.Sexo
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_sexo <> REG.Clave.Sexo Entonces
-			CorteSexo()
-		Contrario
-			Si resg_carrera <> REG.Clave.Carrera Entonces
-				CorteCarrera()
-			Fin Si
-		Fin Si
-		
-		Si REG.FechaIngreso.Año > 2009 Entonces
-			Si REG.MateriasAprobadas > 20 Entonces
-				tot_carr_más20 := tot_carr_más20 + 1
-			Contrario
-				tot_carr_menos20 := tot_carr_menos20 + 1
-			Fin Si
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteSexo()
-	
-	Escribir("Total general de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " total_gral_más20)
-	Escribir("Total general de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " total_gral_menos20)
-	
-	CERRAR(ARCH)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_sexo <> REG.Clave.Sexo Entonces
+            CorteSexo()
+        Contrario
+            Si resg_carrera <> REG.Clave.Carrera Entonces
+                CorteCarrera()
+            Fin Si
+        Fin Si
+
+        Si REG.FechaIngreso.Año > 2009 Entonces
+            Si REG.MateriasAprobadas > 20 Entonces
+                tot_carr_más20 := tot_carr_más20 + 1
+            Contrario
+                tot_carr_menos20 := tot_carr_menos20 + 1
+            Fin Si
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteSexo()
+
+    Escribir("Total general de alumnos con más de 20 materias aprobadas que ingresaron en el 2009: " total_gral_más20)
+    Escribir("Total general de alumnos con menos de 20 materias aprobadas que ingresaron en el 2009: " total_gral_menos20)
+
+    CERRAR(ARCH)
 
 Fin Acción

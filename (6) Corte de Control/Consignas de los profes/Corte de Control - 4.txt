@@ -25,154 +25,154 @@ Acción Corte4 ES
 
 Ambiente
 
-	Proyectos = Registro
-		Clave = Registro
-			Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
-			Área: AN(100)
-			IDProyecto: N(5)
-		Fin Registro
-		CantidadTrabajadores: N(2)
-		Estado: ("N", "I", "P", "F")
-		PresupuestoActual: N(4)
-		PresupuestoInicial: N(4)
-	Fin Registro
-	
-	ARCH: archivo de Proyectos ordenado por Clave
-	REG: Proyectos
-	
-	Presupuesto = Registro
-		Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
-		Área: AN(100)
-		CantidadProyectos: N(2)
-		TotalTrabajadores: N(3)
-	Fin Registro
-	
-	ARCH2: archivo de Presupuesto
-	REG2: Presupuesto
-	
-	resg_área, resg_sucursal: alfanumérico
-	proyectos_corrientes: entero
-	menor_sucursal: alfanumérico
-	menor_sucursal_trab: entero
-	porc_restante: real
-	proyectos_derrochadores, proyectos_derrochadores_trab: entero
-	área_incompletos, área_incompletos_trab, área_trab: entero
-	sucursal_incompletos, sucursal_incompletos_trab, sucursal_trab: entero
-	
-	Procedimiento Inicializar() ES
-		resg_área := REG.Clave.Área
-		resg_sucursal := REG.Clave.Sucursal
-		proyectos_corrientes := 0
-		menor_sucursal := 0
-		menor_sucursal_trab := 0
-		proyectos_derrochadores := 0
-		proyectos_derrochadores_trab := 0
-		área_incompletos := 0
-		área_incompletos_trab := 0
-		área_trab := 0
-		sucursal_incompletos := 0
-		sucursal_incompletos_trab := 0
-		sucursal_trab := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteÁrea() ES
-		// Algunas cosas de corte.
-		Escribir("Área: " resg_área)
-		Escribir("Total de proyectos no finalizados: " área_incompletos)
-		Escribir("Cantidad de trabajadores de proyectos no finalizados: " área_incompletos_trab)
-	
-		// Grabo el archivo de salida.
-		REG2.Sucursal := resg_sucursal
-		REG2.Área := resg_área
-		REG2.CantidadProyectos := proyectos_derrochadores
-		REG2.TotalTrabajadores := proyectos_derrochadores_trab
-		GRABAR(ARCH2, REG2)
-	
-		// Resto de las cosas de corte.
-		sucursal_incompletos := sucursal_incompletos + área_incompletos
-		sucursal_incompletos_trab := sucursal_incompletos_trab + área_incompletos_trab
-		sucursal_trab := sucursal_trab + área_trab
-		área_incompletos := 0
-		área_incompletos_trab := 0
-		área_trab := 0
-		resg_área := REG.Clave.Área
-	Fin Procedimiento
-	
-	Procedimiento CorteSucursal() ES
-		CorteÁrea()
-		
-		// Algunas cosas de corte.
-		Escribir("Sucursal: " resg_sucursal)
-		Escribir("Total de proyectos no finalizados: " sucursal_incompletos)
-		Escribir("Cantidad de trabajadores de proyectos no finalizados: " sucursal_incompletos_trab)
-		
-		// Determino la sucursal con la
-		// menor cantidad de trabajadores.
-		Si sucursal_trab < menor_sucursal_trab Entonces
-			menor_sucursal := resg_sucursal
-			menor_sucursal_trab := sucursal_trab
-		Fin Si
-		
-		// Resto de las cosas de corte.
-		sucursal_incompletos := 0
-		sucursal_incompletos_trab := 0
-		sucursal_trab := 0
-		resg_sucursal := REG.Clave.Sucursal
-	Fin Procedimiento
+    Proyectos = Registro
+        Clave = Registro
+            Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
+            Área: AN(100)
+            IDProyecto: N(5)
+        Fin Registro
+        CantidadTrabajadores: N(2)
+        Estado: ("N", "I", "P", "F")
+        PresupuestoActual: N(4)
+        PresupuestoInicial: N(4)
+    Fin Registro
+
+    ARCH: archivo de Proyectos ordenado por Clave
+    REG: Proyectos
+
+    Presupuesto = Registro
+        Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
+        Área: AN(100)
+        CantidadProyectos: N(2)
+        TotalTrabajadores: N(3)
+    Fin Registro
+
+    ARCH2: archivo de Presupuesto
+    REG2: Presupuesto
+
+    resg_área, resg_sucursal: alfanumérico
+    proyectos_corrientes: entero
+    menor_sucursal: alfanumérico
+    menor_sucursal_trab: entero
+    porc_restante: real
+    proyectos_derrochadores, proyectos_derrochadores_trab: entero
+    área_incompletos, área_incompletos_trab, área_trab: entero
+    sucursal_incompletos, sucursal_incompletos_trab, sucursal_trab: entero
+
+    Procedimiento Inicializar() ES
+        resg_área := REG.Clave.Área
+        resg_sucursal := REG.Clave.Sucursal
+        proyectos_corrientes := 0
+        menor_sucursal := 0
+        menor_sucursal_trab := 0
+        proyectos_derrochadores := 0
+        proyectos_derrochadores_trab := 0
+        área_incompletos := 0
+        área_incompletos_trab := 0
+        área_trab := 0
+        sucursal_incompletos := 0
+        sucursal_incompletos_trab := 0
+        sucursal_trab := 0
+    Fin Procedimiento
+
+    Procedimiento CorteÁrea() ES
+        // Algunas cosas de corte.
+        Escribir("Área: " resg_área)
+        Escribir("Total de proyectos no finalizados: " área_incompletos)
+        Escribir("Cantidad de trabajadores de proyectos no finalizados: " área_incompletos_trab)
+
+        // Grabo el archivo de salida.
+        REG2.Sucursal := resg_sucursal
+        REG2.Área := resg_área
+        REG2.CantidadProyectos := proyectos_derrochadores
+        REG2.TotalTrabajadores := proyectos_derrochadores_trab
+        GRABAR(ARCH2, REG2)
+
+        // Resto de las cosas de corte.
+        sucursal_incompletos := sucursal_incompletos + área_incompletos
+        sucursal_incompletos_trab := sucursal_incompletos_trab + área_incompletos_trab
+        sucursal_trab := sucursal_trab + área_trab
+        área_incompletos := 0
+        área_incompletos_trab := 0
+        área_trab := 0
+        resg_área := REG.Clave.Área
+    Fin Procedimiento
+
+    Procedimiento CorteSucursal() ES
+        CorteÁrea()
+
+        // Algunas cosas de corte.
+        Escribir("Sucursal: " resg_sucursal)
+        Escribir("Total de proyectos no finalizados: " sucursal_incompletos)
+        Escribir("Cantidad de trabajadores de proyectos no finalizados: " sucursal_incompletos_trab)
+
+        // Determino la sucursal con la
+        // menor cantidad de trabajadores.
+        Si sucursal_trab < menor_sucursal_trab Entonces
+            menor_sucursal := resg_sucursal
+            menor_sucursal_trab := sucursal_trab
+        Fin Si
+
+        // Resto de las cosas de corte.
+        sucursal_incompletos := 0
+        sucursal_incompletos_trab := 0
+        sucursal_trab := 0
+        resg_sucursal := REG.Clave.Sucursal
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_sucursal <> REG.Clave.Sucursal Entonces
-			CorteSucursal()
-		Contrario
-			Si resg_área <> REG.Clave.Área Entonces
-				CorteÁrea()
-			Fin Si
-		Fin Si
-	
-		// Primera y segunda consigna.
-		Si REG.Estado = "I" Entonces
-			área_incompletos := área_incompletos + 1
-			área_incompletos_trab := área_incompletos_trab + REG.CantidadTrabajadores
-			
-			Si REG.Sucursal = "Corrientes" y REG.CantidadTrabajadores < 7 Entonces
-				proyectos_corrientes := proyectos_corrientes + 1
-			Fin Si
-		Fin Si
-		
-		// Tercera consigna.
-		// Considero la cantidad de trabajadores sin
-		// importar el estado de los proyectos.
-		área_trab := área_trab + REG.CantidadTrabajadores
-		
-		// Cuarta consigna.
-		// Considero el presupuesto inicial como el 100% y el
-		// presupuesto actual como el porcentaje restante. Si
-		// el porcentaje restante es menor a 25 es porque ya
-		// se gastó más del 75% del presupuesto inicial.
-		porc_restante := (REG.PresupuestoActual * 100) / REG.PresupuestoInicial
-		
-		Si porc_restante < 25 Entonces
-			proyectos_derrochadores := proyectos_derrochadores + 1
-			proyectos_derrochadores_trab := proyectos_derrochadores_trab + REG.Inscriptos
-		Fin Si
-	
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteSucursal()
-	
-	Escribir("La sucursal de Corrientes tiene" proyectos_corrientes "proyectos iniciados con menos de 7 trabajadores.")
-	Escribir("La sucursal con la menor cantidad de trabajadores es" menor_sucursal "con" menor_sucursal_trab "trabajadores.")
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_sucursal <> REG.Clave.Sucursal Entonces
+            CorteSucursal()
+        Contrario
+            Si resg_área <> REG.Clave.Área Entonces
+                CorteÁrea()
+            Fin Si
+        Fin Si
+
+        // Primera y segunda consigna.
+        Si REG.Estado = "I" Entonces
+            área_incompletos := área_incompletos + 1
+            área_incompletos_trab := área_incompletos_trab + REG.CantidadTrabajadores
+
+            Si REG.Sucursal = "Corrientes" y REG.CantidadTrabajadores < 7 Entonces
+                proyectos_corrientes := proyectos_corrientes + 1
+            Fin Si
+        Fin Si
+
+        // Tercera consigna.
+        // Considero la cantidad de trabajadores sin
+        // importar el estado de los proyectos.
+        área_trab := área_trab + REG.CantidadTrabajadores
+
+        // Cuarta consigna.
+        // Considero el presupuesto inicial como el 100% y el
+        // presupuesto actual como el porcentaje restante. Si
+        // el porcentaje restante es menor a 25 es porque ya
+        // se gastó más del 75% del presupuesto inicial.
+        porc_restante := (REG.PresupuestoActual * 100) / REG.PresupuestoInicial
+
+        Si porc_restante < 25 Entonces
+            proyectos_derrochadores := proyectos_derrochadores + 1
+            proyectos_derrochadores_trab := proyectos_derrochadores_trab + REG.Inscriptos
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteSucursal()
+
+    Escribir("La sucursal de Corrientes tiene" proyectos_corrientes "proyectos iniciados con menos de 7 trabajadores.")
+    Escribir("La sucursal con la menor cantidad de trabajadores es" menor_sucursal "con" menor_sucursal_trab "trabajadores.")
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

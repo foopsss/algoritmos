@@ -30,79 +30,79 @@ Acción Corte1 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Registro
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
 
-	Stock = Registro
-		Clave = Registro
-			Categoría: ("I", "II", "III")
-			NroLote: N(5)
-			IDMedicamento: N(3)
-		Fin Registro
-		Stock: N(2)
-		FechaVencimiento: Fecha
-	Fin Registro
-	
-	ARCH: archivo de Stock ordenado por Clave
-	REG: Stock
-	
-	vencimiento_cerca: lógico
-	resg_categoría: alfanumérico
-	med_prox_ven, med_no_prox_ven, tot_prox_ven, tot_no_prox_ven, tot_gen_med: entero
-	
-	Procedimiento Inicializar() ES
-		resg_categoría := REG.Clave.Categoría
-		med_prox_ven := 0
-		med_no_prox_ven := 0
-		tot_prox_ven := 0
-		tot_no_prox_ven := 0
-		tot_gen_med := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteCategoría() ES
-		Escribir("Categoría: " resg_categoría)
-		Escribir("Cantidad de medicamentos próximos a vencer: " med_prox_ven)
-		Escribir("Cantidad de medicamentos que no están próximos a vencer: " med_no_prox_ven)
-		tot_prox_ven := tot_prox_ven + med_prox_ven
-		tot_no_prox_ven := tot_prox_ven + med_no_prox_ven
-		tot_gen_med := tot_gen_med + med_prox_ven + med_no_prox_ven
-		med_prox_ven := 0
-		med_no_prox_ven := 0
-		resg_categoría := REG.Clave.Categoría
-	Fin Procedimiento
+    Stock = Registro
+        Clave = Registro
+            Categoría: ("I", "II", "III")
+            NroLote: N(5)
+            IDMedicamento: N(3)
+        Fin Registro
+        Stock: N(2)
+        FechaVencimiento: Fecha
+    Fin Registro
+
+    ARCH: archivo de Stock ordenado por Clave
+    REG: Stock
+
+    vencimiento_cerca: lógico
+    resg_categoría: alfanumérico
+    med_prox_ven, med_no_prox_ven, tot_prox_ven, tot_no_prox_ven, tot_gen_med: entero
+
+    Procedimiento Inicializar() ES
+        resg_categoría := REG.Clave.Categoría
+        med_prox_ven := 0
+        med_no_prox_ven := 0
+        tot_prox_ven := 0
+        tot_no_prox_ven := 0
+        tot_gen_med := 0
+    Fin Procedimiento
+
+    Procedimiento CorteCategoría() ES
+        Escribir("Categoría: " resg_categoría)
+        Escribir("Cantidad de medicamentos próximos a vencer: " med_prox_ven)
+        Escribir("Cantidad de medicamentos que no están próximos a vencer: " med_no_prox_ven)
+        tot_prox_ven := tot_prox_ven + med_prox_ven
+        tot_no_prox_ven := tot_prox_ven + med_no_prox_ven
+        tot_gen_med := tot_gen_med + med_prox_ven + med_no_prox_ven
+        med_prox_ven := 0
+        med_no_prox_ven := 0
+        resg_categoría := REG.Clave.Categoría
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	LEER(ARCH, REG)
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
 
-	Inicializar()
+    Inicializar()
 
-	Mientras NFDA(ARCH) Hacer
-		Si resg_cat <> REG.Clave.Categoría Entonces
-			CorteCategoría()
-		Fin Si
-		
-		vencimiento_cerca := próximoAVencer(REG.Clave.NroLote)
-		
-		Si vencimiento_cerca Entonces
-			med_prox_ven := med_prox_ven + 1
-		Contrario
-			med_no_prox_ven := med_no_prox_ven + 1
-		Fin Si
-				
-		LEER(ARCH, REG)
-	Fin Mientras
+    Mientras NFDA(ARCH) Hacer
+        Si resg_cat <> REG.Clave.Categoría Entonces
+            CorteCategoría()
+        Fin Si
 
-	CorteCategoría()
+        vencimiento_cerca := próximoAVencer(REG.Clave.NroLote)
 
-	Escribir("Hay disponible un total de" tot_gen_med "medicamentos.")
-	Escribir("Hay" tot_no_prox_ven "medicamentos que no están próximos a vencer.")
-	Escribir("Hay" tot_prox_ven "medicamentos que están próximos a vencer.")
+        Si vencimiento_cerca Entonces
+            med_prox_ven := med_prox_ven + 1
+        Contrario
+            med_no_prox_ven := med_no_prox_ven + 1
+        Fin Si
 
-	CERRAR(ARCH)
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteCategoría()
+
+    Escribir("Hay disponible un total de" tot_gen_med "medicamentos.")
+    Escribir("Hay" tot_no_prox_ven "medicamentos que no están próximos a vencer.")
+    Escribir("Hay" tot_prox_ven "medicamentos que están próximos a vencer.")
+
+    CERRAR(ARCH)
 
 Fin Acción

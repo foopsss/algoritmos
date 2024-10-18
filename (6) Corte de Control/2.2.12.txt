@@ -2,61 +2,61 @@ Acción 2.2.12 ES
 
 Ambiente
 
-	Provincia = Registro
-		Clave = Registro
-			Departamento: AN(100)
-			Ciudad: AN(100)
-		Fin Registro
-		CantHab: N(3)
-	Fin Registro
+    Provincia = Registro
+        Clave = Registro
+            Departamento: AN(100)
+            Ciudad: AN(100)
+        Fin Registro
+        CantHab: N(3)
+    Fin Registro
 
-	ARCH: archivo de Provincia ordenado por Clave
-	REG: Provincia
+    ARCH: archivo de Provincia ordenado por Clave
+    REG: Provincia
 
-	Departamentos = Registro
-		Departamento: AN(100)
-		CantHab: N(3)
-	Fin Registro
+    Departamentos = Registro
+        Departamento: AN(100)
+        CantHab: N(3)
+    Fin Registro
 
-	ARCH2: archivo de Departamentos ordenado por Departamento
-	REG2: Departamento
+    ARCH2: archivo de Departamentos ordenado por Departamento
+    REG2: Departamento
 
-	cant_hab_depto: entero
-	resg_depto: alfanumérico
-	
-	Procedimiento Inicializar() ES
-		resg_depto := REG.Clave.Departamento
-		cant_hab_depto := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteDepartamento() ES
-		REG2.Departamento := resg_depto
-		REG2.CantHab := cant_hab_depto
-		GRABAR(ARCH2, REG2)
-		cant_hab_depto := 0
-		resg_depto := REG.Clave.Departamento
-	Fin Procedimiento
+    cant_hab_depto: entero
+    resg_depto: alfanumérico
+
+    Procedimiento Inicializar() ES
+        resg_depto := REG.Clave.Departamento
+        cant_hab_depto := 0
+    Fin Procedimiento
+
+    Procedimiento CorteDepartamento() ES
+        REG2.Departamento := resg_depto
+        REG2.CantHab := cant_hab_depto
+        GRABAR(ARCH2, REG2)
+        cant_hab_depto := 0
+        resg_depto := REG.Clave.Departamento
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
 
-	Inicializar()
+    Inicializar()
 
-	Mientras NFDA(ARCH) Hacer
-		Si resg_depto <> REG.Clave.Departamento Entonces
-			CorteDepartamento()
-		Fin Si
-		
-		cant_hab_depto := REG.CantHab
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteDepartamento()
+    Mientras NFDA(ARCH) Hacer
+        Si resg_depto <> REG.Clave.Departamento Entonces
+            CorteDepartamento()
+        Fin Si
 
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+        cant_hab_depto := REG.CantHab
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteDepartamento()
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción
