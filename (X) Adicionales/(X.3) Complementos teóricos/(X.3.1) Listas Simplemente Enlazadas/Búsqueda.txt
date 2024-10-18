@@ -1,0 +1,47 @@
+// El algoritmo utiliza una búsqueda lineal con centinela para buscar un elemento
+// en la lista, que se trata del ciclo Mientras dentro del algoritmo.
+
+Acción Búsqueda ES
+
+Ambiente
+
+    Nodo = Registro
+        Dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    // Mi puntero de cabecera es prim.
+    prim, p: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    
+    // Utilizo p como una suerte de "ventana", para enlazar
+    // al primer elemento de la lista que voy a trabajar.
+    p := prim
+    
+    Mientras p <> NIL y *p.Dato <> valor Hacer
+        // Mientras se cumpla que no llegué al fin de la lista
+        // y que no encontré el valor buscado, avanzo a los
+        // siguientes elementos.
+        p := *p.prox
+    Fin Mientras
+    
+    Si p <> NIL Entonces
+        // Si p <> NIL es porque en algún momento encontré
+        // el valor buscado.
+        Escribir("Se encontró el elemento buscado.")
+    Contrario
+        // Si p = NIL es porque llegué al fin de la
+        // lista, pero no encontré el valor buscado.
+        Escribir("No se encontró el elemento buscado.")
+    Fin Si
+
+Fin Acción

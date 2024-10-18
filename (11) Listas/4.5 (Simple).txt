@@ -1,0 +1,71 @@
+Acción 4.5(prim: puntero a NodoEntrada) ES
+
+Ambiente
+
+    NodoEntrada = Registro
+        nombre: AN(100)
+        capital: AN(100)
+        cant_hab: N(5)
+        cant_an: N(5)
+        prox: puntero a NodoEntrada
+    Fin Registro
+
+    q: puntero a NodoEntrada
+
+    NodoSalida = Registro
+        nombre: AN(100)
+        capital: AN(100)
+        porc_an: N(3)
+        prox: puntero a NodoSalida
+    Fin Registro
+    
+    // PL quiere decir "Primera lista" y hace referencia al prim
+    // de la primer lista de salida, para <= 10% de analfabetos.
+    // Lo mismo sucede con SL y TL.
+    p, prim_pl, prim_sl, prim_tl, aux_pl, aux_sl, aux_tl: puntero a NodoSalida
+    porc_analfab: real
+
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_pl := NIL
+        prim_sl := NIL
+        prim_tl := NIL
+    Fin Procedimiento
+
+    // Este procedimiento se tendría que utilizar con paso por
+    // referencia a la hora de programarlo en Pascal o parecido.
+    Procedimiento CargarListaSalida(prim_lista, aux_lista) ES
+        Si prim_lista = NIL Entonces
+            prim_lista := p
+        Contrario
+            *aux_lista.prox := p
+        Fin Si
+        aux_lista.prox := p
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+
+    Mientras q <> NIL Hacer
+        porc_analfab := (*q.cant_an * 100) / *q.cant_hab
+        
+        // Como quiero respetar el orden de carga
+        // decreciente de los datos de entrada en mis
+        // listas de salida, uso una carga encolada.
+        Nuevo(p)
+        *p.nombre := *q.nombre
+        *p.capital := *q.capital
+        *p.porc_an := porc_analfab
+        *p.prox := NIL
+        
+        Según porc_analfab Hacer
+            < 16: CargarListaSalida(prim_pl, aux_pl)
+            >= 16: CargarListaSalida(prim_sl, aux_sl)
+            >= 26: CargarListaSalida(prim_tl, aux_tl)
+        Fin Según
+        
+        q := *q.prox
+    Fin Mientras
+
+Fin Acción

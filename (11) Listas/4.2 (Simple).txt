@@ -1,0 +1,58 @@
+Acción 4.2(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        número: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    p, q, aux, aux_seg, prim_seg: puntero a Nodo
+
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_seg := NIL
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+
+    Mientras q <> NIL Hacer
+        Si *q.número MOD 10 = 0 Entonces
+            // Cargo la nueva lista realizando una carga
+            // encolada, simplemente por preferencia propia.
+            //
+            // De esta forma, respeto el orden en el que voy
+            // cargando los elementos a la hora de recuperarlos.
+            Nuevo(p)
+            *p.número := *q.número
+            *p.prox := NIL
+            
+            Si prim_seg = NIL Entonces
+                prim_seg := p
+            Contrario
+                *aux_seg.prox := p
+            Fin Si
+            
+            aux_seg := p
+            
+            // Elimino el elemento de la lista original.
+            Si q = prim Entonces
+                // Estoy borrando el primer elemento de la lista.
+                prim := *q.prox
+                Disponer(q)
+                q := prim
+            Contrario
+                // Estoy borrando cualquier otro elemento de la lista.
+                *aux.prox := *q.prox
+                Disponer(q)
+                q := *aux.prox
+            Fin Si
+        Contrario
+            aux := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción

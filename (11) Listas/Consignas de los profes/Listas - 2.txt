@@ -1,0 +1,103 @@
+// Consigna de los profes: se tiene una lista con los nombres de los clientes de
+// una compañía de telefonía celular, los cuales pueden aparecer repetidos en la
+// lista si tienen registrado más de un número telefónico.
+//
+// La compañía desea enviar un regalo a sus clientes para su próximo aniversario
+// sin darle más de un regalo a cada cliente. En una lista circular se almacenan
+// los regalos disponibles, encontrándose el nombre y la cantidad disponible de
+// cada regalo.
+//
+// Se desea:
+// (a) Generar una lista encadenada ordenada con los nombres y los premios para
+//     cada uno (sin repetir los nombres). Considérese que los premios no se
+//     acaban, se cuenta con una cantidad más que justa para regalarle a todos
+//     los clientes.
+//
+// Consideraciones:
+// (*) Por cada cliente se debe otorgar una unidad de un regalo distinto. Es
+//     decir, que si la lista circular de regalos tiene N artículos, la voy a
+//     recorrer de manera repetida, restándole una unidad por cada iteración a
+//     cada artículo, porque debo darles regalos variados a los clientes. Esto
+//     se hace hasta que los artículos queden sin unidades. 
+
+Acción Listas2(prim_cli: puntero a Clientes, prim_reg: puntero a Regalos) ES
+
+Ambiente
+
+    Clientes = Registro
+        nombre: AN(100)
+        número: N(10)
+        prox: puntero a Clientes
+    Fin Registro
+    
+    cli: puntero a Clientes
+
+    Regalos = Registro
+        nombre: AN(100)
+        cantidad: N(2)
+        prox: puntero a Regalos
+    Fin Registro
+    
+    reg: puntero a Regalos
+
+    Salida = Registro
+        nombre_cli: AN(100)
+        nombre_reg: AN(100)
+        prox: puntero a Salida
+    Fin Salida
+
+    prim_sal, aux_sal, sal, p: puntero a Salida
+    existe: lógico
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        aux_sal := NIL
+        cli := prim_cli
+        reg := prim_reg
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    
+    Mientras cli <> NIL Hacer
+        existe := F
+        sal := prim_sal
+        
+        // Determino si ya inscribí al cliente actual en la lista
+        // de salida previamente.
+        Mientras sal <> NIL y NO existe Hacer
+            Si *sal.nombre_cli = *cli.nombre Entonces
+                existe := V
+            Fin Si
+            sal := *sal.prox
+        Fin Mientras
+    
+        Si NO existe Entonces
+            Nuevo(p)
+            *p.nombre_cli := *cli.nombre
+            *p.nombre_reg := *reg.nombre
+            *reg.cantidad := *reg.cantidad - 1
+            *reg := *reg.prox
+            sal := prim_sal
+            
+            // Hago la carga ordenada de los nombres en la lista de
+            // salida.
+            Mientras sal <> NIL y *sal.nombre_cli < *p.nombre_cli Hacer
+                aux_sal := sal
+                sal := *sal.prox
+            Fin Mientras
+            
+            Si aux_sal = NIL Entonces
+                *p.prox := prim_sal
+                prim_sal := p
+            Contrario
+                *p.prox := sal
+                *aux_sal.prox := p
+            Fin Si
+        Fin Si
+        
+        cli := *cli.prox
+    Fin Mientras
+
+Fin Acción
