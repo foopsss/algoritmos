@@ -43,110 +43,110 @@ Acción SecuenciasM3 ES
 
 Ambiente
 
-	info, plantel, salida: secuencia de carácter
-	v_inf, v_pl: carácter
-	
-	es_cabeza_serie: lógico
-	i, cant_integrantes: entero
-	resg_pos_a, resg_pos_b: carácter
-	resg_edad, mj: entero
+    info, plantel, salida: secuencia de carácter
+    v_inf, v_pl: carácter
 
-	Procedimiento Inicializar() ES
-		cant_integrantes := 0
-		resg_edad := 0
-		mj := HV
-	Fin Procedimiento
-	
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    es_cabeza_serie: lógico
+    i, cant_integrantes: entero
+    resg_pos_a, resg_pos_b: carácter
+    resg_edad, mj: entero
+
+    Procedimiento Inicializar() ES
+        cant_integrantes := 0
+        resg_edad := 0
+        mj := HV
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(info)
-	ARR(plantel)
-	CREAR(salida)
-	
-	AVZ(info, v_inf)
-	AVZ(plantel, v_pl)
-	
-	Inicializar()
-	
-	Mientras NFDS(info) Hacer
-		cant_integrantes := cant_integrantes + CharToInt(v_inf) * 10
-		AVZ(info, v_inf)
-		cant_integrantes := cant_integrantes + CharToInt(v_inf)
-		AVZ(info, v_inf)
-		
-		Si v_inf = "S" Entonces
-			es_cabeza_serie := V
-		Contrario
-			es_cabeza_serie := F
-		Fin Si
-		
-		AVZ(info, v_inf)
-		
-		Escribir("Equipo: ")
-		
-		Mientras v_inf <> "#" Hacer
-			Escribir(v_inf)
-			AVZ(info, v_inf)
-		Fin Mientras
-		
-		Para i := 1 hasta cant_integrantes Hacer
-			resg_pos_a := v_pl
-			AVZ(plantel, v_pl)
-			resg_pos_b := v_pl
-			AVZ(plantel, v_pl)
-			
-			Si resg_pos_a <> "C" y resg_pos_b <> "T" y es_cabeza_serie Entonces
-				Mientras v_pl <> "#" Hacer
-					GRABAR(salida, v_pl)
-					AVZ(plantel, v_pl)
-				Fin Mientras
-				GRABAR(salida, "%")
-			Contrario
-				Mientras v_pl <> "#" Hacer
-					AVZ(plantel, v_pl)
-				Fin Mientras
-			Fin Si
-			
-			Para i := 1 hasta 3 Hacer
-				AVZ(plantel, v_pl)
-			Fin Para
-			
-			resg_edad := resg_edad + CharToInt(v_inf) * 10
-			AVZ(plantel, v_pl)
-			resg_edad := resg_edad + CharToInt(v_inf)
-			
-			Si resg_edad < mj Entonces
-				mj := resg_edad
-			Fin Si
-			
-			Para i := 1 hasta 2 Hacer
-				AVZ(plantel, v_pl)
-			Fin Para
-		Fin Para
-		
-		Escribir("El jugador más joven del equipo tiene" mj "años.")
-		
-		Inicializar()
-		AVZ(info, v_inf)
-	Fin Mientras
-	
-	CERRAR(info)
-	CERRAR(plantel)
-	CERRAR(salida)
+    ARR(info)
+    ARR(plantel)
+    CREAR(salida)
+
+    AVZ(info, v_inf)
+    AVZ(plantel, v_pl)
+
+    Inicializar()
+
+    Mientras NFDS(info) Hacer
+        cant_integrantes := cant_integrantes + CharToInt(v_inf) * 10
+        AVZ(info, v_inf)
+        cant_integrantes := cant_integrantes + CharToInt(v_inf)
+        AVZ(info, v_inf)
+
+        Si v_inf = "S" Entonces
+            es_cabeza_serie := V
+        Contrario
+            es_cabeza_serie := F
+        Fin Si
+
+        AVZ(info, v_inf)
+
+        Escribir("Equipo: ")
+
+        Mientras v_inf <> "#" Hacer
+            Escribir(v_inf)
+            AVZ(info, v_inf)
+        Fin Mientras
+
+        Para i := 1 hasta cant_integrantes Hacer
+            resg_pos_a := v_pl
+            AVZ(plantel, v_pl)
+            resg_pos_b := v_pl
+            AVZ(plantel, v_pl)
+
+            Si resg_pos_a <> "C" y resg_pos_b <> "T" y es_cabeza_serie Entonces
+                Mientras v_pl <> "#" Hacer
+                    GRABAR(salida, v_pl)
+                    AVZ(plantel, v_pl)
+                Fin Mientras
+                GRABAR(salida, "%")
+            Contrario
+                Mientras v_pl <> "#" Hacer
+                    AVZ(plantel, v_pl)
+                Fin Mientras
+            Fin Si
+
+            Para i := 1 hasta 3 Hacer
+                AVZ(plantel, v_pl)
+            Fin Para
+
+            resg_edad := resg_edad + CharToInt(v_inf) * 10
+            AVZ(plantel, v_pl)
+            resg_edad := resg_edad + CharToInt(v_inf)
+
+            Si resg_edad < mj Entonces
+                mj := resg_edad
+            Fin Si
+
+            Para i := 1 hasta 2 Hacer
+                AVZ(plantel, v_pl)
+            Fin Para
+        Fin Para
+
+        Escribir("El jugador más joven del equipo tiene" mj "años.")
+
+        Inicializar()
+        AVZ(info, v_inf)
+    Fin Mientras
+
+    CERRAR(info)
+    CERRAR(plantel)
+    CERRAR(salida)
 
 Fin Acción

@@ -49,143 +49,142 @@ Acción SecuenciasM3 ES
 
 Ambiente
 
-	fila, compras, salida: secuencia de carácter
-	v_fila, v_comp: carácter
-	
-	i, hora_registro, usuarios_retirados: entero
-	registro_temprano: lógico
-	
-	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
-	
-	Procedimiento Inicializar() ES
-		hora_registro := 0
-		usuarios_retirados := 0
-	Fin Procedimiento
-	
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    fila, compras, salida: secuencia de carácter
+    v_fila, v_comp: carácter
+
+    i, hora_registro, usuarios_retirados: entero
+    registro_temprano: lógico
+
+    números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
+    Procedimiento Inicializar() ES
+        hora_registro := 0
+        usuarios_retirados := 0
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(fila)
-	ARR(compras)
-	CREAR(salida)
-	
-	AVZ(fila, v_fila)
-	AVZ(compras, v_comp)
-	
-	Inicializar()
-	
-	Mientras NFDS(fila) Hacer
-		Mientras v_fila <> "#" Hacer
-			// Obtengo la hora de registro.
-			hora_registro := hora_registro + CharToInt(v_fila) * 10
-			AVZ(fila, v_fila)
-			hora_registro := hora_registro + CharToInt(v_fila)
-			
-			// Verifico si la hora de registro
-			// es previa a las 10:00 AM.
-			Si hora_registro < "10" Entonces
-				registro_temprano := V
-			Contrario
-				registro_temprano := F
-			Fin Si
-			
-			// Avanzo hasta llegar a la marca
-			// de fin de la subsecuencia.
-			Mientras v_fila <> "#" Hacer
-				AVZ(fila, v_fila)
-			Fin Mientras
-			
-			// Trato la secuencia correspondiente
-			// en Compras.
-			Mientras v_comp <> "?" Hacer
-				// Si el registro fue previo a las 10:00 AM, copio
-				// el número de fila.
-				Si registro_temprano Entonces
-					Para i := 1 hasta 6 Hacer
-						GRABAR(salida, v_comp)
-						AVZ(compras, v_comp)
-					Fin Para
-					GRABAR(salida, "+")
-				Contrario
-					Para i := 1 hasta 6 Hacer
-						AVZ(compras, v_comp)
-					Fin Para
-				Fin Si
-				
-				Si v_comp <> "#" Entonces
-					// Si tengo un nombre de usuario, lo
-					// recorro hasta el final.
-					Mientras v_comp <> "+" Hacer
-						AVZ(compras, v_comp)
-					Fin Mientras
-					
-					AVZ(compras, v_comp)
-					
-					// Estoy parado en el primer DNI
-					// de una persona con ticket.
-					Si registro_temprano Entonces
-						Mientras v_comp <> "?" Hacer
-							// Copio los DNI pertenecientes
-							// a órdenes realizadas antes de
-							// las 10:00 AM.
-							Mientras v_comp en números Hacer
-								GRABAR(salida, v_comp)
-								AVZ(compras, v_comp)
-							Fin Mientras
-							GRABAR(salida, "+")
-							
-							// Salto los nombres de las
-							// personas a las que les
-							// corresponden los tickets.
-							Mientras v_comp NO en números y v_comp <> "?" Hacer
-								AVZ(compras, v_comp)
-							Fin Mientras
-						Fin Mientras
-					Contrario
-						Mientras v_comp <> "?" Hacer
-							AVZ(compras, v_comp)
-						Fin Mientras
-					Fin Si
-				Contrario
-					usuarios_retirados := usuarios_retirados + 1
-					
-					// Avanzo hasta llegar a la marca
-					// de fin de la subsecuencia.
-					Para i := 1 hasta 2 Hacer
-						AVZ(compras, v_comp)
-					Fin Para
-				Fin Si
-			Fin Mientras
-			
-			Si registro_temprano Entonces
-				GRABAR(salida, "#")
-			Fin Si
-		Fin Mientras
-		
-		hora_registro := 0
-	
-		AVZ(fila, v_fila)
-		AVZ(compras, v_comp)
-	Fin Mientras
-	
-	Escribir("Hay un total de" usuarios_retirados "usuarios que formaron parte de la fila pero no compraron entradas.")
-	
-	CERRAR(fila)
-	CERRAR(compras)
-	CERRAR(salida)
+    ARR(fila)
+    ARR(compras)
+    CREAR(salida)
+
+    AVZ(fila, v_fila)
+    AVZ(compras, v_comp)
+
+    Inicializar()
+
+    Mientras NFDS(fila) Hacer
+        Mientras v_fila <> "#" Hacer
+            // Obtengo la hora de registro.
+            hora_registro := hora_registro + CharToInt(v_fila) * 10
+            AVZ(fila, v_fila)
+            hora_registro := hora_registro + CharToInt(v_fila)
+
+            // Verifico si la hora de registro
+            // es previa a las 10:00 AM.
+            Si hora_registro < "10" Entonces
+                registro_temprano := V
+            Contrario
+                registro_temprano := F
+            Fin Si
+
+            // Avanzo hasta llegar a la marca
+            // de fin de la subsecuencia.
+            Mientras v_fila <> "#" Hacer
+                AVZ(fila, v_fila)
+            Fin Mientras
+
+            // Trato la secuencia correspondiente
+            // en Compras.
+            Mientras v_comp <> "?" Hacer
+                // Si el registro fue previo a las 10:00 AM, copio
+                // el número de fila.
+                Si registro_temprano Entonces
+                    Para i := 1 hasta 6 Hacer
+                        GRABAR(salida, v_comp)
+                        AVZ(compras, v_comp)
+                    Fin Para
+                    GRABAR(salida, "+")
+                Contrario
+                    Para i := 1 hasta 6 Hacer
+                        AVZ(compras, v_comp)
+                    Fin Para
+                Fin Si
+
+                Si v_comp <> "#" Entonces
+                    // Si tengo un nombre de usuario, lo
+                    // recorro hasta el final.
+                    Mientras v_comp <> "+" Hacer
+                        AVZ(compras, v_comp)
+                    Fin Mientras
+                    AVZ(compras, v_comp)
+
+                    // Estoy parado en el primer DNI
+                    // de una persona con ticket.
+                    Si registro_temprano Entonces
+                        Mientras v_comp <> "?" Hacer
+                            // Copio los DNI pertenecientes
+                            // a órdenes realizadas antes de
+                            // las 10:00 AM.
+                            Mientras v_comp en números Hacer
+                                GRABAR(salida, v_comp)
+                                AVZ(compras, v_comp)
+                            Fin Mientras
+                            GRABAR(salida, "+")
+
+                            // Salto los nombres de las
+                            // personas a las que les
+                            // corresponden los tickets.
+                            Mientras v_comp NO en números y v_comp <> "?" Hacer
+                                AVZ(compras, v_comp)
+                            Fin Mientras
+                        Fin Mientras
+                    Contrario
+                        Mientras v_comp <> "?" Hacer
+                            AVZ(compras, v_comp)
+                        Fin Mientras
+                    Fin Si
+                Contrario
+                    usuarios_retirados := usuarios_retirados + 1
+
+                    // Avanzo hasta llegar a la marca
+                    // de fin de la subsecuencia.
+                    Para i := 1 hasta 2 Hacer
+                        AVZ(compras, v_comp)
+                    Fin Para
+                Fin Si
+            Fin Mientras
+
+            Si registro_temprano Entonces
+                GRABAR(salida, "#")
+            Fin Si
+        Fin Mientras
+
+        hora_registro := 0
+
+        AVZ(fila, v_fila)
+        AVZ(compras, v_comp)
+    Fin Mientras
+
+    Escribir("Hay un total de" usuarios_retirados "usuarios que formaron parte de la fila pero no compraron entradas.")
+
+    CERRAR(fila)
+    CERRAR(compras)
+    CERRAR(salida)
 
 Fin Acción

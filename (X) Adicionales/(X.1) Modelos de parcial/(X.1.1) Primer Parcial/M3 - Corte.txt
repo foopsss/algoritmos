@@ -17,95 +17,95 @@ Acción CorteM3 ES
 
 Ambiente
 
-	Fecha = Registro
-		Año: N(4)
-		Mes: (1..12)
-		Día: (1..31)
-	Fin Fecha
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Fecha
 
-	Ventas = Registro
-		Clave = Registro
-			Provincia: AN(100)
-			Ciudad: AN(100)
-			Plataforma: AN(100)
-			FechaVentas: Fecha
-		Fin Registro
-		Entradas: N(4)
-	Fin Registro
-	
-	ARCH: archivo de Ventas ordenado por Clave
-	REG: Ventas
-	
-	Salida = Registro
-		Provincia: AN(100)
-		Entradas: N(4)
-	Fin Registros
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
-	
-	resg_ciudad, resg_prov: alfanumérico
-	ventas_ciudad, ventas_ciudad_junio, ventas_provincia_junio: entero
-	
-	Procedimiento Inicializar() ES
-		resg_ciudad := REG.Clave.Ciudad
-		resg_prov := REG.Clave.Provincia
-		ventas_ciudad := 0
-		ventas_ciudad_junio := 0
-		ventas_provincia_junio := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteCiudad() ES
-		Si ventas_ciudad > 7500 Entonces
-			Escribir("Ciudad: " resg_ciudad)
-			Escribir("Provincia: " resg_prov)
-			Escribir("Entradas vendidas: " ventas_ciudad)
-		Fin Si
-		
-		ventas_provincia_junio := ventas_provincia_junio + ventas_ciudad_junio
-		ventas_ciudad := 0
-		ventas_ciudad_junio := 0
-		resg_ciudad := REG.Clave.Ciudad
-	Fin Proceso
+    Ventas = Registro
+        Clave = Registro
+            Provincia: AN(100)
+            Ciudad: AN(100)
+            Plataforma: AN(100)
+            FechaVentas: Fecha
+        Fin Registro
+        Entradas: N(4)
+    Fin Registro
 
-	Procedimiento CorteProvincia() ES
-		CorteCiudad()
-		REG2.Provincia := resg_prov
-		REG2.Entradas := ventas_provincia_junio
-		GRABAR(ARCH2, REG2)
-		ventas_provincia_junio := 0
-		resg_prov := REG.Clave.Provincia
-	Fin Procedimiento
+    ARCH: archivo de Ventas ordenado por Clave
+    REG: Ventas
+
+    Salida = Registro
+        Provincia: AN(100)
+        Entradas: N(4)
+    Fin Registros
+
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_ciudad, resg_prov: alfanumérico
+    ventas_ciudad, ventas_ciudad_junio, ventas_provincia_junio: entero
+
+    Procedimiento Inicializar() ES
+        resg_ciudad := REG.Clave.Ciudad
+        resg_prov := REG.Clave.Provincia
+        ventas_ciudad := 0
+        ventas_ciudad_junio := 0
+        ventas_provincia_junio := 0
+    Fin Procedimiento
+
+    Procedimiento CorteCiudad() ES
+        Si ventas_ciudad > 7500 Entonces
+            Escribir("Ciudad: " resg_ciudad)
+            Escribir("Provincia: " resg_prov)
+            Escribir("Entradas vendidas: " ventas_ciudad)
+        Fin Si
+
+        ventas_provincia_junio := ventas_provincia_junio + ventas_ciudad_junio
+        ventas_ciudad := 0
+        ventas_ciudad_junio := 0
+        resg_ciudad := REG.Clave.Ciudad
+    Fin Procedimiento
+
+    Procedimiento CorteProvincia() ES
+        CorteCiudad()
+        REG2.Provincia := resg_prov
+        REG2.Entradas := ventas_provincia_junio
+        GRABAR(ARCH2, REG2)
+        ventas_provincia_junio := 0
+        resg_prov := REG.Clave.Provincia
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
 
-	Mientras NFDA(ARCH) Hacer
-		Si resg_prov <> REG.Clave.Provincia
-			CorteProvincia()
-		Contrario
-			Si resg_ciudad <> REG.Clave.Ciudad Entonces
-				CorteCiudad()
-			Fin Si
-		Fin Si
-		
-		Si REG.Clave.FechaVenta.Mes = 6 Entonces
-			ventas_ciudad_junio := ventas_ciudad_junio + REG.Entradas
-		Fin Si
-		
-		ventas_ciudad := ventas_ciudad + REG.Entradas
-	
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteProvincia()
+    Inicializar()
 
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    Mientras NFDA(ARCH) Hacer
+        Si resg_prov <> REG.Clave.Provincia
+            CorteProvincia()
+        Contrario
+            Si resg_ciudad <> REG.Clave.Ciudad Entonces
+                CorteCiudad()
+            Fin Si
+        Fin Si
+
+        Si REG.Clave.FechaVenta.Mes = 6 Entonces
+            ventas_ciudad_junio := ventas_ciudad_junio + REG.Entradas
+        Fin Si
+
+        ventas_ciudad := ventas_ciudad + REG.Entradas
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteProvincia()
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

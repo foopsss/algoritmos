@@ -37,91 +37,89 @@ Acción SecuenciasM7 ES
 
 Ambiente
 
-	estadios, salida: secuencia de carácter
-	v_est: carácter
-	
-	reserva_us: carácter
-	capacidad_estadio, reservas_estadio, cant_reservas_us, asientos_reservados: entero
-	porcentaje_ocupación: real
-	
-	Procedimiento Inicializar() ES
-		capacidad_estadio := 0
-		reservas_estadio := 0
-		cant_reservas_us := 0
-		asientos_reservados := 0
-	Fin Procedimiento
+    estadios, salida: secuencia de carácter
+    v_est: carácter
 
-	Procedimiento PedirReservaUsuario() ES
-		Escribir("Introduzca un tipo de reserva: ")
-		Leer(reserva_us)
-	Fin Procedimiento
+    reserva_us: carácter
+    capacidad_estadio, reservas_estadio, cant_reservas_us, asientos_reservados: entero
+    porcentaje_ocupación: real
+
+    Procedimiento Inicializar() ES
+        capacidad_estadio := 0
+        reservas_estadio := 0
+        cant_reservas_us := 0
+        asientos_reservados := 0
+    Fin Procedimiento
+
+    Procedimiento PedirReservaUsuario() ES
+        Escribir("Introduzca un tipo de reserva: ")
+        Leer(reserva_us)
+    Fin Procedimiento
 
 Proceso
 
-	ARR(estadios)
-	CREAR(salida)
-	AVZ(estadios, v_est)
-	
-	Inicializar()
-	PedirReservaUsuario()
-	
-	Mientras NFDS(estadios) Hacer
-		Escribir("Estadio: ")
-		
-		Mientras v_est <> "%" Hacer
-			Escribir(v_est)
-			GRABAR(salida, v_est)
-			AVZ(estadios, v_est)
-		Fin Mientras
-		
-		GRABAR(salida, "%")
-		AVZ(estadios, v_est)
-		
-		capacidad_estadio := capacidad_estadio + CharToInt(v_est) * 10
-		AVZ(estadios, v_est)
-		capacidad_estadio := capacidad_estadio + CharToInt(v_est)
-		capacidad_estadio := capacidad_estadio * 1000
-		
-		Para i := 1 hasta 2 Hacer
-			AVZ(estadios, v_est)
-		Fin Para
-		
-		Mientras v_est <> "@" Hacer
-			reservas_estadio := reservas_estadio + 1
-			
-			Si v_est = reserva_us Entonces
-				cant_reservas_us := cant_reservas_us + 1
-			Fin Si
-			
-			Mientras v_est <> "%" Hacer
-				AVZ(estadios, v_est)
-			Fin Mientras
-			
-			AVZ(estadios, v_est)
-		
-			Mientras v_est <> "_" Hacer
-				asientos_reservados := asientos_reservados + 1
-				
-				Para i := 1 hasta 3 Hacer
-					AVZ(estadios, v_est)
-				Fin Para
-			Fin Mientras
-			
-			AVZ(estadios, v_est)
-		Fin Mientras
-		
-		porcentaje_ocupación := (asientos_reservados * 100) / capacidad_estadio
-		GRABAR(salida, cant_reservas_us)
-		GRABAR(salida, "@")
-		
-		Escribir("En este estadio se realizaron un total de" reservas_estadio "reservas.")
-		Escribir("El porcentaje de ocupación es del" porcentaje_ocupación "%.")
-		
-		Inicializar()
-		AVZ(estadios, v_est)
-	Fin Mientras
-	
-	CERRAR(estadios)
-	CERRAR(salida)
+    ARR(estadios)
+    CREAR(salida)
+    AVZ(estadios, v_est)
+
+    Inicializar()
+    PedirReservaUsuario()
+
+    Mientras NFDS(estadios) Hacer
+        Escribir("Estadio: ")
+
+        Mientras v_est <> "%" Hacer
+            Escribir(v_est)
+            GRABAR(salida, v_est)
+            AVZ(estadios, v_est)
+        Fin Mientras
+
+        GRABAR(salida, "%")
+        AVZ(estadios, v_est)
+
+        capacidad_estadio := capacidad_estadio + CharToInt(v_est) * 10
+        AVZ(estadios, v_est)
+        capacidad_estadio := capacidad_estadio + CharToInt(v_est)
+        capacidad_estadio := capacidad_estadio * 1000
+
+        Para i := 1 hasta 2 Hacer
+            AVZ(estadios, v_est)
+        Fin Para
+
+        Mientras v_est <> "@" Hacer
+            reservas_estadio := reservas_estadio + 1
+
+            Si v_est = reserva_us Entonces
+                cant_reservas_us := cant_reservas_us + 1
+            Fin Si
+
+            Mientras v_est <> "%" Hacer
+                AVZ(estadios, v_est)
+            Fin Mientras
+            AVZ(estadios, v_est)
+
+            Mientras v_est <> "_" Hacer
+                asientos_reservados := asientos_reservados + 1
+                Para i := 1 hasta 3 Hacer
+                    AVZ(estadios, v_est)
+                Fin Para
+            Fin Mientras
+
+            AVZ(estadios, v_est)
+        Fin Mientras
+
+        porcentaje_ocupación := (asientos_reservados * 100) / capacidad_estadio
+        GRABAR(salida, cant_reservas_us)
+        GRABAR(salida, "@")
+
+        Escribir("En este estadio se realizaron un total de" reservas_estadio "reservas.")
+        Escribir("El porcentaje de ocupación es del" porcentaje_ocupación "%.")
+
+        Inicializar()
+        AVZ(estadios, v_est)
+    Fin Mientras
+
+    CERRAR(estadios)
+    CERRAR(salida)
 
 Fin Acción

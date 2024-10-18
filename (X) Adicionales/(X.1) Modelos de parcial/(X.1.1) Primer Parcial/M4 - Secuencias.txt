@@ -48,132 +48,129 @@ Acción SecuenciasM4 ES
 
 Ambiente
 
-	artículos, ventas, salida: secuencia de carácter
-	v_art, v_ventas: carácter
+    artículos, ventas, salida: secuencia de carácter
+    v_art, v_ventas: carácter
 
-	i, mes_us, stock_prod, mes_ventas, resg_uv: entero
-	unid_suc, unid_suc_us, unid_dom, unid_dom_us: entero
-	resg_fe: carácter
+    i, mes_us, stock_prod, mes_ventas, resg_uv: entero
+    unid_suc, unid_suc_us, unid_dom, unid_dom_us: entero
+    resg_fe: carácter
 
-	Procedimiento Inicializar() ES
-		stock_prod := 0
-		mes_ventas := 0
-		resg_uv := 0
-		unid_suc := 0
-		unid_suc_us := 0
-		unid_dom := 0
-		unid_dom_us := 0
-	Fin Procedimiento
-	
-	Procedimiento PedirMesUsuario() ES
-		Escribir("Ingrese un mes: ")
-		Leer(mes_us)
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        stock_prod := 0
+        mes_ventas := 0
+        resg_uv := 0
+        unid_suc := 0
+        unid_suc_us := 0
+        unid_dom := 0
+        unid_dom_us := 0
+    Fin Procedimiento
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    Procedimiento PedirMesUsuario() ES
+        Escribir("Ingrese un mes: ")
+        Leer(mes_us)
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(artículos)
-	ARR(ventas)
-	CREAR(salida)
-	
-	AVZ(artículos, v_art)
-	AVZ(ventas, v_ventas)
-	
-	Inicializar()
-	PedirMesUsuario()
-	
-	Escribir("Mes introducido por el usuario: " mes_us)
-	Escribir("| Nombre del Artículo | Cant. unid entregadas en suc | Cant. unid enviadas a domicilio |")
-	
-	Mientras NFDS(artículos) Hacer
-		Mientras v_art <> "&" Hacer
-			Para i := 1 hasta 6 Hacer
-				AVZ(artículos, v_art)
-			Fin Para
-			
-			Para i := 3 hasta 1, -1 Hacer
-				stock_prod := stock_prod + CharToInt(v_art) * (10 ** (i - 1))
-				AVZ(artículos, v_art)
-			Fin Para
-			
-			Mientras v_ventas <> "#" Hacer
-				Para i := 1 hasta 2 Hacer
-					AVZ(ventas, v_ventas)
-				Fin Para
-				
-				mes_ventas := mes_ventas + CharToInt(v_ventas) * 10
-				AVZ(ventas, v_ventas)
-				mes_ventas := mes_ventas + CharToInt(v_ventas)
-				
-				Para i := 1 hasta 2 Hacer
-					AVZ(ventas, v_ventas)
-				Fin Para
-				
-				resg_fe := v_ventas
-				AVZ(ventas, v_ventas)
-				
-				resg_uv := resg_uv + CharToInt(v_ventas) * 10
-				AVZ(ventas, v_ventas)
-				resg_uv := resg_uv + CharToInt(v_ventas)
-				
-				Si resg_fe = "S" Entonces
-					unid_suc := unid_suc + resg_uv
-					
-					Si mes_us = mes_ventas Entonces
-						unid_suc_us := unid_suc_us + resg_uv
-					Fin Si
-				Contrario
-					unid_dom := unid_dom + resg_uv
-					
-					Si mes_us = mes_ventas Entonces
-						unid_dom_us := unid_dom_us + resg_uv
-					Fin Si
-				Fin Si
-				
-				AVZ(ventas, v_ventas)
-			Fin Mientras
-			
-			// Trato el nombre.
-			Si stock_prod - unid_suc = 0 Entonces
-				Mientras v_art <> "&" Hacer
-					GRABAR(salida, v_art)
-					Escribir(v_art)
-					AVZ(artículos, v_art)
-				Fin Mientras
-			Contrario
-				Mientras v_art <> "&" Hacer
-					Escribir(v_art)
-					AVZ(artículos, v_art)
-				Fin Mientras
-			Fin Si
-			
-			Escribir(unid_suc_us)
-			Escribir(unid_dom_us)
-		Fin Mientras
-		
-		Inicializar()
-		
-		AVZ(artículos, v_art)
-		AVZ(ventas, v_ventas)
-	Fin Mientras
-	
-	CERRAR(artículos)
-	CERRAR(ventas)
-	CERRAR(salida)
+    ARR(artículos)
+    ARR(ventas)
+    CREAR(salida)
+
+    AVZ(artículos, v_art)
+    AVZ(ventas, v_ventas)
+
+    Inicializar()
+    PedirMesUsuario()
+
+    Escribir("Mes introducido por el usuario: " mes_us)
+    Escribir("| Nombre del Artículo | Cant. unid entregadas en suc | Cant. unid enviadas a domicilio |")
+
+    Mientras NFDS(artículos) Hacer
+        Mientras v_art <> "&" Hacer
+            Para i := 1 hasta 6 Hacer
+                AVZ(artículos, v_art)
+            Fin Para
+
+            Para i := 3 hasta 1, -1 Hacer
+                stock_prod := stock_prod + CharToInt(v_art) * (10 ** (i - 1))
+                AVZ(artículos, v_art)
+            Fin Para
+
+            Mientras v_ventas <> "#" Hacer
+                Para i := 1 hasta 2 Hacer
+                    AVZ(ventas, v_ventas)
+                Fin Para
+
+                mes_ventas := mes_ventas + CharToInt(v_ventas) * 10
+                AVZ(ventas, v_ventas)
+                mes_ventas := mes_ventas + CharToInt(v_ventas)
+
+                Para i := 1 hasta 2 Hacer
+                    AVZ(ventas, v_ventas)
+                Fin Para
+
+                resg_fe := v_ventas
+                AVZ(ventas, v_ventas)
+                resg_uv := resg_uv + CharToInt(v_ventas) * 10
+                AVZ(ventas, v_ventas)
+                resg_uv := resg_uv + CharToInt(v_ventas)
+
+                Si resg_fe = "S" Entonces
+                    unid_suc := unid_suc + resg_uv
+                    Si mes_us = mes_ventas Entonces
+                        unid_suc_us := unid_suc_us + resg_uv
+                    Fin Si
+                Contrario
+                    unid_dom := unid_dom + resg_uv
+                    Si mes_us = mes_ventas Entonces
+                        unid_dom_us := unid_dom_us + resg_uv
+                    Fin Si
+                Fin Si
+
+                AVZ(ventas, v_ventas)
+            Fin Mientras
+
+            // Trato el nombre.
+            Si stock_prod - unid_suc = 0 Entonces
+                Mientras v_art <> "&" Hacer
+                    GRABAR(salida, v_art)
+                    Escribir(v_art)
+                    AVZ(artículos, v_art)
+                Fin Mientras
+            Contrario
+                Mientras v_art <> "&" Hacer
+                    Escribir(v_art)
+                    AVZ(artículos, v_art)
+                Fin Mientras
+            Fin Si
+
+            Escribir(unid_suc_us)
+            Escribir(unid_dom_us)
+        Fin Mientras
+
+        Inicializar()
+
+        AVZ(artículos, v_art)
+        AVZ(ventas, v_ventas)
+    Fin Mientras
+
+    CERRAR(artículos)
+    CERRAR(ventas)
+    CERRAR(salida)
 
 Fin Acción

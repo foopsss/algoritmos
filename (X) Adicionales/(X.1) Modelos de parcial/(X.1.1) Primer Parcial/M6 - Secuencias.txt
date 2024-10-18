@@ -27,107 +27,106 @@ Acción SecuenciasM6 ES
 
 Ambiente
 
-	estudios, salida: secuencia de carácter
-	v_est: carácter
+    estudios, salida: secuencia de carácter
+    v_est: carácter
 
-	es_prot_a: lógico
-	i, j, cant_est_pac, tot_est: entero
-	cant_est_a, cant_est_e, cant_est_i: entero
-	resg_tipo: carácter
-	monto_est_a, monto_est_e, monto_est_i: entero
-	porc_est_a: real
+    es_prot_a: lógico
+    i, j, cant_est_pac, tot_est: entero
+    cant_est_a, cant_est_e, cant_est_i: entero
+    resg_tipo: carácter
+    monto_est_a, monto_est_e, monto_est_i: entero
+    porc_est_a: real
 
-	Procedimiento Inicializar() ES
-		cant_est_pac := 0
-		tot_est := 0
-		cant_est_a := 0
-		cant_est_e := 0
-		cant_est_i := 0
-		monto_est_a := 0
-		monto_est_e := 0
-		monto_est_i := 0
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        cant_est_pac := 0
+        tot_est := 0
+        cant_est_a := 0
+        cant_est_e := 0
+        cant_est_i := 0
+        monto_est_a := 0
+        monto_est_e := 0
+        monto_est_i := 0
+    Fin Procedimiento
 
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(estudios)
-	CREAR(salida)
-	AVZ(estudios, v_est)
-	
-	Inicializar()
-	
-	Mientras NFDS(estudios) Hacer
-		Mientras v_est <> "*" Hacer
-			Si v_est = "A" Entonces
-				es_prot_a := V
-			Contrario
-				es_prot_a := F
-			Fin Si
-			
-			Mientras v_est <> "," Hacer
-				AVZ(estudios, v_est)
-			Fin Mientras
-			
-			AVZ(estudios, v_est)
-			
-			cant_est_pac := cant_est_pac + CharToInt(v_est) * 10
-			AVZ(estudios, v_est)
-			cant_est_pac := cant_est_pac + CharToInt(v_est) * 1
-			AVZ(estudios, v_est)
-			
-			Para i := 1 hasta cant_est_pac Hacer
-				tot_est := tot_est + 1
-				resg_tipo := v_est
-				
-				Según resg_tipo Hacer
-					= "A": cant_est_a := cant_est_a + 1
-					= "E": cant_est_e := cant_est_e + 1
-					= "I": cant_est_i := cant_est_i + 1
-				Fin Según
-				
-				Si es_prot_a y resg_tipo = "E" Entonces
-					Para j := 1 hasta 4 Hacer
-						GRABAR(salida, v_est)
-						AVZ(estudios, v_est)
-					Fin Para
-				Contrario
-					Para j := 1 hasta 4 Hacer
-						AVZ(estudios, v_est)
-					Fin Para
-				Fin Si
-			Fin Para
-		Fin Mientras
-		
-		cant_est_pac := 0		
-		AVZ(estudios, v_est)
-	Fin Mientras
-	
-	monto_est_a := cant_est_a * 300
-	monto_est_e := cant_est_e * 420
-	monto_est_i := cant_est_i * 670
-	porc_est_a := (cant_est_a * 100) / tot_est
-	
-	Escribir("El tipo de estudio A recaudó un total de" monto_est_a "pesos.")
-	Escribir("El tipo de estudio E recaudó un total de" monto_est_e "pesos.")
-	Escribir("El tipo de estudio I recaudó un total de" monto_est_i "pesos.")
-	Escribir("Los estudios de tipo A representan el" porc_est_a "% del total.")
+    ARR(estudios)
+    CREAR(salida)
+    AVZ(estudios, v_est)
 
-	CERRAR(estudios)
-	CERRAR(salida)
+    Inicializar()
+
+    Mientras NFDS(estudios) Hacer
+        Mientras v_est <> "*" Hacer
+            Si v_est = "A" Entonces
+                es_prot_a := V
+            Contrario
+                es_prot_a := F
+            Fin Si
+
+            Mientras v_est <> "," Hacer
+                AVZ(estudios, v_est)
+            Fin Mientras
+
+            AVZ(estudios, v_est)
+            cant_est_pac := cant_est_pac + CharToInt(v_est) * 10
+            AVZ(estudios, v_est)
+            cant_est_pac := cant_est_pac + CharToInt(v_est) * 1
+            AVZ(estudios, v_est)
+
+            Para i := 1 hasta cant_est_pac Hacer
+                tot_est := tot_est + 1
+                resg_tipo := v_est
+
+                Según resg_tipo Hacer
+                    = "A": cant_est_a := cant_est_a + 1
+                    = "E": cant_est_e := cant_est_e + 1
+                    = "I": cant_est_i := cant_est_i + 1
+                Fin Según
+
+                Si es_prot_a y resg_tipo = "E" Entonces
+                    Para j := 1 hasta 4 Hacer
+                        GRABAR(salida, v_est)
+                        AVZ(estudios, v_est)
+                    Fin Para
+                Contrario
+                    Para j := 1 hasta 4 Hacer
+                        AVZ(estudios, v_est)
+                    Fin Para
+                Fin Si
+            Fin Para
+        Fin Mientras
+
+        cant_est_pac := 0
+        AVZ(estudios, v_est)
+    Fin Mientras
+
+    monto_est_a := cant_est_a * 300
+    monto_est_e := cant_est_e * 420
+    monto_est_i := cant_est_i * 670
+    porc_est_a := (cant_est_a * 100) / tot_est
+
+    Escribir("El tipo de estudio A recaudó un total de" monto_est_a "pesos.")
+    Escribir("El tipo de estudio E recaudó un total de" monto_est_e "pesos.")
+    Escribir("El tipo de estudio I recaudó un total de" monto_est_i "pesos.")
+    Escribir("Los estudios de tipo A representan el" porc_est_a "% del total.")
+
+    CERRAR(estudios)
+    CERRAR(salida)
 
 Fin Acción

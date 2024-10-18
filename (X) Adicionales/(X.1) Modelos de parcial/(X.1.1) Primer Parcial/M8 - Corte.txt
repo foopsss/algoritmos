@@ -25,102 +25,101 @@ Acción CorteM8 ES
 
 Ambiente
 
-	Cadenas = Registro
-		Clave = Registro
-			código_cadena: AN(15)
-			nivel_hotel: (1..5)
-		Fin Registro
-		código_hotel: N(4)
-		nombre_hotel: AN(50)
-		es_ciudad_sede: lógico
-		cantidad_habitaciones: N(4)
-	Fin Registro
-	
-	ARCH: archivo de Cadenas ordenado por Clave
-	REG: Cadenas
-	
-	Salida = Registro
-		código_cadena: AN(15)
-		nivel_hotel: (1..5)
-		código_hotel: N(4)
-		nombre_hotel: AN(50)
-		cantidad_habitaciones: N(4)
-	Fin Registro
-	
-	ARCH2: archivo de Salida
-	REG2: Salida
-	
-	resg_nivel: entero
-	resg_cadena: alfanumérico
-	tot_nivel, tot_cadena, tot_gen: entero
-	
-	Procedimiento Inicializar() ES
-		resg_nivel := REG.Clave.nivel_hotel
-		resg_cadena := REG.Clave.código_cadena
-		tot_nivel := 0
-		tot_cadena := 0
-		tot_gen := 0
-	Fin Procedimiento
-	
-	Procedimiento CorteNivel() ES
-		Escribir("Nivel: " resg_nivel)
-		Escribir("Cantidad de hoteles con más de 300 habitaciones en ciudades sede: " tot_nivel)
-		tot_cadena := tot_cadena + tot_nivel
-		tot_nivel := 0
-		resg_nivel := REG.Clave.nivel_hotel
-	Fin Procedimiento
-	
-	Procedimiento CorteCadena() ES
-		CorteNivel()
-		Escribir("Cadena: " resg_cadena)
-		Escribir("Cantidad de hoteles con más de 300 habitaciones en ciudades sede: " tot_cadena)
-		tot_gen := tot_gen + tot_cadena
-		tot_cadena := 0
-		resg_cadena := REG.Clave.código_cadena
-	Fin Procedimiento
-	
-	Procedimiento GrabarSalida() ES
-		REG2.código_cadena := REG.código_cadena
-		REG2.nivel_hotel := REG.nivel_hotel
-		REG2.código_hotel := REG.código_hotel
-		REG2.nombre_hotel := REG.nombre_hotel
-		REG2.cantidad_habitaciones := REG.cantidad_habitaciones
-		GRABAR(ARCH2, REG2)
-	Fin Procedimiento
+    Cadenas = Registro
+        Clave = Registro
+            código_cadena: AN(15)
+            nivel_hotel: (1..5)
+        Fin Registro
+        código_hotel: N(4)
+        nombre_hotel: AN(50)
+        es_ciudad_sede: lógico
+        cantidad_habitaciones: N(4)
+    Fin Registro
+
+    ARCH: archivo de Cadenas ordenado por Clave
+    REG: Cadenas
+
+    Salida = Registro
+        código_cadena: AN(15)
+        nivel_hotel: (1..5)
+        código_hotel: N(4)
+        nombre_hotel: AN(50)
+        cantidad_habitaciones: N(4)
+    Fin Registro
+
+    ARCH2: archivo de Salida
+    REG2: Salida
+
+    resg_nivel: entero
+    resg_cadena: alfanumérico
+    tot_nivel, tot_cadena, tot_gen: entero
+
+    Procedimiento Inicializar() ES
+        resg_nivel := REG.Clave.nivel_hotel
+        resg_cadena := REG.Clave.código_cadena
+        tot_nivel := 0
+        tot_cadena := 0
+        tot_gen := 0
+    Fin Procedimiento
+
+    Procedimiento CorteNivel() ES
+        Escribir("Nivel: " resg_nivel)
+        Escribir("Cantidad de hoteles con más de 300 habitaciones en ciudades sede: " tot_nivel)
+        tot_cadena := tot_cadena + tot_nivel
+        tot_nivel := 0
+        resg_nivel := REG.Clave.nivel_hotel
+    Fin Procedimiento
+
+    Procedimiento CorteCadena() ES
+        CorteNivel()
+        Escribir("Cadena: " resg_cadena)
+        Escribir("Cantidad de hoteles con más de 300 habitaciones en ciudades sede: " tot_cadena)
+        tot_gen := tot_gen + tot_cadena
+        tot_cadena := 0
+        resg_cadena := REG.Clave.código_cadena
+    Fin Procedimiento
+
+    Procedimiento GrabarSalida() ES
+        REG2.código_cadena := REG.código_cadena
+        REG2.nivel_hotel := REG.nivel_hotel
+        REG2.código_hotel := REG.código_hotel
+        REG2.nombre_hotel := REG.nombre_hotel
+        REG2.cantidad_habitaciones := REG.cantidad_habitaciones
+        GRABAR(ARCH2, REG2)
+    Fin Procedimiento
 
 Proceso
 
-	ABRIR E/ (ARCH)
-	ABRIR S/ (ARCH2)
-	LEER(ARCH, REG)
-	
-	Inicializar()
-	
-	Mientras NFDA(ARCH) Hacer
-		Si resg_cadena <> REG.Clave.código_cadena Entonces
-			CorteCadena()
-		Contrario
-			Si resg_nivel <> REG.Clave.nivel_hotel Entonces
-				CorteNivel()
-			Fin Si
-		Fin Si
-		
-		Si REG.es_ciudad_sede Entonces
-			Si REG.cantidad_habitaciones > 300 Entonces
-				tot_nivel := tot_nivel + 1
-			Fin Si
-			
-			GrabarSalida()
-		Fin Si
-		
-		LEER(ARCH, REG)
-	Fin Mientras
-	
-	CorteCadena()
-	
-	Escribir("Hay un total de" tot_gen "hoteles con más de 300 habitaciones en ciudades sede del Mundial de Fútbol.")
-	
-	CERRAR(ARCH)
-	CERRAR(ARCH2)
+    ABRIR E/ (ARCH)
+    ABRIR S/ (ARCH2)
+    LEER(ARCH, REG)
+
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        Si resg_cadena <> REG.Clave.código_cadena Entonces
+            CorteCadena()
+        Contrario
+            Si resg_nivel <> REG.Clave.nivel_hotel Entonces
+                CorteNivel()
+            Fin Si
+        Fin Si
+
+        Si REG.es_ciudad_sede Entonces
+            Si REG.cantidad_habitaciones > 300 Entonces
+                tot_nivel := tot_nivel + 1
+            Fin Si
+            GrabarSalida()
+        Fin Si
+
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    CorteCadena()
+
+    Escribir("Hay un total de" tot_gen "hoteles con más de 300 habitaciones en ciudades sede del Mundial de Fútbol.")
+
+    CERRAR(ARCH)
+    CERRAR(ARCH2)
 
 Fin Acción

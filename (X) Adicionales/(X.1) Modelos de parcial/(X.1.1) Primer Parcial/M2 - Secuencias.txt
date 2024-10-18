@@ -49,121 +49,120 @@ Acción SecuenciasM2 ES
 
 Ambiente
 
-	fila, compras, salida: secuencia de carácter
-	v_fila, v_comp: carácter
+    fila, compras, salida: secuencia de carácter
+    v_fila, v_comp: carácter
 
-	compra_tarjeta: lógico
-	i, entradas_declaradas, entradas_compradas, mentirosos: entero
-	
-	números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    compra_tarjeta: lógico
+    i, entradas_declaradas, entradas_compradas, mentirosos: entero
 
-	Procedimiento Inicializar() ES
-		entradas_compradas := 0
-		mentirosos := 0
-	Fin Procedimiento
-	
-	Función CharToInt(entrada: carácter): entero ES
-		Según entrada Hacer
-			= "0": CharToInt := 0
-			= "1": CharToInt := 1
-			= "2": CharToInt := 2
-			= "3": CharToInt := 3
-			= "4": CharToInt := 4
-			= "5": CharToInt := 5
-			= "6": CharToInt := 6
-			= "7": CharToInt := 7
-			= "8": CharToInt := 8
-			= "9": CharToInt := 9
-		Fin Según
-	Fin Función
+    números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
+    Procedimiento Inicializar() ES
+        entradas_compradas := 0
+        mentirosos := 0
+    Fin Procedimiento
+
+    Función CharToInt(entrada: carácter): entero ES
+        Según entrada Hacer
+            = "0": CharToInt := 0
+            = "1": CharToInt := 1
+            = "2": CharToInt := 2
+            = "3": CharToInt := 3
+            = "4": CharToInt := 4
+            = "5": CharToInt := 5
+            = "6": CharToInt := 6
+            = "7": CharToInt := 7
+            = "8": CharToInt := 8
+            = "9": CharToInt := 9
+        Fin Según
+    Fin Función
 
 Proceso
 
-	ARR(fila)
-	ARR(compras)
-	CREAR(salida)
-	
-	AVZ(fila, v_fila)
-	AVZ(compras, v_comp)
-	
-	Inicializar()
-	
-	Mientras NFDS(fila) Hacer
-		Mientras v_fila <> "#" Hacer
-			Para i := 1 hasta 10 Hacer
-				AVZ(fila, v_fila)
-			Fin Para
-			
-			Si v_fila = "T" Entonces
-				compra_tarjeta := V
-			Contrario
-				compra_tarjeta := F
-			Fin Si
-			
-			AVZ(fila, v_fila)
-			
-			entradas_declaradas := CharToInt(v_fila)
-			AVZ(fila, v_fila)
-			
-			Mientras v_comp <> "?" Hacer
-				Para i := 1 hasta 6 Hacer
-					AVZ(compras, v_comp)
-				Fin Para
-				
-				Si compra_tarjeta Entonces
-					Mientras v_comp <> "+" Hacer
-						GRABAR(salida, v_comp)
-						AVZ(compras, v_comp)
-					Fin Mientras
-					GRABAR(salida, "+")
-				Contrario
-					Mientras v_comp <> "+" Hacer
-						AVZ(compras, v_comp)
-					Fin Mientras
-				Fin Si
-				
-				AVZ(compras, v_comp)
-				
-				Mientras v_comp <> "?" Hacer
-					Si compra_tarjeta Entonces
-						Mientras v_comp en números Hacer
-							GRABAR(salida, v_comp)
-							AVZ(compras, v_comp)
-						Fin Mientras
-						GRABAR(salida, "+")
-					Contrario
-						Mientras v_comp en números Hacer
-							AVZ(compras, v_comp)
-						Fin Mientras
-					Fin Si
-					
-					entradas_compradas := entradas_compradas + 1
-					
-					Mientras v_comp NO en números y v_comp <> "?" Hacer
-						AVZ(compras, v_comp)
-					Fin Mientras
-				Fin Mientras
-				
-				Si compra_tarjeta Entonces
-					GRABAR(salida, "#")
-				Fin Si
-			Fin Mientras
-		Fin Mientras
-		
-		Si entradas_compradas <> entradas_declaradas Entonces
-			mentirosos := mentirosos + 1
-		Fin Si
-		
-		entradas_compradas := 0
-		
-		AVZ(fila, v_fila)
-		AVZ(compras, v_comp)
-	Fin Mientras
+    ARR(fila)
+    ARR(compras)
+    CREAR(salida)
 
-	Escribir("Hubo" mentirosos "que compraron una cantidad de entradas distinta a la declarada en la fila virtual.")
+    AVZ(fila, v_fila)
+    AVZ(compras, v_comp)
 
-	CERRAR(fila)
-	CERRAR(compras)
-	CERRAR(salida)
+    Inicializar()
+
+    Mientras NFDS(fila) Hacer
+        Mientras v_fila <> "#" Hacer
+            Para i := 1 hasta 10 Hacer
+                AVZ(fila, v_fila)
+            Fin Para
+
+            Si v_fila = "T" Entonces
+                compra_tarjeta := V
+            Contrario
+                compra_tarjeta := F
+            Fin Si
+
+            AVZ(fila, v_fila)
+            entradas_declaradas := CharToInt(v_fila)
+            AVZ(fila, v_fila)
+
+            Mientras v_comp <> "?" Hacer
+                Para i := 1 hasta 6 Hacer
+                    AVZ(compras, v_comp)
+                Fin Para
+
+                Si compra_tarjeta Entonces
+                    Mientras v_comp <> "+" Hacer
+                        GRABAR(salida, v_comp)
+                        AVZ(compras, v_comp)
+                    Fin Mientras
+                    GRABAR(salida, "+")
+                Contrario
+                    Mientras v_comp <> "+" Hacer
+                        AVZ(compras, v_comp)
+                    Fin Mientras
+                Fin Si
+
+                AVZ(compras, v_comp)
+
+                Mientras v_comp <> "?" Hacer
+                    Si compra_tarjeta Entonces
+                        Mientras v_comp en números Hacer
+                            GRABAR(salida, v_comp)
+                            AVZ(compras, v_comp)
+                        Fin Mientras
+                        GRABAR(salida, "+")
+                    Contrario
+                        Mientras v_comp en números Hacer
+                            AVZ(compras, v_comp)
+                        Fin Mientras
+                    Fin Si
+
+                    entradas_compradas := entradas_compradas + 1
+
+                    Mientras v_comp NO en números y v_comp <> "?" Hacer
+                        AVZ(compras, v_comp)
+                    Fin Mientras
+                Fin Mientras
+
+                Si compra_tarjeta Entonces
+                    GRABAR(salida, "#")
+                Fin Si
+            Fin Mientras
+        Fin Mientras
+
+        Si entradas_compradas <> entradas_declaradas Entonces
+            mentirosos := mentirosos + 1
+        Fin Si
+
+        entradas_compradas := 0
+
+        AVZ(fila, v_fila)
+        AVZ(compras, v_comp)
+    Fin Mientras
+
+    Escribir("Hubo" mentirosos "que compraron una cantidad de entradas distinta a la declarada en la fila virtual.")
+
+    CERRAR(fila)
+    CERRAR(compras)
+    CERRAR(salida)
 
 Fin Acción

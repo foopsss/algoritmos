@@ -35,82 +35,81 @@ Acción SecuenciasM8 ES
 
 Ambiente
 
-	sec_est: secuencia de carácter
-	salida: secuencia de entero
-	v_est: carácter
+    sec_est: secuencia de carácter
+    salida: secuencia de entero
+    v_est: carácter
 
-	zona_us: carácter
-	i, res_e, res_p, res_y, res_zona_us, res_estadio: entero
+    zona_us: carácter
+    i, res_e, res_p, res_y, res_zona_us, res_estadio: entero
 
-	Procedimiento PedirZonaUsuario() ES
-		Escribir("Ingrese una zona: ")
-		Leer(zona_us)
-	Fin Procedimiento
+    Procedimiento PedirZonaUsuario() ES
+        Escribir("Ingrese una zona: ")
+        Leer(zona_us)
+    Fin Procedimiento
 
-	Procedimiento Inicializar() ES
-		res_e := 0
-		res_p := 0
-		res_y := 0
-		res_zona_us := 0
-	Fin Procedimiento
+    Procedimiento Inicializar() ES
+        res_e := 0
+        res_p := 0
+        res_y := 0
+        res_zona_us := 0
+    Fin Procedimiento
 
 Proceso
 
-	ARR(sec_est)
-	CREAR(salida)
-	AVZ(sec_est, v_est)
-	
-	Mientras NFDS(sec_est) Hacer
-		Mientras v_est <> "@" Hacer
-			Escribir("Estadio: ")
-			
-			Mientras v_est <> "%" Hacer
-				Escribir(v_est)
-				AVZ(sec_est, v_est)
-			Fin Mientras
-			
-			Para i := 1 hasta 4 Hacer
-				AVZ(sec_est, v_est)
-			Fin Para
-			
-			Mientras v_est <> "@" Hacer
-				Según v_est Hacer
-					= "E": res_e := res_e + 1
-					= "P": res_p := res_p + 1
-					= "Y": res_y := res_y + 1
-				Fin Según
-				
-				Mientras v_est <> "%" Hacer
-					AVZ(sec_est, v_est)
-				Fin Mientras
-				
-				AVZ(sec_est, v_est)
-				
-				Si v_est = zona_us Entonces
-					res_zona_us := res_zona_us + 1
-				Fin Si
-				
-				Para i := 1 hasta 4 Hacer
-					AVZ(sec_est, v_est)
-				Fin Para
-			Fin Mientras
-		Fin Mientras
-		
-		Escribir("Se realizaron" res_e "reservas por parte de empresas.")
-		Escribir("Se realizaron" res_p "reservas por parte de particulares.")
-		Escribir("Se realizaron" res_y "reservas de protocolo.")
-		
-		Escribir("Zona indicada por el usuario: " zona_us)
-		Escribir("En la zona indicada por el usuario se realizaron" res_zona_us "reservas.")
-		
-		res_estadio := res_e + res_p + res_y
-		GRABAR(salida, res_estadio)
-		
-		Inicializar()
-		AVZ(sec_est, v_est)
-	Fin Mientras
-	
-	CERRAR(sec_est)
-	CERRAR(salida)
+    ARR(sec_est)
+    CREAR(salida)
+    AVZ(sec_est, v_est)
+
+    Mientras NFDS(sec_est) Hacer
+        Mientras v_est <> "@" Hacer
+            Escribir("Estadio: ")
+
+            Mientras v_est <> "%" Hacer
+                Escribir(v_est)
+                AVZ(sec_est, v_est)
+            Fin Mientras
+
+            Para i := 1 hasta 4 Hacer
+                AVZ(sec_est, v_est)
+            Fin Para
+
+            Mientras v_est <> "@" Hacer
+                Según v_est Hacer
+                    = "E": res_e := res_e + 1
+                    = "P": res_p := res_p + 1
+                    = "Y": res_y := res_y + 1
+                Fin Según
+
+                Mientras v_est <> "%" Hacer
+                    AVZ(sec_est, v_est)
+                Fin Mientras
+                AVZ(sec_est, v_est)
+
+                Si v_est = zona_us Entonces
+                    res_zona_us := res_zona_us + 1
+                Fin Si
+
+                Para i := 1 hasta 4 Hacer
+                    AVZ(sec_est, v_est)
+                Fin Para
+            Fin Mientras
+        Fin Mientras
+
+        Escribir("Se realizaron" res_e "reservas por parte de empresas.")
+        Escribir("Se realizaron" res_p "reservas por parte de particulares.")
+        Escribir("Se realizaron" res_y "reservas de protocolo.")
+
+        Escribir("Zona indicada por el usuario: " zona_us)
+        Escribir("En la zona indicada por el usuario se realizaron" res_zona_us "reservas.")
+
+        res_estadio := res_e + res_p + res_y
+        GRABAR(salida, res_estadio)
+
+        Inicializar()
+        AVZ(sec_est, v_est)
+    Fin Mientras
+
+    CERRAR(sec_est)
+    CERRAR(salida)
 
 Fin Acción
