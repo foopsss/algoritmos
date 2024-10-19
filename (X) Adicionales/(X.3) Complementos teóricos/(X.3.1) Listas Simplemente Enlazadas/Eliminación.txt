@@ -1,0 +1,84 @@
+// La eliminación implica buscar la posición en la cual se encuentra un
+// elemento a remover. Los datos de la lista sobre la cual se debe trabajar
+// se recuperan a través del puntero externo (cabecera), según el orden que
+// se haya establecido.
+//
+// En este proceso deben contemplarse varias situaciones:
+// (1) Que la lista esté vacía.
+// (2) Que se deba eliminar el primer elemento.
+// (3) Que se deba eliminar un elemento intermedio.
+// (4) Que se deba eliminar el último elemento.
+//
+// El algoritmo generalizado utiliza algo muy parecido a una búsqueda lineal
+// con centinela para buscar un elemento en la lista.
+//
+// |-----------------------------------------------------------------------|
+// |                          TABLA DE ACCIONES                            |
+// |-----------------------------------------------------------------------|
+// | Caso               | Condición      | Acciones                        |
+// |-----------------------------------------------------------------------|
+// | Lista vacía        | p = prim       | prim := NIL (o prim := *p.prox) |
+// |                    | aux = NIL      |                                 |
+// |-----------------------------------------------------------------------|
+// | Primer elemento    | p = prim       | prim := *p.prox                 |
+// |                    | aux = NIL      |                                 |
+// |-----------------------------------------------------------------------|
+// | Elemento del medio | p <> NIL       | *a.prox := *p.prox              |
+// |                    | aux <> NIL     |                                 |
+// |                    | *p.dato = dato |                                 |
+// |-----------------------------------------------------------------------|
+// | Último elemento    | *p.prox = NIL  | *a.prox := NIL                  |
+// |                    | aux <> NIL     |                                 |
+// |                    | *p.dato = dato |                                 |
+// |-----------------------------------------------------------------------|
+
+// Mi puntero de cabecera es prim.
+Acción Eliminación(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, aux: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    q := prim
+    
+    Mientras q <> NIL y *q.dato <> valor Hacer
+        // Resguardo el puntero actual en mi auxiliar
+        // y avanzo hacia el siguiente.
+        aux := q
+        q := *q.prox
+    Fin Mientras
+
+    Si q = NIL Entonces
+        // Si q es igual a NIL, es porque la lista estaba vacía.
+        Escribir("ERROR. La lista está vacía.")
+    Contrario
+        Si aux = NIL Entonces
+            // Si mi auxiliar es igual a NIL, es porque estoy borrando
+            // el primer elemento de la lista,
+            prim := *q.prox
+        Contrario
+            // Si mi auxiliar es distinto de NIL, es porque lo estoy
+            // usando para resguardar el puntero anterior al puntero
+            // que tengo en q.
+            //
+            // Esto implica que estoy borrando el último elemento de
+            // la lista o un elemento intermedio.
+            *aux.prox := *q.prox
+        Fin Si
+    Fin Si
+
+Fin Acción

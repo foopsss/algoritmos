@@ -39,7 +39,7 @@ Acción CargaOrdenada ES
 Ambiente
 
     Nodo = Registro
-        Dato: N(2)
+        dato: N(2)
         prox: puntero a Nodo
     Fin Registro
 
@@ -72,7 +72,7 @@ Proceso
 
     Mientras valor <> tope Hacer        
         Nuevo(p)
-        *p.Dato := valor
+        *p.dato := valor
         
         // Utilizo q como una suerte de "ventana", para enlazar
         // al primer elemento de la lista que voy a trabajar.
@@ -80,7 +80,7 @@ Proceso
         // Si prim = NIL, es porque mi lista está vacía.
         q := prim
         
-        Mientras q <> NIL y *q.Dato < valor Hacer
+        Mientras q <> NIL y *q.dato < valor Hacer
             // Resguardo el puntero actual en mi auxiliar
             // y avanzo hacia el siguiente.
             aux := q

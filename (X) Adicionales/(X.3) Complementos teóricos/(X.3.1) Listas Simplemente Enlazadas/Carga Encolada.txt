@@ -10,7 +10,7 @@ Acción CargaEncolada ES
 Ambiente
 
     Nodo = Registro
-        Dato: N(2)
+        dato: N(2)
         prox: puntero a Nodo
     Fin Registro
 
@@ -33,7 +33,7 @@ Proceso
     // introducido por el usuario.
     Mientras valor <> tope Hacer
         Nuevo(p)
-        *p.Dato := valor
+        *p.dato := valor
         
         // En un principio, hago que el puntero no enlace
         // a ningún próximo elemento al crearlo.
