@@ -1,0 +1,100 @@
+// Consideraciones:
+// (*) La consigna habla específicamente de "secuencia de texto", así que yo
+//     entiendo que habla de una secuencia de datos elementales.
+
+Acción 4.7 ES
+
+Ambiente
+
+    sec: secuencia de carácter
+    v: carácter
+
+    Nodo = Registro
+        letra: AN(1)
+        frec: N(3)
+        prox: puntero a Nodo
+    Fin Registro
+
+    prim, p, q, aux: puntero a Nodo
+    letra_min_ap, letra_max_ap: alfanumérico
+    max_ap, min_ap: entero
+
+    Procedimiento Inicializar() ES
+        prim := NIL
+        aux := NIL
+        max_ap := LV
+        min_ap := HV
+    Fin Procedimiento
+
+Proceso
+
+    ARR(sec)
+    AVZ(sec, v)
+    Inicializar()
+
+    Mientras NFDS(sec) Hacer
+        q := prim
+        
+        Mientras q <> NIL y *q.letra <> v Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        // Si q = NIL pueden darse dos situaciones:
+        // (a) La lista está vacía. Debo crear el primer nodo.
+        // (b) Recorrí toda la lista y no encontré la letra que
+        //     buscaba. Por lo tanto, debo crear un nodo para
+        //     dicha letra e insertarlo en el lugar correcto.
+        Si q = NIL Entonces
+            Nuevo(p)
+            *p.letra := v
+            *p.frec := 1
+
+            Si aux = NIL Entonces
+                *p.prox := prim
+                prim := p
+            Contrario
+                q := prim
+                
+                Mientras q <> NIL y *q.letra < v Hacer
+                    aux := q
+                    q := *q.prox
+                Fin Mientras
+                
+                *aux.prox := p
+                *p.prox := q
+            Fin Si
+        Contrario
+            // Si q <> NIL, es porque encontré un nodo para la
+            // letra que tengo en mi ventana.
+            *q.frec := *q.frec + 1
+        Fin Si
+
+        AVZ(sec, v)
+    Fin Mientras
+
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        Escribir("Letra: " *q.letra)
+        Escribir("Frecuencia de aparición: " *q.frec "veces")
+        
+        Si *q.frec > max_ap Entonces
+            letra_max_ap := *q.letra
+            max_ap := *q_frec
+        Contrario
+            Si *q.frec < min_ap Entonces
+                letra_min_ap := *q.letra
+                min_ap := *q.frec
+            Fin Si
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+    Escribir("La letra que apareció con mayor frecuencia es la" letra_max_ap ", que apareció" max_ap "veces.")
+    Escribir("La letra que apareció con menor frecuencia es la" letra_min_ap ", que apareció" min_ap "veces.")
+
+    CERRAR(sec)
+
+Fin Acción
