@@ -4,7 +4,7 @@
 # Regla para no ignorar todo lo que tenga una extensión.
 !*.*
 
-# Regla para no ignorar directorios carpetas.
+# Regla para no ignorar directorios/carpetas.
 !*/
 
 # Regla para ignorar object files y unit files resultantes de compilar cosas con Free Pascal.
