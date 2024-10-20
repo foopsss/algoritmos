@@ -8,7 +8,7 @@ Ambiente
     Fin Registro
 
     p, q, aux: puntero a Nodo
-    k, dato_us: entero
+    operación, k, dato_us: entero
 
     Procedimiento MenúOpciones() ES
         Escribir("Operaciones disponibles")
