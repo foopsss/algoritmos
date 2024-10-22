@@ -41,62 +41,60 @@ begin
     if IOResult <> 0 then
         error_lectura_archivo()
     else
+        inicializar();
+        read(entrada, v_ent);
+
+        while not eof(entrada) do
         begin
-            inicializar();
-            read(entrada, v_ent);
+            cont_personas := cont_personas + 1;
 
-            while not eof(entrada) do
+            if v_ent in ['A', 'E', 'I', 'O', 'U'] then
+                es_consonante := false
+            else
+                es_consonante := true;
+
+            while v_ent <> '&' do
             begin
-                cont_personas := cont_personas + 1;
-
-                if v_ent in ['A', 'E', 'I', 'O', 'U'] then
-                    es_consonante := false
-                else
-                    es_consonante := true;
-
-                while v_ent <> '&' do
-                begin
-                    read(entrada, v_ent);
-                end;
-
                 read(entrada, v_ent);
-
-                // Día de nacimiento.
-                dia_nac := dia_nac + CharToInt(v_ent) * 10;
-                read(entrada, v_ent);
-                dia_nac := dia_nac + CharToInt(v_ent);
-
-                if dia_nac <= 15 then
-                    es_quincena := true
-                else
-                    es_quincena := false;
-
-                // Mes de nacimiento.
-                mes_nac := mes_nac + CharToInt(v_ent) * 10;
-                read(entrada, v_ent);
-                mes_nac := mes_nac + CharToInt(v_ent);
-
-                if mes_nac <= 3 then
-                    es_trimestre := true
-                else
-                    es_trimestre := false;
-
-                if (es_consonante) and (es_quincena) and (es_trimestre) then
-                begin
-                    quin_trim_cons := quin_trim_cons + 1;
-                end;
-
-                for i := 1 to 6 do
-                begin
-                    read(entrada, v_ent);
-                end;
-
-                dia_nac := 0;
-                mes_nac := 0;
             end;
 
-            porc_quin_trim_cons := (quin_trim_cons * 100) / cont_personas;
-            writeln('Porcentaje de personas: ', porc_quin_trim_cons:4:2);
-            close(entrada)
+            read(entrada, v_ent);
+
+            // Día de nacimiento.
+            dia_nac := dia_nac + CharToInt(v_ent) * 10;
+            read(entrada, v_ent);
+            dia_nac := dia_nac + CharToInt(v_ent);
+
+            if dia_nac <= 15 then
+                es_quincena := true
+            else
+                es_quincena := false;
+
+            // Mes de nacimiento.
+            mes_nac := mes_nac + CharToInt(v_ent) * 10;
+            read(entrada, v_ent);
+            mes_nac := mes_nac + CharToInt(v_ent);
+
+            if mes_nac <= 3 then
+                es_trimestre := true
+            else
+                es_trimestre := false;
+
+            if (es_consonante) and (es_quincena) and (es_trimestre) then
+            begin
+                quin_trim_cons := quin_trim_cons + 1;
+            end;
+
+            for i := 1 to 6 do
+            begin
+                read(entrada, v_ent);
+            end;
+
+            dia_nac := 0;
+            mes_nac := 0;
         end;
+
+        porc_quin_trim_cons := (quin_trim_cons * 100) / cont_personas;
+        writeln('Porcentaje de personas que cumplen la condición: ', porc_quin_trim_cons:4:2);
+        close(entrada)
 end.

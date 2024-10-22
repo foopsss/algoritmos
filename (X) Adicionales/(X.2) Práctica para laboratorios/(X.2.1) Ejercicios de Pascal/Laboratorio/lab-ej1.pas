@@ -39,32 +39,30 @@ begin
     if IOResult <> 0 then
         error_lectura_archivo()
     else
+        inicializar();
+        read(entrada, v_ent);
+
+        while not eof(entrada) do
         begin
-            inicializar();
-            read(entrada, v_ent);
-
-            while not eof(entrada) do
+            for i := 1 to 4 do
             begin
-                for i := 1 to 4 do
-                begin
-                    read(entrada, v_ent);
-                end;
-
-                for i := 3 downto 1 do
-                begin
-                    importe := importe + CharToInt(v_ent) * (10 ** (i - 1));
-                    read(entrada, v_ent);
-                end;
-
-                if importe > 400 then
-                begin
-                    cant_ventas := cant_ventas + 1;
-                end;
-
-                importe := 0;
+                read(entrada, v_ent);
             end;
 
-            writeln('Cantidad de ventas que superan los $400: ', cant_ventas);
-            close(entrada)
+            for i := 3 downto 1 do
+            begin
+                importe := importe + CharToInt(v_ent) * (10 ** (i - 1));
+                read(entrada, v_ent);
+            end;
+
+            if importe > 400 then
+            begin
+                cant_ventas := cant_ventas + 1;
+            end;
+
+            importe := 0;
         end;
+
+        writeln('Cantidad de ventas que superan los $400: ', cant_ventas);
+        close(entrada)
 end.

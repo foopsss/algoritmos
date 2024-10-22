@@ -37,32 +37,30 @@ begin
 	if IOResult <> 0 then
 		error_lectura_archivo()
 	else
+		inicializar();
+		read(entrada, v_ent);
+
+		while not eof(entrada) do
 		begin
-			inicializar();
+			suma := suma + v_ent;
 			read(entrada, v_ent);
-
-			while not eof(entrada) do
-			begin
-				suma := suma + v_ent;
-				read(entrada, v_ent);
-			end;
-
-			promedio := suma / 1500;
-			reset(entrada);
-
-			while not eof(entrada) do
-			begin
-				if v_ent >= promedio then
-				begin
-					est_mayor_prom := est_mayor_prom + 1;
-				end;
-
-				read(entrada, v_ent);
-			end;
-
-			writeln('Promedio de calificaciones: ', promedio:4:2);
-			writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
-
-			close(entrada);
 		end;
+
+		promedio := suma / 1500;
+		reset(entrada);
+
+		while not eof(entrada) do
+		begin
+			if v_ent >= promedio then
+			begin
+				est_mayor_prom := est_mayor_prom + 1;
+			end;
+
+			read(entrada, v_ent);
+		end;
+
+		writeln('Promedio de calificaciones: ', promedio:4:2);
+		writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
+
+		close(entrada);
 end.

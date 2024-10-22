@@ -22,26 +22,24 @@ begin
     if IOResult <> 0 then
         error_lectura_archivo()
     else
+        cont_palabras := 0;
+        read(entrada, v_ent);
+
+        while not eof(entrada) do
         begin
-            cont_palabras := 0;
-            read(entrada, v_ent);
-
-            while not eof(entrada) do
+            while (v_ent = ' ') or (v_ent = '.') do
             begin
-                while (v_ent = ' ') or (v_ent = '.') do
-                begin
-                    read(entrada, v_ent);
-                end;
-
-                cont_palabras := cont_palabras + 1;
-
-                while (v_ent <> ' ') and (v_ent <> '.') do
-                begin
-                    read(entrada, v_ent);
-                end;
+                read(entrada, v_ent);
             end;
 
-            writeln('Cantidad de palabras en la secuencia: ', cont_palabras);
-            close(entrada);
+            cont_palabras := cont_palabras + 1;
+
+            while (v_ent <> ' ') and (v_ent <> '.') do
+            begin
+                read(entrada, v_ent);
+            end;
         end;
+
+        writeln('Cantidad de palabras en la secuencia: ', cont_palabras);
+        close(entrada);
 end.

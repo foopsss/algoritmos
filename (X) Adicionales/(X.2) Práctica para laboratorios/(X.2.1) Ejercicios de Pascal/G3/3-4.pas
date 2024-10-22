@@ -28,46 +28,44 @@ begin
     if IOResult <> 0 then
         error_lectura_archivo()
     else
+        palabras_vocales := 0;
+        read(entrada, v_ent);
+
+        while not eof(entrada) do
         begin
-            palabras_vocales := 0;
-            read(entrada, v_ent);
-
-            while not eof(entrada) do
+            while (v_ent = ' ') or (v_ent = '.') do
             begin
-                while (v_ent = ' ') or (v_ent = '.') do
-                begin
-                    read(entrada, v_ent);
-                end;
-
-                if v_ent in vocales then
-                    begin
-                        palabras_vocales := palabras_vocales + 1;
-                        palabra_con_vocal := true;
-                    end
-                else
-                    palabra_con_vocal := false;
-
-                while (v_ent <> ' ') and (v_ent <> '.') do
-                begin
-                    if palabra_con_vocal then
-                    begin
-                        if (v_ent <> ',') and (v_ent <> '.') then
-                        begin
-                            write(salida, v_ent);
-                        end;
-                    end;
-
-                    read(entrada, v_ent);
-                end;
-
-                if palabra_con_vocal then
-                begin
-                    write(salida, ' ');
-                end;
+                read(entrada, v_ent);
             end;
 
-            writeln('Número de palabras que comienzan con vocal: ', palabras_vocales);
-            close(entrada);
-            close(salida);
+            if v_ent in vocales then
+                begin
+                    palabras_vocales := palabras_vocales + 1;
+                    palabra_con_vocal := true;
+                end
+            else
+                palabra_con_vocal := false;
+
+            while (v_ent <> ' ') and (v_ent <> '.') do
+            begin
+                if palabra_con_vocal then
+                begin
+                    if (v_ent <> ',') and (v_ent <> '.') then
+                    begin
+                        write(salida, v_ent);
+                    end;
+                end;
+
+                read(entrada, v_ent);
+            end;
+
+            if palabra_con_vocal then
+            begin
+                write(salida, ' ');
+            end;
         end;
+
+        writeln('Número de palabras que comienzan con vocal: ', palabras_vocales);
+        close(entrada);
+        close(salida);
 end.

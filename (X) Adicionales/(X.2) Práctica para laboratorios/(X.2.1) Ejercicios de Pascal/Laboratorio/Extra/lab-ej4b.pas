@@ -54,63 +54,61 @@ begin
     if IOResult <> 0 then
         error_lectura_archivo()
     else
+        inicializar();
+
+        // El archivo de entrada tiene una cabecera,
+        // por lo que debo saltarla.
+        //
+        // En la ventana (v_csv) almaceno una línea
+        // del archivo.
+        for i := 1 to 2 do
         begin
-            inicializar();
-
-            // El archivo de entrada tiene una cabecera,
-            // por lo que debo saltarla.
-            //
-            // En la ventana (v_csv) almaceno una línea
-            // del archivo.
-            for i := 1 to 2 do
-            begin
-                readln(entrada_csv, v_csv);
-            end;
-
-            while not eof(entrada_csv) do
-            begin
-                // Cuento la cantidad de jugadoras.
-                cant_jugadoras := cant_jugadoras + 1;
-
-                // Recorro cada línea del archivo como
-                // un arreglo, ya que un dato del tipo
-                // "string" es un arreglo de caracteres.
-                //
-                // Primero avanzo los caracteres hasta
-                // situarme en la cuarta celda, la de
-                // la edad.
-                for i := 1 to 3 do
-                begin
-                    avanzar_columnas();
-                end;
-
-                edad_jugadora := edad_jugadora + CharToInt(v_csv[col_linea]) * 10;
-                edad_jugadora := edad_jugadora + CharToInt(v_csv[col_linea + 1]);
-
-                // Repito el mismo proceso, pero ahora para
-                // llegar al pie preferido, la última celda
-                // de cada fila.
-                for i := 1 to 4 do
-                begin
-                    avanzar_columnas();
-                end;
-
-                resg_pie := v_csv[col_linea];
-
-                if (edad_jugadora >= 30) and (resg_pie = 'R') then
-                begin
-                    der_treinta := der_treinta + 1;
-                end;
-
-                // Reseteo las variables necesarias y paso
-                // a la siguiente línea del archivo.
-                col_linea := 1;
-                edad_jugadora := 0;
-                readln(entrada_csv, v_csv);
-            end;
-
-            porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
-            writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
-            close(entrada_csv);
+            readln(entrada_csv, v_csv);
         end;
+
+        while not eof(entrada_csv) do
+        begin
+            // Cuento la cantidad de jugadoras.
+            cant_jugadoras := cant_jugadoras + 1;
+
+            // Recorro cada línea del archivo como
+            // un arreglo, ya que un dato del tipo
+            // "string" es un arreglo de caracteres.
+            //
+            // Primero avanzo los caracteres hasta
+            // situarme en la cuarta celda, la de
+            // la edad.
+            for i := 1 to 3 do
+            begin
+                avanzar_columnas();
+            end;
+
+            edad_jugadora := edad_jugadora + CharToInt(v_csv[col_linea]) * 10;
+            edad_jugadora := edad_jugadora + CharToInt(v_csv[col_linea + 1]);
+
+            // Repito el mismo proceso, pero ahora para
+            // llegar al pie preferido, la última celda
+            // de cada fila.
+            for i := 1 to 4 do
+            begin
+                avanzar_columnas();
+            end;
+
+            resg_pie := v_csv[col_linea];
+
+            if (edad_jugadora >= 30) and (resg_pie = 'R') then
+            begin
+                der_treinta := der_treinta + 1;
+            end;
+
+            // Reseteo las variables necesarias y paso
+            // a la siguiente línea del archivo.
+            col_linea := 1;
+            edad_jugadora := 0;
+            readln(entrada_csv, v_csv);
+        end;
+
+        porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
+        writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
+        close(entrada_csv);
 end.
