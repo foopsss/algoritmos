@@ -60,7 +60,7 @@ Ambiente
         Si q = NIL Entonces
             // Cubro el caso de lista vacía.
             prim := q
-            ult := q
+            ult := prim
         Contrario
             Mientras *q.prox <> NIL y *q.nombre < *p.nombre Hacer
                 q := *q.prox

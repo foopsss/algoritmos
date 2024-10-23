@@ -1,0 +1,122 @@
+Acción 4.10(prim_conj: puntero a Conjunto) ES
+
+Ambiente
+
+    Conjunto = Registro
+        num: N(3)
+        prox: puntero a Conjunto
+    Fin Registro
+    
+    conj: puntero a Conjunto
+    
+    Salida = Registro
+        prom: N(4)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, ult_sal, sal, p: puntero a Salida
+    i, cant_elem, suma_elem, max_prom, min_prom: entero
+
+    Procedimiento Inicializar() ES
+        conj := prim_conj
+        prim_sal := NIL
+        ult_sal := prim_sal
+        max_prom := LV
+        min_prom := HV
+    Fin Procedimiento
+
+    Procedimiento MayorMenor() ES
+        Si *sal.prom > max_prom Entonces
+           max_prom := *sal.prom 
+        Contrario
+            Si *sal.prom < min_prom Entonces
+                min_prom := *sal.prom
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    
+    Mientras *conj.prox <> prim_conj Hacer
+        cant_elem := *conj.num
+        suma_elem := 0
+        
+        // Este recorrido me deja parado en el último
+        // elemento de un grupo.
+        //
+        // De esta forma, ya sumo todos los elementos
+        // de cada grupo en mi acumulador.
+        Para i := 1 hasta cant_elem
+            conj := *conj.prox
+            suma_elem := suma_elem + *conj.num
+        Fin Para
+    
+        // Si mi lista todavía no finalizó, me voy a
+        // estar parando en el inicio del siguiente
+        // grupo.
+        //
+        // (Con inicio me refiero al nodo que indica
+        // la cantidad de elementos.)
+        Si *conj.prox <> prim_conj Entonces
+            conj := *conj.prox
+        Fin Si
+        
+        Nuevo(p)
+        *p.prom := suma_elem DIV cant_elem
+        *p.ant := NIL
+        *p.prox := NIL
+        sal := prim_sal
+        
+        Si sal = NIL Entonces
+            // Mi lista de salida está vacía.
+            prim_sal := sal
+            ult_sal := prim_sal
+        Contrario
+            Mientras *sal.prox <> NIL y *sal.prom < *p.prom Hacer
+                sal := *sal.prox
+            Fin Mientras
+            
+            Si sal = prim_sal Entonces
+                // Inserto en la primera posición.
+                *p.prox := sal
+                *sal.ant := p
+                prim := p
+            Contrario
+                Si sal = ult_sal Entonces
+                    // Inserto en la última posición.
+                    *p.ant := sal
+                    *p.prox := *sal.prox
+                    *sal.prox := p
+                    ult_sal := p
+                Contrario
+                    // Inserto en una posición intermedia.
+                    *p.ant := *sal.ant
+                    *p.prox := sal
+                    *(*sal.ant).prox := p
+                    *sal.ant := p
+                Fin Si
+            Fin Si
+        Contrario
+
+        Fin Si
+    Fin Mientras
+
+    sal := prim_sal
+
+    Mientras *sal.prox <> NIL Hacer
+        MayorMenor()
+        sal := *sal.prox
+    Fin Mientras
+
+    // Hago esta llamada por fuera del Mientras, porque
+    // dicho ciclo me deja parado en el último elemento
+    // de la lista sin que pueda procesarlo.
+    MayorMenor()
+
+    Escribir("El máximo promedio del conjunto de números es: " max_prom)
+    Escribir("El mínimo promedio del conjunto de números es: " min_prom)
+
+Fin Acción

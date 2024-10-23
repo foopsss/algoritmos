@@ -1,0 +1,71 @@
+Acción 4.11(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        num: N(1)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, resg_prox: puntero a Nodo
+
+    Función ListaOrdenada(var_prim: puntero a Nodo): lógico ES
+    Ambiente
+        r: puntero a Nodo
+    Proceso
+        r := var_prim
+        
+        Mientras *r.prox <> NIL y *r.num <= *(*r.prox).num Hacer
+            r := *r.prox
+        Fin Mientras
+        
+        Si *r.prox = NIL
+            ListaOrdenada := V
+        Contrario
+            ListaOrdenada := F
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Si ListaOrdenada(prim) Entonces
+        q := prim
+        
+        Mientras *q.prox <> NIL Hacer
+            // Con este método, borro siempre el elemento en el
+            // que estoy parado, entendiendo que luego tengo más
+            // repetidos adelante.
+            //
+            // Hago esto hasta que me quede únicamente un elemento
+            // con un valor entero determinado.
+            Mientras *q.num = *(*q.prox).num Hacer
+                Si q = prim Entonces
+                    // Borro un elemento en la primera posición.
+                    *(*q.prox).ant := NIL
+                    prim := *q.prox
+                    Disponer(q)
+                    
+                    // Me ubico en el nuevo primer elemento.
+                    q := prim
+                Contrario
+                    // Borro un elemento intermedio.
+                    resg_prox := *q.prox
+                    *(*q.ant).prox := *q.prox
+                    *(*q.prox).ant := *q.ant
+                    Disponer(q)
+                    
+                    // Me ubico en el nuevo elemento a comparar.
+                    q := resg_prox
+                Fin Si
+            Fin Mientras
+            
+            q := *q.prox
+        Fin Mientras
+        
+        Escribir("La lista se depuró exitosamente.")
+    Contrario
+        Escribir("ERROR. No se puede depurar la lista porque está desordenada.")
+    Fin Si
+
+Fin Acción
