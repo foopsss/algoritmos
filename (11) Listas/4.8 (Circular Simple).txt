@@ -1,0 +1,142 @@
+Acción 4.8(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(5)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, r, p, aux: puntero a Nodo
+    operación, valor: entero
+    elección: alfanumérico
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea realizar una operación? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Procedimiento MenúOpciones() ES
+        Escribir("Operaciones disponibles")
+        Escribir("-----------------------")
+        Escribir("1. Buscar un elemento con una clave determinada.")
+        Escribir("2. Eliminar un elemento con una clave determinada.")
+        Escribir("3. Insertar un elemento con una clave determinada.")
+        Escribir("")
+        Escribir("Introduzca la operación que desea realizar: ")
+        Leer(operación)
+
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+    Procedimiento ERROR(código: entero) ES
+        Si código = 1 Entonces
+            Escribir("ERROR. La lista está vacía.")
+        Contrario
+            Escribir("ERROR. La lista NO contiene un elemento con la clave introducida.")
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento Buscar() ES
+        Mientras *q.prox <> prim y *q.dato <> valor Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.dato <> valor Entonces
+            // Si *q.dato <> valor, es porque ya llegué al último elemento
+            // de la lista, y este tampoco contiene la clave que busco.
+            ERROR(2)
+        Contrario
+            Escribir("La lista contiene un elemento con la clave introducida.")
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento Insertar() ES
+        Nuevo(p)
+        *p.dato := valor
+        
+        Si q <> NIL Entonces
+            // La consigna no especifica donde insertar el
+            // elemento. Inserto en el segundo lugar para
+            // no modificar el puntero del último elemento.
+            *p.prox := *q.prox
+            *q.prox := p
+        Contrario
+            // Si mi lista esta vacía, creo el primer elemento.
+            *p.prox := p
+            prim := p
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento Borrar() ES
+        Mientras *q.prox <> prim y *q.dato <> valor Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.dato <> valor Entonces
+            // Si *q.dato <> valor, es porque ya llegué al último elemento
+            // de la lista, y este tampoco contiene la clave que busco.
+            ERROR(2)
+        Contrario
+            // En esta condición entro si *q.dato = valor.
+            Si q = *q.prox Entonces
+                // Acá contemplo el caso de tener solo un elemento, que
+                // justo es el que tengo que eliminar.
+                // Esto sucede porque el elemento enlaza a sí mismo, eso
+                // es lo que implica "q = *q.prox".
+                prim := NIL
+            Contrario
+                Si q = prim Entonces
+                    // Acá contemplo el caso de estar eliminando el primer elemento
+                    // en una lista con varios elementos.
+                    //
+                    // Lo que hago entonces es buscar el último elemento de la
+                    // lista, con el fin de poder enlazarlo al segundo elemento, que
+                    // va a ser mi nuevo primer elemento, una vez que borre el antiguo.
+                    r := prim
+                    
+                    Mientras *r.prox <> prim Hacer
+                        r := *r.prox
+                    Fin Mientras
+                    
+                    *r.prox := *q.prox
+                    prim := *q.prox                    
+                Contrario
+                    // Acá contemplo el caso de estar eliminando un elemento intermedio
+                    // o el último elemento, en una lista con varios elementos.
+                    *aux.prox := *p.prox
+                Fin Si
+            Fin Si
+            Disponer(q)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ObtenerElecciónUsuario()
+    
+    Mientras elección = "S" Hacer
+        MenúOpciones()
+        q := prim
+        
+        Si q = NIL Entonces
+            Si operación <> 3 Entonces
+                ERROR(1)
+            Contrario
+                Insertar()
+            Fin Si
+        Contrario
+            Según operación Hacer
+                = 1: Buscar()
+                = 2: Borrar()
+                = 3: Insertar()
+            Fin Según
+        Fin Si
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+Fin Acción
