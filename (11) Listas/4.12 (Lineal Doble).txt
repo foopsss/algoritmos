@@ -1,0 +1,160 @@
+Acción 4.12 ES
+
+Ambiente
+
+    Pedidos = Registro
+        estado: AN(1)
+        nombre: AN(100)
+        dirección: AN(100)
+        teléfono: N(10)
+        total: N(3)
+        ant: puntero a Pedidos
+        prox: puntero a Pedidos
+    Fin Registro
+
+    prim, ult, q, p: puntero a Pedidos
+
+    elección, nombre: alfanumérico
+    operación: entero
+
+    Procedimiento Inicializar() ES
+        prim := NIL
+        ult := prim
+    Fin Procedimiento
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea realizar una operación? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+    
+    Procedimiento PedirNombre() ES
+        Escribir("Introduzca un nombre: ")
+        Leer(nombre)
+    Fin Procedimiento
+
+    Procedimiento MenúOpciones() ES
+        Escribir("Dispone de las siguientes opciones: ")
+        Escribir("1. Añadir un pedido a la lista.")
+        Escribir("2. Marcar el envío de un pedido.")
+        Escribir("3. Atender el cobro de un cadete.")
+        Escribir("")
+        Escribir("Introduzca una operación a realizar: ")
+        Leer(operación)
+    Fin Procedimiento
+
+    Procedimiento AñadirPedido() ES
+        Nuevo(p)
+        *p.estado := "P"
+        *p.ant := NIL
+        *p.prox := NIL
+        
+        Escribir("Introduzca el nombre del cliente: ")
+        Leer(*p.nombre)
+        Escribir("Introduzca la dirección del cliente: ")
+        Leer(*p.dirección)
+        Escribir("Introduzca el teléfono del cliente: ")
+        Leer(*p.teléfono)
+        Escribir("Introduzca el monto a cobrarle al cliente: ")
+        Leer(*p.total)
+                
+        Si q = NIL Entonces
+            // Cubro el caso de lista vacía.
+            prim := q
+            ult := q
+        Contrario
+            Mientras *q.prox <> NIL y *q.nombre < *p.nombre Hacer
+                q := *q.prox
+            Fin Mientras
+            
+            Si q = prim Entonces
+                // Primer elemento.
+                *p.prox := q
+                *q.ant := p
+                prim := p
+            Contrario
+                Si q = ult Entonces
+                    // Último elemento.
+                    *p.ant := q
+                    *p.prox := *q.prox
+                    *q.prox := p
+                    ult := p
+                Contrario
+                    // Elemento intermedio.
+                    *p.ant := *q.ant
+                    *p.prox := q
+                    *(*q.ant).prox := p
+                    *q.ant := p
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento MarcarEnvío() ES
+        PedirNombre()
+
+        Mientras *q.prox <> NIL y *q.nombre <> nombre Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.nombre <> nombre Entonces
+            Escribir("ERROR. NO se encontró el nombre buscado.")
+        Contrario
+            *q.estado := "E"
+        Fin Si
+    Fin Procedimiento
+    
+    Procedimiento AtenderCobro() ES
+        PedirNombre()
+        
+        Mientras *q.prox <> NIL y *q.nombre <> nombre Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.nombre <> nombre Entonces
+            Escribir("ERROR. NO se encontró el nombre buscado.")
+        Contrario
+            Si prim = ult Hacer
+                // Hay un solo elemento en la lista.
+                prim := NIL
+                ult := prim
+            Contrario
+                Si q = prim Entonces
+                    // Tengo que borrar el primer elemento de
+                    // la lista.
+                    prim := *q.prox
+                    *(*q.prox).ant := NIL
+                Contrario
+                    Si q = ult Entonces
+                        // Tengo que borrar el último elemento.
+                        ult := *q.ant
+                        *(*q.ant).prox := NIL
+                    Contrario
+                        // Tengo que borrar un elemento intermedio.
+                        *(*q.ant).prox := *q.prox
+                        *(*q.prox).ant := *q.ant
+                    Fin Si
+                Fin Si
+            Fin Si
+            Disponer(q)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ObtenerElecciónUsuario()
+    Inicializar()
+    
+    Mientras elección = "S" Hacer
+        MenúOpciones()
+        q := prim
+        
+        Según operación Hacer
+            = 1: AñadirPedido()
+            = 2: MarcarEnvío()
+            = 3: AtenderCobro()
+        Fin Según
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+Fin Acción

@@ -1,0 +1,81 @@
+Acción 4.9(prim_enc: puntero a Encriptar) ES
+
+Ambiente
+
+    Encriptar = Registro
+        mult: N(5)
+        prox: puntero a Encriptar
+    Fin Registro
+    
+    enc: puntero a Encriptar
+    
+    Salida = Registro
+        suma: AN(1)
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, p, aux: puntero a Salida
+
+    texto: arreglo de [1..255] de carácter
+
+    elección: alfanumérico
+    i, cant_car, prod, suma_dig, mult_dig: entero
+
+    Procedimiento ElecciónUsuario() ES
+        Escribir("¿Desea introducir un carácter? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Procedimiento RecibirTexto() ES
+        ElecciónUsuario()
+        cant_car := 0
+        
+        Mientras elección = "S" y cant_car < 255 Hacer
+            cant_car := cant_car + 1
+            Escribir("Introduzca un carácter: ")
+            Leer(texto[cant_car])
+            ElecciónUsuario()
+        Fin Mientras
+        
+        Si cant_car = 255 Entonces
+            Escribir("Ya llegó al límite de caracteres que puede tener el mensaje.")
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    RecibirTexto()
+    enc := prim_enc
+
+    Escribir("Texto encriptado: ")
+
+    Para i := 1 hasta cant_car Hacer
+        prod := *enc.mult * ASCII(texto[cant_car])
+        enc := *enc.prox
+        suma_dig := 0
+        mult_dig := 1
+        
+        // Hago la sumatoria de los dígitos.
+        Mientras prod > 0 Hacer
+            suma_dig := suma_dig + (prod MOD 10)
+            prod := prod DIV 10
+        Fin Mientras
+        
+        // Creo la lista de salida.
+        Nuevo(p)
+        *p.suma := suma_dig
+        *p.prox := NIL
+        
+        Si aux = NIL Entonces
+            prim_sal := p
+        Contrario
+            *aux.prox := p
+        Fin Si
+        
+        aux := p
+        
+        // Muestro por pantalla.
+        Escribir(*p.suma)
+    Fin Para
+
+Fin Acción
