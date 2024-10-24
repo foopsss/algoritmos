@@ -1,0 +1,42 @@
+Acción 4.14 ES
+
+Ambiente
+
+    Nodo = Registro
+        num: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    prim, q, p: puntero a Nodo
+    elección: alfanumérico
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea introducir un número? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+Proceso
+
+    ObtenerElecciónUsuario()
+    prim := NIL
+
+    Mientras elección = "S" Hacer
+        Nuevo(p)
+        
+        Escribir("Introduzca un número: ")
+        Leer(*p.num)
+        *p.prox := prim
+        prim := p
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+    Escribir("Serie de números ingresada (invertida): ")
+    q := prim
+
+    Mientras q <> NIL Hacer
+        Escribir(*q.num)
+        q := *q.prox
+    Fin Mientras
+
+Fin Acción

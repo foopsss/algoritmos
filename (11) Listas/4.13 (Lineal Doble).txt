@@ -1,4 +1,4 @@
-Acción 4.11(prim, ult: puntero a Nodo) ES
+Acción 4.13(prim, ult: puntero a Nodo) ES
 
 Ambiente
 

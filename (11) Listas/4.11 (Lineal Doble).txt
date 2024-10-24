@@ -1,0 +1,125 @@
+// Consideraciones:
+// (*) Utilizo la definición que se indica en la segunda oración, y no la que se
+//     muestra gráficamente, porque esa ni siquiera contiene el campo DNI.
+
+Acción 4.11 ES
+
+Ambiente
+
+    Personal = Registro
+        DNI: N(8)
+        Nombre: AN(100)
+        Antigüedad: N(2)
+    Fin Registro
+    
+    ARCH: archivo de Personal ordenado por DNI 
+    REG: Personal
+
+    Nodo = Registro
+        dni: N(8)
+        nombre: AN(100)
+        antig: N(2)
+        asig: N(2)
+        ant: puntero a Nodo
+        ult: puntero a Nodo
+    Fin Registro
+
+    prim, ult, q, p: puntero a Nodo
+    elección: alfanumérico
+
+    Procedimiento Inicializar() ES
+        prim := NIL
+        ult := prim
+    Fin Procedimiento
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea realizar la asignación de un integrante? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Procedimiento InformarAsignaciones() Hacer
+        Escribir("Nombre del empleado: " *q.nombre)
+        Escribir("DNI: " *q.dni)
+        Escribir("Número de años trabajados: " *q.antig)
+        Escribir("Asignaciones recibidas: " *q.asig)
+    Fin Mientras
+
+Proceso
+
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+    Inicializar()
+    
+    // Cargo mi lista de salida.
+    Mientras NFDA(ARCH) Hacer
+        Nuevo(p)
+        *p.dni := REG.DNI
+        *p.nombre := REG.Nombre
+        *p.antig := REG.Antigüedad
+        *p.asig := 0
+        *p.ant := NIL
+        *p.prox := NIL
+        q := prim
+        
+        Si q = NIL Entonces
+            // El primer elemento de la lista.
+            prim := p
+            ult := prim
+        Contrario
+            // La lista ya cuenta con elementos.
+            // Yo hago el orden por antiguedad de manera ascendente.
+            Mientras *q.prox <> NIL y *q.antig < REG.Antigüedad Hacer
+                q := *q.prox
+            Fin Mientras
+            
+            Si q = prim Entonces
+                // Primer elemento.
+                *p.prox := q
+                *q.ant := p
+                prim := p
+            Contrario
+                Si q = ult Entonces
+                    // Último elemento.
+                    *p.ant := q
+                    *p.prox := *q.prox
+                    *q.prox := p
+                    ult := p
+                Contrario
+                    // Elemento intermedio.
+                    *p.ant := *q.ant
+                    *p.prox := q
+                    *(*q.ant).prox := p
+                    *q.ant := p
+                Fin Si
+            Fin Si
+        Fin Si
+        
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    // Proceso nuevas asignaciones.
+    ObtenerElecciónUsuario()
+
+    Mientras elección = "S" Hacer
+        *prim.asig := *prim.asig + 1
+        *prim.prox := *ult.prox
+        *prim.ant := ult
+        *(*prim.prox).ant := NIL
+        *ult.prox := prim
+        ult := prim
+        prim := *prim.prox
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+    // Muestro las asignaciones de cada integrante.
+    q := prim
+    
+    Mientras *q.prox <> NIL Hacer
+        InformarAsignaciones()
+        q := *q.prox
+    Fin Mientras
+
+    InformarAsignaciones()
+    CERRAR(ARCH)
+
+Fin Acción
