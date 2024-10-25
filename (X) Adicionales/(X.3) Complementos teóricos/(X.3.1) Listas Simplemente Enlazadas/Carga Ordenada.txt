@@ -16,23 +16,23 @@
 // buscar un elemento en la lista, que se trata del ciclo Mientras dentro
 // del algoritmo.
 //
-// |---------------------------------------------------------------------|
-// |                           TABLA DE ACCIONES                         |
-// |---------------------------------------------------------------------|
-// | Caso               | Condición   | Acciones                         |
-// |---------------------------------------------------------------------|
-// | Lista vacía        | prim = NIL  | *p.prox := NIL                   |
-// |                    | aux = NIL   | prim := p                        |
-// |---------------------------------------------------------------------|
-// | Primer elemento    | prim = NIL  | *p.prox := q (o *p.prox := prim) |
-// |                    | aux = NIL   | prim := p                        |
-// |---------------------------------------------------------------------|
-// | Elemento del medio | prim <> NIL | *p.prox := q                     |
-// |                    | aux <> NIL  | *a.prox := p                     |
-// |---------------------------------------------------------------------|
-// | Último elemento    | aux <> NIL  | *p.prox := q (NIL)               |
-// |                    | q = NIL     | *a.prox := p                     |
-// |---------------------------------------------------------------------|
+// |-----------------------------------------------------------------------|
+// |                           TABLA DE ACCIONES                           |
+// |-----------------------------------------------------------------------|
+// | Caso               |  Condición    | Acciones                         |
+// |-----------------------------------------------------------------------|
+// | Lista vacía        |  prim = NIL   | *p.prox := NIL                   |
+// |                    |  aux = NIL    | prim := p                        |
+// |-----------------------------------------------------------------------|
+// | Primer elemento    |  prim <> NIL  | *p.prox := q (o *p.prox := prim) |
+// |                    |  aux = NIL    | prim := p                        |
+// |-----------------------------------------------------------------------|
+// | Elemento del medio |  prim <> NIL  | *p.prox := q                     |
+// |                    |  aux <> NIL   | *a.prox := p                     |
+// |-----------------------------------------------------------------------|
+// | Último elemento    |  aux <> NIL   | *p.prox := q (NIL)               |
+// |                    |  q = NIL      | *a.prox := p                     |
+// |-----------------------------------------------------------------------|
 
 Acción CargaOrdenada ES
 
@@ -89,11 +89,8 @@ Proceso
         
         Si aux = NIL Entonces
             // Si mi auxiliar es igual a NIL, es porque no resguardé
-            // ningún puntero, lo que implica que la lista estaba vacía.
-            //
-            // De esta forma, no existe nada después del primer
-            // elemento, que acabo de crear, y hago que mi puntero
-            // de cabecera enlace al puntero recién creado.
+            // ningún puntero, lo que implica que la lista estaba vacía
+            // o que estoy insertando algo previo al primer elemento.
             *p.prox := prim
             prim := p
         Contrario
@@ -102,7 +99,6 @@ Proceso
             // que tengo en q.
             // 
             // Esto implica que cubro las siguientes situaciones:
-            // (2) Inserción previo al primer nodo.
             // (3) Inserción después del último nodo.
             // (4) Inserción en el medio de la lista.
             *aux.prox := p

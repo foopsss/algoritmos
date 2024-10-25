@@ -13,13 +13,12 @@ Ambiente
     Procedimiento MenúOpciones() ES
         Escribir("Operaciones disponibles")
         Escribir("-----------------------")
-        Escribir("1. Acceder a un elemento")
-        Escribir("2. Eliminar un elemento")
-        Escribir("3. Insertar un elemento")
+        Escribir("1. Acceder a un elemento.")
+        Escribir("2. Eliminar un elemento.")
+        Escribir("3. Insertar un elemento.")
         Escribir("")
         Escribir("Introduzca la operación que desea realizar: ")
         Leer(operación)
-
         Escribir("Introduzca una posición: ")
         Leer(k)
     Fin Procedimiento

@@ -68,7 +68,7 @@ Proceso
     Contrario
         Si aux = NIL Entonces
             // Si mi auxiliar es igual a NIL, es porque estoy borrando
-            // el primer elemento de la lista,
+            // el primer elemento de la lista.
             prim := *q.prox
         Contrario
             // Si mi auxiliar es distinto de NIL, es porque lo estoy
@@ -80,5 +80,7 @@ Proceso
             *aux.prox := *q.prox
         Fin Si
     Fin Si
+
+    Disponer(q)
 
 Fin Acción

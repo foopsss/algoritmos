@@ -25,7 +25,6 @@ Ambiente
         Escribir("")
         Escribir("Introduzca la operación que desea realizar: ")
         Leer(operación)
-
         Escribir("Ingrese un valor: ")
         Leer(valor)
     Fin Procedimiento
