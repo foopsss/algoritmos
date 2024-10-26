@@ -21,7 +21,7 @@ Ambiente
         antig: N(2)
         asig: N(2)
         ant: puntero a Nodo
-        ult: puntero a Nodo
+        prox: puntero a Nodo
     Fin Registro
 
     prim, ult, q, p: puntero a Nodo
