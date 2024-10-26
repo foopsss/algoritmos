@@ -1,0 +1,28 @@
+// Este algoritmo sirve para mostrar por pantalla los valores de los nodos
+// de una lista simplemente encadenada.
+
+Acción Listado(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q: puntero a Nodo
+
+Proceso
+
+    q := prim
+
+    Si q = NIL Entonces
+        Escribir("La lista está vacía.")
+    Contrario
+        Mientras q <> NIL Hacer
+            Escribir("Valor del nodo: " *q.dato)
+            q := *q.prox
+        Fin Mientras
+    Fin Si
+
+Fin Acción

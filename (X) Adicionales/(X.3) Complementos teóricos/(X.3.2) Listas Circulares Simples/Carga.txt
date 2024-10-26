@@ -1,0 +1,43 @@
+// Este algoritmo sirve para insertar un nodo, que contiene un valor introducido
+// por el usuario, en una lista circular simplemente encadenada que puede o no
+// estar vacía.
+
+Acción Carga(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    p: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    Nuevo(p)
+    *p.dato := valor
+
+    Si prim = NIL Entonces
+        // Si la lista está vacía, hago que el primer elemento
+        // apunte a sí mismo, y hago que prim apunte al primer
+        // elemento.
+        *p.prox := p
+        prim := p
+    Contrario
+        // Yo sigo el método del complemento de la guía de
+        // trabajos prácticos en PDF, que inserta el elemento
+        // en la segunda posición, para no modificar el
+        // puntero del último elemento.
+        *p.prox := *prim.prox
+        *prim.prox := p
+    Fin Si
+
+Fin Acción

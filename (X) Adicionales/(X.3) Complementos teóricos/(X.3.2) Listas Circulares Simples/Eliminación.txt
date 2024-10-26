@@ -1,0 +1,76 @@
+// Este algoritmo sirve para eliminar un nodo, que contiene un valor introducido
+// por el usuario, en una lista circular simplemente encadenada.
+
+Acción Eliminación(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q, r, aux: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    q := prim
+
+    Si q = NIL Entonces
+        Escribir("La lista está vacía.")
+    Contrario
+        Mientras *q.prox <> prim y *q.dato <> valor Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        // Como una de las condiciones para entrar al Mientras
+        // es "*q.prox <> prim", en este condicional verifico si
+        // el último elemento cumple con la segunda condición o no.
+        //
+        // Debido a que este nodo luego apunta a NIL, por ser el
+        // último, su contenido no es revisado dentro del Mientras.
+        Si *q.dato <> valor Entonces
+            Escribir("ERROR. La lista NO contiene un elemento con el valor introducido.")
+        Contrario
+            Si q = *q.prox Entonces
+                // Acá contemplo el caso de tener solo un elemento, que
+                // justo es el que tengo que eliminar.
+                //
+                // Esto sucede porque el elemento enlaza a sí mismo, eso
+                // es lo que implica "q = *q.prox".
+                prim := NIL
+            Contrario
+                Si q = prim Entonces
+                    // Acá contemplo el caso de estar eliminando el primer elemento
+                    // en una lista con varios elementos.
+                    //
+                    // Lo que hago entonces es buscar el último elemento de la
+                    // lista, con el fin de poder enlazarlo al segundo elemento, que
+                    // va a ser mi nuevo primer elemento, una vez que borre el antiguo.
+                    r := prim
+                    
+                    Mientras *r.prox <> prim Hacer
+                        r := *r.prox
+                    Fin Mientras
+                    
+                    *r.prox := *q.prox
+                    prim := *q.prox                    
+                Contrario
+                    // Acá contemplo el caso de estar eliminando un elemento intermedio
+                    // o el último elemento, en una lista con varios elementos.
+                    *aux.prox := *p.prox
+                Fin Si
+            Fin Si
+            Disponer(q)
+        Fin Si
+    Fin Si
+
+Fin Acción
