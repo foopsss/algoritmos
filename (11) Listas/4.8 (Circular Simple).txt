@@ -39,7 +39,6 @@ Ambiente
 
     Procedimiento Buscar() ES
         Mientras *q.prox <> prim y *q.dato <> valor Hacer
-            aux := q
             q := *q.prox
         Fin Mientras
         
@@ -84,6 +83,7 @@ Ambiente
             Si q = *q.prox Entonces
                 // Acá contemplo el caso de tener solo un elemento, que
                 // justo es el que tengo que eliminar.
+                //
                 // Esto sucede porque el elemento enlaza a sí mismo, eso
                 // es lo que implica "q = *q.prox".
                 prim := NIL
