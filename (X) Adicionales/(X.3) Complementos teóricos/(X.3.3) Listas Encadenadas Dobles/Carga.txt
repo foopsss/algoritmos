@@ -1,0 +1,46 @@
+// Este algoritmo sirve para insertar un nodo, que contiene un valor introducido
+// por el usuario, en una lista doblemente encadenada que puede o no estar vacía.
+
+Acción Carga(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+    
+    p: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    Nuevo(p)
+    *p.dato := valor
+    
+    Si prim = NIL Entonces
+        // Si la lista está vacía, cargo el primer
+        // elemento.
+        *p.ant := NIL
+        *p.prox := NIL
+        prim := p
+        ult := p
+    Contrario
+        // En este complemento respeto el método de la
+        // guía en PDF, insertando un nuevo elemento,
+        // en una lista ya existente, al final de dicha
+        // lista.
+        *p.ant := ult
+        *p.prox := NIL
+        *ult.prox := p
+        ult := p
+    Fin Si
+
+Ambiente

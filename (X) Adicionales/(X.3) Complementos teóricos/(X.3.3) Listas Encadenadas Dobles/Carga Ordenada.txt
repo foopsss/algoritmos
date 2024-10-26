@@ -1,0 +1,69 @@
+// Este algoritmo sirve para insertar un nodo, que contiene un valor introducido
+// por el usuario, en una lista doblemente encadenada que puede o no estar vacía.
+
+Acción CargaOrdenada(prim, ult: puntero a nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q, p: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    q := prim
+
+    Nuevo(p)
+    *p.dato := valor
+    
+    Si q = NIL Entonces
+        // Si la lista está vacía, cargo el primer
+        // elemento.
+        *p.ant := NIL
+        *p.prox := NIL
+        prim := p
+        ult := p
+    Contrario
+        // La lista ya está cargada con elementos.
+        Mientras *q.prox <> NIL y *q.dato < valor Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        // Debido a que puedo salir del Mientras por varios
+        // motivos, controlo todas las posibilidades para
+        // ver en dónde estoy parado.
+        Si q = prim Entonces
+            // Hago una inserción previo al primer elemento.
+            *p.ant := NIL
+            *p.prox := q
+            *q.ant := p
+            prim := p
+        Contrario
+            Si q = ult Entonces
+                // Hago una inserción posterior al último elemento.
+                *p.ant := q
+                *p.prox := *q.prox
+                *q.prox := p
+                ult := p
+            Contrario
+                // Hago una inserción en una posición intermedia.
+                *p.ant := *q.ant
+                *p.prox := q
+                *(*q.ant).prox := p
+                *q.ant := p
+            Fin Si
+        Fin Si
+    Fin Si
+
+Fin Acción

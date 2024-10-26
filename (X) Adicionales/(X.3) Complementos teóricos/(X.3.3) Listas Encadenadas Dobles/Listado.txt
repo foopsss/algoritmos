@@ -1,0 +1,39 @@
+// Este algoritmo sirve para mostrar por pantalla los valores de los nodos
+// de una lista doblemente encadenada.
+
+Acción Listado(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q: puntero a Nodo
+
+Proceso
+
+    q := prim
+
+    Si q = NIL Entonces
+        Escribir("La lista está vacía.")
+    Contrario
+        Mientras *q.prox <> NIL Hacer
+            Escribir("Valor del nodo: " *q.dato)
+            q := *q.prox
+        Fin Mientras
+        
+        // Como la condición para entrar al Mientras
+        // es "*q.prox <> NIL", debo mostrar por
+        // separado el valor del último nodo, debido
+        // a que no lo hago en el ciclo Mientras.
+        //
+        // Debido a que este nodo luego apunta a NIL,
+        // por ser el último, su contenido no es mostrado
+        // dentro del Mientras.
+        Escribir("Valor del nodo: " *q.dato)
+    Fin Si
+
+Fin Acción

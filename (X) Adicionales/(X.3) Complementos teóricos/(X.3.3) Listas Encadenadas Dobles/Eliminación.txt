@@ -1,0 +1,69 @@
+// Este algoritmo sirve para eliminar un nodo, que contiene un valor introducido
+// por el usuario, en una lista doblemente encadenada.
+
+Acción Eliminación(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    q := prim
+    
+    Si q = NIL Entonces
+        Escribir("La lista está vacía.")
+    Contrario
+        Mientras *q.prox <> NIL y *q.dato <> valor Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        // Como una de las condiciones para entrar al Mientras
+        // es "*q.prox <> NIL", en este condicional verifico si
+        // el último elemento cumple con la segunda condición o no.
+        //
+        // Debido a que este nodo luego apunta a NIL, por ser el
+        // último, su contenido no es revisado dentro del Mientras.
+        Si *q.dato <> valor Entonces
+            Escribir("ERROR. La lista NO contiene un elemento con el valor introducido.")
+        Contrario
+            // Tengo elementos en la lista.
+            Si prim = ult Hacer
+                // Hay un solo elemento en la lista.
+                prim := NIL
+                ult := prim
+            Contrario
+                Si q = prim Entonces
+                    // Tengo que borrar el primer elemento de la lista.
+                    prim := *q.prox
+                    *(*q.prox).ant := NIL
+                Contrario
+                    Si q = ult Entonces
+                        // Tengo que borrar el último elemento.
+                        ult := *q.ant
+                        *(*q.ant).prox := NIL
+                    Contrario
+                        // Tengo que borrar un elemento intermedio.
+                        *(*q.ant).prox := *q.prox
+                        *(*q.prox).ant := *q.ant
+                    Fin Si
+                Fin Si
+            Fin Si
+            Disponer(q)
+        Fin Si
+    Fin Si
+
+Fin Acción
