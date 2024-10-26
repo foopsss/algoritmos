@@ -29,7 +29,7 @@ Proceso
         // separado el valor del último nodo, debido
         // a que no lo hago en el ciclo Mientras.
         //
-        // Debido a que este nodo luego apunta a NIL,
+        // Debido a que este nodo luego apunta a prim,
         // por ser el último, su contenido no es mostrado
         // dentro del Mientras.
         Escribir("Valor del nodo: " *q.dato)

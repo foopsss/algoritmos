@@ -34,7 +34,7 @@ Proceso
         // es "*q.prox <> prim", en este condicional verifico si
         // el último elemento cumple con la segunda condición o no.
         //
-        // Debido a que este nodo luego apunta a NIL, por ser el
+        // Debido a que este nodo luego apunta a prim, por ser el
         // último, su contenido no es revisado dentro del Mientras.
         Si *q.dato <> valor Entonces
             Escribir("ERROR. La lista NO contiene un elemento con el valor introducido.")
