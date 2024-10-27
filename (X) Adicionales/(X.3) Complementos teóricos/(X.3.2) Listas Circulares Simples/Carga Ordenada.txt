@@ -1,0 +1,74 @@
+// Este algoritmo sirve para insertar un nodo, que contiene un valor introducido
+// por el usuario, en una lista circular simplemente encadenada que puede o no
+// estar vacía.
+
+Acción CargaOrdenada(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q, p, r, aux: puntero a Nodo
+    valor: entero
+
+    Procedimiento PedirValor() ES
+        Escribir("Ingrese un valor: ")
+        Leer(valor)
+    Fin Procedimiento
+
+Proceso
+
+    PedirValor()
+    q := prim
+
+    Nuevo(p)
+    *p.dato := valor
+
+    Si q = NIL Entonces
+        // Si la lista está vacía, hago que el primer elemento
+        // apunte a sí mismo, y hago que prim apunte al primer
+        // elemento.
+        *p.prox := p
+        prim := p
+    Contrario
+        // La lista ya está cargada con elementos.
+        Mientras *q.prox <> prim y *q.dato < valor Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si q = prim Entonces
+            // Acá contemplo el caso de estar insertando un elemento nuevo
+            // previo al primer elemento.
+            //
+            // Lo que hago entonces es buscar el último elemento de la
+            // lista, con el fin de poder enlazarlo al nuevo elemento, que
+            // va a ser en adelante el primer elemento.
+            r := prim
+            
+            Mientras *r.prox <> prim Hacer
+                r := *r.prox
+            Fin Mientras
+            
+            *r.prox := p
+            *p.prox := q
+            prim := p
+        Contrario
+            Si *q.prox = prim Entonces
+                // Acá contemplo el caso de estar insertando un elemento nuevo
+                // luego del último elemento.
+                *p.prox := *q.prox
+                *q.prox := p
+            Contrario
+                // Acá contemplo el caso de estar insertando un elemento nuevo
+                // en una posición intermedia.
+                *p.prox := q
+                *aux.prox := p
+            Fin Si
+        Fin Si
+    Fin Si
+
+Fin Acción
