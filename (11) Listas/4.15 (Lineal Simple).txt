@@ -14,7 +14,8 @@ Ambiente
     Fin Registro
 
     aux, q, p: puntero a Nodo
-    num: entero
+    num, operación: entero
+    elección: alfanumérico
 
     Procedimiento ObtenerElecciónUsuario() ES
         Escribir("¿Desea realizar una operación? [S/N]: ")
