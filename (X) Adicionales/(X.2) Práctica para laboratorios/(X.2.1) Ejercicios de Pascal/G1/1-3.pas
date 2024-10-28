@@ -41,11 +41,11 @@ end;
 begin
     writeln('Operaciones');
     writeln('-----------');
-    writeln('1. Suma');
-    writeln('2. Resta');
-    writeln('3. Multiplicación');
-    writeln('4. División entera');
-    writeln('5. Resto');
+    writeln('1. Suma.');
+    writeln('2. Resta.');
+    writeln('3. Multiplicación.');
+    writeln('4. División entera.');
+    writeln('5. Resto.');
 
     writeln();
     write('Introduzca su elección: ');
