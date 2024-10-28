@@ -16,11 +16,6 @@ Ambiente
     aux, q, p: puntero a Nodo
     num: entero
 
-    Procedimiento Inicializar() ES
-        prim := NIL
-        aux := NIL
-    Fin Procedimiento
-
     Procedimiento ObtenerElecciónUsuario() ES
         Escribir("¿Desea realizar una operación? [S/N]: ")
         Leer(elección)
@@ -43,7 +38,7 @@ Ambiente
         *p.num := num
         *p.prox := NIL
         
-        Si prim = NIL Entonces
+        Si q = NIL Entonces
             prim := p
         Contrario
             // En caso de tener más de un elemento, recorro de esta
@@ -85,21 +80,17 @@ Ambiente
 Proceso
 
     ObtenerElecciónUsuario()
-    Inicializar()
+    aux := NIL
     
     Mientras elección = "S" Hacer
         MenúOpciones()
         q := prim
         
-        Si q = NIL Entonces
-            Si operación = 1 Entonces
-                Insertar()
-            Contrario
-                Escribir("No se puede borrar elementos en una lista vacía.")
-            Fin Si
+        Si operación = 1 Entonces
+            Insertar()
         Contrario
-            Si operación = 1 Entonces
-                Insertar()
+            Si q = NIL Entonces
+                Escribir("No se puede borrar elementos en una lista vacía.")
             Contrario
                 Borrar()
             Fin Si
