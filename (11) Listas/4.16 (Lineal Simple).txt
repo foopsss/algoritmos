@@ -1,0 +1,90 @@
+// Consideraciones:
+// (*) Como el ejercicio dice que debo comprobar si la pila está cargada o
+//     no, entiendo que me dan un puntero a una lista que puede o no estar
+//     vacía. Por lo tanto, planteo el ejercicio de manera generalizada para
+//     ambos casos (lista cargada de entrada y no cargada de entrada).
+
+Acción 4.16(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(2)
+        prox: puntero a Nodo
+    Fin Registro
+
+    aux, q, p: puntero a Nodo
+    num, operación: entero
+    elección: alfanumérico
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea realizar una operación? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Procedimiento MenúOpciones() ES
+        Escribir("Operaciones disponibles")
+        Escribir("-----------------------")
+        Escribir("1. Insertar un elemento.")
+        Escribir("2. Eliminar un elemento.")
+        Escribir("")
+        Escribir("Introduzca la operación que desea realizar: ")
+        Leer(operación)
+        Escribir("Introduzca un número para insertar o borrar en la pila: ")
+        Leer(num)
+    Fin Procedimiento
+
+    Procedimiento Insertar() ES
+        // Apilo los elementos en el tope de la lista.
+        // Es decir, hago una carga apilada.
+        Nuevo(p)
+        *p.num := num
+        *p.prox := prim
+        prim := p
+    Fin Procedimiento
+    
+    Procedimiento Borrar() ES        
+        Mientras q <> NIL y *q.num <> num Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si q = NIL Entonces
+            // Lista vacía.
+            Escribir("ERROR. La lista está vacía.")
+        Contrario
+            Si aux = NIL Entonces
+                // Primer elemento.
+                prim := *q.prox
+            Contrario
+                // Elemento intermedio.
+                *aux.prox := *q.prox
+            Fin Si
+        Fin Si
+        
+        Disponer(q)
+    Fin Procedimiento
+
+Proceso
+
+    ObtenerElecciónUsuario()
+    Inicializar()
+    
+    Mientras elección = "S" Hacer
+        MenúOpciones()
+        q := prim
+
+        Si operación = 1 Entonces
+            Insertar()
+        Contrario
+            Si q = NIL Entonces
+                Escribir("No se puede borrar elementos en una lista vacía.")
+            Contrario
+                Borrar()
+            Fin Si
+        Fin Si
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+Fin Acción
