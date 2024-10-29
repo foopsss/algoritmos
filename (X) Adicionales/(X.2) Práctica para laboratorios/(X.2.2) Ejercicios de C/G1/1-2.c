@@ -23,11 +23,11 @@ int main() {
     printf("Valor de Y: %d\n", y);
 
     printf("\n");
-    printf("Suma: %d\n", suma);
-    printf("Resta: %d\n", resta);
-    printf("Multiplicación: %d\n", mult);
-    printf("División entera: %d\n", div_ent);
-    printf("Resto: %d\n", resto);
+    printf("Resultado de la suma: %d\n", suma);
+    printf("Resultado de la resta: %d\n", resta);
+    printf("Resultado de la multiplicación: %d\n", mult);
+    printf("Resultado de la división entera: %d\n", div_ent);
+    printf("Resultado del resto: %d\n", resto);
 
     return 0;
 }
