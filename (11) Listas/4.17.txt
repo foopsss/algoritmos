@@ -1,0 +1,203 @@
+// Secuencia 1: Las palabras como anagrama o densidad, que comienzan con la misma letra, son de una alta rareza. Saludos.
+// Secuencia 2: Hol4, algun4s palabras contien3n dígitos numéric0s dentro de sí mism4s. ¡Qu3 l0c0!
+
+// NOTA: este algoritmo es una traducción directa del código que hice en Pascal
+// para la consigna, ubicado en la carpeta "(X) Adicionales/(X.2) Práctica para
+// laboratorios/(X.2.1) Ejercicios de Pascal/AED/4-17.pas".
+
+Acción 4.17 ES
+
+Ambiente
+
+    sec1, sec2, sal: secuencia de carácter
+    v1, v2: carácter
+
+    Nodo = Registro
+        dato: AN(1)
+        prox: puntero a Nodo
+    Fin Registro
+
+    prim, aux, q: puntero a Nodo
+    cont_letras_pal_sec1, cont_pal_sec2: entero
+
+    signos = {".", "¡", "!", "¿", "?", ","}
+    números = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    
+    Procedimiento CargarLista(car: carácter) ES
+    Ambiente
+        p: puntero a Nodo
+    Proceso
+        Nuevo(p)
+        *p.dato := car
+        *p.prox := NIL
+
+        Si prim = NIL Entonces
+            prim := p
+        Contrario
+            *aux.prox := p
+        Fin Si
+
+        aux := p
+    Fin Procedimiento
+
+    Procedimiento AvanzarCarácter(sec: secuencia de carácter, v: carácter, ent: entero) ES
+        // v y sec son dos parámetros que deben ser asignados mediante
+        // paso de parámetro por referencia.
+        Mientras v = " " o v en signos Hacer
+            AVZ(sec, v)
+        Fin Mientras
+        
+        // ent es una variable que permite especificar si se está
+        // trabajando con el primer o el segundo archivo de entrada.
+        //
+        // Valores posibles:
+        // 1 = sec1.
+        // 2 = sec2.
+        Si ent = 2 Entonces
+            cont_pal_sec2 := cont_pal_sec2 + 1
+        Fin Si
+        
+        Mientras v <> " " y v NO en signos Hacer
+            Si ent = 1 Entonces
+                cont_letras_pal_sec1 := cont_letras_pal_sec1 + 1
+            Fin Si
+            
+            CargarLista(v)
+            AVZ(sec, v)
+        Fin Mientras
+    Fin Procedimiento
+    
+    Procedimiento TratarLista(prim_var: puntero a Nodo, op: entero) ES
+        // tratar_lista es un procedimiento generalizado
+        // para realizar varias acciones con la lista:
+        //
+        // Posibles valores de op:
+        // 0: significa que solo se recorre la lista.
+        // 1: para cargar elementos de la lista en la salida.
+        // 2: para borrar todos los elementos de la lista.
+        //
+        // A diferencia de la versión en Pascal, cualquiera
+        // de los valores debe ser especificado al llamar
+        // el procedimiento.
+        //
+        // En la versión en Pascal, 0 es un valor por defecto
+        // de op, por lo que no hace falta especificarlo en
+        // una invocación al procedimiento.
+        
+        // prim_var es una variable que debe ser asignada
+        // mediante paso por referencia también, pues la
+        // idea es que referencie al prim cargado en el
+        // procedimiento CargarLista.
+        q := prim_var
+        
+        Mientras q <> NIL Hacer
+            Si op = 1 Entonces
+                Escribir(sal, *q.dato)
+            Fin Si
+            
+            aux := q
+            q := *q.prox
+            
+            Si op = 2 Entonces
+                Disponer(aux)
+            Fin Si
+        Fin Mientras
+        
+        Si op = 1 Entonces
+            Escribir(sal, " ")
+        Contrario
+            Si op = 2 Entonces
+                prim := NIL
+                aux := NIL
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+    Función TieneNúmeros(prim_var: puntero a Nodo): lógico ES
+    Ambiente
+        cant_num: entero
+    Proceso
+        // prim_var es una variable que debe ser asignada
+        // mediante paso por referencia también, pues la
+        // idea es que referencie al prim cargado en el
+        // procedimiento CargarLista.
+        q := prim_var
+        cant_num := 0
+        
+        // Acá cambio un poco la lógica del control de
+        // caracteres, debido a que no tengo nada
+        // equivalente al "return" y al "break" en
+        // seudocódigo.
+        Mientras q <> NIL Hacer
+            Si *q.dato en números Entonces
+                cant_num := cant_num + 1
+            Fin Si
+            
+            q := *q.prox
+        Fin Mientras
+    
+        Si cant_num > 0 Entonces
+            TieneNúmeros := V
+        Contrario
+            TieneNúmeros := F
+        Fin Si
+    Fin Función
+
+Proceso
+
+    ARR(sec1)
+    ARR(sec2)
+    CREAR(sal)
+
+    AVZ(sec1, v1)
+    AVZ(sec2, v2)
+    cont_pal_sec2 := 0
+
+    Mientras NFDS(sec1) y NFDS(sec2) Hacer
+        TratarLista(prim, 2)
+        cont_letras_pal_sec1 := 0
+        AvanzarCarácter(sec1, v1, 1)
+        TratarLista(prim, 0)
+        
+        Si cont_letras_pal_sec1 > 1 Entonces
+            Si *prim.dato = *aux.dato Entonces
+                TratarLista(prim, 1)
+            Fin Si
+        Fin Si
+        
+        TratarLista(prim, 2)
+        AvanzarCarácter(sec2, v2, 2)
+        
+        Si TieneNúmeros(prim) y cont_pal_sec2 mod 2 = 0 Entonces
+            TratarLista(prim, 1)
+        Fin Si
+    Fin Mientras
+
+    Mientras NFDS(sec1) Hacer
+        TratarLista(prim, 2)
+        cont_letras_pal_sec1 := 0
+        AvanzarCarácter(sec1, v1, 1)
+        TratarLista(prim, 0)
+        
+        Si cont_letras_pal_sec1 > 1 Entonces
+            Si *prim.dato = *aux.dato Entonces
+                TratarLista(prim, 1)
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Mientras NFDS(sec2) Hacer
+        TratarLista(prim, 2)
+        AvanzarCarácter(sec2, v2, 2)
+        
+        Si TieneNúmeros(prim) y cont_pal_sec2 mod 2 = 0 Entonces
+            TratarLista(prim, 1)
+        Fin Si
+    Fin Mientras
+
+    TratarLista(prim, 2)
+    CERRAR(sec1)
+    CERRAR(sec2)
+    CERRAR(sal)
+
+Fin Acción
