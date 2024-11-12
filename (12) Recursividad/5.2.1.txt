@@ -1,0 +1,28 @@
+Acción 5.2.1 ES
+
+Ambiente
+
+    num_us: entero
+
+    Procedimiento Inverso(num: entero) ES
+        // Caso base: el número tiene un solo dígito.
+        Si num mod 10 = num Entonces
+            Escribir(num)
+        Contrario
+            // Caso recursivo: el número tiene más de un dígito.
+            dígito := num mod 10
+            Escribir(dígito)
+            num := num DIV 10
+            Inverso(num)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    Escribir("Ingrese un número: ")
+    Leer(num_us)
+
+    Escribir("Dígitos invertidos: ")
+    Inverso(num_us)
+
+Fin Acción
