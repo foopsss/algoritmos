@@ -1,0 +1,40 @@
+// Consigna de los profes: crear una subacción recursiva que calcule el valor de
+// un número decimal en binario.
+
+// Ejemplo con el número 17:
+//
+// Primer llamada: 17 DIV 2 = 8 -> DaB(8)
+// Segunda llamada: 8 DIV 2 = 4 -> DaB(4)
+// Tercer llamada: 4 DIV 2 = 2 -> DaB(2)
+// Cuarta llamada: 2 DIV 2 = 1 -> DaB(1)
+// Quinta llamada: 1 DIV 2 = NO
+//
+// Desapilando las llamadas:
+// (5) 1 mod 2 = 1
+// (4) 2 mod 2 = 0
+// (3) 4 mod 2 = 0
+// (2) 8 mod 2 = 0
+// (1) 17 mod 2 = 1
+
+Acción Recursividad1 ES
+
+Ambiente
+
+    num_us: entero
+
+    Procedimiento DaB(num: entero) ES
+        Si num DIV 2 <> 0 Entonces
+            DaB(num DIV 2)
+        Fin Si
+        Escribir(num mod 2)
+    Fin Procedimiento
+
+Proceso
+
+    Escribir("Inserte un número en base decimal: ")
+    Leer(num_us)
+    
+    Escribir("Valor del número en binario: ")
+    DaB(num_us)
+
+Fin Acción

@@ -1,0 +1,24 @@
+// Consigna de los profes: dado un vector de 10 números enteros, calcular la
+// suma de sus elementos.
+
+Acción Recursividad3(numeros: arreglo de [1..10] de entero) ES
+
+Ambiente
+
+    i, total: entero
+
+    Función SumaElementos(arr: arreglo de [1..10] de entero, j: entero): entero ES
+        Si j = 1 Entonces
+            SumaElementos := arr[j]
+        Contrario
+            SumaElementos := arr[j] + SumaElementos(arr, j - 1)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    i := 10
+    total := SumaElementos(numeros, i)
+    Escribir("La suma de los elementos da como resultado: " total)
+
+Fin Acción

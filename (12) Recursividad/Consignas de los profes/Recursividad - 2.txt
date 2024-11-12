@@ -1,0 +1,41 @@
+// Consigna de los profes: determine recursivamente si un número es par o impar
+// usando solo las operaciones de suma y resta.
+
+// Ejemplo con el número 9:
+//
+// Primer llamada: esPar(9 - 2) = esPar(7)
+// Segunda llamada: esPar(7 - 2) = esPar(5)
+// Tercer llamada: esPar(5 - 2) = esPar(3)
+// Cuarta llamada: esPar(3 - 2) = esPar(1)
+// Quinta llamada: esPar(1) = F
+
+Acción Recursividad2 ES
+
+Ambiente
+
+    num_us: entero
+
+    Función esPar(num: entero): lógico ES
+        Si num = 0 Entonces
+            esPar := V
+        Contrario
+            Si num = 1 Entonces
+                esPar := F
+            Contrario
+                esPar(num - 2)
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Introduzca un número: ")
+    Leer(num_us)
+
+    Si esPar(num_us) Entonces
+        Escribir("El número es par.")    
+    Contrario
+        Escribir("El número no es par.")
+    Fin Si
+
+Fin Acción

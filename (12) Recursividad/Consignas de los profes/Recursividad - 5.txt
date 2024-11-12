@@ -1,0 +1,28 @@
+// Ejemplo: Alberto - Carlos - Jerónimo - Lucas - Mario
+
+// Consigna de los profes: dada una lista de nombres ordenada en forma ascendente
+// construir un procedimiento recursivo que imprima como salida la misma lista, pero
+// en orden descendente, sin modificar la lista original.
+
+Acción Recursividad5(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        nombre: AN(100)
+        prox: puntero a Nodo
+    Fin Registro
+
+    Procedimiento Invertir(r: puntero a Nodo) ES
+        Si *r.prox <> NIL Entonces
+            Invertir(*r.prox)
+        Fin Si
+        Escribir(*r.nombre)
+    Fin Procedimiento
+
+Proceso
+
+    Escribir("Lista de nombres invertida: ")
+    Invertir(prim)
+
+Fin Acción
