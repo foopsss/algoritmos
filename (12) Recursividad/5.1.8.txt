@@ -1,7 +1,4 @@
-// Consigna de los profes: dado un vector de 10 números enteros, calcular la
-// suma de sus elementos.
-
-Acción Recursividad3(numeros: arreglo de [1..10] de entero) ES
+Acción 5.1.8(numeros: arreglo de [1..10] de entero) ES
 
 Ambiente
 

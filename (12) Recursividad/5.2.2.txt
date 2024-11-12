@@ -1,8 +1,4 @@
-// Consigna de los profes: leer una palabra (cadena de caracteres) y la cantidad
-// de caracteres y generar su palíndromo. El palíndromo de "Venezuela"
-// es "aleuzeneV".
-
-Acción Recursividad4 ES
+Acción 5.2.2 ES
 
 Ambiente
 

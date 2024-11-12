@@ -1,8 +1,8 @@
 // Uso de las variables:
-// dni: resguardar el CUIT sin el último caracter, que se encuentra luego del
+// dni: resguardar el CUIT sin el último carácter, que se encuentra luego del
 //      último dígito del DNI.
 // cuit: resguardar el CUIT entero para ir tratándolo con el fin de guardarlo
-//       como un caracter.
+//       como un carácter.
 
 // Para convertir número por número a carácter:
 // 1. Resguardo el CUIT.

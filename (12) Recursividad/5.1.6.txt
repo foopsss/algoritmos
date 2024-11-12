@@ -1,6 +1,3 @@
-// Consigna de los profes: determine recursivamente si un número es par o impar
-// usando solo las operaciones de suma y resta.
-
 // Ejemplo con el número 9:
 //
 // Primer llamada: esPar(9 - 2) = esPar(7)
@@ -9,7 +6,7 @@
 // Cuarta llamada: esPar(3 - 2) = esPar(1)
 // Quinta llamada: esPar(1) = F
 
-Acción Recursividad2 ES
+Acción 5.1.6 ES
 
 Ambiente
 
