@@ -13,8 +13,7 @@ begin
         begin
             digito := num mod 10;
             writeln(digito);
-            num := num div 10;
-            inverso(num);
+            inverso(num div 10);
         end;
 end;
 

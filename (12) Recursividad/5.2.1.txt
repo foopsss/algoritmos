@@ -12,8 +12,7 @@ Ambiente
             // Caso recursivo: el número tiene más de un dígito.
             dígito := num mod 10
             Escribir(dígito)
-            num := num DIV 10
-            Inverso(num)
+            Inverso(num DIV 10)
         Fin Si
     Fin Procedimiento
 
