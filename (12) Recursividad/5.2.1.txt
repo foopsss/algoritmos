@@ -5,8 +5,11 @@ Ambiente
     num_us: entero
 
     Procedimiento Inverso(num: entero) ES
-        // Caso base: el número tiene un solo dígito.
+    Ambiente
+        digito: entero
+    Proceso
         Si num mod 10 = num Entonces
+            // Caso base: el número tiene un solo dígito.
             Escribir(num)
         Contrario
             // Caso recursivo: el número tiene más de un dígito.
