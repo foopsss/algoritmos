@@ -1,0 +1,38 @@
+// Consideraciones:
+// Un número elevado a la 0 es 1.
+// Un número elevado a la 1 es igual a sí mismo.
+//
+// Ejemplo:
+// 2³ = 8.
+// 2 * 2 * 2 = 8.
+
+Acción 5.1.3 ES
+
+Ambiente
+
+    a, b, res: entero
+    
+    Función Potencia(base, exp: entero): entero ES
+        Si exp = 0 Entonces
+            Potencia := 1
+        Contrario
+            Si exp = 1 Entonces
+                Potencia := base
+            Contrario
+                Potencia := base * Potencia(exp - 1)
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Introduzca una base: ")
+    Leer(a)
+
+    Escribir("Introduzca un exponente: ")
+    Leer(b)
+
+    res := Potencia(a, b)
+    Escribir("El resultado de la operación es: " res)
+
+Fin Acción
