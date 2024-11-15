@@ -1,0 +1,41 @@
+Acción 5.1.4 ES
+
+Ambiente
+
+    num_us: entero
+
+    Función TieneImpares(num: entero): lógico ES
+    Ambiente
+        digito: entero
+    Proceso
+	    Si num MOD 10 = num Entonces
+            // Caso base: el número tiene un solo dígito.
+            Si num MOD 2 <> 0 Entonces
+                TieneImpares := V
+            Contrario
+                TieneImpares := F
+            Fin Si
+        Contrario
+            // Caso recursivo: el número tiene más de un dígito.
+            digito := num MOD 10
+            
+            Si digito MOD 2 <> 0 Entonces
+                TieneImpares := V
+            Contrario
+                TieneImpares := TieneImpares(num DIV 10)
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Ingrese un número: ")
+    Leer(num_us)
+
+    Si TieneImpares(num_us) Entonces
+        Escribir("Uno o más dígitos del número son impares.")
+    Contrario
+        Escribir("Todos los dígitos del número son pares.")
+    Fin Si
+
+Fin Acción
