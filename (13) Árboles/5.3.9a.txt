@@ -1,0 +1,26 @@
+Acción 5.3.9a(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(1)
+        izq: puntero a Nodo
+        der: puntero a Nodo
+    Fin Registro
+
+    Función Suma(q: puntero a Nodo): entero ES
+        Si q = NIL Entonces
+            Suma := 0
+        Contrario
+            Suma := *q.dato + Suma(*q.izq) + Suma(*q.der)
+        Fin Si
+    Fin Función
+
+    suma_elem: entero
+
+Proceso
+
+    suma_elem := Suma(prim)
+    Escribir("La suma de los elementos del árbol es: " suma_elem)
+
+Fin Acción

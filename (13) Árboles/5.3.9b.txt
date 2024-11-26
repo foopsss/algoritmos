@@ -1,0 +1,30 @@
+Acción 5.3.9b(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(1)
+        izq: puntero a Nodo
+        der: puntero a Nodo
+    Fin Registro
+
+    Función Suma(q: puntero a Nodo): entero ES
+        Si q = NIL Entonces
+            Suma := 0
+        Contrario
+            Si *q.dato MOD 3 = 0 Entonces
+                Suma := Suma(*q.izq) + Suma(*q.der) + *q.dato
+            Contrario
+                Suma := Suma(*q.izq) + Suma(*q.der)
+            Fin Si
+        Fin Si
+    Fin Función
+
+    suma_mult: entero
+
+Proceso
+
+    suma_mult := Suma(prim)
+    Escribir("La suma de los múltiplos de tres del árbol es: " suma_mult)
+
+Fin Acción
