@@ -1,0 +1,32 @@
+// Por si hace falta recordar como funciona la división entera: https://matematix.org/division-entera/
+
+Acción 5.1.5 ES
+
+Ambiente
+
+    a, b, res: entero
+
+    Función Dividir(dividendo, divisor: entero): entero ES
+        Si dividendo > divisor Entonces
+            Dividir := 1 + Dividir(dividendo - divisor, divisor)
+        Contrario
+            Si dividendo = divisor Entonces
+                Dividir := 1
+            Contrario
+                Dividir := 0
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Introduzca un dividendo: ")
+    Leer(a)
+
+    Escribir("Introduzca un divisor: ")
+    Leer(b)
+
+    res := Dividir(a, b)
+    Escribir("El resultado de la operación es: " res)
+
+Fin Acción
