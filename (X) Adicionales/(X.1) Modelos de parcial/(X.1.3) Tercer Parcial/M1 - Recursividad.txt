@@ -1,0 +1,103 @@
+// Consigna: dada la lista de alumnos del primer ejercicio, se desea generar una
+// lista simplemente enlazada que se encuentre ordenada por número de legajo, con
+// todos los alumnos que hayan obtenido una calificación mayor a 6 en al menos 3
+// instancias de exámenes.
+//
+// Para comprobar si los alumnos aprobaron al menos tres instancias, utilizar una
+// función recursiva. Finalmente, mostrar los estudiantes que se cargaron en la
+// nueva lista.
+
+Acción RecursividadM1(prim: puntero a Alumno) ES
+
+Ambiente
+
+    Alumno = Registro
+        legajo: N(5)
+        nomap: AN(100)
+        comisión: AN(1)
+        notas: arreglo de [1..5] de entero
+        prox: puntero a Alumno
+    Fin Registro
+
+    q: puntero a Alumno
+
+    Salida = Registro
+        legajo: N(5)
+        nomap: AN(100)
+        comisión: AN(1)
+        notas: arreglo de [1..5] de entero
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, aux_sal, p, r: puntero a Salida
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        aux_sal := NIL
+        q := prim
+    Fin Procedimiento
+
+    // RECORDATORIO: no se pueden usar variables locales que actúen como contadores con ejercicios de
+    // recursividad, ya que en cada llamada se hace una copia de las variables. Para esto deben usarse
+    // parámetros.
+    Función Aprobado(arr: arreglo de [1..5] de entero, num_aprob: entero, num_notas: entero): lógico ES
+        // Empiezo a contar desde el 1, así que una vez que llegue
+        // a num_notas = 6 debo parar.
+        Si num_notas < 6 Entonces
+            Si arr[num_notas] > 6 Entonces
+                Aprobado(arr, num_aprob + 1, num_notas + 1)
+            Contrario
+                Aprobado(arr, num_aprob, num_notas + 1)
+            Fin Si
+        Contrario
+            Si num_aprob >= 3 Entonces
+                Aprobado := V
+            Contrario
+                Aprobado := F
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Inicializar()
+    
+    Mientras q <> NIL Hacer
+        Si Aprobado(*q.notas, 0, 1) Entonces
+            Nuevo(p)
+            *p.legajo := *q.legajo
+            *p.nomap := *q.nomap
+            *p.comisión := *q.comisión
+            *p.notas := *q.notas
+            r := prim_sal    
+            
+            Mientras r <> NIL y *r.legajo < *q.legajo Hacer
+                aux_sal := r
+                r := *r.prox
+            Fin Mientras
+            
+            Si aux_sal = NIL
+                // Lista vacía o inserción previa al
+                //primer elemento.
+                *p.prox := prim_sal
+                prim_sal := p
+            Contrario
+                // Inserción previa a un elemento
+                // intermedio o luego del último.
+                *aux_sal.prox := p
+                *p.prox := q
+            Fin Si
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+    Escribir("Estudiantes cargados en la nueva lista: ")
+    r := prim_sal
+            
+    Mientras r <> NIL Hacer
+        Escribir(*r.nomap)
+        r := *r.prox
+    Fin Mientras
+
+Fin Proceso

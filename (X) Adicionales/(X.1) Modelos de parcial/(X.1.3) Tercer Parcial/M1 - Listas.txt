@@ -1,0 +1,181 @@
+// Consigna: para el día del tercer parcial de Algoritmos se decidió agrupar a
+// los alumnos en 6 aulas. Cada aula tendrá un profesor a cargo. Se dispone de
+// una lista simplemente enlazada de alumnos con los siguientes datos:
+//
+// (*) Legajo.
+// (*) Nombre y apellido.
+// (*) Comisión.
+// (*) Notas: arreglo de [1..5] de enteros
+//
+// Además, se cuenta con dos funciones:
+// (*) EsAlumnoLibre(), que recibe como parámetro el legajo del alumno y devuelve
+//     verdadero o falso, en función de si el alumno se encuentra libre o no.
+// (*) AsignarAula(), que devuelve un número aleatorio entre 1 y 6.
+//
+// Se solicita:
+// (a) Generar un lista doblemente enlazada, de los alumnos en condiciones de
+//     rendir (es decir, que no se encuentren libres) con la siguiente
+//     información:
+//       (*) Número de curso.
+//       (*) Cantidad.
+//       (*) Legajo.
+//     Se deberá cargar un nodo por cada curso, y de forma intermedia, un nodo
+//     por cada alumno asignado a dicho curso. Los nodos de los cursos serán
+//     los nodos de cabecera, mientras que los nodos intermedios contendrán
+//     información del alumno, de forma tal que:
+//       (*) Si es un nodo de cabecera:
+//           (-) El campo número de curso será el número del curso (1..6).
+//           (-) El campo cantidad indicará la cantidad de alumnos asignados
+//               a dicho curso (deberá actualizarse cada vez que se asigne un
+//               nuevo alumno).
+//           (-) El campo legajo será 0.
+//       (*) Si es un nodo intermedio:
+//           (-) El campo número de curso será el número del curso (1..6).
+//           (-) El campo cantidad será 1.
+//           (-) El campo legajo será el legajo del alumno correspondiente.
+//     En el caso de que el alumno se encuentre en condiciones de rendir, se
+//     debe eliminarlo de la lista original.
+// (b) Informar:
+//     (b.1) El promedio de alumnos por aula.
+//     (b.2) El aula con la mayor cantidad de alumnos.
+
+Acción ListasM1(prim: puntero a Alumno) ES
+
+Ambiente
+
+    alumnos_aulas: arreglo de [1..6] de entero
+
+    Alumno = Registro
+        legajo: N(5)
+        nomap: AN(100)
+        comisión: AN(1)
+        notas: arreglo de [1..5] de entero
+        prox: puntero a Alumno
+    Fin Registro
+
+    q, aux_ent, borrar: puntero a Alumno
+
+    Salida = Registro
+        nro_curso: (1..6)
+        cantidad: N(3)
+        legajo: N(5)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, ult_sal, p, r, aux_sal: puntero a Salida
+    i, curso_alumno, max_alumnos, max_alumnos_curso, total_alumnos, prom_alumnos: entero
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 6 Hacer
+            alumnos_aulas[i] := 0
+        Fin Para
+
+        prim_sal := NIL
+        ult_sal := NIL
+        aux_sal := NIL
+        aux_ent := NIL
+        max_alumnos := LV
+        total_alumnos := 0
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+
+    // Primero, voy a crear la lista de salida con los nodos
+    // correspondientes a los cursos.
+    Para i := 1 hasta 6 Hacer
+        Nuevo(p)
+        *p.nro_curso := i
+        *p.cantidad := 0
+        *p.legajo := 0
+        *p.ant := NIL
+        *p.prox := NIL
+
+        Si prim_sal = NIL Entonces
+            prim_sal := p
+            ult_sal := p
+        Contrario
+            *aux_sal.prox := p
+            *p.ant := aux_sal
+            ult_sal := p
+        Fin Si
+
+        aux_sal := p
+    Fin Para
+
+    // Ahora sí, trabajo con la lista de entrada.
+    q := prim
+
+    Mientras q <> NIL Hacer
+        Si NO EsAlumnoLibre(*q.legajo) Entonces
+            curso_alumno := AsignarAula()
+            alumnos_aulas[curso_alumno] := alumnos_aulas[curso_alumno] + 1
+            r := prim_sal
+
+            Mientras *r.prox <> NIL y *r.nro_curso <> curso_alumno Hacer
+                r := *r.prox
+            Fin Mientras
+
+            Si *r.nro_curso <> curso_alumno Hacer
+                // Esto no debería pasar... pero bueno.
+                Escribir("ERROR. No se pudo encontrar el curso solicitado.")
+            Contrario
+                // Voy a insertar siempre después del nodo de cabecera, empujando
+                // los nodos de alumnos ya existentes hacia adelante, puesto que
+                // la consigna no aclara que deba estar ordenada la lista.
+                Nuevo(p)
+                *p.nro_curso := curso_alumno
+                *p.cantidad := 1
+                *p.legajo := *q.legajo
+                *p.ant := r
+                *p.prox := *r.prox
+                *r.prox := p
+                *r.cantidad := *r.cantidad + 1
+
+                Si *p.prox = NIL Entonces
+                    // Estoy cargando un elemento que va a ser el nuevo
+                    // último elemento de la lista.
+                    //
+                    // Esto solo pasaría, a priori, si estoy cargando el
+                    // nodo correspondiente al primer alumno asignado al
+                    // sexto curso.
+                    ult_sal := p
+                Contrario
+                    *(*p.prox).ant := p
+                Fin Si
+
+                // Borro el nodo correspondiente a la lista de entrada.
+                Si aux_ent = NIL Entonces
+                    // Estoy borrando el primer elemento de la lista.
+                    prim := *q.prox
+                Contrario
+                    // Último elemento o elemento intermedio.
+                    *aux_ent.prox := *q.prox
+                Fin Si
+                
+                borrar := q
+                q := *q.prox
+                Disponer(borrar)
+            Fin Si
+        Contrario
+            aux_ent := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+    Para i := 1 hasta 6 Hacer
+        Si max_alumnos < alumnos_aulas[i] Entonces
+            max_alumnos := alumnos_aulas[i]
+            max_alumnos_curso := i
+        Fin Si
+
+        total_alumnos := total_alumnos + alumnos_aulas[i]
+    Fin Para
+
+    prom_alumnos := total_alumnos / 6
+
+    Escribir("El promedio por curso es de" prom_alumnos "alumnos.")
+    Escribir("El curso con la mayor cantidad de alumnos es el curso" max_alumnos_curso ".")
+Fin Acción
