@@ -20,8 +20,10 @@ end;
 begin
     write('Introduzca una base: ');
     readln(a);
+
     write('Introduzca un exponente: ');
     readln(b);
+
     res := potencia(a, b);
     writeln('El resultado de la operación es: ', res);
 end.
