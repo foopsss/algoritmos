@@ -20,6 +20,7 @@ end;
 begin
     write('Introduzca un número: ');
     readln(num_us);
+
     writeln('Dígitos invertidos: ');
     inverso(num_us);
 end.
