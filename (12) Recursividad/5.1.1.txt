@@ -1,0 +1,23 @@
+Acción 5.1.1 ES
+
+Ambiente
+
+    num_us, res: entero
+
+    Función Factorial(n: entero): entero ES
+        Si n > 0 Entonces
+            Factorial := n * Factorial(n - 1)
+        Contrario
+            Factorial := 1
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Ingrese un número N: ")
+    Leer(num_us)
+    
+    res := Factorial(num_us)
+    Escribir("El factorial de N es: " res)
+
+Fin Acción

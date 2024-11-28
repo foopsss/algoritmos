@@ -1,0 +1,23 @@
+Acción 5.1.2 ES
+
+Ambiente
+
+    num_us, res: entero
+
+    Función Fibonacci(n: entero): entero ES
+        Si n > 2 Entonces
+            Fibonacci := Fibonacci(n - 1) + Fibonacci (n - 2)
+        Contrario
+            Fibonacci := 1
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Ingrese un número N: ")
+    Leer(num_us)
+    
+    res := Fibonacci(num_us)
+    Escribir("El n-ésimo número de la serie de Fibonacci es: " res)
+
+Fin Acción
