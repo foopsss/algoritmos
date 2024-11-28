@@ -1,0 +1,26 @@
+Acción 5.1.7 ES
+
+Ambiente
+
+    m, n, res: entero
+
+    Función MCD(dividendo, divisor: entero): entero ES
+        Si (dividendo mod divisor) <> 0 Entonces
+            MCD := MCD(divisor, dividendo mod divisor)
+        Contrario
+            MCD := divisor
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Introduzca un número M: ")
+    Leer(m)
+
+    Escribir("Introduzca un número N: ")
+    Leer(n)
+
+    res := MCD(m, n)
+    Escribir("El máximo común divisor de M y N es " res ".");
+
+Fin Acción
