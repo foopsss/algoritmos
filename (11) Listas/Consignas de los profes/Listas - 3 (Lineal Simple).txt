@@ -1,0 +1,210 @@
+// Consigna: se cuenta con un archivo de proyectos de desarrollo de una importante
+// empresa, con el siguiente formato:
+//
+// | Código [N(10)] | Nombre [AN(60)] | Tipo ["D", "W"] | Cant_Errores [N(3)] |
+// El archivo está ordenado por código de proyecto, y el campo Cant_Errores indica
+// la cantidad de errores de cada proyecto.
+//
+// La información respecto a cada error se almacena en una lista simple, de acuerdo
+// al orden de los proyectos, y teniendo en cuenta la cantidad que le corresponde
+// a cada proyecto. Por ejemplo, si el primer proyecto tiene 3 errores, los 3
+// primeros nodos de la lista corresponden al primer proyecto. La información que
+// se almacena por nodo es la siguiente:
+//
+// | Descripción [AN(250)] | Estado [N: "No resuelto", O: "En proceso", R: "Resuelto"] |
+//
+// Se necesita crear 2 listas dobles como salida:
+// (a) La primera debe contener el código y nombre de los proyectos que tengan
+//     todos sus errores en estado resuelto.
+// (b) La segunda debe contener el código y nombre de los proyectos que tengan
+//     al menos el 50% de sus errores en estado "resuelto" o "en proceso". La
+//     lista debe estar ordenada además de mayor a menor por dicho porcentaje
+//     de errores.
+//
+// Al finalizar, informar la cantidad de proyectos que tienen todos sus errores en
+// estado "No resuelto".
+
+Acción Listas3(prim_ent: puntero a Entrada) ES
+
+Ambiente
+
+    Proyectos = Registro
+        Código: N(10)
+        Nombre: AN(60)
+        Tipo: ("D", "W")
+        CantErrores: N(3)
+    Fin Registro
+    
+    ARCH: archivo de Proyectos ordenado por Código
+    REG: Proyectos
+
+    Entrada = Registro
+        descripción: AN(250)
+        estado: ("N", "O", "R")
+        prox: puntero a Entrada
+    Fin Registro
+
+    q: puntero a Entrada
+
+    // Primer lista de salida.
+    // Esta debe contener la información de los proyectos
+    // cuyos errores han sido resueltos completamente.
+    Salida_RES = Registro
+        código: N(10)
+        nombre: AN(60)
+        ant: puntero a Salida_RES
+        prox: puntero a Salida_RES
+    Fin Registro
+
+    prim_res, ult_res: puntero a Salida_RES
+    
+    // Segunda lista de salida.
+    // Esta debe contener la información de los proyectos que
+    // tengan al menos el 50% de sus errores resueltos o en
+    // proceso de resolución.
+    Salida_RPR = Registro
+        código: N(10)
+        nombre: AN(60)
+        porc_err_rpr: N(3)
+        ant: puntero a Salida_RPR
+        prox: puntero a Salida_RPR
+    Fin Registro
+    
+    prim_rpr, ult_rpr: puntero a Salida_RPR
+
+    errores_proyecto, cont_err, errores_res, errores_ep, errores_nr, cant_proyectos_nr: entero
+    porc_rpr: real
+
+    Procedimiento Inicializar() ES
+        q := prim_ent
+        prim_res := NIL
+        ult_res := NIL
+        prim_rpr := NIL
+        ult_rpr := NIL
+        cant_proyectos_nr := 0
+    Fin Procedimiento
+
+    Procedimiento PrimerSalida(código_proy: entero, nombre_proy: alfanumérico) ES
+    Ambiente
+        p: puntero a Salida_RES
+    Proceso
+        Nuevo(p)
+        *p.código := código_proy
+        *p.nombre := nombre_proy
+        
+        Si prim_res = NIL Entonces
+            *p.ant := NIL
+            *p.prox := NIL
+            prim_res := p
+            ult_res := p
+        Contrario
+            // La consigna no especifica como cargar los
+            // elementos, así que los añado al final de
+            // lista.
+            *p.ant := ult_res
+            *p.prox := *ult_res.prox
+            *ult_res.prox := p
+            ult_res := p
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento SegundaSalida(código_proy: entero, nombre_proy: alfanumérico, porc: real) ES
+    Ambiente
+        r, t: puntero a Salida_RPR
+    Proceso
+        Nuevo(r)
+        *r.código := código_proy
+        *r.nombre := nombre_proy
+        *r.porc_err_rpr := porc
+    
+        Si prim_rpr = NIL Entonces
+            *r.ant := NIL
+            *r.prox := NIL
+            prim_rpr := r
+            ult_rpr := r
+        Contrario
+            t := prim_rpr
+            
+            Mientras *t.prox <> NIL y *t.porc_err_rpr > *r.porc_err_rpr Hacer
+                t := *t.prox
+            Fin Mientras
+            
+            Si t = prim_rpr Entonces
+                // Inserción previo al primer elemento.
+                *r.ant := NIL
+                *r.prox := t
+                *t.ant := r
+                prim_rpr := r
+            Contrario
+                Si t = ult_rpr Entonces
+                    // Inserción posterior al último elemento.
+                    *r.ant := t
+                    *r.prox := *t.prox
+                    *t.prox := r
+                    ult_rpr := r
+                Contrario
+                    // Inserción intermedia.
+                    // Debo insertar previo a t.
+                    *r.ant := *t.ant
+                    *r.prox := t
+                    *t.ant := r
+                    *(*t.ant).prox := r
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH, REG)
+    LEER(ARCH, REG)
+    Inicializar()
+
+    Mientras NFDA(ARCH) Hacer
+        errores_proyecto := REG.CantErrores
+        cont_err := errores_proyecto
+        errores_res := 0
+        errores_ep := 0
+        errores_nr := 0
+        
+        Mientras q <> NIL y cont_err <> 0 Hacer
+            Según *q.estado Hacer
+                = "R": errores_res := errores_res + 1
+                = "O": errores_ep := errores_ep + 1
+                = "N": errores_nr := errores_nr + 1
+            Fin Según
+            
+            cont_err := cont_err - 1
+            q := *q.prox
+        Fin Mientras
+        
+        porc_rpr := (errores_res + errores_ep) * 100 / errores_proyecto
+        
+        Si errores_res = errores_proyecto Entonces
+            // Añadir a la primer lista de salida, que contiene
+            // la información de los proyectos cuyos errores
+            // fueron solucionados completamente.
+            PrimerSalida(REG.Código, REG.Nombre)
+        Contrario
+            Si porc_rpr >= 50 Entonces
+                // Añadir a la segunda lista de salida, que contiene
+                // la información de los proyectos donde al menos la
+                // mitad de los errores fueron resueltos o están en
+                // proceso de resolución.
+                SegundaSalida(REG.Código, REG.Nombre, porc_err)
+            Contrario
+                Si errores_nr = errores_proyecto Entonces
+                    // Proyectos donde ninguno de los errores
+                    // ha sido resuelto.
+                    cant_proyectos_nr := cant_proyectos_nr + 1
+                Fin Si
+            Fin Si
+        Fin Si
+        
+        LEER(ARCH, REG)
+    Fin Mientras
+
+    Escribir("Hay" cant_proyectos_nr "proyectos que no tienen ningún error resuelto.")
+    CERRAR(ARCH)
+
+Fin Acción
