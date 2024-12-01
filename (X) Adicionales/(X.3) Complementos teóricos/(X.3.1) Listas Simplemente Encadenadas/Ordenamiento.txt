@@ -1,0 +1,83 @@
+// Este algoritmo sirve para reordenar los elementos de una lista sobre
+// la misma lista. Utiliza un método similar al ordenamiento por intercambio
+// visto con arreglos.
+//
+// Con este método se ordena la lista de mayor a menor, pero fácilmente
+// se puede cambiar para ordenar de menor a mayor.
+
+Acción Ordenamiento(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        dato: N(1)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, aux: puntero a Nodo
+
+Proceso
+
+    Si prim <> NIL Entonces
+        Si *prim.prox <> NIL Entonces
+            // La lista varios elementos.
+            ordenado := F
+
+            Mientras NO ordenado Hacer
+                ordenado := V
+                q := prim
+                
+                // Recorro la lista hasta llegar al fin, o hasta encontrar
+                // un elemento cuyo sucesor es mayor.
+                Mientras *q.prox <> NIL y *q.grupo < *(*q.prox).grupo Hacer
+                    aux := q
+                    q := *q.prox
+                Fin Mientras
+                
+                Si *q.prox <> NIL Entonces
+                    // Hay dos elementos de la lista que están desordenados.
+                    ordenado := F
+                    
+                    Si q = prim Entonces
+                        // Estoy reordenando el primer nodo.
+                        // Hago que prim apunte al nuevo primer elemento.
+                        prim := *q.prox
+                        
+                        // Hago que el siguiente elemento de mi antiguo
+                        // primer elemento sea el elemento posterior al
+                        // nuevo prim. Es decir, mi antiguo prim apunta
+                        // ahora al elemento que se encuentra en la tercer
+                        // posición.
+                        *q.prox := *(*q.prox).prox
+                        
+                        // Finalmente, hago que el nuevo prim apunte al
+                        // antiguo prim, que es mi nuevo segundo elemento.
+                        *prim.prox := q
+                    Contrario
+                        // Estoy reordenando un nodo intermedio.
+                        // Hago que el resguardo apunte al nodo siguiente
+                        // al cual estoy parado.
+                        *aux.prox := *q.prox
+                        
+                        // Hago que el nodo en el cual estoy parado apunte
+                        // al elemento que sucede al siguiente elemento de
+                        // mi nodo actual.
+                        *q.prox := *(*q.prox).prox
+                        
+                        // Hago que el nodo que antes era el siguiente
+                        // ahora apunte al nodo en el cual estoy parado,
+                        // cuya posición termino de cambiar acá.
+                        *(*aux.prox).prox := q
+                    Fin Si
+                Fin Si
+            Fin Mientras
+        Contrario
+            // Un solo elemento.
+            Escribir("La lista tiene un solo elemento.")
+        Fin Si
+    Contrario
+        // La lista no tiene elementos.
+        Escribir("ERROR. La lista no tiene elementos.")
+    Fin Si
+
+Fin Acción
