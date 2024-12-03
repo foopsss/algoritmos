@@ -1,0 +1,33 @@
+RECORRIDO POS-ORDEN (IDR)
+-------------------------
+9 - 32 - 28 - 52 - 10 - 70 - 40
+
+RECORRIDO EN-ORDEN (IRD)
+------------------------
+9 - 28 - 32 - 40 - 52 - 70 - 10
+
+ALGORITMO
+---------
+Acción Recorrido(prim: puntero a Árbol) ES
+
+Ambiente
+
+    Árbol = Registro
+        dato: N(2)
+        izq: puntero a Árbol
+        der: puntero a Árbol
+    Fin Registro
+
+    Procedimiento EnOrden(p: puntero a Árbol) ES
+        Si p <> NIL Hacer
+            EnOrden(*p.izq)
+            Escribir(*p.dato)
+            EnOrden(*p.der)
+        Fin Mientras
+    Fin Procedimiento
+
+Proceso
+
+    EnOrden(prim)
+
+Fin Acción
