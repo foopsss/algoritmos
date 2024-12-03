@@ -1,0 +1,10 @@
+1) Nodos hoja: D, M, N, F, J, K, L
+2) El nodo A.
+3) El nodo A.
+4) F, G y H.
+5) El nodo A.
+6) El nodo I.
+7) El nodo D tiene como hermano derecho a E, pero E no tiene ningún hermano derecho.
+8) J está a la izquierda de G, mientras que K está a la derecha.
+9) El árbol tiene una profundidad de 4 niveles.
+10) El nodo se encuentra en el segundo nivel. Esa es su altura.
