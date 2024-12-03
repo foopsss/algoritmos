@@ -1,0 +1,110 @@
+// Consigna: se tiene una lista circular de entrada donde cada nodo contiene como
+// dato un valor entero que representa un código binario. Se debe cargar en una
+// nueva lista simple aquellos nodos que no cumplen con el siguiente patrón:
+// (10) * N, siendo N cualquier número natural.
+//
+// Ejemplo:
+// N = 3, valor 101010.
+//
+// Se pide:
+// (a) Para controlar el cumplimiento del patrón, realizar una función recursiva
+//     que retorne un valor lógico.
+// (b) Mostrar cómo quedó la lista circular con los nodos que cumplen el patrón.
+
+// Nota: lo que yo tengo en cada nodo es un valor binario, como 101010. Lo que
+// debo comprobar, es si se cumple el patrón de que el número está compuesto
+// por varios números 10 en repetición. Por ejemplo, 10101010 cumple con el
+// patrón, mientras que 10101011 no lo hace.
+
+Acción RecursividadM2(prim: puntero a Binario) ES
+
+Ambiente
+
+    Binario = Registro
+        dato: N(20)
+        prox: puntero a Binario
+    Fin Registro
+    
+    q: puntero a Binario
+
+    Salida = Registro
+        dato: N(20)
+        prox: puntero a Salida
+    Fin Registro
+    
+    prim_sal, aux_sal, p: puntero a Salida
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        aux_sal := NIL
+        q := prim
+    Fin Procedimiento
+
+    Función CumplePatrón(entrada: entero): lógico ES
+        // El número tiene solo un dígito.
+        // No me sirve.
+        Si entrada MOD 10 = entrada Entonces
+            CumplePatrón := F
+        Fin Si
+        
+        // Entraría en este Si cuando mi entrada es
+        // un código binario de dos dígitos, como 10
+        // u 11.
+        Si entrada MOD 100 = entrada Entonces
+            Si entrada MOD 100 <> 10 Entonces
+                CumplePatrón := F
+            Contrario
+                CumplePatrón := V
+            Fin Si
+        Fin Si
+        
+        // Entraría en este Si cuando mi entrada es
+        // un código binario de más de dos dígitos.
+        Si entrada MOD 100 <> entrada Entonces
+            Si entrada MOD 100 <> 10 Entonces
+                CumplePatrón := F
+            Contrario
+                CumplePatrón := CumplePatrón(entrada DIV 100)
+            Fin Si
+        Fin Si
+    Fin Función
+    
+    Procedimiento AñadirSalida() ES
+        Nuevo(p)
+        *p.dato := *q.dato
+        *p.prox := NIL
+        
+        Si prim_sal = NIL Entonces
+            prim_sal := p
+        Contrario
+            *aux_sal.prox := p
+        Fin Si
+        
+        aux_sal := p
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    Escribir("Valor de los nodos que cumplen el patrón: ")
+
+    Mientras *q.prox <> prim Hacer
+        Si NO CumplePatrón(*q.dato) Entonces
+            AñadirSalida()
+        Contrario
+            Escribir(*q.dato)
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+    // Necesito controlar el último nodo, debido
+    // a que la condición del Mientras me hace
+    // salir antes de poder procesarlo.
+    Si CumplePatrón(*q.dato) Entonces
+        AñadirSalida()
+    Contrario
+        Escribir(*q.dato)
+    Fin Si
+
+Fin Acción
