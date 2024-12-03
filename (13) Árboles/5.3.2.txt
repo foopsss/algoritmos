@@ -1,0 +1,8 @@
+Se tienen los siguientes caminos:
+
+(*) C - H - L 
+(*) C - G - K
+(*) C - G - J
+(*) B - E - I
+(*) E - I - N
+(*) E - I - M
