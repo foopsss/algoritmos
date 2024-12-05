@@ -30,6 +30,14 @@
 //         de fecha y cantidad. Una vez que se cargó a la swiftie en la lista doble,
 //         se la debe eliminar de la lista de entrada.
 // (b) Informar la fecha con la mayor cantidad de swifties.
+//
+// Ejemplo de la lista doble:
+// |-----------|       |------------------|       |------------|       |------------------|       |------------|       |------------------|
+// |fecha: 9/11|       |fecha:            |       |fecha: 10/11|       |fecha:            |       |fecha: 11/11|       |fecha:            |
+// |cant: 45633| ----> |cant:             | ----> |cant: 45633 | ----> |cant:             | ----> |cant: 45633 | ----> |cant:             |
+// |cod:       | <---- |cod:a#14s/54d(aa4d| <---- |cod:        | <---- |cod:a#14s/54d(aa4d| <---- |cod:        | <---- |cod:a#14s/54d(aa4d|
+// |dni:       |       |dni: 11222666     |       |dni:        |       |dni: 11222666     |       |dni:        |       |dni: 11222666     |
+// |-----------|       |------------------|       |------------|       |------------------|       |------------|       |------------------|
 
 Acción ListasM2(prim: puntero a Swiftie, cod_enc: arreglo de [1..12, 1..3] de entero) ES
 
@@ -54,7 +62,7 @@ Ambiente
     Salida = Registro
         fecha_rec: Fecha
         cantidad: N(3)
-        código: AN(10)
+        código: AN(20)
         dni: N(8)
         ant: puntero a Salida
         prox: puntero a Salida
