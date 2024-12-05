@@ -68,43 +68,30 @@ Ambiente
             Fin Si
         Fin Si
     Fin Función
-    
-    Procedimiento AñadirSalida() ES
-        Nuevo(p)
-        *p.dato := *q.dato
-        *p.prox := NIL
-        
-        Si prim_sal = NIL Entonces
-            prim_sal := p
-        Contrario
-            *aux_sal.prox := p
-        Fin Si
-        
-        aux_sal := p
-    Fin Procedimiento
 
 Proceso
 
     Inicializar()
-    Escribir("Valor de los nodos que cumplen el patrón: ")
+    Escribir("Valores de los nodos que cumplen el patrón: ")
 
-    Mientras *q.prox <> prim Hacer
+    Mientras q <> prim Hacer
         Si NO CumplePatrón(*q.dato) Entonces
-            AñadirSalida()
+            Nuevo(p)
+            *p.dato := *q.dato
+            *p.prox := NIL
+            
+            Si prim_sal = NIL Entonces
+                prim_sal := p
+            Contrario
+                *aux_sal.prox := p
+            Fin Si
+            
+            aux_sal := p
         Contrario
             Escribir(*q.dato)
         Fin Si
         
         q := *q.prox
     Fin Mientras
-
-    // Necesito controlar el último nodo, debido
-    // a que la condición del Mientras me hace
-    // salir antes de poder procesarlo.
-    Si CumplePatrón(*q.dato) Entonces
-        AñadirSalida()
-    Contrario
-        Escribir(*q.dato)
-    Fin Si
 
 Fin Acción
