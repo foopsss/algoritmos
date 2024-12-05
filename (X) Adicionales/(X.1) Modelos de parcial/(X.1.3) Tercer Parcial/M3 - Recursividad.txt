@@ -1,0 +1,92 @@
+// Consigna: se tiene una lista circular de entrada donde cada nodo contiene
+// códigos binarios. Se desea copiar a una nueva lista doble aquellos nodos
+// donde la cantidad de 0 no sea múltiplo de 3.
+//
+// Para el control, realizar una función recursiva que retorne un valor
+// lógico. Si la cantidad de 0 es múltiplo de 3 debe retornar verdadero y,
+// si no lo es, debe retornar falso. Para finalizar, mostrar la lista
+// generada.
+
+Acción RecursividadM3(prim: puntero a Binario) ES
+
+Ambiente
+
+    Binario = Registro
+        dato: N(20)
+        prox: puntero a Binario
+    Fin Registro
+    
+    q: puntero a Binario
+
+    Salida = Registro
+        dato: N(20)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+    
+    prim_sal, ult_sal, aux_sal, p, r: puntero a Salida
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        ult_sal := NIL
+        q := prim
+    Fin Procedimiento
+
+    Función CumplePatrón(entrada: entero, cant_cero: entero): lógico ES
+        Si entrada DIV 10 = 0 Entonces
+            // El número tiene un solo dígito.
+            Si entrada MOD 10 = 0 Entonces
+                cant_cero := cant_cero + 1
+            Fin Si
+            
+            Si cant_cero MOD 3 = 0 Entonces
+                CumplePatrón := V
+            Contrario
+                CumplePatrón := F
+            Fin Si
+        Contrario
+            // El número tiene varios dígitos.
+            Si entrada MOD 10 = 0 Entonces
+                CumplePatrón(entrada DIV 10, cant_cero + 1)
+            Contrario
+                CumplePatrón(entrada DIV 10, cant_cero)
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Inicializar()
+
+    Mientras q <> prim Hacer
+        Si NO CumplePatrón(*q.dato, 0) Entonces
+            Nuevo(p)
+            *p.dato := *q.dato
+            
+            Si prim_sal = NIL Entonces
+                *p.ant := NIL
+                *p.prox := NIL
+                prim_sal := p
+            Contrario
+                *aux_sal.prox := p
+                *p.ant := aux_sal
+                *p.prox := NIL
+            Fin Si
+            
+            ult_sal := p
+            aux_sal := p
+        Fin Si        
+        
+        q := *q.prox
+    Fin Mientras
+
+    // Muestro la lista generada.
+    Escribir("Valores de los nodos de la lista de salida: ")
+    r := prim_sal
+
+    Mientras r <> NIL Hacer
+        Escribir(*r.dato)
+        r := *r.prox
+    Fin Mientras
+
+Fin Acción

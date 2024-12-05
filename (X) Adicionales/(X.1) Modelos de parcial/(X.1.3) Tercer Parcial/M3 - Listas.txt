@@ -1,0 +1,172 @@
+// Consigna: Taylor Swift trajo The Eras Tour a Latinoamérica y pasó por Buenos Aires
+// el 9, 10 y 11 de noviembre. Una gran cantidad de swifties hicieron fila en la entrada
+// del estadio por 7 meses para asegurar un lugar cercano a la artista en el recital.
+//
+// La comunidad de "Swifties Developers" desarrolló un sistema para enumerar los lugares
+// en la fila, y posteriormente acceder de manera ordenada al estadio, pero tuvieron
+// problemas de seguridad y quieren optimizar dicho sistema para próximos recitales con
+// tanta concurrencia. Se cuenta con la siguiente información:
+//
+// Una lista doble que contiene un nodo por cada fecha de recital junto con la cantidad
+// de asistentes, seguido por todos los códigos encriptados (correspondientes al número
+// que tiene en la fila) y DNI de las swifties que van a cada fecha. Se tiene el
+// siguiente formato:
+//
+// |-----------|       |------------------|       |------------|       |------------------|       |------------|       |------------------|
+// |fecha: 9/11|       |fecha:            |       |fecha: 10/11|       |fecha:            |       |fecha: 11/11|       |fecha:            |
+// |cant: 45633| ----> |cant:             | ----> |cant: 45633 | ----> |cant:             | ----> |cant: 45633 | ----> |cant:             |
+// |cod:       | <---- |cod:a#14s/54d(aa4d| <---- |cod:        | <---- |cod:a#14s/54d(aa4d| <---- |cod:        | <---- |cod:a#14s/54d(aa4d|
+// |dni:       |       |dni: 11222666     |       |dni:        |       |dni: 11222666     |       |dni:        |       |dni: 11222666     |
+// |-----------|       |------------------|       |------------|       |------------------|       |------------|       |------------------|
+//
+// Se desea desencriptar el lugar en la fila que le tocó a cada swiftie, para poder
+// acceder al estadio. El proceso de desencriptación es el siguiente: se cuenta con
+// una función swiftieHabilitada() que es de tipo lógica, y recibe como parámetro el
+// código encriptado y DNI de la swiftie. Si la swiftie puede ingresar, devuelve
+// verdadero y, si debe esperar su turno, devuelve falso.
+//
+// Se pide:
+// (a) Eliminar de la lista de entrada los nodos de swifties que ya ingresaron,
+//     manteniendo actualizado el campo cantidad de los nodos fecha.
+// (b) Si la swiftie no ingresó, se le debe pasar el código encriptado a la función
+//     DesencriptarLugarEnLaFila(), que devuelve su número de lugar en la fila. Se
+//     debe cargar esta información en el campo código, junto con el DNI de la
+//     swiftie, en una lista simple ordenada por el número de lugar en la fila, de
+//     manera ascendente. Estos nodos no se deben eliminar de la lista de entrada.
+// (c) Informar la cantidad de swifties que ingresaron en una fecha determinada.
+
+Acción ListasM3(prim, ult: puntero a Swiftie) ES
+
+Ambiente
+
+    Fecha = Registro
+        año: N(4)
+        mes: (1..12)
+        día: (1..31)
+    Fin Registro
+
+    Swiftie = Registro
+        fecha_rec: Fecha
+        cantidad: N(3)
+        código: AN(20)
+        dni: N(8)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+
+    q, borrar, fecha_nueve, fecha_diez, fecha_once: puntero a Swiftie
+
+    Salida = Registro
+        código: N(3)
+        dni: N(8)
+        prox: puntero a Salida
+    Fin Registro
+    
+    prim_sal, aux_sal, p, r: puntero a Salida
+    fecha_us, cant_fecha_us: entero
+
+    Procedimiento Inicializar() ES
+        fecha_nueve := NIL
+        fecha_diez := NIL
+        fecha_once := NIL
+        prim_sal := NIL
+        aux_sal := NIL
+        cant_fecha_us := 0
+    Fin Procedimiento
+
+    Procedimiento ObtenerFechaUsuario() ES
+        Escribir("Ingrese el día de un recital: ")
+        Leer(fecha_us)
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    ObtenerFechaUsuario()
+
+    // Primero, me conviene ubicar los nodos de cabecera
+    // con la información de cada recital.
+    Para i := 9 hasta 11 Hacer
+        q := prim
+        
+        // Esto funciona porque el primer nodo para una
+        // fecha dada siempre va a ser el nodo correspondiente
+        // a la cantidad de asistentes al recital.
+        Mientras q <> NIL y *q.fecha_rec.día <> i Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Según i Hacer
+            = 9: fecha_nueve := q
+            = 10: fecha_diez := q
+            = 11: fecha_once := q
+        Fin Según
+    Fin Para
+
+    // Recorro para tratar los nodos de las swifties.
+    // No olvidar que el primer nodo corresponde al nodo
+    // de cabecera de la fecha 9.
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        // Si estoy en un nodo de cabecera, me
+        // lo salto.
+        Si *q.código = " " y *q.dni = 0 Entonces
+            q := *q.prox
+        Fin Si
+    
+        Si swiftieHabilitada(*q.código, *q.dni) Entonces
+            // Actualizo la cantidad del nodo fecha.
+            Según *q.fecha_rec.día Hacer
+                = 9: *fecha_nueve.cantidad := *fecha_nueve.cantidad - 1
+                = 10: *fecha_diez.cantidad := *fecha_diez.cantidad - 1
+                = 11: *fecha_once.cantidad := *fecha_once.cantidad - 1
+            Fin Según
+            
+            // Cantidad de swifties que ingresaron en una
+            // fecha determinada.
+            Si *q.fecha_rec.día = fecha_us Entonces
+                cant_fecha_us := cant_fecha_us + 1
+            Fin Si
+            
+            // Debo borrar el nodo de la swiftie que ingresó.
+            Si q = ult Entonces
+                *(*q.ant).prox := NIL
+                ult := *q.ant
+            Contrario
+                *(*q.ant).prox := *q.prox
+                *(*q.prox).ant := *q.ant
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+            Disponer(borrar)
+        Contrario            
+            // Creo un nuevo nodo y lo ubico en la lista
+            // de salida.
+            Nuevo(p)
+            *p.código := DesencriptarLugarEnLaFila(*q.código)
+            *p.dni := *q.dni
+            r := prim_sal
+            
+            Mientras r <> NIL y *r.código < *p.código Hacer
+                aux_sal := r
+                r := *r.prox
+            Fin Mientras
+            
+            Si aux_sal = NIL Entonces
+                *p.prox := prim_sal
+                prim_sal := p
+            Contrario
+                *aux_sal.prox := p
+                *p.prox := r
+            Fin Si
+            
+            // Avanzo al siguiente nodo de la lista doble.
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+    Escribir("En la fecha introducida por el usuario ingresaron" cant_fecha_us "swifties.")
+
+Fin Acción
