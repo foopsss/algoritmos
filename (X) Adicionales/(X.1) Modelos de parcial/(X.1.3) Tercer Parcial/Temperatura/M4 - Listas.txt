@@ -1,0 +1,190 @@
+// Consigna: una importante cadena de supermercados está realizando un sorteo por
+// su aniversario, repartiendo importantes premios y descuentos a sus clientes, de
+// acuerdo a las compras realizadas (cuantas más compras realiza un cliente, más
+// chances suma). La información de las compras se encuentra en un archivo secuencial
+// ordenado por fecha de compra:
+//
+// | Fecha_compra | DNI_cliente | Cantidad_artículos | Importe_total |
+//
+// Además, cuenta con un programa de fidelización de clientes. La información de
+// los socios adheridos al programa se encuentra dentro de un archivo indexado por
+// DNI del cliente:
+//
+// | DNI_cliente | ApellidoyNombre | Fecha_adhesión | Categoría |
+//
+// Se pide:
+// (a) Crear una lista simplemente enlazada (ordenada por Nombre y apellido) con
+//     información de las personas que forman parte del programa de socios. Los
+//     datos a almacenar son los siguientes:
+//     | ApellidoyNombre | Chances_total |
+//
+// Para ello, se debe tener en cuenta lo siguiente:
+// (*) Cuando se agrega a un cliente, se le otorgan 5 chances por única vez. Por
+//     cada $100 que gaste en cada compra posterior, se le sumará una chance extra.
+// (*) En caso de que la categoría del cliente sea "Black", tendrá una cantidad
+//     aleatoria de chances. Esta cantidad se genera mediante un giro de ruleta,
+//     simulado con la información almacenada en una lista circular simple de la
+//     siguiente manera:
+//     1. Se genera un valor aleatorio con la función Tirar(), la cual retorna 
+//        un número entre 1 y 55. Para obtener el número de chances extra, deben
+//        realizarse tantos saltos sobre la resulta como indique el valor obtenido
+//        con la función.
+//     2. Los valores para los siguientes clientes se obtendrán a partir de la
+//        última posición que haya quedado.
+
+Acción ListasM4(prim_circ: puntero a Descuento) ES
+
+Ambiente
+
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
+    
+    Compras = Registro
+        FechaCompra: Fecha
+        DNI: N(8)
+        CantArt: N(2)
+        Importe: N(3)
+    Fin Registro
+    
+    ARCH_COM: archivo de Compras ordenado por FechaCompra
+    REG_COM: Compras
+
+    Clientes = Registro
+        DNI: N(8)
+        NomAp: AN(100)
+        FechaAdhesión: Fecha
+        Categoría: AN(50)
+    Fin Registro
+    
+    ARCH_CLI: archivo de Clientes indexado por DNI
+    REG_CLI: Clientes
+
+    Descuento = Registro
+        chances: N(2)
+        prox: puntero a Descuento
+    Fin Registro
+    
+    q: puntero a Descuento
+
+    Salida = Registro
+        nomap: AN(100)
+        chances: N(3)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, ult_sal, p, r: puntero a Salida
+    i, cant_giros: entero
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        ult_sal := NIL
+        q := prim_circ
+    Fin Procedimiento
+
+    Procedimiento GirarRuleta() ES
+        // No me terminó de quedar muy claro cómo funciona la cuestión
+        // de la ruleta. Yo lo interpreto como que Tirar() devuelve el
+        // número de posiciones que debo avanzar en la lista circular
+        // hasta llegar al número de chances que debo otorgarle al
+        // cliente.
+        cant_giros := Tirar()
+        Para i := 1 hasta cant_giros Hacer
+            q := *q.prox
+        Fin Para
+    Fin Procedimiento
+
+    Procedimiento CargarSalida(nombre_cli: alfanumérico) ES
+    Ambiente
+        t: puntero a Salida
+    Proceso
+        t := prim_sal
+        
+        Nuevo(p)
+        *p.nomap := nombre_cli
+        *p.chances := 5
+        
+        Si t = NIL Entonces
+            *p.ant := NIL
+            *p.ant := NIL
+            prim_sal := p
+            ult_sal := p
+        Contrario
+            Mientras *t.prox <> NIL y *t.nomap < *p.nomap Hacer
+                t := *t.prox
+            Fin Mientras
+            
+            Si t = prim_sal Entonces
+                // Inserción previa al primer elemento.
+                *p.ant := NIL
+                *p.prox := t
+                *t.ant := p
+                prim_sal := p
+            Contrario
+                Si t = ult_sal Entonces
+                    // Inserción posterior al último elemento.
+                    *p.ant := t
+                    *p.prox := *t.prox
+                    *t.prox := p
+                    ult_sal := p
+                Contrario
+                    // Inserción intermedia.
+                    *p.ant := *t.ant
+                    *p.prox := t
+                    *(*t.ant).prox := p
+                    *t.ant := p
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH_COM)
+    ABRIR E/ (ARCH_CLI)
+    
+    LEER(ARCH_COM, REG_COM)
+    Inicializar()
+    
+    Mientras NFDA(ARCH_COM) Hacer
+        REG_CLI.DNI := REG_COM.DNI
+        LEER(ARCH_CLI, REG_CLI)
+        
+        Si existe Entonces
+            r := prim_sal
+            
+            // Primero corresponde buscar al cliente en la lista
+            // de salida.
+            Mientras r <> NIL y *r.nomap <> REG_CLI.NomAp Hacer
+                r := *r.prox
+            Fin Mientras
+            
+            Si r <> NIL Entonces
+                // Se encontró al cliente. Se le suman chances.
+                // Si el cliente es Black, le otorgo las chances
+                // correspondientes tras girar la ruleta.
+                Si REG_CLI.Categoría = "Black" Entonces
+                    GirarRuleta()
+                    *r.chances := *r.chances + *q.chances
+                Contrario
+                    *r.chances := *r.chances + (REG_COM.Importe DIV 100)
+                Fin Si
+            Contrario
+                // No se encontró al cliente. Debo incorporarlo
+                // a la lista de salida.
+                CargarSalida(REG_CLI.NomAp)
+            Fin Si
+        Contrario
+            Escribir("El cliente con DNI" REG_CLI.DNI "no está adherido al programa de fidelización.")
+        Fin Si
+        
+        LEER(ARCH_COM, REG_COM)
+    Fin Mientras
+
+    CERRAR(ARCH_COM)
+    CERRAR(ARCH_CLI)
+
+Fin Acción

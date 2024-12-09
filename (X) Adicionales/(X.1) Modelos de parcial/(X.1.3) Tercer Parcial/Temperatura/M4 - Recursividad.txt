@@ -1,0 +1,71 @@
+// Consigna: una clínica dispone de un sistema informático para monitorear la
+// temperatura de sus pacientes de forma automatizada, rápida y segura. La
+// información se almacena en una lista simplemente encadenada con los siguientes
+// datos:
+//
+// | DNI del paciente | Nombre y apellido | Edad | Nro. de cama | Nro. de habitación | Temperaturas |
+//
+// El campo temperaturas contiene un arreglo de 4 mediciones. Se pide mostrar
+// el nombre y apellido, y luego eliminar de la lista a los pacientes que no
+// hayan registrado temperaturas mayores a 36.5º C.
+//
+// Para determinar si el paciente cumple la condición mencionada anteriormente
+// se debe desarrollar y utilizar una función recursiva.
+
+Acción RecursividadM4(prim: puntero a Paciente) ES
+
+Ambiente
+
+    Paciente = Registro
+        dni: N(8)
+        nomap: AN(100)
+        edad: N(3)
+        nro_cama: N(2)
+        nro_hab: N(2)
+        temp: arreglo de [1..4] de real
+        prox: puntero a Paciente
+    Fin Registro
+
+    q, aux, borrar: puntero a Paciente
+
+    Función TemperaturasNormales(arr: arreglo de [1..4] de real, ind: entero): lógico ES
+        Si ind = 4 Entonces
+            Si arr[ind] < 36,5 Entonces
+                TemperaturasNormales := V
+            Contrario
+                TemperaturasNormales := F
+            Fin Si
+        Contrario
+            Si arr[ind] < 36,5 Entonces
+                TemperaturasNormales := TemperaturasNormales(arr, ind + 1)
+            Contrario
+                TemperaturasNormales := F
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Escribir("Pacientes que no registraron temperaturas mayores a 36,5º C: ")
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        Si TemperaturasNormales(*q.temp, 1) Entonces
+            Escribir(*q.nomap)
+            
+            Si aux = NIL Entonces
+                prim := *q.prox
+            Contrario
+                *aux.prox := *q.prox
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+            Disponer(borrar)
+        Contrario
+            aux := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción
