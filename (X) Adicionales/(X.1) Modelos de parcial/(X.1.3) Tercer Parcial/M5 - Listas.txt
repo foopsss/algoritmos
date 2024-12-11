@@ -1,0 +1,189 @@
+// Consigna: una importante cadena de supermercados está realizando un sorteo por
+// su aniversario, repartiendo importantes premios y descuentos a sus clientes, de
+// acuerdo a las compras realizadas (cuantas más compras realiza un cliente, más
+// chances suma). La información de las compras se encuentra en un archivo secuencial
+// ordenado por fecha de compra:
+//
+// | Fecha_compra | DNI_cliente | Cantidad_artículos | Importe_total |
+//
+// Además, cuenta con un programa de fidelización de clientes. La información de
+// los socios adheridos al programa se encuentra dentro de un archivo indexado por
+// DNI del cliente:
+//
+// | DNI_cliente | ApellidoyNombre | Fecha_adhesión | Categoría |
+//
+// Se pide:
+// (a) Crear una lista simplemente enlazada con información de las personas que
+//     NO forman parte del programa de socios, ordenada por DNI_cliente, con la
+//     siguiente información:
+//     | DNI_cliente | Cantidad_compras_realizadas | Importe_total |
+// (b) Por cada compra, emitir una orden de descuento (mostrar por pantalla), la
+//     cual se determina teniendo en cuenta el importe total de la compra. La
+//     información de los descuentos se encuentra almacenada en una lista
+//     doblemente enlazada, ordenada por importe_mínimo:
+//     | Importe_mínimo | Importe_máximo | Descuento (0,01 a 0,99) | Cupo_disponible | Rubro_descuento (1..9) |
+//
+// Consideraciones para aplicar el descuento:
+// 1. Para determinar el porcentaje de descuento debe buscarse en la lista el
+//    primer rango que incluya el importe total de la compra. En caso de que no
+//    exista ninguno, no le corresponde descuento. Por ejemplo, si el importe
+//    total es 10.000:
+//    (*) Nodo 1: importe_mínimo = 1000 e importe_máximo = 5000, no corresponde.
+//    (*) Nodo 2: importe_mínimo = 5001 e importe_máximo = 15000. Lo contiene,
+//        por lo que entonces se toma el descuento indicado en este nodo.
+// 2. En caso de encontrar el rango, solo se debe generar un cupón de descuento
+//    si se cuenta con cupos disponibles.
+// 3. Se deberá mostrar el porcentaje de descuento y el rubro al que corresponde
+//    el mismo.
+
+Acción ListasM5(prim, ult: puntero a Descuentos) ES
+
+Ambiente
+
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
+    
+    Compras = Registro
+        FechaCompra: Fecha
+        DNI: N(8)
+        CantArt: N(2)
+        Importe: N(3)
+    Fin Registro
+    
+    ARCH_COM: archivo de Compras ordenado por FechaCompra
+    REG_COM: Compras
+
+    Clientes = Registro
+        DNI: N(8)
+        NomAp: AN(100)
+        FechaAdhesión: Fecha
+        Categoría: AN(50)
+    Fin Registro
+    
+    ARCH_CLI: archivo de Clientes indexado por DNI
+    REG_CLI: Clientes
+
+    Descuentos = Registro
+        imp_min: N(5)
+        imp_max: N(5)
+        desc: (0,01..0,99)
+        cupo_disp: ("S", "N")
+        rubro_desc: (1..9)
+        ant: puntero a Descuentos
+        prox: puntero a Descuentos
+    Fin Registro
+    
+    q: puntero a Descuentos
+
+    Salida = Registro
+        dni: N(8)
+        cant_comp: N(2)
+        imp_tot: N(5)
+        prox: puntero a Salidas
+    Fin Registro
+
+    prim_sal, aux_sal, r: puntero a Salida
+    monto_desc, total: entero
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        aux_sal := NIL
+    Fin Procedimiento
+    
+    Procedimiento CargarSalida(dni, importe: entero) ES
+    Ambiente
+        t: puntero a Salida
+    Proceso
+        Nuevo(p)
+        *p.dni := dni
+        *p.cant_comp := 1
+        *p.imp_tot := importe
+        t := prim_sal
+        
+        Mientras t <> NIL y *t.dni < *p.dni Hacer
+            aux_sal := t
+            t := *t.prox
+        Fin Mientras
+        
+        Si aux_sal = NIL Entonces
+            *p.prox := prim_sal
+            prim_sal := p
+        Contrario
+            *aux_sal.prox := p
+            *p.prox := t
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH_COM)
+    ABRIR E/ (ARCH_CLI)
+    
+    LEER(ARCH_COM, REG_COM)
+    Inicializar()
+    
+    Mientras NFDA(ARCH_COM) Hacer
+        // Verifico si el cliente pertenece al programa de fidelización
+        // de clientes o no.
+        //
+        // Si no pertenece, debo registrarlo en la lista de salida o
+        // actualizar su información en caso de que ya esté registrado.
+        REG_CLI.DNI := REG_COM.DNI
+        LEER(ARCH_CLI, REG_CLI)
+        
+        Si NO existe Entonces
+            r := prim_sal
+            
+            Mientras r <> NIL y *r.dni <> REG_CLI.DNI Hacer
+                r := *r.prox
+            Fin Mientras
+            
+            Si r <> NIL Entonces
+                // Se encontró al cliente.
+                // Actualizo su información.
+                *r.cant_comp := *r.cant_comp + 1
+                *r.imp_tot := *r.imp_tot + REG_COM.Importe
+            Contrario
+                // No se encontró al cliente. Debo incorporarlo
+                // a la lista de salida.
+                CargarSalida(REG_COM.DNI, REG_COM.Importe)
+            Fin Si
+        Contrario
+            Escribir("El cliente con DNI" REG_CLI.DNI "está adherido al programa de fidelización.")
+        Fin Si
+        
+        // Genero el cupón de descuento, si corresponde.
+        q := prim
+        
+        Mientras q <> NIL y *q.imp_max < REG_COM.Importe Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si q <> NIL Entonces
+            Si *q.cupo_disp = "S" Entonces
+                monto_desc := *q.desc * REG_COM.Importe
+                total := REG_COM.Importe - monto_desc
+                Escribir("Importe total de la compra: " REG_COM.Importe)
+                Escribir("Porcentaje de descuento: " *q.desc "%")
+                Escribir("Rubro del descuento: " *q.rubro_desc)
+                Escribir("")
+                Escribir("Monto a descontar: " monto_desc)
+                Escribir("Total a pagar: " total)
+            Contrario
+                Escribir("No hay cupos de descuento disponibles para el rango en el que se encuentra el importe facturado.")
+            Fin Si
+        Contrario
+            // Esto no debería pasar... pero bueno.
+            Escribir("ERROR. No se pudo encontrar un rango en el que se encuentre el importe facturado.")
+        Fin Si
+        
+        LEER(ARCH_COM, REG_COM)
+    Fin Mientras
+
+    CERRAR(ARCH_COM)
+    CERRAR(ARCH_CLI)
+
+Fin Acción

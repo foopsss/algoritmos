@@ -1,0 +1,134 @@
+// Consigna: una clínica dispone de un sistema informático para monitorear la
+// presión arterial de sus pacientes de forma automatizada, rápida y segura. La
+// información se almacena en una lista simplemente encadenada con los siguientes
+// datos:
+//
+// | DNI del paciente | Nombre y apellido | Nro. de cama | Nro. de habitación | Pa_sistólica | Pa_diastólica |
+//
+// Los campos Pa_sistólica y Pa_diastólica contienen cada uno un arreglo de 4
+// mediciones. La presión arterial se considera normal cuando la presión arterial
+// sistólica está por debajo de 120 la mayoría de las veces, y la presión arteral
+// diastólica está por debajo de 80 la mayor parte del tiempo (escrito como 120/80
+// mm Hg).
+//
+// Se pide:
+// (a) Escribir un algoritmo que permita eliminar de la lista a los pacientes
+//     cuyos valores promedio de presión arterial (sistólica y diastólica) se
+//     encuentren dentro de valores normales. Para determinar la presión arterial
+//     promedio se debe desarrollar y utilizar una función recursiva.
+
+// NOTA: creo que la consigna se puede interpretar de dos formas:
+// (1) Hay que controlar si el promedio de las 4 medidas de presión arterial
+//     es menor a los valores indicados.
+// (2) Hay que controlar si cualquiera de las 4 medidas de presión arterial
+//     es superior a los límites aceptables.
+//
+// Por las dudas, incluyo ambas formas.
+
+INTERPRETACIÓN 1
+----------------
+
+Acción RecursividadM5(prim: puntero a Paciente) ES
+
+Ambiente
+
+    Paciente = Registro
+        dni: N(8)
+        nomap: AN(100)
+        nro_cama: N(2)
+        nro_hab: N(2)
+        pa_sist: arreglo de [1..4] de entero
+        pa_diast: arreglo de [1..4] de entero
+        prox: puntero a Paciente
+    Fin Registro
+    
+    q, aux, borrar: puntero a Paciente
+
+    Función PromedioPresión(arr: arreglo de [1..4] de entero, ind: entero, suma_med: entero): entero ES
+        Si ind < 5 Hacer
+            PromedioPresión := PromedioPresión(arr, ind + 1, suma_med + arr[ind])
+        Contrario
+            PromedioPresión := suma_med DIV (ind - 1)
+        Fin Si
+    Fin Función
+
+Proceso
+
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        Si PromedioPresión(*q.pa_sist, 1, 0) < 120 y PromedioPresión(*q.pa_diast, 1, 0) < 80 Entonces
+            Si aux = NIL Entonces
+                prim := *q.prox
+            Contrario
+                *aux.prox := *q.prox
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+            Disponer(borrar)
+        Contrario
+            aux := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción
+
+INTERPRETACIÓN 2
+----------------
+
+Acción RecursividadM5(prim: puntero a Paciente) ES
+
+Ambiente
+
+    Paciente = Registro
+        dni: N(8)
+        nomap: AN(100)
+        nro_cama: N(2)
+        nro_hab: N(2)
+        pa_sist: arreglo de [1..4] de entero
+        pa_diast: arreglo de [1..4] de entero
+        prox: puntero a Paciente
+    Fin Registro
+    
+    q, aux, borrar: puntero a Paciente
+
+    Función PresiónNormal(arr: arreglo de [1..4] de entero, ind: entero, límite: entero): lógico ES
+        Si ind = 4 Entonces
+            Si arr[ind] < límite Entonces
+                PresiónNormal := V
+            Contrario
+                PresiónNormal := F
+            Fin Si
+        Contrario
+            Si arr[ind] < límite Entonces
+                PresiónNormal := PresiónNormal(arr, ind + 1, límite)
+            Contrario
+                PresiónNormal := F
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        Si PresiónNormal(*q.pa_sist, 1, 120) y PresiónNormal(*q.pa_diast, 1, 80) Entonces
+            Si aux = NIL Entonces
+                prim := *q.prox
+            Contrario
+                *aux.prox := *q.prox
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+            Disponer(borrar)
+        Contrario
+            aux := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción
