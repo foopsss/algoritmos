@@ -1,0 +1,154 @@
+// Consigna: dada una lista simple que contiene los 32 equipos clasificados para
+// el Mundial, los datos que provee son países, grupo, puntos, tarjetas amarillas,
+// tarjetas rojas (datos que vienen vacíos en todos los nodos) y un arreglo con
+// la edad de los 26 jugadores.
+//
+// Se solicita un programa que asista en la realización del sorteo de grupos,
+// agregando el dato del grupo asignado a la lista de entrada, la cual debe quedar
+// ordenada (se debe reordenar sobre la misma lista). El usuario del programa
+// ingresa el grupo y el nombre del país sorteado.
+//
+// Al final del sorteo se debe mostrar el equipo con el menor y el mayor promedio
+// de edad. Para esto se debe calcular el promedio de cada equipo usando una
+// función recursiva.
+
+Acción RecursividadM6(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        país: AN(100)
+        grupo: N(1)
+        puntos: N(2)
+        tar_am: N(2)
+        tar_roj: N(2)
+        edades: arreglo de [1..26] de entero
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, aux: puntero a Nodo
+
+    grupo_país, promedio, mayor_prom, menor_prom: entero
+    elección, nombre_país, país_mayor_prom, país_menor_prom: alfanumérico
+    ordenado: lógico
+
+    Procedimiento Inicializar() ES
+        mayor_prom := HV
+        menor_prom := LV
+    Fin Procedimiento
+
+    Procedimiento ObtenerElecciónUsuario() ES
+        Escribir("¿Desea continuar con el sorteo? [S/N]: ")
+        Leer(elección)
+    Fin Procedimiento
+
+    Función ObtenerPromedio(arr: arreglo de [1..26] de entero, num_jug: entero, suma_edades: entero): entero ES
+        Si num_jug < 27 Entonces
+            ObtenerPromedio := ObtenerPromedio(arr, num_jug + 1, suma_edades + arr[num_jug])
+        Contrario
+            ObtenerPromedio := suma_edades DIV (num_jug - 1)
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Inicializar()
+
+    // Primero, corresponde realizar el sorteo.
+    ObtenerElecciónUsuario()
+
+    Mientras elección = "S" Hacer
+        Escribir("Inserte un nombre de país: ")
+        Leer(nombre_país)
+        
+        Escribir("Inserte el grupo en el que será asignado el país: ")
+        Leer(grupo_país)
+        
+        q := prim
+        
+        Mientras q <> NIL y *q.país <> nombre_país Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si q <> NIL Entonces
+            *q.grupo := grupo_país
+        Contrario
+            Escribir("ERROR. No se encontró el país buscado.")
+        Fin Si
+        
+        ObtenerElecciónUsuario()
+    Fin Mientras
+
+    // Luego, corresponde ordenar la lista sobre sí misma.
+    ordenado := F
+
+    Mientras NO ordenado Hacer
+        ordenado := V
+        q := prim
+        
+        Mientras *q.prox <> NIL y *q.grupo < *(*q.prox).grupo Hacer
+            aux := q
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.prox <> NIL Entonces
+            // Hay dos elementos de la lista que están desordenados.
+            ordenado := F
+            
+            Si q = prim Entonces
+                // Estoy reordenando el primer nodo.
+                // Hago que prim apunte al nuevo primer elemento.
+                prim := *q.prox
+                
+                // Hago que el siguiente elemento de mi antiguo
+                // primer elemento sea el elemento posterior al
+                // nuevo prim. Es decir, mi antiguo prim apunta
+                // ahora al elemento que se encuentra en la tercer
+                // posición.
+                *q.prox := *(*q.prox).prox
+                
+                // Finalmente, hago que el nuevo prim apunte al
+                // antiguo prim, que es mi nuevo segundo elemento.
+                *prim.prox := q
+            Contrario
+                // Estoy reordenando un nodo intermedio.
+                // Hago que el resguardo apunte al nodo siguiente
+                // al cual estoy parado.
+                *aux.prox := *q.prox
+                
+                // Hago que el nodo en el cual estoy parado apunte
+                // al elemento que sucede al siguiente elemento de
+                // mi nodo actual.
+                *q.prox := *(*q.prox).prox
+                
+                // Hago que el nodo que antes era el siguiente
+                // ahora apunte al nodo en el cual estoy parado,
+                // cuya posición termino de cambiar acá.
+                *(*aux.prox).prox := q
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    // Por último, corresponde obtener los promedios de edad.
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        promedio := ObtenerPromedio(*q.edades, 1, 0)
+        
+        Si promedio > mayor_prom Entonces
+            mayor_prom := promedio
+            país_mayor_prom := *q.país
+        Contrario
+            Si promedio < menor_prom Entonces
+                menor_prom := promedio
+                país_menor_prom := *q.país
+            Fin Si
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+    Escribir("El equipo con el mayor promedio de edad es" país_mayor_prom "con un promedio de edad de" mayor_prom "años.")
+    Escribir("El equipo con el menor promedio de edad es" país_menor_prom "con un promedio de edad de" menor_prom "años.")
+
+Fin Acción

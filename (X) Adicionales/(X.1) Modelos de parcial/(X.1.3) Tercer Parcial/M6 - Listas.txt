@@ -1,0 +1,309 @@
+// Consigna: dada la lista de equipos generada anteriormente (en el ejercicio
+// de recursividad), que se encuentra ordenada por grupos, y un archivo con
+// información de los partidos que tiene el siguiente formato:
+//
+// PARTIDOS (ordenado por ID_Partido, Equipo_local y Equipo_Visitante)
+// | ID_Partido | Equipo_local | Equipo_Visitante |
+// (Un mismo equipo juega varios partidos, independientemente de que sea local
+// o visitante).
+//
+// También se tiene un archivo indexado donde se tienen los resultados de los
+// mismos, así como las amonestaciones colocadas:
+//
+// RESULTADOS (indexado por ID_Partido)
+// | ID_Partido [N(5)] | goles_local [N(2)] | goles_visitante [N(2)] | rojas [N(2)] | amarillas[N(2)] |
+//
+// Se pide:
+// (a) Generar una lista doblemente enlazada con los equipos que pasarán a
+//     la siguiente fase del Mundial 2022, ordenada por cantidad de puntos
+//     obtenidos.
+//     (*) Suma 3 puntos el equipo ganador, y en caso de empate cada equipo
+//         suma 1 punto. Diferencia de gol es la resta entre los goles a
+//         favor y los goles en contra.
+//     (*) Pasan a la siguiente fase los equipos que:
+//         - Sumen más de 4 puntos.
+//         - Sumen 4 puntos y tengan una diferencia de gol superior a 2.
+//           Dicha diferencia de gol ha de ser positiva.
+//         - Sumen 3 puntos, y algún equipo en el grupo tenga 9 puntos.
+// (b) Mostrar por pantalla:
+//     (b.1) Los nombres de los equipos que pasaron a la siguiente fase.
+//     (b.2) El equipo que tiene la mayor cantidad de tarjetas rojas.
+
+// Consideraciones:
+// (*) La consigna la transcribí casi totalmente como estaba en la hoja. Lo
+//     único que hice fue modificar los nombres de algunos campos del indexado
+//     porque eran realmente largos, y la redacción de las cosas adicionales
+//     que se piden luego de crear la lista de salida, para que sea más claro.
+//     (*) Dicho eso, a fin de poder hacer el ejercicio, definí para el indexado
+//     dos campos de tarjetas rojas y dos campos de tarjetas amarillas, una para
+//     cada equipo. De lo contrario, siento que no se puede hacerlo realmente.
+// (*) En la lista de salida solo almaceno el nombre del país y la cantidad
+//     de puntos que cosechó durante la fase de grupos. Creo que más datos
+//     no hacen falta porque los goles hechos y recibidos los voy a almacenar
+//     en un arreglo y las tarjetas y puntos en la lista de entrada.
+
+Acción ListasM6(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        país: AN(100)
+        grupo: N(1)
+        puntos: N(2)
+        tar_am: N(2)
+        tar_roj: N(2)
+        edades: arreglo de [1..26] de entero
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, resg_pos: puntero a Nodo
+
+    Partidos = Registro
+        ID: AN(5)
+        Local: AN(100)
+        Visitante: AN(100)
+    Fin Registro
+    
+    PART: Partidos
+    ARCH_PART: archivo de Partidos ordenado por ID, Local y Visitante
+
+    Resultados = Registro
+        ID: AN(5)
+        gol_loc: N(2)
+        gol_vis: N(2)
+        roj_loc: N(2)
+        roj_vis: N(2)
+        am_loc: N(2)
+        am_vis: N(2)
+    Fin Registro
+    
+    RES: Resultados
+    ARCH_RES: archivo de Resultados indexado por ID
+
+    Salida = Registro
+        país: AN(100)
+        puntos: N(2)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+    
+    prim_sal, ult_sal, r: puntero a Salida
+
+    GolesEquipo = Registro
+        favor: N(2)
+        contra: N(2)
+    Fin Registro
+
+    goles: arreglo de [1..32] de GolesEquipo
+
+    i, puntos_loc, puntos_vis, may_tar_roj: entero
+    equipo_nueve_puntos: lógico
+    eq_may_tar_roj: alfanumérico
+
+    Procedimiento Inicializar() ES
+        Para i := 1 hasta 32 Hacer
+            goles[i].favor := 0
+            goles[i].contra := 0
+        Fin Para
+    
+        prim_sal := NIL
+        ult_sal := NIL
+        may_tar_roj := LV
+    Fin Procedimiento
+
+    Procedimiento ContarGoles(equipo: alfanumérico, gol_fav: entero, gol_con: entero) ES
+        q := prim
+        i := 1
+        
+        Mientras q <> NIL y *q.país <> equipo Hacer
+            i := i + 1
+            q := *q.prox
+        Fin Mientras
+        
+        Si q = NIL Entonces
+            Escribir("ERROR. No se encontró el país buscado.")
+        Contrario
+            goles[i].favor := goles[i].favor + gol_fav
+            goles[i].contra := goles[i].contra + gol_con
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento ActualizarEquipo(equipo: alfanumérico, rojas: entero, amarillas: entero, puntos: entero) ES
+        q := prim
+        
+        Mientras q <> NIL y *q.país <> equipo Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si q = NIL Entonces
+            Escribir("ERROR. No se pudo encontrar el equipo buscado.")
+        Contrario
+            Si rojas <> 0 Entonces
+                *q.tar_roj := *q.tar_roj + rojas
+            Fin Si
+            
+            Si amarillas <> 0 Entonces
+                *q.tar_am := *q.tar_am + amarillas
+            Fin Si
+            
+            Si puntos <> 0 Entonces
+                *q.puntos := *q.puntos + puntos
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento AñadirSalida(ent: puntero a Nodo) ES
+    Ambiente
+        p: puntero a Salida
+    Proceso
+        Nuevo(p)
+        *p.país := *ent.país
+        *p.puntos := *ent.puntos
+        r := prim_sal
+        
+        Si r = NIL Entonces
+            *p.ant := NIL
+            *p.prox := NIL
+            prim_sal := p
+            ult_sal := p
+        Contrario
+            Mientras r <> NIL y *r.puntos < *p.puntos Hacer
+                r := *r.prox
+            Fin Mientras
+            
+            Si r = prim_sal Entonces
+                *p.ant := NIL
+                *p.prox := r
+                *r.ant := p
+                prim_sal := p
+            Contrario
+                Si r = ult_sal Entonces
+                    *p.ant := r
+                    *p.prox := *r.prox
+                    *r.prox := p
+                    ult_sal := p
+                Contrario
+                    *p.ant := *r.ant
+                    *p.prox := r
+                    *(*r.ant).prox := p
+                    *r.ant := p
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH_PART)
+    ABRIR E/ (ARCH_RES)
+
+    LEER(ARCH_PART, PART)
+    Inicializar()
+
+    Mientras NFDA(ARCH_PART) Hacer
+        RES.ID := PART.ID
+        LEER(ARCH_RES, RES)
+        
+        Si NO existe Entonces
+            // Esto no debería pasar... pero bueno.
+            Escribir("ERROR. No se encuentra la información correspondiente al partido con ID" RES.ID ".")
+        Contrario
+            // Registro los goles hechos y recibidos
+            // por cada equipo.
+            ContarGoles(PART.Local, RES.gol_loc, RES.gol_vis)
+            ContarGoles(PART.Visitante, RES.gol_vis, RES.gol_loc)
+            
+            // Determino el equipo ganador del partido,
+            // o si hubo un empate.
+            Según RES.gol_loc Hacer
+                > RES.gol_vis: puntos_loc := 3
+                               puntos_vis := 0
+                = RES.gol_vis: puntos_loc := 1
+                               puntos_vis := 1
+                < RES.gol_vis: puntos_vis := 3
+                               puntos_loc := 0
+            Fin Según
+            
+            // Actualizo la lista de entrada con la
+            // cantidad de puntos y tarjetas de cada
+            // equipo por partido.
+            ActualizarEquipo(PART.Local, RES.roj_loc, RES.am_loc, puntos_loc)
+            ActualizarEquipo(PART.Visitante, RES.roj_vis, RES.am_vis, puntos_vis)
+        Fin Si
+        
+        LEER(ARCH_PART, PART)
+    Fin Mientras
+
+    // Grabo en la salida los equipos que pasarán
+    // a la siguiente fase del Mundial. Por cada
+    // grupo voy a hacer dos pasadas.
+    q := prim
+    
+    // Utilizo esta variable para relacionar el
+    // país que estoy tratando en la lista de
+    // entrada con su posición en el arreglo que
+    // registra los goles hechos y recibidos.
+    i := 1
+    
+    Mientras q <> NIL Hacer
+        // La primer pasada es para verificar si
+        // existe algún equipo con nueve puntos.
+        resg_pos := q
+        equipo_nueve_puntos := F
+        
+        Mientras *q.grupo = *resg_pos.grupo Hacer
+            Si *q.puntos = 9 Entonces
+                equipo_nueve_puntos := V
+            Fin Si
+            q := *q.prox
+        Fin Mientras
+        
+        // La segunda pasada es para añadir los
+        // equipos del grupo que cumplan las
+        // condiciones a la salida.
+        q := resg_pos
+        
+        Mientras *q.grupo = *resg_pos.grupo Hacer
+            // No se me ocurre una mejor manera de hacer esto.
+            Si *q.puntos > 4 Entonces 
+                AñadirSalida(q)
+            Fin Si
+            
+            Si *q.puntos = 4 y (goles[i].favor - goles[i].contra) > 2 Entonces
+                AñadirSalida(q)
+            Fin Si
+            
+            Si *q.puntos = 3 y equipo_nueve_puntos Entonces
+                AñadirSalida(q)
+            Fin Si
+            
+            // Registro el equipo con la mayor cantidad
+            // de rojas.
+            Si *q.tar_roj > may_tar_roj Entonces
+                may_tar_roj := *q.tar_roj
+                eq_may_tar_roj := *q.país
+            Fin Si
+            
+            i := i + 1
+            q := *q.prox
+        Fin Mientras
+    Fin Mientras
+
+    // Muestro los nombres de los países que
+    // pasaron a la siguiente fase. También
+    // el equipo con la mayor cantidad de
+    // rojas.
+    Escribir("Países que pasaron a la siguiente fase: ")
+    r := prim_sal
+    
+    Mientras r <> NIL Hacer
+        Escribir(*r.país)
+        r := *r.prox
+    Fin Mientras
+
+    Escribir("El equipo con la mayor cantidad de tarjetas rojas es" eq_may_tar_roj ".")
+
+    CERRAR(ARCH_PART)
+    CERRAR(ARCH_RES)
+
+Fin Acción
