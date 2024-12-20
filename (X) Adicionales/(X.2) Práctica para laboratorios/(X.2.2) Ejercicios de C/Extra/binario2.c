@@ -1,6 +1,6 @@
 // Este algoritmo presenta una función recursiva que, dado un código binario,
 // permite calcular si se cumple el patrón de que el número esté compuesto por
-// una cantidad de 0s que sea múltiplo de 3.
+// una cantidad de 0 que sea múltiplo de 3.
 
 #include <stdio.h>
 #include <stdbool.h>
