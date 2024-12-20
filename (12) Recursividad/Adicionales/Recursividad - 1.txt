@@ -1,0 +1,84 @@
+// Consigna: dada una lista simple donde cada nodo contiene un mensaje encriptado
+// en binario, se quiere identificar aquellos nodos con mensajes que contienen
+// error. Hay un error cuando el mensaje contiene una cantidad impar de 1.
+//
+// |---------|     |---------|     |---------|
+// | 1110010 | --> | 1111010 | --> | 1000011 | 
+// |---------|     |---------|     |---------|
+//  (No tiene       (Contiene       (Contiene
+//   error)          error)          error)
+//
+// Se pide:
+// (a) Implementar un algoritmo que devuelva en otra lista simple aquellos mensajes
+//     con error.
+// (b) Realizar una función recursiva para la detección de nodos con mensajes
+//     que tengan una cantidad impar de 1. La misma deberá recibir un número
+//     binario y devolver si contiene error o no.
+
+Acción Recursividad1(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        msg: N(10)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q: puntero a Nodo
+
+    Salida = Registro
+        msg: N(10)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    prim_sal, aux, p: puntero a Salida
+
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_sal := NIL
+        aux := NIL
+    Fin Procedimiento
+
+    Función esCorrecto(mensaje: entero, cant_uno: entero): lógico ES
+        Si mensaje MOD 10 = mensaje Entonces
+            Si mensaje = 1 Entonces
+                cant_uno := cant_uno + 1
+            Fin Si
+            
+            Si cant_uno MOD 2 <> 0 Entonces
+                esCorrecto := F
+            Contrario
+                esCorrecto := V
+            Fin Si
+        Contrario
+            Si mensaje MOD 10 = 1 Entonces
+                esCorrecto(mensaje DIV 10, cant_uno + 1)
+            Contrario
+                esCorrecto(mensaje DIV 10, cant_uno)
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    Inicializar()
+    
+    Mientras q <> NIL Hacer
+        Si NO esCorrecto(*q.msg, 0) Entonces
+            Nuevo(p)
+            *p.msg := *q.msg
+            *p.prox := NIL
+            
+            Si prim_sal = NIL Entonces
+                prim_sal := p
+            Contrario
+                *aux.prox := p
+            Fin Si
+            
+            aux := p
+        Fin Si
+        
+        q := *q.prox
+    Fin Mientras
+
+Fin Acción
