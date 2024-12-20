@@ -1,0 +1,47 @@
+PRIMER ÁRBOL
+------------
+Expresión: ( 5 + 7 ) / 8 – ( 6 * 7 ) ** 2
+En-orden (IRD): 5, +, 7, /, 8, -, 6, *, 7, **, 2
+Pre-orden (RID): -, /, +, 5, 7, 8, **, *, 6, 7, 2
+Post-orden (IDR): 5, 7, +, 8, /, 6, 7, *, 2, **, -
+Resultado numérico del recorrido: -1762,5
+
+                 -
+
+          /              **
+
+       +     8        *      2
+
+     5   7          6   7
+
+SEGUNDO ÁRBOL
+-------------
+Expresión: 3 – 6 + 6 * ( 8 / 3 )
+En-orden (IRD): 3, -, 6, +, 6, *, 8, /, 3
+Pre-orden (RID): *, +, -, 3, 6, 6, /, 8, 3
+Post-orden (IDR): 3, 6, -, 6, +, 8, 3, /, *
+Resultado numérico del recorrido: 13
+
+                 *   
+
+          +             /
+
+       -     6       8     3
+
+     3   6
+
+TERCER ÁRBOL
+------------
+Expresión: 4 / ( 8 – 6 * ( 8 + 3 ) )
+En-orden (IRD): 4, /, 8, -, 6, *, 8, +, 3
+Pre-orden (RID): /, 4, *, -, 8, 6, +, 8, 3
+Post-orden (IDR): 4, 8, 6, -, 8, 3, +, *, /
+Resultado numérico del recorrido: -1,333333333
+
+                    /
+
+      4                          *
+
+                          -             +
+
+                        8   6         8   3

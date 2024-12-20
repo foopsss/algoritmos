@@ -1,0 +1,9 @@
+Expresión: [ ( x - y ) * z ] / ( m + n ** p)
+
+                        /
+
+             *                    +
+
+        -        z            m        **
+
+     x     y                        n      p
