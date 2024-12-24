@@ -8,7 +8,7 @@ Ambiente
             Manzana: N(3)
             NroVivienda: N(4)
         Fin Registro
-        Condición: ("Muy buena", "Buena", "Mala")
+        Condición: {"Muy buena", "Buena", "Mala"}
         CantidadHabitantes: N(2)
     Fin Registro
 

@@ -43,7 +43,7 @@ Ambiente
     Usuarios = Registro
         IDUsuario: N(5)
         DNI: N(8)
-        Sexo: ("M", "F")
+        Sexo: {"M", "F"}
         NomAp: AN(100)
         Domicilio: AN(100)
         Localidad: AN(100)

@@ -31,7 +31,7 @@ Ambiente
     Proyectos = Registro
         Código: N(10)
         Nombre: AN(60)
-        Tipo: ("D", "W")
+        Tipo: {"D", "W"}
         CantErrores: N(3)
     Fin Registro
     
@@ -40,7 +40,7 @@ Ambiente
 
     Entrada = Registro
         descripción: AN(250)
-        estado: ("N", "O", "R")
+        estado: {"N", "O", "R"}
         prox: puntero a Entrada
     Fin Registro
 

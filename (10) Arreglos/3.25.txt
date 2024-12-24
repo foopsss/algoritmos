@@ -14,7 +14,7 @@ Ambiente
 
     Compras = Registro
         NroFactura: N(5)
-        Proveedor: ("A", "B", "C")
+        Proveedor: {"A", "B", "C"}
         FechaCompra: Fecha
         NroPlanta: (1..4)
         Importe: N(3)

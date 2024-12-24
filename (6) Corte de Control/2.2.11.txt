@@ -10,8 +10,8 @@ Ambiente
 
     Alumnos = Registro
         Clave = Registro
-            Sexo: ("M", "F")
-            Carrera: ("ISI", "IEM", "IQ", "LAR")
+            Sexo: {"M", "F"}
+            Carrera: {"ISI", "IEM", "IQ", "LAR"}
             Legajo: N(5)
         Fin Registro
         FechaIngreso: Fecha

@@ -62,8 +62,8 @@ Ambiente
         CodPok: (1..151)
         PuntosExp: N(5)
         FechaCaptura: Fecha
-        EstadoPokemon: ("E", "I", "D")
-        EstadoUsuario: ("A", "S", "B")
+        EstadoPokemon: {"E", "I", "D"}
+        EstadoUsuario: {"A", "S", "B"}
     Fin Registro
 
     ARCH_CAP: archivo de Capturas ordenado por Clave_CAP y CodPok

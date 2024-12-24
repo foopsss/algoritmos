@@ -13,7 +13,7 @@ Ambiente
         FechaUltLectura: Fecha
         CantLecturas: N(3)
         PromLecturas: N(3)
-        TipoConsumidor: ("A", "B", "C")
+        TipoConsumidor: {"A", "B", "C"}
     Fin Registro
 
     ARCH, ARCH3: archivo de Cliente ordenado por IDCasa

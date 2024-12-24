@@ -50,8 +50,8 @@ Ambiente
         IDProducto: N(5)
         Nombre: AN(100)
         Descripción: AN(100)
-        Categoría: ("C", "R", "G", "S")
-        NuevoLanzamiento: ("SI", "NO")
+        Categoría: {"C", "R", "G", "S"}
+        NuevoLanzamiento: {"SI", "NO"}
         PorcDesc: (0..1)
         Stock: N(2)
     Fin Registro
@@ -63,7 +63,7 @@ Ambiente
         IDProducto: N(5)
         IDCliente: N(5)
         Cantidad: N(2)
-        es_personalizado: ("SI", "NO")
+        es_personalizado: {"SI", "NO"}
         NroJugador: (1..26)
         NombreJugador: AN(100)
         Talle: AN(3)

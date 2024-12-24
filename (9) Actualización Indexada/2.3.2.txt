@@ -11,7 +11,7 @@ Ambiente
     Empleados = Registro
         Clave = Registro
             NroSucursal: N(5)
-            Categoría: ("A", "B", "C")
+            Categoría: {"A", "B", "C"}
         Fin Registro
         Nombre: AN(100)
         CodCurso: N(5)

@@ -33,7 +33,7 @@ Ambiente
 
     Libros = Registro
         IDLibro: N(5)
-        Tema: ("MB", "ISI", "IEM", "IQ")
+        Tema: {"MB", "ISI", "IEM", "IQ"}
         Título: AN(100)
         CantActual: N(2)
     Fin Registro
@@ -44,7 +44,7 @@ Ambiente
     Movimientos = Registro
         IDLibro: N(5)
         CodMov: AN(1)
-        Tema: ("MB", "ISI", "IEM", "IQ")
+        Tema: {"MB", "ISI", "IEM", "IQ"}
         Título: AN(100)
     Fin Registro
 

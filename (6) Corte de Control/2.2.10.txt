@@ -12,10 +12,10 @@ Ambiente
     // Formato tomado del 2.2.1 y modificado ligeramente.
     Alumnos = Registro
         NomAp: AN(50)
-        Sexo: ("M", "F")
+        Sexo: {"M", "F"}
         DNI: N(8)
         Legajo: N(5)
-        Carrera: ("ISI", "IEM", "IQ")
+        Carrera: {"ISI", "IEM", "IQ"}
         FechaNacimiento: Fecha
         FechaIngreso: Fecha
     Fin Registro

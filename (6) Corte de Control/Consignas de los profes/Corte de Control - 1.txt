@@ -38,7 +38,7 @@ Ambiente
 
     Stock = Registro
         Clave = Registro
-            Categoría: ("I", "II", "III")
+            Categoría: {"I", "II", "III"}
             NroLote: N(5)
             IDMedicamento: N(3)
         Fin Registro

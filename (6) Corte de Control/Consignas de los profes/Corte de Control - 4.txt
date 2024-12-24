@@ -27,12 +27,12 @@ Ambiente
 
     Proyectos = Registro
         Clave = Registro
-            Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
+            Sucursal: {"Resistencia", "Formosa", "Corrientes", "Posadas"}
             Área: AN(100)
             IDProyecto: N(5)
         Fin Registro
         CantidadTrabajadores: N(2)
-        Estado: ("N", "I", "P", "F")
+        Estado: {"N", "I", "P", "F"}
         PresupuestoActual: N(4)
         PresupuestoInicial: N(4)
     Fin Registro
@@ -41,7 +41,7 @@ Ambiente
     REG: Proyectos
 
     Presupuesto = Registro
-        Sucursal: ("Resistencia", "Formosa", "Corrientes", "Posadas")
+        Sucursal: {"Resistencia", "Formosa", "Corrientes", "Posadas"}
         Área: AN(100)
         CantidadProyectos: N(2)
         TotalTrabajadores: N(3)

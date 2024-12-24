@@ -21,10 +21,10 @@ Ambiente
     Jubilar = Registro
         Clave = Registro
             Regional: AN(50)
-            Carrera: ("ISI", "IQ", "IEM", "LAR")
+            Carrera: {"ISI", "IQ", "IEM", "LAR"}
             Legajo: N(5)
         Fin Registro
-        Sexo: ("M", "F")
+        Sexo: {"M", "F"}
         Nombre: AN(100)
     Fin Registro
 

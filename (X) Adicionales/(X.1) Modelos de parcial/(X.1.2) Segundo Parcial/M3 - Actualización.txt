@@ -45,7 +45,7 @@ Ambiente
     Álbum = Registro
         CodFigurita: N(5)
         Cantidad: N(2)
-        PermitirDuplicados: ("SI", "NO")
+        PermitirDuplicados: {"SI", "NO"}
     Fin Registro
 
     ARCH_MAE, ARCH_SAL: archivo de Álbum ordenado por CodFigurita

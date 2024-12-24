@@ -70,7 +70,7 @@ Ambiente
         imp_min: N(5)
         imp_max: N(5)
         desc: (0,01..0,99)
-        cupo_disp: ("S", "N")
+        cupo_disp: {"S", "N"}
         rubro_desc: (1..9)
         ant: puntero a Descuentos
         prox: puntero a Descuentos

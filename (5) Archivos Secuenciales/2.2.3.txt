@@ -6,7 +6,7 @@ Ambiente
         NroSocio: N(5)
         NroTeléfono: N(12)
         NomAp: AN(50)
-        Carrera: ("ISI", "IEM", "IQ", "LAR")
+        Carrera: {"ISI", "IEM", "IQ", "LAR"}
         Domicilio: AN(50)
         UnidadesPrestadas: N(2)
     Fin Registro

@@ -13,7 +13,7 @@ Ambiente
     Facturas = Registro
         NroFactura: N(5)
         NroUsuario: N(5)
-        Zona: ("A", "B", "C", "D")
+        Zona: {"A", "B", "C", "D"}
         FechaConsumo: Fecha
         Consumo: N(2)
     Fin Registro

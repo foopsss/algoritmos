@@ -34,7 +34,7 @@ Ambiente
         CodUsuario: (1..10)
         CodFigurita: N(5)
         Cantidad: N(2)
-        Tipo: ("C", "D", "V")
+        Tipo: {"C", "D", "V"}
     Fin Registro
 
     ARCH_AL: archivo de Álbum ordenado por CodUsuario

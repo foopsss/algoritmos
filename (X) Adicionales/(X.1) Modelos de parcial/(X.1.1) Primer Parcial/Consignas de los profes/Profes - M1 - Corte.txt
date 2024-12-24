@@ -21,7 +21,7 @@ Ambiente
     Jugadores = Registro
         Clave = Registro
             Selección: AN(50)
-            Posición: ("AR", "DF", "ME", "DE", "CT")
+            Posición: {"AR", "DF", "ME", "DE", "CT"}
             Dorsal: N(2)
         Fin Registro
         NomAp: AN(100)

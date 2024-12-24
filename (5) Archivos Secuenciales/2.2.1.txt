@@ -10,12 +10,12 @@ Ambiente
 
     Alumnos = Registro
         NomAp: AN(50)
-        Carrera: ("ISI", "IEM", "IQ")
+        Carrera: {"ISI", "IEM", "IQ"}
         Legajo: N(5)
         FechaNacimiento: Fecha
         FechaIngreso: Fecha
         DNI: N(8)
-        Sexo: ("M", "F")
+        Sexo: {"M", "F"}
         FechaUltExAprob: Fecha
         Nota: (1..100)
     Fin Registro

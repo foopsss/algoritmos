@@ -11,12 +11,12 @@ Ambiente
     Aspirantes = Registro
         DNI: N(8)
         NomAp: AN(100)
-        Carrera: ("ISI", "IEM", "IQ", "LAR")
+        Carrera: {"ISI", "IEM", "IQ", "LAR"}
         FacultadNacional: AN(100)
         Email: AN(100)
         Secundario: AN(100)
         FechaInscripción: Fecha
-        Aprobado: ("SI", "NO")
+        Aprobado: {"SI", "NO"}
     Fin Registro
 
     ARCH, ARCH2: archivo de Aspirantes ordenado por DNI
