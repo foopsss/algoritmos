@@ -10,3 +10,6 @@
 # Regla para ignorar object files y unit files resultantes de compilar cosas con Free Pascal.
 *.o
 *.ppu
+
+# Regla para ignorar ejecutables de Windows compilados con MinGW.
+*.exe
