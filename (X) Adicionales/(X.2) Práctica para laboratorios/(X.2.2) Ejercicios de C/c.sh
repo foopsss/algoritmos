@@ -24,6 +24,15 @@ run_program() {
     fi
 }
 
+delete_files() {
+    if [ "$platform" == "mgw" ]
+    then
+        rm $program.exe
+    else
+        rm $program
+    fi
+}
+
 while getopts l:p:c:r:d: flag;
 do
     case "${flag}" in
@@ -31,6 +40,6 @@ do
         p) platform=$OPTARG;;
         c) program=$OPTARG; compile_program;;
         r) program=$OPTARG; run_program;;
-        d) rm $OPTARG;;
+        d) program=$OPTARG; delete_files;;
     esac
 done
