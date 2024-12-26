@@ -4,12 +4,9 @@ run_program() {
     fpc $program.pas
     coderr=$?
 
-    echo "------------------------------------------------------------"
-
-    if [ "$coderr" -gt 0 ]
+    if [ "$coderr" -eq 0 ]
     then
-        echo "No se pudo ejecutar el programa."
-    else
+        echo "------------------------------------------------------------"
         ./$program
     fi
 }
