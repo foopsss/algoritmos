@@ -1,9 +1,10 @@
 // Secuencia 1: Las palabras como anagrama o densidad, que comienzan con la misma letra, son de una alta rareza. Saludos.
 // Secuencia 2: Hol4, algun4s palabras contien3n dígitos numéric0s dentro de sí mism4s. ¡Qu3 l0c0!
-
-// NOTA: este algoritmo es una traducción directa del código que hice en Pascal
-// para la consigna, ubicado en la carpeta "(X) Adicionales/(X.2) Práctica para
-// laboratorios/(X.2.1) Ejercicios de Pascal/AED/4-17.pas".
+//
+// NOTA: este algoritmo es una traducción directa del código que hice en Pascal para
+// la consigna, ubicado en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.1) Ejercicios de Pascal/AED".
+// El archivo se llama "4-17.pas".
 
 Acción 4.17 ES
 

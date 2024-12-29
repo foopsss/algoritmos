@@ -14,6 +14,10 @@
 // (b) Realizar una función recursiva para la detección de nodos con mensajes
 //     que tengan una cantidad impar de 1. La misma deberá recibir un número
 //     binario y devolver si contiene error o no.
+//
+// NOTA: hay una versión en C de la función recursiva, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.2) Ejercicios de C/Extra".
+// El archivo se llama "binario3.c".
 
 Acción Recursividad1(prim: puntero a Nodo) ES
 

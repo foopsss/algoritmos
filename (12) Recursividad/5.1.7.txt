@@ -1,3 +1,7 @@
+// NOTA: hay una versión en Pascal de este ejercicio, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.1) Ejercicios de Pascal/AED".
+// El archivo se llama "5-1-7.pas".
+
 Acción 5.1.7 ES
 
 Ambiente

@@ -6,6 +6,10 @@
 // lógico. Si la cantidad de 0 es múltiplo de 3 debe retornar verdadero y,
 // si no lo es, debe retornar falso. Para finalizar, mostrar la lista
 // generada.
+//
+// NOTA: hay una versión en C de la función recursiva, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.2) Ejercicios de C/Extra".
+// El archivo se llama "binario2.c".
 
 Acción RecursividadM3(prim: puntero a Binario) ES
 

@@ -10,11 +10,15 @@
 // (a) Para controlar el cumplimiento del patrón, realizar una función recursiva
 //     que retorne un valor lógico.
 // (b) Mostrar cómo quedó la lista circular con los nodos que cumplen el patrón.
-
-// Nota: lo que yo tengo en cada nodo es un valor binario, como 101010. Lo que
+//
+// NOTA 1: lo que yo tengo en cada nodo es un valor binario, como 101010. Lo que
 // debo comprobar, es si se cumple el patrón de que el número está compuesto
 // por varios números 10 en repetición. Por ejemplo, 10101010 cumple con el
 // patrón, mientras que 10101011 no lo hace.
+//
+// NOTA 2: hay una versión en C de la función recursiva, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.2) Ejercicios de C/Extra".
+// El archivo se llama "binario.c".
 
 Acción RecursividadM2(prim: puntero a Binario) ES
 

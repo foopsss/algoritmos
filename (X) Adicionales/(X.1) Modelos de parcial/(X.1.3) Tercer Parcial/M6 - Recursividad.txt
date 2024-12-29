@@ -11,6 +11,10 @@
 // Al final del sorteo se debe mostrar el equipo con el menor y el mayor promedio
 // de edad. Para esto se debe calcular el promedio de cada equipo usando una
 // función recursiva.
+//
+// NOTA: hay una versión en C de la función recursiva, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.2) Ejercicios de C/Extra".
+// El archivo se llama "prom_rec.c".
 
 Acción RecursividadM6(prim: puntero a Nodo) ES
 

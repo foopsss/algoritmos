@@ -1,4 +1,8 @@
-// Por si hace falta recordar como funciona la división entera: https://matematix.org/division-entera/
+// Por si hace falta recordar como funciona la división entera: https://matematix.org/division-entera/.
+//
+// NOTA: hay una versión en Pascal de este ejercicio, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.1) Ejercicios de Pascal/AED".
+// El archivo se llama "5-1-5.pas".
 
 Acción 5.1.5 ES
 
