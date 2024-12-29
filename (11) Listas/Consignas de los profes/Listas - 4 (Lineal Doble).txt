@@ -1,0 +1,93 @@
+// Consigna: escribir un procedimiento AGRUPA(prim, ult: puntero a Nodo, A: entero) que,
+// dada una lista doblemente encadenada de enteros L, agrupe (sume) elementos de manera
+// tal que en L queden solo elementos mayores o iguales que A.
+//
+// El algoritmo recorre la lista y, cuando encuentra un elemento menor, empieza a agrupar
+// (sumar) dicho elemento con los elementos siguientes hasta llegar al valor A o superarlo,
+// o hasta que se acabe la lista.
+//
+// Por ejemplo, si A = 10 y la lista es:
+// L = {3, 4, 2, 4, 1, 4, 4, 3, 2, 2, 4, 1, 4, 1, 4, 4, 1, 4, 4, 2}
+//
+// Entonces: AGRUPA(prim, ult, 10) da como resultado L = {13, 12, 13, 10, 10}. En la lista
+// final no deben quedar elementos menores que A salvo, eventualmente, el último.
+
+// NOTA: hay una versión en Pascal de este ejercicio, ubicada en la siguiente ruta:
+// "(X) Adicionales/(X.2) Práctica para laboratorios/(X.2.1) Ejercicios de Pascal/Extra".
+// El archivo se llama "agrupa.pas".
+
+Acción Listas4(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        num: N(2)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+
+    num_us: entero
+
+    Procedimiento Agrupa(prim_list, ult_list: puntero a Nodo, valor: entero) ES
+    Ambiente
+        q, r, borrar: puntero a Nodo
+    Proceso
+        q := prim_list
+
+        Mientras q <> NIL Hacer
+            // Trabajo con un resguardo en el que voy a guardar
+            // temporalmente los elementos a sumar en la posición
+            // actual.
+            r := *q.prox
+
+            // Controlo que todavía pueda agrupar elementos en la
+            // posición actual, y que no esté parado en el último
+            // elemento de la lista.
+            //
+            // Controlo esto último porque hay casos donde puedo
+            // agrupar en función de un valor A lo suficientemente
+            // grande como para que solo quede un único valor de L
+            // sin tratar al final del proceso, por lo que ya no
+            // puedo continuar agrupando.
+            //
+            // Esto sucedería, por ejemplo, cuando A = 13.
+            Mientras *q.dato < valor y q <> ult_list Hacer
+                // A mi posición actual le sumo el siguiente valor.
+                *q.dato := *q.dato + *r.dato
+                
+                // Resguardo el elemento a borrar y avanzo al siguiente.
+                borrar := r
+                r := *r.prox
+                
+                // Enlazo mi elemento actual con el que le sigue al que 
+                // se encuentra adelante.
+                *q.prox := r
+
+                // Si todavía no estoy parado en el último elemento,
+                // hago el proceso inverso. Es decir, enlazo el nuevo
+                // siguiente elemento con mi elemento actual (como ant).
+                //
+                // Por el contrario, si el nuevo prox es NIL, es porque
+                // ya procesé el último elemento de la lista. Reasigno
+                // ult.
+                Si r <> NIL Entonces
+                    *r.ant := q
+                Contrario
+                    ult_list := q
+                Fin Si
+
+                // Finalmente, borro el resguardo.
+                Disponer(borrar)
+            Fin Mientras
+
+            q := *q.prox
+        Fin Mientras
+    Fin Procedimiento
+
+Proceso
+
+    Escribir("Introduzca un valor: ")
+    Leer(num_us)
+    Agrupa(prim, ult, num_us)
+
+Fin Acción
