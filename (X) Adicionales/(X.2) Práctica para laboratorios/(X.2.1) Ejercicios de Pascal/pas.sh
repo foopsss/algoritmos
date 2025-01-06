@@ -20,11 +20,12 @@ delete_files() {
     fi
 }
 
-while getopts l:c:r:d: flag;
+while getopts l:c:g:r:d: flag;
 do
     case "${flag}" in
         l) cd "$OPTARG";;
         c) fpc $OPTARG.pas;;
+        g) fpc -g $OPTARG.pas;;
         r) program=$OPTARG; run_program;;
         d) program=$OPTARG; delete_files;;
     esac
