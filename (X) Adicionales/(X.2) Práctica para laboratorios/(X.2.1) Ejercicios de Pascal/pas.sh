@@ -25,7 +25,7 @@ do
     case "${flag}" in
         l) cd "$OPTARG";;
         c) fpc $OPTARG.pas;;
-        g) fpc -g $OPTARG.pas;;
+        g) fpc -g $OPTARG.pas -o"$OPTARG-dbg";;
         r) program=$OPTARG; run_program;;
         d) program=$OPTARG; delete_files;;
     esac
