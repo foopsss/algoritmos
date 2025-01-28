@@ -8,11 +8,11 @@ Se asume para esta parte que el compilador utilizado es [Free Pascal](https://es
 Los ejercicios pueden ser compilados tanto en Linux como en Windows con una simple invocación al compilador: `fpc <nombre del archivo>`.
 
 ### Con pas.sh (Linux)
-`pas.sh` es un pequeño script de Bash que facilita algunas acciones al trabajar con Pascal, como compilar y ejecutar los ejercicios. Cuenta con cuatro parámetros que se le pueden pasar al ejecutarlo:
+`pas.sh` es un pequeño script de Bash que facilita algunas acciones al trabajar con Pascal, como compilar y ejecutar los ejercicios. Cuenta con cinco parámetros que se le pueden pasar al ejecutarlo:
 
 1. **l** (location): permite especificar el directorio en el cual se va a realizar una acción.
 2. **c** (compile): permite especificar el nombre del archivo con el código a compilar.
-3. **g**: permite especificar el nombre del archivo con el código a compilar, con la diferencia de que el ejecutable resultante incluirá información de depuración, útil para depurar el programa compilado con software como [GDB](https://es.wikipedia.org/wiki/GNU_Debugger).
+3. **g**: permite especificar el nombre del archivo con el código a compilar, con la diferencia de que el ejecutable resultante incluirá información de depuración y se abrirá en [GDB](https://es.wikipedia.org/wiki/GNU_Debugger).
 4. **r** (run): permite especificar el nombre del archivo con el código a compilar y ejecutar.
 5. **d** (delete): permite especificar el nombre del ejercicio cuyos archivos resultantes de la compilación se quieren borrar.
 
@@ -32,7 +32,7 @@ Los ejercicios pueden ser compilados tanto en Linux como en Windows con una simp
 1. **l** (location): permite especificar el directorio en el cual se va a realizar una acción.
 2. **p** (platform): permite especificar si se quiere compilar usando GCC o MinGW (también disponible en Linux), así como el archivo a ejecutar y/o borrar. Si la entrada es "mgw" se compila de forma cruzada/ejecuta/borra un ejecutable para Windows, y para Linux en cualquier otro caso (o si no se especifica).
 3. **c** (compile): permite especificar el nombre del archivo con el código a compilar.
-4. **g**: permite especificar el nombre del archivo con el código a compilar, con la diferencia de que el ejecutable resultante incluirá información de depuración, útil para depurar el programa compilado con software como [GDB](https://es.wikipedia.org/wiki/GNU_Debugger).
+4. **g**: permite especificar el nombre del archivo con el código a compilar, con la diferencia de que el ejecutable resultante incluirá información de depuración y se abrirá en [GDB](https://es.wikipedia.org/wiki/GNU_Debugger) si se compila con GCC para Linux. En caso de usar la versión de MinGW de GCC, simplemente se compilará el código.
 5. **r** (run): permite especificar el nombre del archivo con el código a compilar y ejecutar.
 6. **d** (delete): permite especificar el nombre del ejercicio cuyo archivo resultante de la compilación se quiere borrar.
 
