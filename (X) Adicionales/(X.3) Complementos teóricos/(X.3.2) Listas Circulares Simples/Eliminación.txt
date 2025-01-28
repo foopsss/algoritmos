@@ -62,7 +62,7 @@ Proceso
                     Fin Mientras
                     
                     *r.prox := *q.prox
-                    prim := *q.prox                    
+                    prim := *q.prox
                 Contrario
                     // Acá contemplo el caso de estar eliminando un elemento intermedio
                     // o el último elemento, en una lista con varios elementos.
