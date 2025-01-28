@@ -1,22 +1,37 @@
 #!/bin/bash
 
+print_line() {
+    echo "------------------------------------------------------------"
+}
+
 run_program() {
-    fpc $program.pas
+    fpc $OPTARG.pas
     coderr=$?
 
     if [ "$coderr" -eq 0 ]
     then
-        echo "------------------------------------------------------------"
-        ./$program
+        print_line
+        ./$OPTARG
+    fi
+}
+
+debug_program() {
+    fpc -g $OPTARG.pas
+    coderr=$?
+
+    if [ "$coderr" -eq 0 ]
+    then
+        print_line
+        gdb ./$OPTARG
     fi
 }
 
 delete_files() {
-    if [ $program = "functions" ]
+    if [ $OPTARG = "functions" ]
     then
-        rm $program.ppu $program.o
+        rm $OPTARG.ppu $OPTARG.o
     else
-        rm $program $program.o
+        rm $OPTARG $OPTARG.o
     fi
 }
 
@@ -25,8 +40,8 @@ do
     case "${flag}" in
         l) cd "$OPTARG";;
         c) fpc $OPTARG.pas;;
-        g) fpc -g $OPTARG.pas -o"$OPTARG-dbg";;
-        r) program=$OPTARG; run_program;;
-        d) program=$OPTARG; delete_files;;
+        g) debug_program;;
+        r) run_program;;
+        d) delete_files;;
     esac
 done
