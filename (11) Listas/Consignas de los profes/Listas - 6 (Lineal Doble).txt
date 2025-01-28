@@ -1,0 +1,189 @@
+// Consigna: se cuenta con un archivo de proyectos de una importante empresa con
+// el siguiente formato:
+//
+// | Código [N(10)] | Nombre [AN(60)] | Tipo ["D", "W"] | Cant_Errores [N(3)] |
+// Ordenado por código.
+//
+// El dato Cant_Errores indica la cantidad de errores de cada proyecto. La
+// información respecto a cada error se almacena en una lista simple de acuerdo
+// al orden de los proyectos, y teniendo en cuenta la cantidad que le corresponden
+// a este. Por ejemplo, si el primer proyecto del archivo tiene tres errores, los
+// tres primeros nodos de la lista corresponden a dicho proyecto. La información
+// que se almacena por error es la siguiente:
+//
+// | Descripción [AN(250)] | Estado |
+//
+// Estado puede tomar tres valores:
+// (*) "N": no resuelto.
+// (*) "O": en proceso.
+// (*) "R": resuelto.
+//
+// Se le solicita:
+// (a) Crear dos listas dobles como salida:
+//     (*) La primer lista debe contener el código y nombre de los proyectos
+//         que tengan todos sus errores Resuelto.
+//     (*) La segunda lista debe contener el código y nombre de los proyectos
+//         que tengan al menos el 50% de sus errores Resuelto o en proceso
+//         de resolución, y debe estar ordenada por dicho porcentaje de mayor
+//         a menor.
+// (b) Informar la cantidad de proyectos que no tienen ningún error resuelto.
+
+Acción Listas6(prim: puntero a Errores) ES
+
+Ambiente
+
+    Proyectos = Registro
+        Código: N(10)
+        Nombre: AN(60)
+        Tipo: {"D", "W"}
+        Cant_Errores: N(3)
+    Fin Registro
+    
+    ARCH: archivo de Proyectos ordenado por Código
+    REG: Proyectos
+
+    Errores = Registro
+        desc: AN(250)
+        estado: {"N", "O", "R"}
+        prox: puntero a Errores
+    Fin Registro
+    
+    q: puntero a Errores
+    
+    Resuelto = Registro
+        cod: N(10)
+        nombre: AN(60)
+        ant: puntero a Resuelto
+        prox: puntero a Resuelto
+    Fin Registro
+    
+    prim_res, ult_res: puntero a Resuelto
+    
+    EnProceso = Registro
+        cod: N(10)
+        nombre: AN(60)
+        porc: N(4)
+        ant: puntero a EnProceso
+        prox: puntero a EnProceso
+    Fin Registro
+    
+    prim_ep, ult_ep: puntero a EnProceso
+    cant_err, cont_res, cont_ep, cont_no_res, proy_no_res: entero
+    
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_res := NIL
+        prim_ep := NIL
+        ult_res := NIL
+        ult_ep := NIL
+        proy_no_res := 0
+    Fin Procedimiento
+
+    Procedimiento CargarResuelto(código: entero, nombre: alfanumérico) ES
+    Ambiente
+        p: puntero a Resuelto
+    Proceso
+        Nuevo(p)
+        *p.cod := código
+        *p.nombre := nombre
+        
+        Si prim_res = NIL Entonces
+            *p.ant := NIL
+            *p.prox := NIL
+            prim_res := p
+            ult_res := p
+        Contrario
+            *p.ant := ult_res
+            *p.prox := NIL
+            *ult_res.prox := p
+            ult := p
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento CargarEnProceso(código: entero, nombre: alfanumérico, tot_err: entero, err_res: entero, err_ep: entero) ES
+    Ambiente
+        p, r: puntero a EnProceso
+    Proceso
+        Nuevo(p)
+        *p.cod := código
+        *p.nombre := nombre
+        *p.porc := ((err_res + err_ep) * 100) / tot_err
+        r := prim_ep
+        
+        Si r = NIL Entonces
+            // Cargo el primer elemento.
+            *p.ant := NIL
+            *p.prox := NIL
+            prim_ep := p
+            ult_ep := p
+        Contrario
+            Mientras r <> NIL y *r.porc > *p.porc Hacer
+                r := *r.prox
+            Fin Mientras
+            
+            Si r = prim_ep Entonces
+                // Inserción previa al primer elemento.
+                *p.ant := NIL
+                *p.prox := r
+                *r.ant := p
+                prim_ep := p
+            Contrario
+                Si r = ult_ep Entonces
+                    // Inserción posterior al último elemento.
+                    *p.ant := r
+                    *p.prox := *r.prox
+                    *r.prox := p
+                    ult_ep := p
+                Contrario
+                    // Inserción en posición intermedia.
+                    *p.ant := *r.ant
+                    *p.prox := r
+                    *(*r.ant).prox := p
+                    *r.ant := p
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH)
+    LEER(ARCH, REG)
+    Inicializar()
+    
+    Mientras NFDA(ARCH) Hacer
+        cant_err := 0
+        cont_res := 0
+        cont_ep := 0
+        cont_no_res := 0
+        
+        Mientras q <> NIL y cant_err <> REG.Cant_Errores Hacer
+            Según *q.estado Hacer
+                = "N": cont_no_res := cont_no_res + 1
+                = "O": cont_ep := cont_ep + 1
+                = "R": cont_res := cont_res + 1
+            Fin Según
+            
+            cant_err := cant_err + 1
+            q := *q.prox
+        Fin Mientras
+        
+        Si cant_err = cont_res Entonces
+            CargarResuelto(REG.Código, REG.Nombre)
+        Contrario
+            Si cant_err = cont_no_res Entonces
+                proy_no_res := proy_no_res + 1
+            Contrario
+                Si (cont_res + cont_ep) >= (cant_err * 0,5) Entonces
+                    CargarEnProceso(REG.Código, REG.Nombre, cant_err, cont_res, cont_ep)
+                Fin Si
+            Fin Si
+        Fin Si
+        
+        LEER(ARCH, REG)
+    Fin Mientras
+    
+    Escribir("Hay un total de" proy_no_res "proyectos que no tienen ningún error resuelto.")
+    CERRAR(ARCH)
+
+Fin Acción
