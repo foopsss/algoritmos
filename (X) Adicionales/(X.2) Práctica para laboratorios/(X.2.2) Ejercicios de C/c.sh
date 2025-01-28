@@ -3,18 +3,24 @@
 compile_program() {
     if [ "$platform" == "mgw" ]
     then
-        x86_64-w64-mingw32-gcc $program.c -o $program.exe
+        x86_64-w64-mingw32-gcc $OPTARG.c -o $OPTARG.exe
     else
-        gcc $program.c -o $program
+        gcc $OPTARG.c -o $OPTARG
     fi
 }
 
 compile_debugging() {
     if [ "$platform" == "mgw" ]
     then
-        x86_64-w64-mingw32-gcc -g $program.c -o "$program-dbg".exe
+        x86_64-w64-mingw32-gcc -g $OPTARG.c -o "$OPTARG-dbg.exe"
     else
-        gcc -g $program.c -o "$program-dbg"
+        gcc -g $OPTARG.c -o "$OPTARG-dbg"
+        coderr=$?
+
+        if [ "$coderr" -eq 0 ]
+        then
+            gdb ./"$OPTARG-dbg"
+        fi
     fi
 }
 
@@ -26,9 +32,9 @@ run_program() {
     then
         if [ "$platform" == "mgw" ]
         then
-            wine $program.exe
+            wine $OPTARG.exe
         else
-            ./$program
+            ./$OPTARG
         fi
     fi
 }
@@ -36,9 +42,9 @@ run_program() {
 delete_files() {
     if [ "$platform" == "mgw" ]
     then
-        rm $program.exe
+        rm $OPTARG.exe
     else
-        rm $program
+        rm $OPTARG
     fi
 }
 
@@ -47,9 +53,9 @@ do
     case "${flag}" in
         l) cd "$OPTARG";;
         p) platform=$OPTARG;;
-        c) program=$OPTARG; compile_program;;
-        g) program=$OPTARG; compile_debugging;;
-        r) program=$OPTARG; run_program;;
-        d) program=$OPTARG; delete_files;;
+        c) compile_program;;
+        g) compile_debugging;;
+        r) run_program;;
+        d) delete_files;;
     esac
 done
