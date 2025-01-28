@@ -1,0 +1,212 @@
+// Consigna: una oficina postal quiere mejorar la organización de los pedidos y
+// envíos diarios, dada una lista circular simple, ordenada por prioridad, que
+// incluye los pedidos a entregar a domicilio en el día de hoy con el siguiente
+// formato:
+//
+// (*) ID_Pedido.
+// (*) Estado: "pendiente", "entregado".
+// (*) Intentos de entrega: (0..5).
+// (*) Fecha_retiro: Fecha (día en el que se debe entregar el pedido).
+// (*) Prioridad: (1..5).
+// (*) Dirección_envío.
+// (*) ID_empleado_asignado.
+// (*) nombre_empleado_asignado.
+//
+// Se le solicita:
+// (a) Registrar la entrega de pedidos según lo indique el usuario:
+//     (a.1) Cargar el ID y nombre del empleado que entregó cada paquete.
+//     (a.2) Cambiar el estado de un pedido a "entregado" cuando se complete
+//           la entrega.
+//     (a.3) Si el pedido no pudo entregarse (por ejemplo, si el destinatario
+//           no estaba), se debe incrementar la cantidad de intentos de entrega
+//           y mover el pedido a una nueva lista de pendientes para el siguiente
+//           día.
+// (b) Generar un reporte diario de entregas que incluya:
+//     (b.1) La cantidad de pedidos entregados exitosamente.
+//     (b.2) La cantidad de pedidos que no se pudieron entregar y se
+//           reprogramarán para el próximo día.
+//     (b.3) La cantidad de pedidos pendientes con prioridad alta (1) que
+//           siguen sin ser entregados.
+//     (b.4) DNI, nombre y apellido del empleado que entregó la mayor
+//           cantidad de pedidos en el día.
+//
+// Consideraciones:
+// (*) Para la lista de salida uso el mismo formato de la lista de entrada,
+//     porque la consigna no dice nada acerca del formato que debe tener.
+//     Sin embargo, la de salida va a ser simplemente encadenada. Tampoco
+//     se habla de que tenga que estar ordenada, así que no voy a hacerlo.
+// (*) El cuarto ítem de la segunda consigna me pide el DNI del empleado que
+//     entregó la mayor cantidad de pedidos en el día, pero yo no cuento con
+//     ese dato. Entiendo que la consigna se refiere con esto a la ID del
+//     empleado asignado.
+
+Acción Listas5(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        id_env: N(5)
+        estado: {"pendiente", "entregado"}
+        int_ent: (0..5)
+        fecha_retiro: Fecha
+        prioridad: (1..5)
+        dir_env: AN(100)
+        id_emp: N(5)
+        nomap_emp: AN(100)
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, aux: puntero a Nodo
+    prim_sal: puntero a Nodo
+    
+    Empleado = Registro
+        id_emp: N(5)
+        nomap_emp: AN(100)
+        cant_ent: N(2)
+        prox: puntero a Empleado
+    Fin Registro
+    
+    prim_emp, s: puntero a Empleado
+    id_empleado, ent_exit, ent_prox_dia, ent_prior_alta, mayor_cant_ent, id_empleado_mayor: entero
+    nomap_empleado, pedido_entregado, nomap_empleado_mayor: alfanumérico
+
+    Procedimiento Inicializar() ES
+        q := prim
+        prim_sal := NIL
+        prim_emp := NIL
+        ent_exit := 0
+        ent_prox_dia := 0
+        ent_prior_alta := 0
+        mayor_cant_ent := LV
+    Fin Procedimiento
+
+    Procedimiento CargarListaEmpleados(id: entero, nomap: alfanumérico) ES
+    Ambiente
+        p, r: puntero a Empleado
+    Proceso
+        r := prim_emp
+        
+        Mientras r <> NIL y *r.id_emp <> id Hacer
+            r := *r.prox
+        Fin Mientras
+        
+        Si r <> NIL Entonces
+            *r.cant_ent := *r.cant_ent + 1
+        Contrario
+            Nuevo(p)
+            *p.id_emp := id
+            *p.nomap_emp := nomap
+            *p.cant_ent := 1
+            *p.prox := prim_emp
+            prim_emp := p
+        Fin Si
+    Fin Procedimiento
+
+    Procedimiento MoverPedido() ES
+    Ambiente
+        p, r, borrar: puntero a Nodo
+    Proceso
+        // Cargo el nodo en la lista de salida.
+        Nuevo(p)
+        *p.id_env := *q.id_env
+        *p.estado := *q.estado
+        *p.int_ent := *q.int_ent
+        *p.fecha_retiro := *q.fecha_retiro
+        *p.prioridad := *q.prioridad
+        *p.dir_env := *q.dir_env
+        *p.id_emp := *q.id_emp
+        *p.nomap_emp := *q.nomap_emp
+        *p.prox := prim_sal
+        prim_sal := p
+        
+        // Borro el nodo de la lista de entrada.
+        Si q = *q.prox Entonces
+            // Lista con un único elemento.
+            prim := NIL
+        Contrario
+            Si q = prim Entonces
+                // Primer elemento de una lista
+                // con varios elementos.
+                r := prim
+                
+                Mientras *r.prox <> prim Hacer
+                    r := *r.prox
+                Fin Mientras
+                
+                *r.prox := *q.prox
+                prim := *q.prox
+            Contrario
+                // Elemento intermedio de una lista
+                // con varios elementos.
+                *aux.prox := *q.prox
+            Fin Si
+        Fin Si
+        
+        borrar := q
+        q := *q.prox
+        Disponer(borrar)
+    Fin Procedimiento
+
+    Procedimiento CargarLista() ES
+        Escribir("Introduzca la ID del empleado asignado al pedido: ")
+        Leer(id_empleado)
+        Escribir("Introduzca el nombre del empleado asignado al pedido: ")
+        Leer(nomap_empleado)
+        Escribir("¿El pedido fue entregado exitosamente? [S/N]: ")
+        Leer(pedido_entregado)
+        
+        // Cargo los datos del empleado solo si el paquete se entregó.
+        // Creo que de lo contrario, no corresponde.
+        Si pedido_entregado = "S" Entonces
+            *q.id_emp := id_empleado
+            *q.nomap_emp := nomap_empleado
+            *q.estado := "entregado"
+            ent_exit := ent_exit + 1
+            CargarListaEmpleados(*q.id_emp, *q.nomap_emp)
+            aux := q
+            q := *q.prox
+        Contrario
+            *q.int_ent := *q.int_ent + 1
+            ent_prox_dia := ent_prox_dia + 1
+            
+            Si *q.prioridad = 1 Entonces
+                ent_prior_alta := ent_prior_alta + 1
+            Fin Si
+            
+            MoverPedido(q)
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+
+    Mientras *q.prox <> prim Hacer
+        CargarLista()
+    Fin Mientras
+    
+    // Todavía me queda un elemento por controlar
+    // de la lista de entrada.
+    CargarLista()
+    
+    // Para controlar cuál es el empleado que más pedidos
+    // entregó, cargué una lista con los datos de cada
+    // empleado y la cantidad de pedidos que entregó.
+    s := prim_emp
+    
+    Mientras s <> NIL Hacer
+        Si *s.cant_ent > mayor_cant_ent Entonces
+            mayor_cant_ent := *s.cant_ent
+            id_empleado_mayor := *s.id_emp
+            nomap_empleado_mayor := *s.nomap_emp
+        Fin Si
+        s := *s.prox
+    Fin Mientras
+    
+    Escribir("Hay un total de" ent_exit "pedidos entregados exitosamente.")
+    Escribir("Hay un total de" ent_prox_dia "pedidos cuyas entregas debieron reprogramarse para mañana.")
+    Escribir("Hay un total de" ent_prior_alta "pedidos con prioridad alta que siguen sin ser entregados.")
+    Escribir("La ID del empleado que más pedidos entregó es" id_empleado_mayor ".")
+    Escribir("Su nombre es" nomap_empleado_mayor ".")
+
+Fin Acción

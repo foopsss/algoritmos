@@ -1,0 +1,196 @@
+// Consigna: una oficina postal quiere mejorar la organización de los pedidos y
+// envíos diarios, dada una lista circular simple que incluye los pedidos a
+// entregar a domicilio en el día de hoy con el siguiente formato:
+//
+// (*) ID_Pedido.
+// (*) Estado: "pendiente", "entregado".
+// (*) Intentos de entrega: (0..5).
+// (*) Fecha_retiro: Fecha (día en el que se debe entregar el pedido).
+// (*) Modalidad_envío: "domicilio", "sucursal".
+// (*) Prioridad: (1..5).
+// (*) Dirección_envío.
+// (*) DNI_destinatario.
+// (*) Apellidoynombre_destinatario.
+// (*) ID_empleado_asignado.
+// (*) nombre_empleado_asignado.
+//
+// Se le solicita:
+// (a) Crear un procedimiento que recorra la lista de pedidos programados y
+//     verifique:
+//     (*) Que todos los pedidos tengan estado "pendiente".
+//     (*) Que todos los pedidos sean de modalidad "domicilio".
+//     (*) Que la dirección de envío y el DNI del destinatario no estén en
+//         blanco.
+// (b) Si se detecta un error (dirección o DNI vacíos) en un pedido, se lo
+//     debe mover a una lista de pedidos con errores. Al final del proceso
+//     se debe informar el total de pedidos con errores.
+// (c) Crear cuatro listas de salida para los pedidos en estado "pendiente"
+//     y con modalidad de envío "domicilio", separadas por zona de entrega
+//     (norte, sur, este, oeste) y ordenadas por prioridad. Para determinar
+//     la zona de entrega se puede utilizar la función "localización_zona
+//     (domicilio: alfanumérico)", que retorna la zona de envío a partir de
+//     la dirección de envío o domicilio.
+//
+// Consideraciones:
+// (*) Para las listas de salida uso el mismo formato que la lista de entrada,
+//     porque la consigna no dice nada acerca del formato que deben tener.
+//     Asimismo, como tampoco dice nada sobre el tipo de lista, voy a crear
+//     listas simples de salida.
+// (*) En el caso de la lista de pedidos con errores, no se aclara que deba
+//     estar ordenada, a diferencia de las listas para los envíos por zona,
+//     así que voy a realizar una carga apilada.
+// (*) La consigna no aclara el tipo de dato que devuelve "localización_zona".
+//     Por lo tanto, voy a asumir que devuelve un alfanumérico que puede ser
+//     "Norte", "Sur", "Este" u "Oeste".
+// (*) No voy a eliminar nodos al verificar el estado y modalidad de envío, ya
+//     que la consigna no lo dice.
+
+Acción Listas5(prim: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        id_env: N(5)
+        estado: {"pendiente", "entregado"}
+        int_ent: (0..5)
+        fecha_retiro: Fecha
+        mod_env: {"domicilio", "sucursal"}
+        prioridad: (1..5)
+        dir_env: AN(100)
+        dni_dest: N(8)
+        nomap_dest: AN(100)
+        id_emp: N(5)
+        nomap_emp: AN(100)
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q, r, aux, prim_err, prim_norte, prim_sur, prim_este, prim_oeste: puntero a Nodo
+    tot_ped_err: entero
+
+    Procedimiento Inicializar() ES
+        prim_err := NIL
+        prim_norte := NIL
+        prim_sur := NIL
+        prim_este := NIL
+        prim_oeste := NIL
+        tot_ped_err := 0
+    Fin Procedimiento
+
+    Procedimiento CargarListaSalida(ent: puntero a Nodo, prim_list: puntero a Nodo, tipo_lista: entero) ES
+    Ambiente
+        p, aux_carga: puntero a Nodo
+    Proceso
+        Nuevo(p)
+        *p.id_env := *ent.id_env
+        *p.estado := *ent.estado
+        *p.int_ent := *ent.int_ent
+        *p.fecha_retiro := *ent.fecha_retiro
+        *p.mod_env := *ent.mod_env
+        *p.prioridad := *ent.prioridad
+        *p.dir_env := *ent.dir_env
+        *p.dni_dest := *ent.dni_dest
+        *p.nomap_dest := *ent.nomap_dest
+        *p.id_emp := *ent.id_emp
+        *p.nomap_emp := *ent.nomap_emp
+    
+        Si tipo_lista = 0 Entonces
+            // Cargo la lista de nodos con errores.
+            *p.prox := prim_list
+            prim_list := p
+        Contrario
+            // Cargo alguna de las listas de nodos por zona.
+            r := prim_list
+            
+            Mientras r <> NIL y *r.prioridad < *p.prioridad Hacer
+                aux_carga := r
+                r := *r.prox
+            Fin Mientras
+            
+            Si aux_carga = NIL Entonces
+                *p.prox := prim_list
+                prim_list := p
+            Contrario
+                *aux_carga.prox := p
+                *p.prox := r
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+    
+    Procedimiento BorrarNodoEntrada() ES
+    Ambiente
+        borrar: puntero a Nodo
+    Proceso
+        Si q = *q.prox Entonces
+            // Lista con un único elemento.
+            prim := NIL
+        Contrario
+            Si q = prim Entonces
+                // Primer elemento de una lista
+                // con varios elementos.
+                r := prim
+                
+                Mientras *r.prox <> prim Hacer
+                    r := *r.prox
+                Fin Mientras
+                
+                *r.prox := *q.prox
+                prim := *q.prox
+            Contrario
+                // Elemento intermedio de una lista
+                // con varios elementos.
+                *aux.prox := *q.prox
+            Fin Si
+        Fin Si
+        
+        borrar := q
+        q := *q.prox
+        Disponer(borrar)
+    Fin Procedimiento
+
+    Procedimiento ControlarLista() ES
+        q := prim
+        
+        Mientras *q.prox <> prim Hacer
+            Si *q.dir_env = "" o *q.dni_dest = "" Entonces
+                tot_ped_err := tot_ped_err + 1
+                CargarListaSalida(q, prim_err, 0)
+                BorrarNodoEntrada()
+            Contrario
+                Si *q.estado = "pendiente" y *q.mod_env = "domicilio" Entonces
+                    Según localización_zona(*q.dir_env) Hacer
+                        = "Norte": CargarListaSalida(q, prim_norte, 1)
+                        = "Sur": CargarListaSalida(q, prim_sur, 1)
+                        = "Este": CargarListaSalida(q, prim_este, 1)
+                        = "Oeste": CargarListaSalida(q, prim_oeste, 1)
+                    Fin Según
+                Fin Si
+                
+                aux := q
+                q := *q.prox
+            Fin Si
+        Fin Mientras
+        
+        // Todavía me queda el último elemento sin revisar.
+        Si *q.dir_env = "" o *q.dni_dest = "" Entonces
+            tot_ped_err := tot_ped_err + 1
+            CargarListaSalida(q, prim_err, 0)
+            BorrarNodoEntrada()
+        Contrario
+            Si *q.estado = "pendiente" y *q.mod_env = "domicilio" Entonces
+                Según localización_zona(*q.dir_env) Hacer
+                    = "Norte": CargarListaSalida(q, prim_norte, 1)
+                    = "Sur": CargarListaSalida(q, prim_sur, 1)
+                    = "Este": CargarListaSalida(q, prim_este, 1)
+                    = "Oeste": CargarListaSalida(q, prim_oeste, 1)
+                Fin Según
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    Inicializar()
+    ControlarLista()
+    Escribir("Hay un total de" tot_ped_err "pedidos con errores.")
+
+Fin Acción
