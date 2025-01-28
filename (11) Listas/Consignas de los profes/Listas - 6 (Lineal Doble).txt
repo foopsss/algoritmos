@@ -11,9 +11,9 @@
 // tres primeros nodos de la lista corresponden a dicho proyecto. La información
 // que se almacena por error es la siguiente:
 //
-// | Descripción [AN(250)] | Estado |
+// | Descripción [AN(250)] | Estado ["N", "O", "R"] |
 //
-// Estado puede tomar tres valores:
+// Donde:
 // (*) "N": no resuelto.
 // (*) "O": en proceso.
 // (*) "R": resuelto.
