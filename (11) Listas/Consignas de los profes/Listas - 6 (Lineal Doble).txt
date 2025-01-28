@@ -117,7 +117,7 @@ Ambiente
             prim_ep := p
             ult_ep := p
         Contrario
-            Mientras r <> NIL y *r.porc > *p.porc Hacer
+            Mientras *r.prox <> NIL y *r.porc > *p.porc Hacer
                 r := *r.prox
             Fin Mientras
             
