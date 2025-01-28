@@ -16,13 +16,13 @@ run_program() {
 }
 
 debug_program() {
-    fpc -g $OPTARG.pas
+    fpc -g $OPTARG.pas -o"$OPTARG-dbg"
     coderr=$?
 
     if [ "$coderr" -eq 0 ]
     then
         print_line
-        gdb ./$OPTARG
+        gdb ./"$OPTARG-dbg"
     fi
 }
 
