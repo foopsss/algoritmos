@@ -88,7 +88,7 @@ Ambiente
     Fin Registro
 
     prim_sal, ult_sal, p, r: puntero a Salida
-    cant_op, suma_calif, resg_id, cod_ult_serv: entero
+    cant_op, suma_calif, resg_id, cod_ult_serv, i: entero
     resg_fecha: Fecha
 
     Procedimiento Inicializar() ES
@@ -137,7 +137,7 @@ Proceso
                 *p.nomap := REG.NomAp
                 *p.correo := REG.Correo
                 *p.cant_op := cant_op
-                *p.prom_op := suma_calif / cant_op
+                *p.prom_op := suma_calif DIV cant_op
                 *p.desc := *desc.porc
                 desc := *desc.prox
 
