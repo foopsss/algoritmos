@@ -34,7 +34,7 @@ Ambiente
     Nodo = Registro
         id_compra: N(5)
         fecha_compra: Fecha
-        método_pago: AN(10)
+        método_pago: AN(2)
         nro_tarjeta: arreglo de [1..16] de entero
         monto: N(4)
         ant: puntero a Nodo

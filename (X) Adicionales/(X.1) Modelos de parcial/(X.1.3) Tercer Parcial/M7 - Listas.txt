@@ -88,7 +88,7 @@ Ambiente
     Fin Registro
 
     prim_sal, ult_sal, p, r: puntero a Salida
-    cant_op, suma_calif, resg_id, cod_ult_serv, i: entero
+    cant_op, suma_calif, resg_id, cod_ult_serv: entero
     resg_fecha: Fecha
 
     Procedimiento Inicializar() ES
@@ -96,6 +96,24 @@ Ambiente
         desc := prim_desc
         prim_sal := NIL
         ult_sal := NIL
+    Fin Procedimiento
+
+    Procedimiento MostrarUsuarios(punt_ent: puntero a Salida, tipo_op: entero) ES
+    Ambiente
+        i: entero
+    Procedimiento
+        r := punt_ent
+        
+        Para i := 1 hasta 5 Hacer
+            Escribir("ID: " *r.id)
+            Escribir("Nombre: " *r.nomap)
+            
+            Si tipo_op = 1 Entonces
+                r := *r.ant
+            Contrario
+                r := *r.prox
+            Fin Si
+        Fin Para
     Fin Procedimiento
 
 Proceso
@@ -180,22 +198,10 @@ Proceso
     Fin Mientras
 
     Escribir("Usuarios con el mayor promedio de calificación: ")
-    r := ult_sal
-
-    Para i := 1 hasta 5 Hacer
-        Escribir("ID: " *r.id)
-        Escribir("Nombre: " *r.nomap)
-        r := *r.ant
-    Fin Para
+    MostrarUsuarios(ult_sal, 1)
 
     Escribir("Usuarios con el menor promedio de calificación: ")
-    r := prim_sal
-
-    Para i := 1 hasta 5 Hacer
-        Escribir("ID: " *r.id)
-        Escribir("Nombre: " *r.nomap)
-        r := *r.prox
-    Fin Para
+    MostrarUsuarios(prim_sal, 2)
 
     CERRAR(ARCH)
 
