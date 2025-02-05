@@ -1,0 +1,98 @@
+// Consigna: dada una lista doblemente enlazada con la información de las compras
+// realizadas por los clientes, donde en cada compra se indica el método de pago
+// (efectivo, tarjeta de crédito, Mercado Pago, Modo, etc), con el siguiente
+// formato:
+//
+// | id_compra | fecha_compra | método_pago | nro_tarjeta | monto |
+//
+// Se le solicita:
+// (a) Validar las compras realizadas con tarjeta de cŕedito (método_pago = "TC")
+//     utilizando una función recursiva. La información de las tarjetas de crédito
+//     se encuentra dentro de un arreglo de 20 posiciones en cada nodo (en el campo
+//     nro_tarjeta), debiendo realizarse los siguientes pasos:
+//     (1) Comenzar a procesar desde el último dígito hacia el primero.
+//     (2) Doblar (duplicar) los dígitos en posiciones impares. Si el resultado
+//         de la operación es mayor que 9, se deben sumar los dígitos del número
+//         (por ejemplo, si el resultado es 14, entonces 1 + 4 = 5).
+//     (3) Sumar todos los dígitos obtenidos.
+//     (4) Verificar si la suma de los dígitos es divisible por 5. En caso de
+//         serlo, el número de tarjeta es válido.
+// (b) Eliminar de la lista de entrada aquellas compras que se hayan realizado
+//     con un número de tarjeta inválido, sin modificar los nodos con números de
+//     tarjeta válidos.
+
+Acción RecursividadM8(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Fecha = Registro
+        Día: (1..31)
+        Mes: (1..12)
+        Año: N(4)
+    Fin Registro
+
+    Nodo = Registro
+        id_compra: N(5)
+        fecha_compra: Fecha
+        método_pago: AN(2)
+        nro_tarjeta: arreglo de [1..20] de entero
+        monto: N(4)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+
+    q, borrar: puntero a Nodo
+
+    Función ValidarCompra(tarjeta: arreglo de [1..20] de entero, num_dig: entero, suma_dig: entero): lógico ES
+        Si num_dig > 0 Entonces
+            Si num_dig MOD 2 = 0 Entonces
+                ValidarCompra(tarjeta, num_dig - 1, suma_dig + tarjeta[num_dig])
+            Contrario
+                Si (tarjeta[num_dig] * 2) > 9 Entonces
+                    ValidarCompra(tarjeta, num_dig - 1, suma_dig + (tarjeta[num_dig] * 2) DIV 10 + (tarjeta[num_dig] * 2) MOD 10)
+                Contrario
+                    ValidarCompra(tarjeta, num_dig - 1, suma_dig + tarjeta[num_dig] * 2)
+                Fin Si
+            Fin Si
+        Contrario
+            Si suma_dig MOD 5 = 0 Entonces
+                ValidarCompra := V
+            Contrario
+                ValidarCompra := F
+            Fin Si
+        Fin Si
+    Fin Procedimiento
+
+Proceso
+
+    q := prim
+    
+    Mientras q <> NIL Hacer
+        Si *q.método_pago = "TC" y NO ValidarCompra(*q.nro_tarjeta, 20, 0) Entonces
+            Si prim = ult Entonces
+                prim := NIL
+                ult := NIL
+            Contrario
+                Si q = prim Entonces
+                    *(*q.prox).ant := NIL
+                    prim := *q.prox
+                Contrario
+                    Si q = ult Entonces
+                        *(*q.ant).prox := NIL
+                        ult := *q.ant
+                    Contrario
+                        *(*q.ant).prox := *q.prox
+                        *(*q.prox).ant := *q.ant
+                    Fin Si
+                Fin Si
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+            Disponer(borrar)
+        Contrario
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción

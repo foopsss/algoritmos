@@ -1,0 +1,209 @@
+// Consigna: una empresa que tiene un negocio de e-commerce quiere conocer la
+// opinión de los clientes en cuanto a su experiencia en la página a la hora
+// de realizar consultas sobre los servicios que ofrece. Se registraron en una
+// lista simple las opiniones de los usuarios respecto de cada compra:
+//
+// Lista de opiniones (ordenada por usuario):
+// | id_usuario | fecha_opinión | calificación [(1..5)] | servicio_calificado [(1..20)] |
+//
+// Los datos de los distintos compradores están registrados en un archivo
+// indexado:
+//
+// Usuarios (indexado por Usuario):
+// | Usuario | Apellido y Nombre | DNI | Dirección | Correo | Categoría [("Sin categoría", "Silver", "Gold")] |
+//
+// Se posee además una lista circular simple con códigos de cupones de descuento
+// disponibles (cod_descuento, porcentaje_descuento).
+//
+// Se le solicita:
+// (a) Generar una lista doblemente enlazada, ordenada por cantidad de
+//     calificaciones de manera descendente, de los usuarios a los que
+//     se les debe enviar un cupón de descuento.
+//     (*) Téngase en cuenta que un mismo usuario puede realizar más de
+//         una compra y dejar más de una opinión, pero no deben repetirse
+//         usuarios en la lista de salida.
+//     (*) Para determinar el descuento se le asignará el próximo cupón
+//         disponible en la lista circular, solo si la función
+//         bonificación(categoría, código_último_servicio) retorna
+//         verdadero. De lo contrario no se debe incluir a los usuarios
+//         en la lista, ya que no les corresponde un descuento. El código
+//         de último servicio debe ser de la opinión (fecha_opinión) más
+//         antigua.
+//     (*) Los datos que debe incluir cada nodo de la lista doble de
+//         salida son los siguientes:
+//         | id_usuario | Apellido y Nombre | Correo | Cantidad de opiniones | Promedio de opiniones | Descuento |
+// (b) Al finalizar el proceso, mostrar por pantalla el nombre, correo e 
+//     ID de los 10 usuarios con el mayor promedio de calificación y los
+//     10 usuarios con el menor promedio de calificación.
+
+Acción ListasM8(prim_op: puntero a Opinión, prim_desc: puntero a Descuento) ES
+
+Ambiente
+
+    Fecha = Registro
+        Día: (1..31)
+        Mes: (1..12)
+        Año: N(4)
+    Fin Registro
+
+    Opinión = Registro
+        id: N(5)
+        fecha_op: Fecha
+        calif: (1..5)
+        serv_calif: (1..20)
+        prox: puntero a Opinión
+    Fin Registro
+
+    q: puntero a Opinión
+
+    Descuento = Registro
+        cod: N(5)
+        porc: N(3)
+        prox: puntero a Descuento
+    Fin Registro
+
+    desc: puntero a Descuento
+
+    Usuarios = Registro
+        Usuario: N(5)
+        NomAp: AN(100)
+        DNI: N(8)
+        Dirección: AN(100)
+        Correo: AN(100)
+        Categoría: {"Sin categoría", "Silver", "Gold"}
+    Fin Registro
+
+    ARCH: archivo de Usuarios indexado por Usuario
+    REG: Usuarios
+
+    Salida = Registro
+        id: N(5)
+        nomap: AN(100)
+        correo: AN(100)
+        cant_op: N(2)
+        prom_op: N(2)
+        desc: N(3)
+        ant: puntero a Salida
+        prox: puntero a Salida
+    Fin Registro
+
+    prim_sal, ult_sal, p, r: puntero a Salida
+    cant_op, suma_calif, resg_id, cod_ult_serv: entero
+    resg_fecha: Fecha
+
+    Procedimiento Inicializar() ES
+        q := prim_op
+        desc := prim_desc
+        prim_sal := NIL
+        ult_sal := NIL
+    Fin Procedimiento
+
+    Procedimiento MostrarUsuarios(punt_ent: puntero a Salida, tipo_op: entero) ES
+    Ambiente
+        i: entero
+    Procedimiento
+        r := punt_ent
+        
+        Para i := 1 hasta 10 Hacer
+            Escribir("ID: " *r.id)
+            Escribir("Nombre: " *r.nomap)
+            Escribir("Correo: " *r.correo)
+            
+            Si tipo_op = 1 Entonces
+                r := *r.ant
+            Contrario
+                r := *r.prox
+            Fin Si
+        Fin Para
+    Fin Procedimiento
+
+Proceso
+
+    ABRIR E/ (ARCH)
+    Inicializar()
+
+    Mientras q <> NIL Hacer
+        cant_op := 1
+        suma_calif := *q.calif
+        cod_ult_serv := *q.serv_calif
+        resg_id := *q.id
+        resg_fecha := *q.fecha_op
+        q := *q.prox
+
+        Mientras *q.id = resg_id Hacer
+            Si *q.fecha_op < resg_fecha Entonces
+                resg_fecha := *q.fecha_op
+                cod_ult_serv := *q.serv_calif
+            Fin Si
+
+            cant_op := cant_op + 1
+            suma_calif := suma_calif + *q.calif
+            q := *q.prox
+        Fin Mientras
+
+        REG.Usuario := resg_id
+        LEER(ARCH, REG)
+
+        Si NO existe Entonces
+            Escribir("ERROR. El cliente" REG.Usuario "no está registrado en la base de datos.")
+        Contrario
+            Si NO bonificación(REG.Categoría, cod_ult_serv) Entonces
+                Escribir("Al cliente" REG.Usuario "no le corresponde un descuento.")
+            Contrario
+                // Creo el nodo de salida y lo asigno.
+                Nuevo(p)
+                *p.id := REG.Usuario
+                *p.nomap := REG.NomAp
+                *p.correo := REG.Correo
+                *p.cant_op := cant_op
+                *p.prom_op := suma_calif DIV cant_op
+                *p.desc := *desc.porc
+                desc := *desc.prox
+
+                Si prim_sal = NIL Entonces
+                    *p.ant := NIL
+                    *p.prox := NIL
+                    prim_sal := p
+                    ult_sal := p
+                Contrario
+                    r := prim_sal
+
+                    Mientras *r.prox <> NIL y *r.cant_op > *p.cant_op Hacer
+                        r := *r.prox
+                    Fin Mientras
+
+                    Si r = prim_sal Entonces
+                        // Inserción previa al primer elemento.
+                        *p.ant := NIL
+                        *p.prox := prim_sal
+                        *r.ant := p
+                        prim_sal := p
+                    Contrario
+                        Si r = ult_sal Entonces
+                            // Inserción posterior al último elemento.
+                            *p.ant := r
+                            *p.prox := *r.prox
+                            *r.prox := p
+                            ult_sal := p
+                        Contrario
+                            // Inserción intermedia.
+                            *p.ant := *r.ant
+                            *p.prox := r
+                            *(*r.ant).prox := p
+                            *r.ant := p
+                        Fin Si
+                    Fin Si
+                Fin Si
+            Fin Si
+        Fin Si
+    Fin Mientras
+
+    Escribir("Usuarios con el mayor promedio de calificación: ")
+    MostrarUsuarios(ult_sal, 1)
+
+    Escribir("Usuarios con el menor promedio de calificación: ")
+    MostrarUsuarios(prim_sal, 2)
+
+    CERRAR(ARCH)
+
+Fin Acción
