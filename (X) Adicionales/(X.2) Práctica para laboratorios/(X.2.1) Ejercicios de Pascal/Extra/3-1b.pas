@@ -1,3 +1,8 @@
+{* Usando el tipo de dato "record", crear una subacción que permita cargar a
+mano tres libros en memoria. Para cada libro se debe almacenar el título, el
+nombre del autor, un pequeño resumen de este y la ID del libro. Tras cargar
+los libros en memoria se los debe listar en pantalla. *}
+
 // Material para este ejercicio:
 // https://www.freepascal.org/docs-html/rtl/system/random.html
 // https://www.freepascal.org/docs-html/rtl/system/randomize.html
@@ -38,7 +43,7 @@ begin
 
     libro2.titulo := '1984';
     libro2.autor := 'Eric Arthur Blair';
-    libro2.resumen := 'Novela de ficción distópica sobre un Estado que vigila en masa a los ciudadadanos';
+    libro2.resumen := 'Novela de ficción distópica sobre un Estado que vigila en masa a los ciudadadanos.';
     libro2.id_libro := random(55555);
 
     libro3.titulo := 'El diario de Ana Frank';
