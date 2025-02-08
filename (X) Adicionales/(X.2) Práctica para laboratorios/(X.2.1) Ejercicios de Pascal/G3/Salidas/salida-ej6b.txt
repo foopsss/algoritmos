@@ -1,0 +1,14 @@
+Libro: Las aventuras de Alicia en el país de las maravillas
+Autor: Charles Lutwidge Dodgson
+Resumen del libro: Novela sobre una niña que cae por un agujero a otro mundo.
+ID: 49309
+
+Libro: 1984
+Autor: Eric Arthur Blair/George Orwell
+Resumen del libro: Novela de ficción distópica sobre un Estado que vigila en masa a los ciudadadanos.
+ID: 59109
+
+Libro: El diario de Ana Frank
+Autor: Ana Frank
+Resumen del libro: Diario escrito por una joven durante la ocupación alemana de los Países Bajos.
+ID: 1827
