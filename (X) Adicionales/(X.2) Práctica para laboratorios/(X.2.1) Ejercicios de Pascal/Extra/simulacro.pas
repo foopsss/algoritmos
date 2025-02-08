@@ -4,13 +4,14 @@ cuántos estudiantes obtuvieron una calificación mayor o igual al promedio. El
 programa también debe mostrar el promedio de calificaciones y el número de
 estudiantes que superaron o igualaron el promedio. *}
 
-// Material para este ejercicio:
-// https://www.freepascal.org/docs-html/rtl/system/halt.html
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
 
 program simulacro;
 
 uses
-	functions in '../functions.pas';
+	sysutils;
 
 var
 	entrada: TextFile;
@@ -30,13 +31,8 @@ end;
 begin
 	assign(entrada, 'Materiales/entrada-simulacro.txt');
 
-	{$I-}
-	reset(entrada);
-	{$I+}
-
-	if IOResult <> 0 then
-		error_lectura_archivo()
-	else
+	try
+		reset(entrada);
 		inicializar();
 		read(entrada, v_ent);
 
@@ -47,20 +43,38 @@ begin
 		end;
 
 		promedio := suma / 1500;
-		reset(entrada);
-
-		while not eof(entrada) do
-		begin
-			if v_ent >= promedio then
-			begin
-				est_mayor_prom := est_mayor_prom + 1;
-			end;
-
-			read(entrada, v_ent);
-		end;
-
-		writeln('Promedio de calificaciones: ', promedio:4:2);
-		writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
-
 		close(entrada);
+
+		try
+		    reset(entrada);
+
+		    while not eof(entrada) do
+		    begin
+			    if v_ent >= promedio then
+			    begin
+				    est_mayor_prom := est_mayor_prom + 1;
+			    end;
+
+			    read(entrada, v_ent);
+		    end;
+
+		    writeln('Promedio de calificaciones: ', promedio:4:2);
+		    writeln('Número de estudiantes con calificación mayor o igual al promedio: ', est_mayor_prom);
+		    close(entrada);
+		except
+            on E: EInOutError do
+            begin
+                writeln('Hubo un error al manipular el archivo por segunda vez.');
+                writeln('Tipo de error: ', E.ClassName);
+                writeln('Descripción del error: "', E.Message, '"');
+            end;
+		end;
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo por primera vez.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.
