@@ -64,7 +64,7 @@ begin
 		except
             on E: EInOutError do
             begin
-                writeln('Hubo un error al manipular el archivo por segunda vez.');
+                writeln('Hubo un error al manipular el archivo de entrada por segunda vez.');
                 writeln('Tipo de error: ', E.ClassName);
                 writeln('Descripción del error: "', E.Message, '"');
             end;
@@ -72,7 +72,7 @@ begin
     except
         on E: EInOutError do
         begin
-            writeln('Hubo un error al manipular el archivo por primera vez.');
+            writeln('Hubo un error al manipular el archivo de entrada por primera vez.');
             writeln('Tipo de error: ', E.ClassName);
             writeln('Descripción del error: "', E.Message, '"');
         end;
