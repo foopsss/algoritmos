@@ -7,13 +7,14 @@ ha sido válida ("S" o "N").
 Se pide: ¿qué porcentaje representan las operaciones no válidas del tipo depósito
 sobre el total de operaciones? *}
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ2;
 
 uses
-    functions in '../functions.pas';
-
-type
-    sec = TextFile;
+    sysutils;
 
 var
     entrada: TextFile;
@@ -32,13 +33,8 @@ end;
 begin
     assign(entrada, 'Materiales/entrada-lab-ej2.txt');
 
-    {$I-}
-    reset(entrada);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada);
         inicializar();
         read(entrada, v_ent);
 
@@ -76,5 +72,13 @@ begin
 
         porc_noval_dep := (noval_dep * 100) / cont_op;
         writeln('Porcentaje de operaciones no válidas del tipo depósito: ', porc_noval_dep:4:2);
-        close(entrada)
+        close(entrada);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

@@ -9,16 +9,30 @@ utilizar el pie derecho para patear? *}
 // ACLARACIÓN: esta resolución no utiliza registros, sino que trata cada línea
 // del archivo como un arreglo.
 
+// Material para este ejercicio:
+// https://wiki.freepascal.org/File_Handling_In_Pascal
+// https://wiki.freepascal.org/Exceptions
+// https://www.freepascal.org/docs-html/rtl/sysutils/index-4.html
+
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+//
+// No utilizo "finally", como en las versiones principales de los ejercicios de
+// laboratorio, porque acá no hay tareas de limpieza que yo deba llevar a cabo
+// irrespectivamente de si pude cargar el archivo en memoria o no.
+//
+// Si no logro abrir el archivo, simplemente voy a mostrar un error en pantalla
+// con un exception.
+{$mode objfpc}
+
 program EJ4;
 
 uses
-    functions in '../../functions.pas';
-
-type
-    csv = TextFile;
+    functions in '../../functions.pas',
+    sysutils;
 
 var
-    entrada_csv: csv;
+    entrada_csv: TextFile;
     v_csv: string;
 
     i, col_linea: integer;
@@ -47,13 +61,8 @@ end;
 begin
     assign(entrada_csv, '../Materiales/entrada-lab-ej4.csv');
 
-    {$I-}
-    reset(entrada_csv);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada_csv);
         inicializar();
 
         // El archivo de entrada tiene una cabecera,
@@ -111,4 +120,12 @@ begin
         porc_der_treinta := (der_treinta * 100) / cant_jugadoras;
         writeln('Porcentaje de jugadoras que cumplen la condición: ', porc_der_treinta:4:2);
         close(entrada_csv);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

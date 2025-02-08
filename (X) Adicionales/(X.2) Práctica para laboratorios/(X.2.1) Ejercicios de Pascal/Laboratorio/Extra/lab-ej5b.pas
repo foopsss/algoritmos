@@ -23,16 +23,17 @@ table booking = No) pero sí ofrecen delivery online (Has online delivery = Yes)
 // ACLARACIÓN: esta resolución no utiliza registros, sino que trata cada línea
 // del archivo como un arreglo, de la misma forma que en el archivo "lab-ej4b.pas".
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ5;
 
 uses
-    functions in '../../functions.pas';
-
-type
-    csv = TextFile;
+    sysutils;
 
 var
-    entrada_csv: csv;
+    entrada_csv: TextFile;
     v_csv: string;
 
     i, col_linea: integer;
@@ -58,13 +59,8 @@ end;
 begin
     assign(entrada_csv, '../Materiales/entrada-lab-ej5.csv');
 
-    {$I-}
-    reset(entrada_csv);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada_csv);
         inicializar();
 
         // El archivo de entrada tiene una cabecera,
@@ -104,4 +100,12 @@ begin
 
         writeln('Cantidad de restaurantes que cumplen la condición: ', cant_rest_cond);
         close(entrada_csv);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.
