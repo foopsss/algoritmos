@@ -9,11 +9,16 @@ destino) que van hacia el área de Mantenimiento (que destino comience con 1).
 (b) Contar la cantidad de mensajes que se dirigen hacia el área de Sistemas (que
 destino comience con 23). *}
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ5;
 
 uses
     functions in '../functions.pas',
-    math;
+    math,
+    sysutils;
 
 var
     entrada, salida: file of char;
@@ -34,14 +39,9 @@ begin
     assign(entrada, 'Materiales/entrada-ej5.txt');
     assign(salida, 'Salidas/salida-ej5.txt');
 
-    {$I-}
-    reset(entrada);
-    rewrite(salida);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada);
+        rewrite(salida);
         cant_msg_sist := 0;
         read(entrada, v_ent);
 
@@ -86,4 +86,12 @@ begin
         writeln('Número de mensajes dirigidos al área de sistemas: ', cant_msg_sist);
         close(entrada);
         close(salida);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular uno (o ambos) de los archivos.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

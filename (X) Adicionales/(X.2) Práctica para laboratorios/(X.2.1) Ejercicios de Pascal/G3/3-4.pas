@@ -1,10 +1,14 @@
 {* A partir de la secuencia localizada en el archivo "entrada-ej2.txt", generar
 una secuencia de salida que posea todas las palabras que comienzan con vocal. *}
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ4;
 
 uses
-    functions in '../functions.pas';
+    sysutils;
 
 const
     vocales = ['a', 'e', 'i', 'o', 'u'];
@@ -20,14 +24,9 @@ begin
     assign(entrada, 'Materiales/entrada-ej2.txt');
     assign(salida, 'Salidas/salida-ej4.txt');
 
-    {$I-}
-    reset(entrada);
-    rewrite(salida);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada);
+        rewrite(salida);
         palabras_vocales := 0;
         read(entrada, v_ent);
 
@@ -68,4 +67,12 @@ begin
         writeln('Número de palabras que comienzan con vocal: ', palabras_vocales);
         close(entrada);
         close(salida);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular uno (o ambos) de los archivos.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

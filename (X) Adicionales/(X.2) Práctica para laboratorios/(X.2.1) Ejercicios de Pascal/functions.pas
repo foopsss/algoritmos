@@ -1,5 +1,6 @@
 // Documentación útil para la librería:
 // https://www.freepascal.org/docs-html/user/userse33.html
+// https://wiki.freepascal.org/Default_parameter
 
 // Necesito poner el compilador en modo OBJFPC para poder establecer parámetros
 // por defecto en una subacción.
