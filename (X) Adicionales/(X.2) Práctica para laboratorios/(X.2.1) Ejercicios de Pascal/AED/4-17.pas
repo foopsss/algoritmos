@@ -11,13 +11,15 @@ algoritmo que lo resuelva, teniendo en cuenta que conoce la estructura de listas
 // https://codeforwin.org/data-structures/c-program-to-delete-all-nodes-of-singly-linked-list
 
 // Pongo el compilador en modo OBJFPC para poder establecer parámetros por
-// defecto en el procedimiento tratar_lista.
+// defecto en el procedimiento tratar_lista. También lo necesito para poder usar
+// las palabras reservadas "try" y "except". Voy a utilizar ademñas con este fin
+// la librería "sysutils".
 {$mode objfpc}
 
 program EJ17;
 
 uses
-    functions in '../functions.pas';
+    sysutils;
 
 type
     puntero = ^Nodo;
@@ -155,15 +157,10 @@ begin
     assign(entrada2, 'Materiales/entrada2-ej417.txt');
     assign(salida, 'Salidas/salida-ej417.txt');
 
-    {$I-}
-    reset(entrada1);
-    reset(entrada2);
-    rewrite(salida);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada1);
+        reset(entrada2);
+        rewrite(salida);
         read(entrada1, v_ent1);
         read(entrada2, v_ent2);
         cont_pal_sec2 := 0;
@@ -226,4 +223,12 @@ begin
         close(entrada1);
         close(entrada2);
         close(salida);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular uno de los archivos.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

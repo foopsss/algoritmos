@@ -1,10 +1,14 @@
 {* Indicar el promedio de palabras por oración de una secuencia, localizada en
 el archivo "entrada-ej2.txt". *}
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ3;
 
 uses
-    functions in '../functions.pas';
+    sysutils;
 
 var
     entrada: file of char;
@@ -22,13 +26,8 @@ end;
 begin
     assign(entrada, 'Materiales/entrada-ej2.txt');
 
-    {$I-}
-    reset(entrada);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada);
         inicializar();
         read(entrada, v_ent);
 
@@ -55,4 +54,12 @@ begin
         prom_palabras := cont_palabras / cont_oraciones;
         writeln('El promedio de palabras por oración es de ', prom_palabras:4:2, ' palabras.');
         close(entrada);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

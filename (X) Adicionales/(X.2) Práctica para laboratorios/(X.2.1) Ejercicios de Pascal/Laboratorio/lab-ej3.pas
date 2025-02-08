@@ -6,16 +6,18 @@ Se pide: ¿qué porcentaje de personas nacieron en la primera quincena (de cualq
 mes) en el primer trimestre (de cualquier año), cuyos nombres comienzan además
 con letras consonantes? *}
 
+// Necesito esta directiva de compilador para poder usar las palabras reservadas
+// "try" y "except". También voy a utilizar con este fin la librería "sysutils".
+{$mode objfpc}
+
 program EJ3;
 
 uses
-    functions in '../functions.pas';
-
-type
-    sec = TextFile;
+    functions in '../functions.pas',
+    sysutils;
 
 var
-    entrada: sec;
+    entrada: TextFile;
     v_ent: char;
 
     i, dia_nac, mes_nac: integer;
@@ -34,13 +36,8 @@ end;
 begin
     assign(entrada, 'Materiales/entrada-lab-ej3.txt');
 
-    {$I-}
-    reset(entrada);
-    {$I+}
-
-    if IOResult <> 0 then
-        error_lectura_archivo()
-    else
+    try
+        reset(entrada);
         inicializar();
         read(entrada, v_ent);
 
@@ -96,5 +93,13 @@ begin
 
         porc_quin_trim_cons := (quin_trim_cons * 100) / cont_personas;
         writeln('Porcentaje de personas que cumplen la condición: ', porc_quin_trim_cons:4:2);
-        close(entrada)
+        close(entrada);
+    except
+        on E: EInOutError do
+        begin
+            writeln('Hubo un error al manipular el archivo.');
+            writeln('Tipo de error: ', E.ClassName);
+            writeln('Descripción del error: "', E.Message, '"');
+        end;
+    end;
 end.

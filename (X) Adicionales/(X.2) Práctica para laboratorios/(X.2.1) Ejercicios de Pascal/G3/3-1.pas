@@ -4,7 +4,6 @@ nombre del autor, un pequeño resumen de este y la ID del libro. Tras cargar
 los libros en memoria se los debe listar en pantalla. *}
 
 // Material para este ejercicio:
-// https://wiki.freepascal.org/Default_parameter
 // https://wiki.freepascal.org/Basic_Pascal_Tutorial/Chapter_4/Parameters
 
 program EJ1;

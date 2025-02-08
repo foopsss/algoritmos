@@ -1,5 +1,6 @@
 // Documentación útil para la librería:
 // https://www.freepascal.org/docs-html/user/userse33.html
+// https://wiki.freepascal.org/Default_parameter
 
 // Necesito poner el compilador en modo OBJFPC para poder establecer parámetros
 // por defecto en una subacción.
@@ -10,7 +11,6 @@ unit functions;
 interface
     function CharToInt(entrada: char): integer;
     procedure draw_line(length: integer; symbol: char = ' ');
-    procedure error_lectura_archivo();
 
 implementation
     function CharToInt(entrada: char): integer;
@@ -45,13 +45,6 @@ implementation
             writeln('-')
         else
             writeln(symbol);
-    end;
-
-    procedure error_lectura_archivo();
-    begin
-        writeln('¡Error!');
-        writeln('No se pudo abrir el archivo.');
-        halt(1);
     end;
 
 end.
