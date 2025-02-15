@@ -8,13 +8,18 @@ Es decir, se vendió el artículo 0001 por un importe de $225, luego el artícul
 0001 nuevamente, por un importe de $450, y por último el artículo 0003 por un
 importe de $200.
 
-Se pide: ¿cuál es la cantidad de ventas que superaron el importe de $400? *}
+Se pide: ¿cuántos artículos con código 1001 se vendieron? *}
+
+// NOTA: para este ejercicio reutilizo la entrada del primer ejercicio que subí
+// en la carpeta, porque no pude conseguir el archivo específico de este. Puedo
+// hacer esto porque son consignas muy similares, y sus entradas tienen el mismo
+// formato.
 
 // Necesito esta directiva de compilador para poder usar las palabras reservadas
 // "try" y "except". También voy a utilizar con este fin la librería "sysutils".
 {$mode objfpc}
 
-program EJ1;
+program EJ7;
 
 uses
     functions in '../functions.pas',
@@ -25,50 +30,43 @@ var
     entrada: TextFile;
     v_ent: char;
 
-    i, cant_ventas: integer;
-    importe: LongInt;
-
-procedure inicializar();
-begin
-    importe := 0;
-    cant_ventas := 0;
-end;
+    i, codigo_art, cant_ventas: integer;
 
 begin
     assign(entrada, 'Materiales/entrada-lab-ej1.txt');
 
     try
         reset(entrada);
-        inicializar();
+        cant_ventas := 0;
         read(entrada, v_ent);
 
         while not eof(entrada) do
         begin
-            for i := 1 to 4 do
+            codigo_art := 0;
+
+            for i := 4 downto 1 do
+            begin
+                codigo_art := codigo_art + CharToInt(v_ent) * (10 ** (i - 1));
+                read(entrada, v_ent);
+            end;
+
+            for i := 1 to 3 do
             begin
                 read(entrada, v_ent);
             end;
 
-            for i := 3 downto 1 do
-            begin
-                importe := importe + CharToInt(v_ent) * (10 ** (i - 1));
-                read(entrada, v_ent);
-            end;
-
-            if importe > 400 then
+            if codigo_art = 1001 then
             begin
                 cant_ventas := cant_ventas + 1;
             end;
-
-            importe := 0;
         end;
 
-        writeln('Cantidad de ventas que superan los $400: ', cant_ventas);
+        writeln('Cantidad de artículos de tipo 1001 vendidos: ', cant_ventas);
         close(entrada);
     except
         on E: EInOutError do
         begin
-            writeln('Hubo un error al manipular el archivo de entrada.');
+            writeln('Hubo un error al manipular el archivo.');
             writeln('Tipo de error: ', E.ClassName);
             writeln('Descripción del error: "', E.Message, '"');
         end;
