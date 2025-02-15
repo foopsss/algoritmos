@@ -2,7 +2,7 @@
 El archivo "entrada-lab-ej1.txt" contiene los registros de ventas, con el código
 del artículo vendido (cuatro caracteres) y el precio de venta (tres caracteres).
 
-Ejemplo: 00012250001450003200
+Ejemplo: 000122500014500003200
 
 Es decir, se vendió el artículo 0001 por un importe de $225, luego el artículo
 0001 nuevamente, por un importe de $450, y por último el artículo 0003 por un
