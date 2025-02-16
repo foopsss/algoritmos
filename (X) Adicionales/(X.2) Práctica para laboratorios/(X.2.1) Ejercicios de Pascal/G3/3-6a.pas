@@ -59,10 +59,10 @@ begin
 
             // Grabo la ID del libro solo con un "write" para no
             // dejar una línea en blanco al final del archivo.
-            writeln(salida, 'Libro: ', def_libro.titulo);
-            writeln(salida, 'Autor: ', def_libro.autor);
-            writeln(salida, 'Resumen del libro: ', def_libro.resumen);
-            write(salida, 'ID: ', def_libro.id_libro);
+            writeln(salida, def_libro.titulo);
+            writeln(salida, def_libro.autor);
+            writeln(salida, def_libro.resumen);
+            write(salida, def_libro.id_libro);
 
             draw_line(55, '=');
             write('¿Desea cargar información sobre otro libro? [S/N]: ');
