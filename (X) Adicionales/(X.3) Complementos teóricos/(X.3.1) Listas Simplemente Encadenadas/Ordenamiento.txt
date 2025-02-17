@@ -29,7 +29,7 @@ Proceso
                 
                 // Recorro la lista hasta llegar al fin, o hasta encontrar
                 // un elemento cuyo sucesor es mayor.
-                Mientras *q.prox <> NIL y *q.grupo < *(*q.prox).grupo Hacer
+                Mientras *q.prox <> NIL y *q.valor < *(*q.prox).valor Hacer
                     aux := q
                     q := *q.prox
                 Fin Mientras
