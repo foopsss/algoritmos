@@ -1,4 +1,4 @@
-Libro: Las aventuras de Alicia en el país de las maravillas
-Autor: Charles Lutwidge Dodgson
-Resumen del libro: Novela sobre una niña que cae por un agujero a otro mundo.
-ID: 50384
+Las aventuras de Alicia en el país de las maravillas
+Charles Lutwidge Dodgson
+Novela sobre una niña que cae por un agujero a otro mundo.
+50384
