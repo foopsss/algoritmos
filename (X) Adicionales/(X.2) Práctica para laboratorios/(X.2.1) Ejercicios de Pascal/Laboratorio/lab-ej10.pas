@@ -29,6 +29,6 @@ begin
             write('*');
         end;
         writeln('*');
-        cant_ast := cant_ast + 1;
+        cant_ast := cant_ast + 2;
     end;
 end.
