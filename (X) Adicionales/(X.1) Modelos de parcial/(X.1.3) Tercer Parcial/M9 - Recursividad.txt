@@ -1,0 +1,72 @@
+// Consigna: dada una lista doblemente encadenada que contiene números aleatorios
+// (de cualquier longitud) que posteriormente serán usados para encriptar, se desea
+// eliminar de dicha lista aquellos números que sean "perfectos". Un número es
+// perfecto cuando la suma de sus divisores (sin incluir al número en sí) es igual
+// al número en cuestión. Por ejemplo, el número 6 es perfecto, pues sus divisores
+// suman 1 + 2 + 3 = 6.
+//
+// Realice un algoritmo que solucione el problema teniendo en cuenta que, para saber
+// si el número es perfecto o no, deberá resolverlo con una subacción recursiva.
+// Puede hacer una función que devuelva verdadero o falso, o bien, la suma de los
+// divisores.
+
+Acción RecursividadM9(prim, ult: puntero a Nodo) ES
+
+Ambiente
+
+    Nodo = Registro
+        num: N(4)
+        ant: puntero a Nodo
+        prox: puntero a Nodo
+    Fin Registro
+    
+    q, borrar: puntero a Nodo
+
+    Función EsPerfecto(num: entero, divisor: entero, suma_div: entero): lógico ES
+        Si divisor <> 0 Entonces
+            Si num MOD divisor = 0 Entonces
+                EsPerfecto(num, divisor - 1, suma_div + divisor)
+            Contrario
+                EsPerfecto(num, divisor - 1, suma_div)
+            Fin Si
+        Contrario
+            Si suma_div MOD num = 0 Entonces
+                EsPerfecto := V
+            Contrario
+                EsPerfecto := F
+            Fin Si
+        Fin Si
+    Fin Función
+
+Proceso
+
+    q := prim
+    
+    Mientras q <> prim Hacer
+        Si NO es_perfecto(*q.num, *q.num - 1, 0) Entonces
+            q := *q.prox
+        Entonces
+            Si prim = ult Entonces
+                prim := NIL
+                ult := prim
+            Contrario
+                Si q = prim Entonces
+                    *(*q.prox).ant := NIL
+                    prim := *q.prox
+                Contrario
+                    Si q = ult Entonces
+                        *(*q.ant).prox := NIL
+                        ult := *q.ant
+                    Contrario
+                        *(*q.prox).ant := *q.ant
+                        *(*q.ant).prox := *q.prox
+                    Fin Si
+                Fin Si
+            Fin Si
+            
+            borrar := q
+            q := *q.prox
+        Fin Si
+    Fin Mientras
+
+Fin Acción

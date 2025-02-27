@@ -1,0 +1,174 @@
+// Consigna: te encuentras trabajando en una empresa proveedora de servicios de
+// correo. Debido a la aplicación de políticas de seguridad, la empresa se ve
+// obligada a monitorear el tráfico generado por las personas usuarias. Por ello,
+// surge la necesidad de generar un ranking, teniendo en cuenta todas las cuentas
+// de correo registradas en el siguiente archivo:
+//
+// Archivo ordenado por Mail:
+// | Mail [AN(20)] | Mensajes corruptos [N(4)] | Fecha_Último [(Fecha)] |
+//
+// Al momento de generar el ranking se debe actualizar la cantidad de mensajes
+// corruptos en la cuenta con la información provista en la siguiente estructura:
+//
+// Archivo indexado por Mail y Mensaje:
+// | Mail [AN(20)] | Mensaje [AN(255)] | Corrupto [(SI/NO)] |
+//
+// Además, se cuenta con una lista circular de información de los email
+// previamente marcados como "Peligrosos", en la cual cada nodo solo contiene
+// el email (al estar en la lista significa que esa cuenta es peligrosa). Si un
+// email es peligroso, a la cantidad de mensajes corruptos se la multiplica por
+// un factor de 10 (para que, de esa forma, quede siempre más arriba en el
+// ranking).
+//
+// Se solicita entonces un algoritmo que:
+// (a) Genere un ranking ordenado, de mayor a menor, de acuerdo a la cantidad
+//     de mensajes corruptos que posee cada cuenta de correo.
+// (b) Mostrar el ranking ordenado.
+// (c) Informar el porcentaje de cuentas que son peligrosas.
+
+Acción ListasM9(prim: puntero a Peligrosos) ES
+
+Ambiente
+
+    Fecha = Registro
+        Año: N(4)
+        Mes: (1..12)
+        Día: (1..31)
+    Fin Registro
+
+    Direcciones = Registro
+        Mail: AN(20)
+        MSGCorr: N(4)
+        FechaÚltimo: Fecha
+    Fin Registro
+
+    ARCH_DIR: archivo de Direcciones ordenado por Mail
+    REG_DIR: Direcciones
+
+    Correos = Registro
+        Mail: AN(20)
+        Mensaje: AN(255)
+        Corrupto: {"SI", "NO"}
+    Fin Registro
+    
+    ARCH_CORR: archivo de Correos indexado por Mail y Mensaje
+    REG_CORR: Correos
+
+    Peligrosos = Registro
+        mail: AN(20)
+        prox: puntero a Peligrosos
+    Fin Registro
+    
+    Salida = Registro
+        mail: AN(20)
+        msg_corr: N(4)
+        peligro: {"S", "N"}
+        prox: puntero a Salida
+    Fin Registro
+    
+    prim_sal, aux, p, r: puntero a Salida
+    cant_msg_corr, cant_cuentas, cant_cuentas_pelig: entero
+    porc_cuentas_pelig: real
+
+    Procedimiento Inicializar() ES
+        prim_sal := NIL
+        aux := NIL
+        cant_msg_corr := 0
+        cant_cuentas := 0
+        cant_cuentas_pelig := 0
+    Fin Procedimiento
+
+    Función EsPeligroso(correo: alfanumérico): carácter ES
+    Ambiente
+        q: puntero a Peligrosos
+    Proceso
+        q := prim
+        
+        Mientras *q.prox <> prim y *q.mail <> correo Hacer
+            q := *q.prox
+        Fin Mientras
+        
+        Si *q.mail <> correo Entonces
+            EsPeligroso := N
+        Contrario
+            EsPeligroso := S
+        Fin Si
+    Fin Función
+
+Proceso
+
+    ABRIR E/ (ARCH_DIR)
+    ABRIR E/ (ARCH_CORR)
+    LEER(ARCH_DIR, REG_DIR)
+    Inicializar()
+
+    Mientras NFDA(ARCH_DIR) Hacer
+        REG_CORR.Mail := REG_DIR.Mail
+        LEER(ARCH_CORR, REG_CORR)
+        
+        // Acceso dinámico/mixto al indexado.
+        Si NO existe Entonces
+            Escribir("La dirección" REG_CORR.Mail "no ha enviado más mensajes.")
+        Contrario
+            Mientras NFDA(ARCH_CORR) y REG_CORR.Mail = REG_DIR.Mail Hacer
+                Si REG_CORR.Corrupto = "SI" Entonces
+                    cant_msg_corr := cant_msg_corr + 1
+                Fin Si
+                LEER(ARCH_CORR, REG_CORR)
+            Fin Mientras            
+        Fin Si
+        
+        // Yo voy a trabajar bajo la presunción de que
+        // las direcciones de correo tienen solo una
+        // entrada en el archivo secuencial.
+        Nuevo(p)
+        *p.mail := REG_DIR.Mail
+        *p.peligro := EsPeligroso(REG_DIR.Mail)
+        
+        Si *p.peligro = "S" Entonces
+            *p.msg_corr := (REG_DIR.MSGCorr + cant_msg_corr) * 10
+        Contrario
+            *p.msg_corr := REG_DIR.MSGCorr + cant_msg_corr
+        Fin Si
+        
+        // Cargo en la lista de salida.
+        r := prim_sal
+        
+        Mientras r <> NIL y *q.msg_corr > *p.msg_corr Hacer
+            aux := r
+            r := *r.prox
+        Fin Mientras
+        
+        Si aux = NIL Entonces
+            *p.prox := prim_sal
+            prim_sal := p
+        Contrario
+            *p.prox := r
+            *aux.prox := p
+        Fin Si
+        
+        LEER(ARCH_DIR, REG_DIR)
+    Fin Mientras
+
+    Escribir("Ranking de cuentas que poseen mensajes corruptos: ")
+    r := prim_sal
+    
+    Mientras r <> NIL Hacer
+        cant_cuentas := cant_cuentas + 1
+        
+        Si *r.peligro = "S" Entonces
+            cant_cuentas_pelig := cant_cuentas_pelig + 1
+        Fin Si
+        
+        Escribir("Dirección de correo: " *r.mail)
+        Escribir("Número de mensajes corruptos: " *r.msg_corr)
+        r := *r.prox
+    Fin Mientras
+
+    porc_cuentas_pelig := (cant_cuentas_pelig * 100) / cant_cuentas
+    Escribir("El porcentaje de cuentas peligrosas es del" porc_cuentas_pelig "%.")
+
+    CERRAR(ARCH_DIR)
+    CERRAR(ARCH_CORR)
+
+Fin Acción
