@@ -22,7 +22,7 @@ begin
         numero_digitos := suma + 1;
 end;
 
-function sumar_potencias(num: LongInt; suma: integer; num_dig: integer): LongInt;
+function sumar_potencias(num: LongInt; suma, num_dig: integer): LongInt;
 begin
     if num mod 10 <> num then
         sumar_potencias := sumar_potencias(num div 10, suma + (num mod 10) ** num_dig, num_dig)

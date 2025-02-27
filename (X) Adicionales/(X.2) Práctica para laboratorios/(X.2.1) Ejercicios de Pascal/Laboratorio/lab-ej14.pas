@@ -6,7 +6,7 @@ program EJ14;
 var
     num_us, suma_dig: integer;
 
-function sumar_digitos(num: integer; suma: integer): integer;
+function sumar_digitos(num, suma: integer): integer;
 begin
     if num mod 10 <> num then
         sumar_digitos := sumar_digitos(num DIV 10, suma + num MOD 10)
