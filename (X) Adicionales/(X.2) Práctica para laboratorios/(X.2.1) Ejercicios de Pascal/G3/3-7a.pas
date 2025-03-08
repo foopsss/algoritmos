@@ -1,4 +1,4 @@
-{* Crear un programa que lea el archivo creado en el ejercicio anterior. *}
+{* Crear un programa que lea el archivo creado en el ejercicio anterior (3-6b). *}
 
 // Necesito esta directiva de compilador para poder usar las palabras reservadas
 // "try" y "except". También voy a utilizar con este fin la librería "sysutils".

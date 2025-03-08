@@ -1,5 +1,5 @@
-{* Crear un programa que lea el archivo creado en el ejercicio anterior. Incorporar
-la funcionalidad de pasar al próximo libro cuando uno lo necesite. *}
+{* Crear un programa que lea el archivo creado en el ejercicio anterior (3-6b).
+Incorporar la funcionalidad de pasar al próximo libro cuando uno lo necesite. *}
 
 // Necesito esta directiva de compilador para poder usar las palabras reservadas
 // "try" y "except". También voy a utilizar con este fin la librería "sysutils".
