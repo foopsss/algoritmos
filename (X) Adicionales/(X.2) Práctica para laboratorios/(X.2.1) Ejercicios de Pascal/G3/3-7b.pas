@@ -65,7 +65,7 @@ begin
     except
         on E: EInOutError do
         begin
-            writeln('Hubo un error al manipular el archivo de salida.');
+            writeln('Hubo un error al manipular el archivo de entrada.');
             writeln('Tipo de error: ', E.ClassName);
             writeln('Descripción del error: "', E.Message, '"');
         end;
