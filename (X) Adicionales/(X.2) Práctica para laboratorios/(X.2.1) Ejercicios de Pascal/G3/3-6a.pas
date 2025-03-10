@@ -13,7 +13,7 @@ uses
     sysutils;
 
 type
-    Libro = record
+    libro = record
         titulo: string[100];
         autor: string[100];
         resumen: string[100];
@@ -22,7 +22,7 @@ type
 
 var
     salida: TextFile;
-    def_libro: Libro;
+    def_libro: libro;
 
     borrar_archivo: boolean;
     eleccion: char;
@@ -41,7 +41,7 @@ begin
         write('¿Desea cargar información sobre un libro? [S/N]: ');
         readln(eleccion);
 
-        while eleccion = 'S' do
+        while (eleccion = 'S') or (eleccion = 's') do
         begin
             borrar_archivo := false;
 

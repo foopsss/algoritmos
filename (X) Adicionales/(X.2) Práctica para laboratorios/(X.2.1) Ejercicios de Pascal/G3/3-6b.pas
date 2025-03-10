@@ -19,7 +19,7 @@ uses
     sysutils;
 
 type
-    Libro = record
+    libro = record
         titulo: string[100];
         autor: string[100];
         resumen: string[100];
@@ -28,7 +28,7 @@ type
 
 var
     salida: TextFile;
-    def_libro: Libro;
+    def_libro: libro;
 
     archivo_nuevo, borrar_archivo: boolean;
     eleccion: char;
