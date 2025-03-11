@@ -91,6 +91,14 @@ begin
             read(entrada, reg_emp);
         end;
 
+        // Por algún motivo, el ciclo principal termina aún
+        // cuando todavía tengo una entrada disponible en
+        // reg_emp, así que debo encargarme de terminar
+        // correctamente el conteo acá.
+        // Luego, naturalmente debo llamar una vez más a la
+        // subacción de corte de mayor nivel, y recién ahí
+        // puedo mostrar el total correcto de empleados.
+        tot_emp_categoria := tot_emp_categoria + 1;
         corte_planta();
         writeln('Nombre del empleado: ', reg_emp.nombre);
         writeln('Total general de empleados: ', tot_gen);
