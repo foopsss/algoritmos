@@ -2,7 +2,7 @@
 elementos, de manera tal que al final solo queden elementos mayores o iguales
 que un determinado número ingresado por el usuario, siempre que sea posible.  *}
 
-program agrupa1;
+program agrupa;
 
 uses
 	functions in '../functions.pas';
@@ -151,4 +151,11 @@ begin
         q := q^.prox;
         Dispose(aux);
     end;
+
+    // Entiendo que prim y ult quedan apuntando a
+    // direcciones de memoria que técnicamente ya
+    // no existen, así que lo correcto sería liberar
+    // estos punteros también.
+    prim := NIL;
+    ult := NIL;
 end.

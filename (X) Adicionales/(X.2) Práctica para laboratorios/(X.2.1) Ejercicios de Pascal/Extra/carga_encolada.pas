@@ -39,4 +39,11 @@ begin
         q := q^.prox;
         Dispose(aux);
     end;
+
+    // Entiendo que prim y p quedan apuntando a
+    // direcciones de memoria que técnicamente ya
+    // no existen, así que lo correcto sería liberar
+    // estos punteros también.
+    prim := NIL;
+    p := NIL;
 end.
