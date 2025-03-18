@@ -32,7 +32,7 @@ type
 var
     entrada_emp, entrada_cat_cuatro: file of empleado;
     entrada_emp_planta: file of planta;
-    reg_emp, reg_cat_cuatro: empleado;
+    reg_emp: empleado;
     reg_planta: planta;
 
 procedure mostrar_empleado(reg: empleado);
@@ -54,16 +54,11 @@ begin
     assign(entrada_emp_planta, 'Salidas/salida-ej8-emp-planta.dat');
 
     try
-        reset(entrada_emp);
-        reset(entrada_cat_cuatro);
-        reset(entrada_emp_planta);
-        read(entrada_emp, reg_emp);
-        read(entrada_cat_cuatro, reg_cat_cuatro);
-        read(entrada_emp_planta, reg_planta);
-
         //////////////////////////////////
         // Archivo: salida-ej8-gen.dat. //
         //////////////////////////////////
+        reset(entrada_emp);
+        read(entrada_emp, reg_emp);
         draw_line(50, '=');
         writeln('Contenido del archivo "salida-ej8-gen.dat".');
         draw_line(50);
@@ -77,27 +72,33 @@ begin
 
         // Me queda una línea sin mostrar al final.
         mostrar_empleado(reg_emp);
+        close(entrada_emp);
 
         /////////////////////////////////////////
         // Archivo: salida-ej8-cat-cuatro.dat. //
         /////////////////////////////////////////
+        reset(entrada_cat_cuatro);
+        read(entrada_cat_cuatro, reg_emp);
         draw_line(50, '=');
         writeln('Contenido del archivo "salida-ej8-cat-cuatro.dat".');
         draw_line(50);
 
         while not eof(entrada_cat_cuatro) do
         begin
-            mostrar_empleado(reg_cat_cuatro);
+            mostrar_empleado(reg_emp);
             draw_line(50);
-            read(entrada_cat_cuatro, reg_cat_cuatro);
+            read(entrada_cat_cuatro, reg_emp);
         end;
 
         // Me queda una línea sin mostrar al final.
-        mostrar_empleado(reg_cat_cuatro);
+        mostrar_empleado(reg_emp);
+        close(entrada_cat_cuatro);
 
         /////////////////////////////////////////
         // Archivo: salida-ej8-emp-planta.dat. //
         /////////////////////////////////////////
+        reset(entrada_emp_planta);
+        read(entrada_emp_planta, reg_planta);
         draw_line(50, '=');
         writeln('Contenido del archivo "salida-ej8-emp-planta.dat".');
         draw_line(50);
@@ -111,9 +112,6 @@ begin
 
         // Me queda una línea sin mostrar al final.
         mostrar_planta(reg_planta);
-
-        close(entrada_emp);
-        close(entrada_cat_cuatro);
         close(entrada_emp_planta);
     except
         on E: EInOutError do
