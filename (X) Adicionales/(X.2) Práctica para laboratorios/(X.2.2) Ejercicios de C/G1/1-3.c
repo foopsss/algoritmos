@@ -29,7 +29,7 @@ void op_resto(int a, int b) {
     printf("Resultado del resto: %d\n", resto);
 }
 
-int main() {
+int main(void) {
     int eleccion, x, y;
 
     printf("Operaciones\n");

@@ -25,7 +25,7 @@ int promedio(int arr[26], int num_jug, int suma_edades) {
     }
 }
 
-int main() {
+int main(void) {
     int edades[26];
     int i, prom, suma_val;
     

@@ -4,7 +4,7 @@ deben ser ingresados por el usuario. */
 
 #include <stdio.h>
 
-int main() {
+int main(void) {
     int x, y;
 
     printf("Ingrese un valor para X: ");

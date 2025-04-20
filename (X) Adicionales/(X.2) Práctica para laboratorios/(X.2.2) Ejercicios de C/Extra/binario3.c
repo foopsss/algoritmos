@@ -30,7 +30,7 @@ bool cumple_patron(long int entrada, int cant_uno) {
     }
 }
 
-int main() {
+int main(void) {
     long int binario;
 
     printf("Introduzca un código binario: ");

@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-int main() {
+int main(void) {
     int num_us;
 
     printf("Introduzca un número: ");
