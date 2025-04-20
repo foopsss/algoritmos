@@ -32,7 +32,7 @@ bool cumple_patron(long int entrada) {
     }
 }
 
-int main() {
+int main(void) {
     // Combinaciones que se pueden probar
     // para ver si la función falla:
     // (*) 1110101010.

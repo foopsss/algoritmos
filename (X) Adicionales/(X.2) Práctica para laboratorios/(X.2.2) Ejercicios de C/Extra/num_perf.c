@@ -25,7 +25,7 @@ bool es_perfecto(int num, int divisor, int suma_div) {
     }
 }
 
-int main() {
+int main(void) {
     int num_us;
 
     printf("Introduzca un número: ");

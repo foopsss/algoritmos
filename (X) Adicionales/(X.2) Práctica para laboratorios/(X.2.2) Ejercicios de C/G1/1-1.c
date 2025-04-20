@@ -4,7 +4,7 @@ son: X = 132 e Y = 34. */
 
 #include <stdio.h>
 
-int main() {
+int main(void) {
     int x = 132;
     int y = 34;
 

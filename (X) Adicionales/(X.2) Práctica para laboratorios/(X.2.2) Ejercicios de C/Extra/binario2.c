@@ -30,7 +30,7 @@ bool cumple_patron(long int entrada, int cant_cero) {
     }
 }
 
-int main() {
+int main(void) {
     long int numero = 10101010;
     long int numero2 = 1011011100;
 
