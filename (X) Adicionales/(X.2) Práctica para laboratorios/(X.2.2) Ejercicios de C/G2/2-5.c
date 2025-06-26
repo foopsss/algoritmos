@@ -2,7 +2,7 @@
 posiciones y devuelva el resultado. */
 
 // NOTA: para cargar el arreglo opté por reutilizar la mecánica de carga de
-// valores al azar que utilicé en el ejercicio 2-4, con una cota superior en el
+// valores al azar que utilicé en el ejercicio 2-3, con una cota superior en el
 // número 101, con la diferencia de que esta vez no le sumo nada al número
 // entregado por el generador.
 
