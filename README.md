@@ -26,4 +26,5 @@ Adjunto otros repositorios con resoluciones de la guía práctica, e incluso eje
 * [Repositorio de Xiomara Solari](https://github.com/Xiomara-Solari/PARCIALES_AED).
 
 ## Otros repositorios de alumnos de UTN a nivel nacional
+También adjunto repositorios de otros alumnos de la UTN a nivel nacional. Téngase en cuenta que pueden no tener los mismos ejercicios que hicimos nosotros, pero vale la pena enlazar a ellos igual:
 * [Repositorio de Ignacio Martinoli](https://github.com/ignamartinoli/aed).
