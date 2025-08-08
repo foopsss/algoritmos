@@ -15,7 +15,7 @@ Algunas cosas a considerar:
 
 Algunos de los ejercicios cuentan además con una versión escrita en [Rust](https://www.rust-lang.org/), el lenguaje de programación de sistemas de Mozilla. Dichas versiones se encuentran disponibles en otro de mis repositorios, [algoritmos-rs](https://github.com/foopsss/algoritmos-rs).
 
-## Otros repositorios
+## Otros repositorios de alumnos de la FRRe
 Adjunto otros repositorios con resoluciones de la guía práctica, e incluso ejercicios de parcial, para consultar maneras adicionales de encarar los ejercicios:
 
 * [Repositorio de Carlos Gomez](https://github.com/CarlosGomez2288/AED).
@@ -24,3 +24,6 @@ Adjunto otros repositorios con resoluciones de la guía práctica, e incluso eje
 * [Repositorio de Leonardo David Brabo](https://github.com/LeonardoBrabo/Algoritmos_Resueltos).
 * [Repositorio de Orianna Fernandez](https://github.com/OriannaF/Parcial_AyED_UTN).
 * [Repositorio de Xiomara Solari](https://github.com/Xiomara-Solari/PARCIALES_AED).
+
+## Otros repositorios de alumnos de UTN a nivel nacional
+* [Repositorio de Ignacio Martinoli](https://github.com/ignamartinoli/aed).
