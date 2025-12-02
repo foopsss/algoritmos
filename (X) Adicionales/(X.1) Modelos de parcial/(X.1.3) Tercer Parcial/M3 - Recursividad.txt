@@ -62,7 +62,7 @@ Proceso
 
     Inicializar()
 
-    Mientras q <> prim Hacer
+    Mientras *q.prox <> prim Hacer
         Si NO CumplePatrón(*q.dato, 0) Entonces
             Nuevo(p)
             *p.dato := *q.dato
@@ -79,12 +79,30 @@ Proceso
             
             ult_sal := p
             aux_sal := p
-        Fin Si        
+        Fin Si   
         
         q := *q.prox
     Fin Mientras
 
-    // Muestro la lista generada.
+    // Como estoy tratando una lista circular, debo revisar
+    // por separado el último nodo, debido al ciclo que utilicé
+    // para recorrerla.
+    Si NO CumplePatrón(*q.dato, 0) Entonces
+        Nuevo(p)
+        *p.dato := *q.dato
+        
+        Si prim_sal = NIL Entonces
+            *p.ant := NIL
+            *p.prox := NIL
+            prim_sal := p
+        Contrario
+            *aux_sal.prox := p
+            *p.ant := aux_sal
+            *p.prox := NIL
+        Fin Si
+    Fin Si
+
+    // Muestro la lista de salida generada.
     Escribir("Valores de los nodos de la lista de salida: ")
     r := prim_sal
 
