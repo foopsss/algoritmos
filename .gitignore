@@ -7,7 +7,8 @@
 # Regla para no ignorar directorios/carpetas.
 !*/
 
-# Regla para ignorar object files y unit files resultantes de compilar cosas con Free Pascal.
+# Regla para ignorar object files y unit files resultantes de compilar cosas
+# con Free Pascal.
 *.o
 *.ppu
 
