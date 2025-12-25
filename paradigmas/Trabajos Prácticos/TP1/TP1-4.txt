@@ -1,0 +1,23 @@
+Punto 4
+-------
+Evalúe los siguientes mensajes de palabras clave:
+
+a) 'Esto es una prueba' at: 3                     = $t (se para en el tercer carácter del string)
+b) 'Hola' includes: $o                            = true (verifica si el string incluye la letra "o")
+c) 'hola' at: 1 put: $H                           = 'Hola' (inserta el carácter 'H' en la primera posición)
+   * Sin embargo, téngase en cuenta que el retorno cuando se hace CTRL + P es "$H". Si se almacena en una variable y se inspecciona se puede ver el "Hola".
+d) 'Paradigmas de Programación' copyFrom: 4 to: 9 = 'adigma' (crea una copia del string entre las posiciones 4 y 9)
+e) #( 9 8 7 6 5 ) at: 3                           = 7
+f) #( 1 ( 2 3 ) 4 5 ) includes: #( 2 3 )          = true (verifica si el array tiene un sub-array con los elementos 2 y 3) 
+g) #( 9 8 7 6 5 ) copyFrom: 1 to: 2               = #(9 8) (crea una copia del array, o subarray, con los primeros dos elementos)
+h) Array new: 10                                  = #(nil nil nil nil nil nil nil nil nil nil) (crea un arreglo vacío de 10 elementos)
+
+NOTAS
+-----
+* Mensajes de palabra clave: mensajes donde hay una palabra clave que recibe un parámetro. Se tiene un objeto receptor y un selector.
+* La aparición de una palabra clave se identifica por los dos puntos luego de una frase.
+* Para comprobar lo del C, hacer:
+    | str_test |
+    str_test := 'hola'.
+    str_test at: 1 put: $H
+    str_test inspect

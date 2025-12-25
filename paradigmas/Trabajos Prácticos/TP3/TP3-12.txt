@@ -1,0 +1,101 @@
+Punto 12
+--------
+* Mostrar cuál es la vocal de mayor cantidad de ocurrencias en una frase.
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    (txt ~= 'NO' and: txt ~= nil) ifTrue: [
+        | arrlet arrlettilde arrcant arrind informe cantmas vocmas |.
+        txt := txt asLowercase.
+        arrlet := #($a $e $i $o $u).
+        arrlettilde := #($á $é $í $ó $ú).
+        arrcant := #(0 0 0 0 0).
+        cantmas := 0.
+
+        1 to: txt size do: [ :i |
+	        (arrlet includes: (txt at: i)) ifTrue: [
+		        arrind := arrlet indexOf: (txt at: i).
+		        arrcant at: arrind put: ((arrcant at: arrind) + 1).
+	        ].
+
+	        (arrlettilde includes: (txt at: i)) ifTrue: [
+		        arrind := arrlettilde indexOf: (txt at: i).
+		        arrcant at: arrind put: ((arrcant at: arrind) + 1).
+	        ].
+        ].
+
+        informe := 'Frase: '.
+        informe := informe, txt, '.'.
+
+        1 to: arrcant size do: [ :i |
+	        (cantmas < arrcant at: i) ifTrue: [
+		        cantmas := arrcant at: i.
+		        vocmas := arrlet at: i.
+	        ].
+        ].
+
+        informe := informe, Character cr asString.
+        informe := informe, 'La vocal que más se repite en la frase es: '.
+        informe := informe, '"', vocmas asString, '".'.
+
+        informe inspect.
+    ].
+
+    (txt = nil) ifTrue: [
+        ^'Ejecución del programa abortada.'.
+    ].
+
+* Mostrar cuál es la vocal de mayor cantidad de ocurrencias en una frase, pidiéndole al usuario que introduzca frases por pantalla hasta que la frase sea NIL o no se inserte una frase.
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt ~= nil ] whileTrue: [
+	    | arrlet arrlettilde arrcant arrind informe cantmas vocmas |.
+	    txt := txt asLowercase.
+	    arrlet := #($a $e $i $o $u).
+	    arrlettilde := #($á $é $í $ó $ú).
+	    arrcant := #(0 0 0 0 0).
+	    cantmas := 0.
+
+	    "Este ciclo es necesario para poder limpiar
+	    el arreglo en cada iteración. De lo contrario
+	    no se resetea y se van acumulando cantidades."
+	    1 to: arrcant size do: [ :i |
+		    arrcant at: i put: 0.
+	    ].
+
+	    1 to: txt size do: [ :i |
+		    (arrlet includes: (txt at: i)) ifTrue: [
+			    arrind := arrlet indexOf: (txt at: i).
+			    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+		    ].
+
+		    (arrlettilde includes: (txt at: i)) ifTrue: [
+			    arrind := arrlettilde indexOf: (txt at: i).
+			    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+		    ].
+	    ].
+
+	    informe := 'Frase: '.
+	    informe := informe, txt, '.'.
+
+	    1 to: arrcant size do: [ :i |
+		    (cantmas < arrcant at: i) ifTrue: [
+			    cantmas := arrcant at: i.
+			    vocmas := arrlet at: i.
+		    ].
+	    ].
+
+	    informe := informe, Character cr asString.
+	    informe := informe, 'La vocal que más se repite en la frase es: '.
+	    informe := informe, '"', vocmas asString, '".'.
+
+	    informe inspect.
+	    txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt = nil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].

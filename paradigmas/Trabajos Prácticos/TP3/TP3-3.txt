@@ -1,0 +1,186 @@
+Punto 3
+-------
+* Dada una frase, verificar si se trata de un palíndromo.
+
+    | txt txt2 arr |.
+    txt := 'Anita lava la tina'.
+    arr := txt substrings.
+    txt2 := ''.
+    1 to: arr size do: [ :i |
+	    txt2 := txt2, (arr at: i) asString.
+    ].
+    txt2 := txt2 asLowercase.
+    ^(txt2 = txt2 reverse).
+    ---------------------------------------------
+    | txt txt2 arr band |.
+    txt := 'Anita lava la tina'.
+    arr := txt substrings.
+    txt2 := ''.
+    band := 1.
+
+    1 to: arr size do: [ :i |
+	    txt2 := txt2, (arr at: i) asString.
+    ].
+    txt2 := txt2 asLowercase.
+
+    1 to: txt2 size do: [ :i |
+	    ((txt2 at: i) = (txt2 at: txt2 size + 1 - i)) ifFalse: [band := 0].
+    ].
+    ^band.
+    ---------------------------------------------
+    | txt band leftptr rightptr |.
+
+    txt := 'Anita lava la tina'.
+    txt := txt asUppercase.
+    band := 1.
+
+    leftptr := 1.
+    rightptr := txt size.
+
+    "La idea acá es controlar que no se choquen los punteros
+    y que no se itere más de lo necesario si ya se comprueba
+    que el string no es palíndromo."
+    [ leftptr < rightptr and: (band = 1) ] whileTrue: [
+	    [(txt at: leftptr) isSpaceSeparator]
+		    whileTrue: [ leftptr := leftptr + 1 ].
+
+	    [(txt at: rightptr) isSpaceSeparator]
+		    whileTrue: [ rightptr := rightptr - 1 ].
+
+	    ((txt at: leftptr) = (txt at: rightptr))
+		    ifFalse: [ band := 0 ].
+	    
+	    leftptr := leftptr + 1.
+	    rightptr := rightptr - 1.
+    ].
+
+    ^band.
+    ---------------------------------------------
+    ** Versión corregida por Gemini para no tener errores del tipo "out-of-bounds".**
+    
+    | txt band leftptr rightptr |.
+    txt := 'Anita lava la tina'.
+    txt := txt asUppercase.
+    band := 1.
+
+    leftptr := 1.
+    rightptr := txt size.
+
+    "La idea acá es controlar que no se choquen los punteros
+    y que no se itere más de lo necesario si ya se comprueba
+    que el string no es palíndromo."
+    [ (leftptr < rightptr) and: (band = 1) ] whileTrue: [
+        "Controlo que los punteros no apunten a caracteres en blanco y que
+        se mantenga la condición de que el puntero izquierdo es menor que
+        el puntero derecho, entonces no coinciden sus posiciones o se
+        sobrepasan, lo que no sería correcto."
+        ""
+        "Sin embargo, no se puede garantizar que esta condición se mantenga
+        luego de modificarlos acá."
+        [ (leftptr < rightptr) and: [(txt at: leftptr) isSpaceSeparator] ]
+            whileTrue: [ leftptr := leftptr + 1 ].
+
+        [ (leftptr < rightptr) and: [(txt at: rightptr) isSpaceSeparator] ]
+            whileTrue: [ rightptr := rightptr - 1 ].
+
+        "Ahora que los punteros no apuntan a caracteres que sean espacios
+        en blanco, verifico que no coincidan o se sobrepasen y luego
+        verifico si son iguales."
+        ""
+        "De esta forma, si los punteros apuntan a posiciones inválidas o
+        se cruzan/coinciden, no opero innecesariamente, y luego de
+        incrementar sus valores ya voy a salir del ciclo principal."
+        (leftptr < rightptr) ifTrue: [
+            ((txt at: leftptr) = (txt at: rightptr))
+                ifFalse: [ band := 0 ].
+        ].
+
+        leftptr := leftptr + 1.
+        rightptr := rightptr - 1.
+    ].
+
+    ^band.
+
+* Dada una frase, verificar si se trata de un palíndromo, considerando que hay otros caracteres a eliminar.
+
+    | txt txt2 band arr |.
+    txt := 'Eva, ya hay ave'.
+    txt2 := ''.
+    band := 1.
+    arr := #($. $, $; $ ).
+
+    txt do: [ :car |
+	    (arr includes: car)
+		    ifFalse: [ txt2 := txt2, car asString ].
+    ].
+
+    txt2 := txt2 asLowercase.
+    (txt2 = txt2 reverse) ifFalse: [ band := 0 ].
+    ^band.
+    ---------------------------------------------
+    | txt txt2 band arr leftptr rightptr |.
+    txt := 'Eva, ya hay ave'.
+    txt2 := ''.
+    band := 1.
+    arr := #($. $, $; $ ).
+
+    txt do: [ :car |
+        (arr includes: car)
+	        ifFalse: [ txt2 := txt2, car asString ].
+    ].
+
+    txt2 := txt2 asLowercase.
+    leftptr := 1.
+    rightptr := txt2 size.
+
+    "La idea acá es controlar que no se choquen los punteros
+    y que no se itere más de lo necesario si ya se comprueba
+    que el string no es palíndromo."
+    [ leftptr < rightptr and: (band = 1) ] whileTrue: [
+        ((txt2 at: leftptr) = (txt2 at: rightptr))
+	        ifFalse: [ band := 0 ].
+        
+        leftptr := leftptr + 1.
+        rightptr := rightptr - 1.
+    ].
+
+    ^band.
+
+* Dada una frase, verificar si se trata de un palíndromo, considerando que hay otros caracteres a eliminar, incluidas letras con tilde.
+
+    | txt txt2 arr arr2 arr3 band arrind leftptr rightptr |
+    txt := 'A la catalana banal, atácala' asLowercase.
+    txt2 := ''.
+    arr := #($á $é $í $ó $ú).
+    arr2 := #($a $e $i $o $u).
+    arr3 := #($. $, $; $ ).
+    band := 1.
+
+    txt do: [ :car |
+        (arr3 includes: car)
+            ifFalse: [ txt2 := txt2, car asString ].
+    ].
+
+    1 to: txt2 size do: [ :i |
+	    (arr includes: (txt2 at: i))
+		    ifTrue: [
+			    arrind := arr indexOf: (txt2 at: i).
+			    txt2 at: i put: (arr2 at: arrind).
+		    ].
+    ].
+
+    leftptr := 1.
+    rightptr := txt2 size.
+
+    "La idea acá es controlar que no se choquen los punteros
+    y que no se itere más de lo necesario si ya se comprueba
+    que el string no es palíndromo."
+    [ leftptr < rightptr and: (band = 1) ] whileTrue: [
+        ((txt2 at: leftptr) = (txt2 at: rightptr))
+            ifFalse: [ band := 0 ].
+        
+        leftptr := leftptr + 1.
+        rightptr := rightptr - 1.
+    ].
+
+    ^band.

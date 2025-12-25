@@ -1,0 +1,39 @@
+Punto 1
+-------
+* Convertir el string 'eSto ES uN strING de PRUEba' para que todos los caracteres estén en mayúscula.
+
+    | txt |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    1 to: txt size do: [ :i |
+	    (txt at: i) isUppercase ifFalse: [
+		    txt at: i put: (txt at: i) asUppercase
+	    ].
+    ].
+    ^txt (o 'txt.')
+    -------------------------------------------------------------
+    | txt txt2 |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    txt2 := ''.
+    txt do: [ :car |
+	    txt2 := txt2, car asUppercase asString
+    ].
+    ^txt2 (o 'txt2.')
+
+* Convertir el string 'eSto ES uN strING de PRUEba' para que todos los caracteres estén en minúscula.
+
+    | txt |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    1 to: txt size do: [ :i |
+	    (txt at: i) isLowercase ifFalse: [
+		    txt at: i put: (txt at: i) asLowercase
+	    ].
+    ].
+    ^txt (o 'txt.')
+    -------------------------------------------------------------
+    | txt txt2 |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    txt2 := ''.
+    txt do: [ :car |
+	    txt2 := txt2, car asLowercase asString
+    ].
+    ^txt2 (o 'txt2.')

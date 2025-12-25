@@ -1,0 +1,15 @@
+Punto 9
+-------
+Expresiones booleanas:
+ 
+a) 5 < 2 or: [ $a isVowel ]                                = true
+b) 5 < 2                                                   = false
+c) (5 < 2) not                                             = true
+d) 5 < 2 and: [ $a isVowel ]                               = false
+e) (5 < 2) not and: [ $a isVowel ]                         = true
+f) (5 < 2) not or: [ 'hola' size < 2 and: [ $a isVowel ] ] = true
+
+NOTAS
+-----
+* Puedo usar los corchetes para agrupar código y mandarlo como parámetro, como en el ejercicio a).
+* En el ejercicio a) se usan los paréntesis para alterar el orden de evaluación, de manera que primero se pueda obtener un valor booleano y luego negarlo.

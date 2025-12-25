@@ -1,0 +1,22 @@
+Punto 2
+-------
+* Convertir el string 'eSto ES uN strING de PRUEba' de modo que los caracteres que están en mayúscula queden en minúscula, y viceversa.
+
+    | txt |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    1 to: txt size do: [ :i |
+        (txt at: i) isUppercase
+		    ifFalse: [txt at: i put: (txt at: i) asUppercase]
+		    ifTrue: [txt at: i put: (txt at: i) asLowercase].
+    ].
+    ^txt
+    -------------------------------------------------------------
+    | txt txt2 |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    txt2 := ''.
+    txt do: [ :car |
+        car isUppercase
+            ifFalse: [txt2 := txt2, car asUppercase asString]
+            ifTrue: [txt2 := txt2, car asLowercase asString].
+    ].
+    ^txt2

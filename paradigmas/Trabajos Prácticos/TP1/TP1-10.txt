@@ -1,0 +1,9 @@
+Punto 10
+--------
+¿Cómo se sabe a qué clase pertenece cada objeto? Evalúe las expresiones:
+
+a) #(Francesca Jackie Marisa Bree) class     = Array
+b) 'Rakesh Vijay Charles Daniel Tyler' class = ByteString
+c) 5 class                                   = SmallInteger
+d) (1/2) class                               = Fraction
+e) 5.2 class                                 = SmallFloat64

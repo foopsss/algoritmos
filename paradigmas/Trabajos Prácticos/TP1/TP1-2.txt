@@ -1,0 +1,20 @@
+Punto 2
+-------
+Evalúe los siguientes mensajes unarios:
+
+a) #( 'arreglo' 'de' 'strings' ) size          = 3
+b) 'Hoy es Jueves' asUppercase                 = 'HOY ES JUEVES'
+c) 'hola aquí estoy' reversed                  = 'yotse íuqa aloh'
+d) #( 4 'cinco' 6 7 ) reversed                 = #(7 6 'cinco' 4)
+e) $A asciiValue                               = 65
+f) 65 asCharacter                              = $A
+g) 'cuál es la longitud de esta oración?' size = 36
+
+NOTAS
+-----
+* Mensajes unarios: mensajes que van dirigidos a un objeto receptor y constan del objeto y el mensaje en sí mismo, sin ninguna otra información.
+* Los métodos en Pharo se escriben con notación camelCase.
+* Un elemento precedido por un símbolo $ denota un carácter.
+* Links útiles:
+  * https://dev.to/pancy/learn-oop-with-smalltalk-1781
+  * https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_Languages/Book%3A_Pharo_by_Example_5.0_(Ducasse_Zagidulin_Hess_and_Chloupis)/05%3A_Understanding_Message_Syntax/5.02%3A_Three_Types_of_Messages

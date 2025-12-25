@@ -1,0 +1,321 @@
+Punto 4
+-------
+* Contar la cantidad de vocales de una frase.
+
+    | txt voc |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    voc := 0.
+    1 to: txt size do: [ :i |
+        (txt at: i) isVowel ifTrue: [ voc := voc + 1 ].
+    ].
+    ^voc
+    -------------------------------------------------------------
+    | txt voc |.
+    txt := 'eSto ES uN strING de PRUEba'.
+    voc := 0.
+    txt do: [ :car |
+	    car isVowel ifTrue: [ voc := voc + 1 ].
+    ].
+    ^voc
+
+* Mostrar la cantidad de cada vocal presente en una frase.
+
+    | txt arrlet arrcant cantvoc |.
+    txt := 'eSto ES uN strING de PRUEba' asLowercase.
+    arrlet := #($a $e $i $o $u).
+    arrcant := #(0 0 0 0 0).
+    cantvoc := ''.
+
+    1 to: txt size do: [ :i |
+	    | arrind |.
+	    (arrlet includes: (txt at: i))
+		    ifTrue: [
+			    arrind := arrlet indexOf: (txt at: i).
+			    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+		    ].
+    ].
+
+    1 to: arrcant size do: [ :i |
+	    cantvoc := cantvoc, 'Cant. de '.
+	    cantvoc := cantvoc, (arrlet at: i) asUppercase asString.
+	    cantvoc := cantvoc, ': '.
+	    cantvoc := cantvoc, (arrcant at: i) asString.
+	    cantvoc := cantvoc, '; '.
+    ].
+
+    ^cantvoc.
+
+* Mostrar la cantidad de cada vocal presente en una frase (contando tildes).
+
+    | txt arrlet arrlettilde arrcant cantvoc |.
+    txt := 'eSto ES uN strING de PRUEbaá ASÍ BRO' asLowercase.
+    arrlet := #($a $e $i $o $u).
+    arrlettilde := #($á $é $í $ó $ú).
+    arrcant := #(0 0 0 0 0).
+    cantvoc := ''.
+
+    1 to: txt size do: [ :i |
+        | arrind |.
+        (arrlet includes: (txt at: i))
+            ifTrue: [
+                arrind := arrlet indexOf: (txt at: i).
+                arrcant at: arrind put: ((arrcant at: arrind) + 1).
+            ].
+
+        (arrlettilde includes: (txt at: i))
+            ifTrue: [
+                arrind := arrlettilde indexOf: (txt at: i).
+                arrcant at: arrind put: ((arrcant at: arrind) + 1).
+            ].
+    ].
+
+    1 to: arrcant size do: [ :i |
+        cantvoc := cantvoc, 'Cant. de '.
+        cantvoc := cantvoc, (arrlet at: i) asUppercase asString.
+        cantvoc := cantvoc, ': '.
+        cantvoc := cantvoc, (arrcant at: i) asString.
+        cantvoc := cantvoc, '; '.
+    ].
+
+    ^cantvoc.
+
+* Mostrar la cantidad de cada vocal presente en una frase, pidiéndole al usuario que introduzca frases por pantalla hasta que la frase sea NIL o no se inserte una frase.
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt ~= nil ] whileTrue: [
+         | arrlet arrlettilde arrcant cantvoc |.
+        txt := txt asLowercase.
+        arrlet := #($a $e $i $o $u).
+        arrlettilde := #($á $é $í $ó $ú).
+        arrcant := #(0 0 0 0 0).
+        cantvoc := ''.
+
+        "Este ciclo es necesario para poder limpiar
+        el arreglo en cada iteración. De lo contrario
+        no se resetea y se van acumulando cantidades."
+        1 to: arrcant size do: [ :i |
+            arrcant at: i put: 0.
+        ].
+
+        1 to: txt size do: [ :i |
+            | arrind |.
+            (arrlet includes: (txt at: i))
+                ifTrue: [
+                    arrind := arrlet indexOf: (txt at: i).
+                    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+                ].
+
+            (arrlettilde includes: (txt at: i))
+                ifTrue: [
+                    arrind := arrlettilde indexOf: (txt at: i).
+                    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+                ].
+        ].
+
+        cantvoc := cantvoc, 'Palabra: '.
+        cantvoc := cantvoc, txt.
+        cantvoc := cantvoc, ' | '.
+
+        1 to: arrcant size do: [ :i |
+            cantvoc := cantvoc, 'Cant. de '.
+            cantvoc := cantvoc, '"'.
+            cantvoc := cantvoc, (arrlet at: i) asString.
+            cantvoc := cantvoc, '"'.
+            cantvoc := cantvoc, ': '.
+            cantvoc := cantvoc, (arrcant at: i) asString.
+            cantvoc := cantvoc, ' ; '.
+        ].
+
+        cantvoc inspect.
+        txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt = nil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].
+    ---------------------------------------------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt isNil not ] whileTrue: [
+         | arrlet arrlettilde arrcant cantvoc |.
+        txt := txt asLowercase.
+        arrlet := #($a $e $i $o $u).
+        arrlettilde := #($á $é $í $ó $ú).
+        arrcant := #(0 0 0 0 0).
+        cantvoc := ''.
+
+        "Este ciclo es necesario para poder limpiar
+        el arreglo en cada iteración. De lo contrario
+        no se resetea y se van acumulando cantidades."
+        1 to: arrcant size do: [ :i |
+            arrcant at: i put: 0.
+        ].
+
+        1 to: txt size do: [ :i |
+            | arrind |.
+            (arrlet includes: (txt at: i))
+                ifTrue: [
+                    arrind := arrlet indexOf: (txt at: i).
+                    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+                ].
+
+            (arrlettilde includes: (txt at: i))
+                ifTrue: [
+                    arrind := arrlettilde indexOf: (txt at: i).
+                    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+                ].
+        ].
+
+        cantvoc := cantvoc, 'Palabra: '.
+        cantvoc := cantvoc, txt.
+        cantvoc := cantvoc, ' | '.
+
+        1 to: arrcant size do: [ :i |
+            cantvoc := cantvoc, 'Cant. de '.
+            cantvoc := cantvoc, '"'.
+            cantvoc := cantvoc, (arrlet at: i) asString.
+            cantvoc := cantvoc, '"'.
+            cantvoc := cantvoc, ': '.
+            cantvoc := cantvoc, (arrcant at: i) asString.
+            cantvoc := cantvoc, ' ; '.
+        ].
+
+        cantvoc inspect.
+        txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt isNil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].
+    ---------------------------------------------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt ~= nil ] whileTrue: [
+	    | dict car currval informe |.
+	    dict := Dictionary newFrom: { $a -> 0. $e -> 0. $i -> 0. $o -> 0. $u -> 0 }.
+	    txt := txt asLowercase.
+	    
+	    1 to: txt size do: [ :i |
+		    car := txt at: i.
+		    (dict includesKey: car) ifTrue: [
+			    currval := dict at: car.
+			    dict at: car put: currval + 1.
+		    ].
+	    ].
+
+	    informe := 'Frase: ', txt.
+	    informe := informe, ' | '.
+	    
+	    'aeiou' do: [ :let |
+		    informe := informe, 'Cant. de '.
+		    informe := informe, '"'.
+		    informe := informe, let asString.
+		    informe := informe, '"'.
+		    informe := informe, ': '.
+		    informe := informe, (dict at: let) asString.
+		    informe := informe, ' ; '.
+	    ].
+	    
+	    informe inspect.
+	    txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt = nil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].
+    ---------------------------------------------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt ~= nil ] whileTrue: [
+	    | arrlet arrlettilde arrcant vocales arrind informe |.
+	    txt := txt asLowercase.
+	    arrlet := #($a $e $i $o $u).
+	    arrlettilde := #($á $é $í $ó $ú).
+	    arrcant := #(0 0 0 0 0).
+
+        "Este ciclo es necesario para poder limpiar
+        el arreglo en cada iteración. De lo contrario
+        no se resetea y se van acumulando cantidades."
+        1 to: arrcant size do: [ :i |
+            arrcant at: i put: 0.
+        ].
+
+	    vocales := txt select: [ :car |
+		    (arrlet includes: car) or: (arrlettilde includes: car)
+	    ].
+	    
+	    vocales do: [ :car |
+		    (arrlet includes: car) ifTrue: [
+			    arrind := arrlet indexOf: car.
+			    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+		    ].
+
+		    (arrlettilde includes: car) ifTrue: [
+			    arrind := arrlettilde indexOf: car.
+			    arrcant at: arrind put: ((arrcant at: arrind) + 1).
+		    ].
+	    ].
+
+	    informe := 'Frase: ', txt.
+	    informe := informe, ' | '.
+
+	    1 to: arrcant size do: [ :i |
+		    informe := informe, 'Cant. de '.
+		    informe := informe, '"'.
+		    informe := informe, (arrlet at: i) asString.
+		    informe := informe, '"'.
+		    informe := informe, ': '.
+		    informe := informe, (arrcant at: i) asString.
+		    informe := informe, ' ; '.
+	    ].
+
+	    informe inspect.
+	    txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt = nil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].
+    ---------------------------------------------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una palabra ("NO" para salir): '.
+
+    [ txt ~= 'NO' and: txt ~= nil ] whileTrue: [
+	    | dict car currval informe |.
+	    dict := Dictionary newFrom: { $a -> 0. $e -> 0. $i -> 0. $o -> 0. $u -> 0. $á -> 0. $é -> 0. $í -> 0. $ó -> 0. $ú -> 0 }.
+	    txt := txt asLowercase.
+	    
+	    1 to: txt size do: [ :i |
+		    car := txt at: i.
+		    (dict includesKey: car) ifTrue: [
+			    currval := dict at: car.
+			    dict at: car put: currval + 1.
+		    ].
+	    ].
+	    
+	    informe := 'Frase: '.
+	    informe := informe, txt, '.'.
+	    informe := informe, Character cr asString.
+	    
+	    'aeiouáéíóú' do: [ :let |
+		    informe := informe, 'Cant. de '.
+		    informe := informe, '"'.
+		    informe := informe, let asString.
+		    informe := informe, '"'.
+		    informe := informe, ': '.
+		    informe := informe, (dict at: let) asString, '.'.
+		    informe := informe, Character cr asString.
+	    ].
+	    
+	    informe inspect.
+	    txt := UIManager default request: 'Introduzca otra palabra ("NO" para salir): '.
+    ].
+
+    (txt = nil) ifTrue: [
+	    ^'Ejecución del programa abortada.'.
+    ].

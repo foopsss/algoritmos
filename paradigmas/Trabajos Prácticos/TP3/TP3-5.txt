@@ -1,0 +1,29 @@
+Punto 5
+-------
+* Ingresar dos cadenas y devolver una tercera que contenga los elementos de las dos anteriores, pero intercalados.
+
+    | txt1 txt2 txt3 cont1 cont2 |.
+    txt1 := '135795'.
+    txt2 := '24680624'.
+    txt3 := ''.
+    cont1 := 1.
+    cont2 := 1.
+
+    [ (cont1 <= txt1 size) and: (cont2 <= txt2 size) ] whileTrue: [
+	    txt3 := txt3, (txt1 at: cont1) asString.
+	    txt3 := txt3, (txt2 at: cont2) asString.
+	    cont1 := cont1 + 1.
+	    cont2 := cont2 + 1.
+    ].
+
+    [ cont1 <= txt1 size ] whileTrue: [
+	    txt3 := txt3, (txt1 at: cont1) asString.
+	    cont1 := cont1 + 1.
+    ].
+
+    [ cont2 <= txt2 size ] whileTrue: [
+	    txt3 := txt3, (txt2 at: cont2) asString.
+	    cont2 := cont2 + 1.
+    ].
+
+    ^txt3.

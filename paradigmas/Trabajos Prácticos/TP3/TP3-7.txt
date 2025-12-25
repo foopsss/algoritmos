@@ -1,0 +1,28 @@
+Punto 7
+-------
+* Convertir un número en el sistema decimal al sistema binario.
+
+    | num div |.
+    num := 13.
+    div := ''.
+
+    [ (num // 2) ~= 0 ] whileTrue: [
+	    div := div, (num \\ 2) asString.
+	    num := num // 2.
+    ].
+
+    div := div, (num \\ 2) asString.
+    div := div reverse.
+    ^div.
+    -------------------------------------------------------------
+    | num div |.
+    num := 23.
+    div := ''.
+
+    [ num ~= 0 ] whileTrue: [
+	    div := div, (num \\ 2) asString.
+	    num := num // 2.
+    ].
+
+    div := div reverse.
+    ^div.

@@ -1,0 +1,18 @@
+Punto 6
+-------
+Variables globales, que siempre empiezan con mayúscula. Evaluarlas una a una verificando los resultados:
+
+a) Display         = DisplayScreen(1920x1080x32) (de clase DisplayScreen)
+b) Transcript      = Transcript (de clase ThreadSafeTranscript)
+c) Debug           = Variable desconocida, se la puede definir
+d) Disk            = Variable desconocida, se la puede definir
+e) Distancia       = Variable desconocida, se la puede definir
+f) Distancia := 15 = 15 (si se la define como nueva variable global)
+
+NOTAS
+-----
+* Para este ejercicio se requiere Pharo 8. En Pharo 13 no funcionan la mayoría de estas variables globales.
+* Símbolo: cadena de caracteres sin restricciones de valores que la pueden componer. Se usan como identificadores para nombrar clases, métodos, variables, etc.
+  * Si quiero averiguar el valor de una variable global, también puedo hacer algo como "Smalltalk at:#Distancia"
+  * Se pueden remover variables globales haciendo "Smalltalk globals removeKey:#nombre_llave".
+* La notación ":=" se usa para apuntar (hacer referencia a la ubicación en la memoria) al objeto que está del lado derecho de la expresión.
