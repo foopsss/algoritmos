@@ -1,5 +1,5 @@
 # utn
-En este repositorio almaceno ejercicios hechos durante el cursado de distintas materias en la carrera de Ingeniería en Sistemas de Información de la UTN FRRe. Acá se pueden encontrar ejercicios de las siguientes materias:
+En este repositorio almaceno ejercicios hechos durante el cursado de distintas materias en la carrera de Ingeniería en Sistemas de Información de la UTN FRRe. Acá se pueden encontrar ejercicios de las siguientes materias actualmente:
 
 * Algoritmos y Estructuras de Datos (carpeta "algoritmos").
 
