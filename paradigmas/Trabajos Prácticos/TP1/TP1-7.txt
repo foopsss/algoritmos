@@ -1,0 +1,10 @@
+Punto 7
+-------
+Comparando objetos. Evaluar cada uno, verificar resultados y en caso de error indicar la expresión correcta.
+
+a) 3 < 4                    = true
+b) #( 1 2 3 4) = #(1 2 3 4) = true
+c) 'hola' <= 'adios'        = false
+   * Raro, porque 'hola' size <= 'adios' size sí da como resultado true.
+d) 5 = 2 + 3                = Provoca error. La expresión correcta es "5 = (2 + 3)" y el resultado es true. 
+e) 5 = (2 + 3)              = true

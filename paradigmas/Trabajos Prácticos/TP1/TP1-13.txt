@@ -1,0 +1,15 @@
+Punto 13
+--------
+Condicionales. Verifique estas expresiones:
+
+a) 3 < 4 ifTrue: ['el bloque verdadero']
+            ifFalse: ['el bloque falso']   = 'el bloque verdadero'
+b) (5 > 2) ifTrue:[^'5 es MAYOR que 2']
+            ifFalse:[^'5 es menor que 2']. = '5 es MAYOR que 2'
+c) $b isVowel ifTrue:[^'es una vocal']
+            ifFalse:[^'es una consonante'] = 'es una consonante'
+
+NOTAS
+-----
+* El acento circunflejo (^), como el que se ve en el ejercicio b), es una instrucción de retorno que corta la ejecución del programa y devuelve lo que se encuentra justo a su derecha.
+* En los ejercicios a) y b), las comparaciones numéricas son objetos que tienen las clases True o False, y a esos se les manda los mensajes ifTrue e ifFalse.

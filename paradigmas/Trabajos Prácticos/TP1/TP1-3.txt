@@ -1,0 +1,13 @@
+Punto 3
+-------
+Evalúe los siguientes mensajes binarios:
+
+a) 'hola', ' aquí estoy' = 'hola aquí estoy'
+b) #(1 2 3), #(4 5 6)    = #(1 2 3 4 5 6)
+c) 4 = 5                 = false 
+d) #(1 2 $a), #($b 'cd') = #(1 2 $a $b 'cd')
+
+NOTAS
+-----
+* Mensajes binarios: aquellos que tienen dos objetos, que pueden estar tanto a la izquierda como a la derecha del mensaje.
+* Cuando se tienen métodos definidos para distintas clases, se va a ejecutar la versión definida para el objeto receptor.

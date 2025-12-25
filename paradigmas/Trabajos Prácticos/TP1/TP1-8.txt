@@ -1,0 +1,29 @@
+Punto 8
+-------
+Bloques de código (recordar que un bloque puede tener argumentos):
+
+a) [ $a isVowel ] value                                  = true
+b) [ $b isVowel ] value                                  = false
+c) [ 3+4 . 'hola' asUpperCase ] value                    = 'HOLA'
+d) | bloque |
+   bloque:=[ 'Hola ', ' como estás ?' ].
+   ^bloque value.                                        = 'Hola  como estás ?'
+e) [ :c | c isVowel ] value: $a                          = true
+f) [ :c | c isVowel ] value: $b                          = false
+g) | bloque resp |                                       = 
+   bloque := [ :a :b | a , b].
+   resp := bloque value: 'Hola ' value: ' como estás ?'.
+   ^resp                                                 = 'Hola  como estás ?'
+   
+NOTAS
+-----
+* En los ejercicios a) y b), "value" se usa para ejecutar los bloques de código definidos entre llaves. En los ejercicios e) y f) se usa para pasar valores a los parámetros.
+* La notación "| nombre |" se usa para declarar/inicializar variables locales.
+* El punto se usa para separar varias sentencias u operaciones entre llaves, pero solo se va a mostrar el resultado de la última operación.
+
+VARIANTES DE EJERCICIOS
+-----------------------
+g.1) | bloque resp |.
+     bloque := [ :a :b | a , b].
+     resp := bloque value: #(3 4) value: ' como estás ?'.
+     ^resp

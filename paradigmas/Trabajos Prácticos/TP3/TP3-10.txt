@@ -1,0 +1,166 @@
+Punto 10
+--------
+* A partir de una frase ingresada por el usuario, contar la cantidad de palabras que terminan con una determinada letra (también ingresada por el usuario).
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una frase ("NO" para salir): '.
+
+    (txt ~= 'NO') ifTrue: [
+        | letra cantpal wordptr |.
+        letra := UIManager default request: 'Introduzca una letra: '.
+        txt := txt asLowercase.
+        letra := letra asLowercase.
+        cantpal := 0.
+        wordptr := 1.
+        
+        [wordptr < txt size] whileTrue: [
+	        [ (txt at: wordptr) isSpaceSeparator and: wordptr < txt size ] whileTrue: [
+		        wordptr := wordptr + 1.
+	        ].
+
+	        [ (txt at: wordptr) isSpaceSeparator not and: wordptr < txt size ] whileTrue: [
+		        ((txt at: wordptr + 1) isSpaceSeparator and: (txt at: wordptr) asString = letra) ifTrue: [
+		            cantpal := cantpal + 1.
+		        ].
+		        wordptr := wordptr + 1.
+	        ].
+        ].
+
+        "Cuando salgo del ciclo anterior el puntero wordptr debería
+        estar ubicado en el último carácter del texto, el cual no
+        puedo revisar en dicho ciclo por la condición establecida
+        para recorrer el texto. Lo hago acá."
+        (wordptr = txt size) ifTrue: [
+	        ((txt at: wordptr) asString = letra) ifTrue: [
+	            cantpal := cantpal + 1.
+	        ].
+        ].
+
+        ^cantpal.
+    ].
+    ---------------------------------------------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una frase ("NO" para salir): '.
+
+    (txt ~= 'NO') ifTrue: [
+        | arr letra cantpal elemsize lastletter |.
+        letra := UIManager default request: 'Introduzca una letra: '.
+        letra := letra asLowercase.
+        arr := txt asLowercase substrings.
+        cantpal := 0.
+
+        1 to: arr size do: [ :i |
+            elemsize := (arr at: i) size.
+            lastletter := ((arr at: i) at: elemsize) asString.
+            (lastletter = letra) ifTrue: [
+                cantpal := cantpal + 1.
+            ].
+        ].
+
+        ^cantpal.
+    ].
+
+* Dado un texto, se pide:
+  * Obtener la posición inicial de la palabra más larga.
+  * Obtener la longitud del texto.
+  * Obtener cuantas palabras con una longitud de entre 8 y 16 caracteres poseen más de tres veces la vocal "a".
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una frase ("NO" para salir): '.
+
+    (txt ~= 'NO') ifTrue: [
+        | wordptr informe iniciopal posinpal cantcarpal posin_maslarg cantcar_maslarg pal palmaslarga canta cantpalvoc |.
+        wordptr := 1.
+        cantpalvoc := 0.
+        posin_maslarg := 0.
+        cantcar_maslarg := 0.
+
+        [wordptr < txt size] whileTrue: [
+            [ (txt at: wordptr) isSpaceSeparator and: wordptr < txt size ] whileTrue: [
+                wordptr := wordptr + 1.
+            ].
+
+            iniciopal := 1.
+            cantcarpal := 0.
+            pal := ''.
+            canta := 0.
+
+            [ (txt at: wordptr) isSpaceSeparator not and: wordptr < txt size ] whileTrue: [
+                (iniciopal = 1) ifTrue: [
+                    posinpal := wordptr.
+                    iniciopal := 0.
+                ].
+                pal := pal, (txt at: wordptr) asString.
+                cantcarpal := cantcarpal + 1.
+                wordptr := wordptr + 1.
+            ].
+
+            (cantcar_maslarg < cantcarpal) ifTrue: [
+                posin_maslarg := posinpal.
+                cantcar_maslarg := cantcarpal.
+                palmaslarga := pal.
+            ].
+
+            (pal size > 7 and: pal size <= 16) ifTrue: [
+                1 to: pal size do: [ :i |
+                    (#($a $A $á $Á) includes: (pal at: i)) ifTrue: [
+                        canta := canta + 1.
+                    ].
+                ].
+
+                (canta > 3) ifTrue: [
+                    cantpalvoc := cantpalvoc + 1.
+                ].
+            ].
+        ].
+
+        "Cuando salgo del ciclo anterior el puntero wordptr debería
+        estar ubicado en el último carácter del texto, el cual no
+        puedo revisar en dicho ciclo por la condición establecida
+        para recorrer el texto. Lo hago acá."
+        (wordptr = txt size) ifTrue: [
+            "Necesito asegurarme de que este caracter es una continuación
+            de la palabra que venía procesando antes de salir del ciclo,
+            asumiendo que sea eso. Si es un espacio no me importa."
+            ((txt at: wordptr) isSpaceSeparator not) ifTrue: [
+                pal := pal, (txt at: wordptr) asString.
+                cantcarpal := cantcarpal + 1.
+
+                (cantcar_maslarg < cantcarpal) ifTrue: [
+                    posin_maslarg := posinpal.
+                    cantcar_maslarg := cantcarpal.
+                    palmaslarga := pal.
+                ].
+
+                (pal size > 7 and: pal size <= 16) ifTrue: [
+                    1 to: pal size do: [ :i |
+                        (#($a $A $á $Á) includes: (pal at: i)) ifTrue: [
+                            canta := canta + 1.
+                        ].
+                    ].
+
+                    (canta > 3) ifTrue: [
+                        cantpalvoc := cantpalvoc + 1.
+                    ].
+                ].
+            ].
+        ].
+
+        informe := 'Cantidad de caracteres de la frase: '.
+        informe := informe, txt size asString, ' caracteres.'.
+        informe := informe, Character cr asString.
+        informe := informe, Character cr asString.
+        informe := informe, 'Posición inicial de la palabra más larga: carácter '.
+        informe := informe, posin_maslarg asString, '.'.
+        informe := informe, Character cr asString.
+        informe := informe, Character cr asString.
+        informe := informe, 'La palabra más larga tiene ', cantcar_maslarg asString, ' caracteres.'.
+        informe := informe, Character cr asString.
+        informe := informe, Character cr asString.
+        informe := informe, 'La palabra más larga es: ', palmaslarga, '.'.
+        informe := informe, Character cr asString.
+        informe := informe, Character cr asString.
+        informe := informe, 'Hay un total de ', cantpalvoc asString, ' palabra/s que tienen una longitud de entre 8 y 16 caracteres y poseen más de tres veces la vocal «a».'.
+
+        ^informe inspect.
+    ].

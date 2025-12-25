@@ -1,0 +1,55 @@
+Punto 9
+-------
+* A partir de una frase ingresada por el usuario, contar la cantidad de palabras que empiezan con una determinada letra (también ingresada por el usuario).
+
+    | txt |.
+    txt := UIManager default request: 'Introduzca una frase ("NO" para salir): '.
+
+    (txt ~= 'NO') ifTrue: [
+	    | letra cantpal wordptr firstletter |.
+	    letra := UIManager default request: 'Introduzca una letra: '.
+	    txt := txt asLowercase.
+	    letra := letra asLowercase.
+	    cantpal := 0.
+	    wordptr := 1.
+	    
+	    [wordptr < txt size] whileTrue: [
+		    [ (txt at: wordptr) isSpaceSeparator and: wordptr < txt size ] whileTrue: [
+			    wordptr := wordptr + 1.
+		    ].
+	    
+		    firstletter := 1.
+	    
+		    [ (txt at: wordptr) isSpaceSeparator not and: wordptr < txt size ] whileTrue: [
+			    (firstletter = 1) ifTrue: [
+				    firstletter := 0.
+				    "letra es un string, por lo que el carácter también tiene que ser un
+				    string para comparar."
+				    ((txt at: wordptr) asString = letra) ifTrue: [cantpal := cantpal + 1].
+			    ].
+			    wordptr := wordptr + 1.
+		    ].
+	    ].
+
+	    ^cantpal.
+    ].
+    -------------------------------------------------------------
+    | txt |.
+    txt := UIManager default request: 'Introduzca una frase ("NO" para salir): '.
+
+    (txt ~= 'NO') ifTrue: [
+	    | arr letra cantpal primlet |.
+	    letra := UIManager default request: 'Introduzca una letra: '.
+	    arr := txt asLowercase substrings.
+	    letra := letra asLowercase.
+	    cantpal := 0.
+
+	    1 to: arr size do: [ :i |
+		    primlet := ((arr at: i) at: 1) asString.
+		    (primlet = letra) ifTrue: [
+			    cantpal := cantpal + 1.
+		    ].
+	    ].
+
+	    ^cantpal.
+    ].

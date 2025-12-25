@@ -1,0 +1,61 @@
+Punto 8
+-------
+* Dada una frase, contar la cantidad de palabras en mayúsculas (usando el mensaje "substrings").
+
+    | txt arr cont band |.
+    txt := ' hola MUNDO hermoso que ALEGRIA vivir HOY jaJ '.
+    arr := txt substrings.
+    cont := 0.
+    1 to: (arr size) do: [ :i |
+	    band := 1.
+	    (arr at: i) do: [ :car |
+		    car isLowercase ifTrue: [ band := 0 ]. 
+	    ].
+	    (band = 1) ifTrue: [ cont := cont + 1 ].
+    ].
+    ^cont
+    -------------------------------------------------------------
+    | txt cont esMay |
+    txt := ' hola MUNDO hermoso que ALEGRIA vivir HOY jaJ '.
+    cont := 0.
+    txt substrings do: [ :palabra |
+	    esMay := true.
+	    palabra do: [ :car |
+		    car isLowercase ifTrue: [ esMay := false ].
+	    ].
+	    esMay ifTrue: [ cont := cont + 1 ].
+    ].
+    ^cont.
+
+* Dada una frase, contar la cantidad de palabras en mayúsculas (sin usar el mensaje "substrings").
+
+    | txt wordptr cont band |
+    txt := ''.
+    wordptr := 1.
+    cont := 0.
+
+    [wordptr < txt size] whileTrue: [
+	    [ (txt at: wordptr) isSpaceSeparator and: wordptr < txt size ] whileTrue: [
+		    wordptr := wordptr + 1.
+	    ].
+
+	    "Este chequeo de acá es para asegurarme de que tengo
+	    una palabra para controlar, y no tengo únicamente un
+	    string de espacios en blanco."
+	    (wordptr < txt size)
+		    ifFalse: [ ^cont ]
+		    ifTrue: [ band := 1 ].
+	    
+	    [ (txt at: wordptr) isSpaceSeparator not and: wordptr < txt size ] whileTrue: [
+		    (txt at: wordptr) isLowercase ifTrue: [
+			    band := 0.
+		    ].
+		    wordptr := wordptr + 1.
+	    ].
+
+	    (band = 1) ifTrue: [
+		    cont := cont + 1.
+	    ].
+    ].
+
+    ^cont.

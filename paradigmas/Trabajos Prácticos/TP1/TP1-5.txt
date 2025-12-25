@@ -1,0 +1,17 @@
+Punto 5
+-------
+Se tienen los siguientes mensajes anidados. Evaluarlos y, de ser necesario, colocar paréntesis para mostrar de que manera Pharo evalúa las expresiones:
+
+a) 'hola' size + 4                                 = 8
+b) 'ahora' size + #( 1 2 3 4 ) size                = 9
+c) #( 1 12 24 36) includes: 4 factorial            = true (El factorial de 4 es 24, que sí está incluido en el arreglo)
+d) 3 + 4 * 2                                       = 14
+e) 3 + (4 * 2)                                     = 11
+f) 4 factorial between: 3 + 4 and: 'hola' size * 7 = true (verifica que el factorial de 4 esté entre (3 + 4) y el tamaño de 'hola' multiplicado por 7)
+g) 'hola' at: ( #( 5 3 1 ) at: 2 )                 = $l (toma el número que está en la segunda posición del arreglo y luego se para en la posición del string correspondiente a ese número) 
+h) 6 + 9 asString                                  = '15' (debe escribirse con la forma "(6 + 9) asString")
+i) Array with: 1 with: 'hola' with: (1/3)          = {1. 'hola'. (1/3)} (crea un array con los elementos "1", "'hola'" y "(1/3)")
+
+NOTAS
+-----
+* Orden de evaluación de las expresiones: de izquierda a derecha, siempre que los mensajes sean de la misma categoría. De lo contrario, primero se resuelven los unarios, después los binarios y después los de palabra clave. Con los paréntesis se puede alterar el orden de evaluación, ya que primero se resuelve lo que está entre paréntesis.

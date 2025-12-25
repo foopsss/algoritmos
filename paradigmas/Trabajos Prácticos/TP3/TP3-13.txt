@@ -1,0 +1,80 @@
+Punto 13
+--------
+* Dado un texto terminado en ‘/’, se pide determinar cuántas veces aparece una determinada letra leída por teclado.
+
+    | txt letra cont isvalidtxt validletter informe |.
+    txt := UIManager default request: 'Introduzca un texto que termine con el símbolo "/": '.
+    isvalidtxt := false.
+
+    [ isvalidtxt = false ] whileTrue: [
+        | emptytxt invalidtxt |.
+        emptytxt := false.
+        invalidtxt := false.
+        
+        (txt isNil or: txt = '') ifTrue: [
+	        emptytxt := true.
+        ].
+
+        (emptytxt = false) ifTrue: [
+	        ((txt at: txt size) asString ~= '/') ifTrue: [
+		        invalidtxt := true.
+	        ].
+        ].
+
+        (emptytxt = true or: invalidtxt = true)
+	        ifTrue: [
+		        txt := UIManager default request: 'Introduzca esta vez un texto que termine con el símbolo "/": '.
+	        ]
+	        ifFalse: [
+		        isvalidtxt := true.
+	        ].
+    ].
+
+    letra := UIManager default request: 'Introduzca una letra: '.
+    validletter := false.
+
+    [ validletter = false ] whileTrue: [
+        | isempty_islong isletter isvalid |.
+        
+        isempty_islong := false.
+        isletter := true.
+        isvalid := false.
+        
+        [ isvalid = false ] whileTrue: [	    
+            ((letra isNil or: letra = '') or: letra size > 1) ifTrue: [
+	            isempty_islong := true.
+            ].
+            
+            (isempty_islong = false) ifTrue: [
+            	    letra := (letra at: 1).
+                ((letra) isLetter not) ifTrue: [
+	                isletter := false.
+                ].
+            ].
+            
+            (isempty_islong = true or: isletter = false)
+                ifTrue: [letra := UIManager default request: 'Introduzca una letra válida (un solo carácter y nada de espacios en blanco) esta vez, por favor: '.]
+                ifFalse: [isvalid := true].
+        ].
+        
+        (isvalid = true) ifTrue: [
+            validletter := true.
+        ].
+    ].
+
+    txt := txt asLowercase.
+    letra := letra asLowercase.
+    cont := 0.
+
+    1 to: txt size do: [ :i |
+        (i < txt size) ifTrue: [
+	        ((txt at: i) = letra)
+		        ifTrue: [ cont := cont + 1 ].
+        ].
+    ].
+
+    informe := 'Se produjeron un total de '.
+    informe := informe, cont asString.
+    informe := informe, ' ocasión/es en las que una letra del texto introducido coincidió con la letra provista por el usuario.'.
+
+    ^informe inspect.

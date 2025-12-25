@@ -1,0 +1,54 @@
+Punto 6
+-------
+* Dada una cadena de entrada, devolver otra en la cual las palabras estén en formato "tipo título" (cada palabra comienza con mayúscula).
+
+    | txt arr newtxt |.
+    txt := ' ejemplo de titulo fachero '.
+    arr := txt substrings.
+    newtxt := ''.
+
+    1 to: arr size do: [ :i |
+        | pal |.
+        pal := (arr at: i) asString.
+        pal at: 1 put: (pal at: 1) asUppercase.
+        newtxt := newtxt, pal.
+
+	     (i < arr size) ifTrue: [
+        	 newtxt := newtxt, ' '.
+	     ].
+    ].
+
+    ^newtxt.
+    -------------------------------------------------------------
+    | txt newtxt wordptr |.
+    txt := ' ejemplo de titulo fachero '.
+    newtxt := ''.
+    wordptr := 1.
+
+    [wordptr < txt size] whileTrue: [
+        | firstletter |.  
+	     [ (txt at: wordptr) isSpaceSeparator and: wordptr < txt size ] whileTrue: [
+            wordptr := wordptr + 1.
+        ].
+        
+	     firstletter := 1.
+
+        [ (txt at: wordptr) isSpaceSeparator not and: wordptr < txt size ] whileTrue: [
+        	 (firstletter = 1)
+		     	 ifTrue: [
+		     	 	 newtxt := newtxt, (txt at: wordptr) asString asUppercase.
+			     	 firstletter := 0.
+		     	 ]
+			     ifFalse: [
+			     	 newtxt := newtxt, (txt at: wordptr) asString.
+			     ].
+		     
+	     	 wordptr := wordptr + 1.
+        ].
+
+	     (wordptr < txt size) ifTrue: [
+	     	 newtxt := newtxt, ' '.
+	     ].
+    ].
+
+    ^newtxt.

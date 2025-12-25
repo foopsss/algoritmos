@@ -1,0 +1,103 @@
+Punto 15
+--------
+* Leer dos letras por teclado y luego un texto terminado en ‘/’, y determinar la cantidad de veces que la primera letra precede a la segunda en el texto.
+
+    | txt letraA letraB cont isvalidtxt validletters informe |.
+    txt := UIManager default request: 'Introduzca un texto que termine con el símbolo "/": '.
+    isvalidtxt := false.
+
+    [ isvalidtxt = false ] whileTrue: [
+	    | emptytxt invalidtxt |.
+	    emptytxt := false.
+	    invalidtxt := false.
+	    
+	    (txt isNil or: txt = '') ifTrue: [
+		    emptytxt := true.
+	    ].
+
+	    (emptytxt = false) ifTrue: [
+		    ((txt at: txt size) asString ~= '/') ifTrue: [
+			    invalidtxt := true.
+		    ].
+	    ].
+
+	    (emptytxt = true or: invalidtxt = true)
+		    ifTrue: [
+			    txt := UIManager default request: 'Introduzca esta vez un texto que termine con el símbolo "/": '.
+		    ]
+		    ifFalse: [
+			    isvalidtxt := true.
+		    ].
+    ].
+
+    letraA := UIManager default request: 'Introduzca una letra A: '.
+    letraB := UIManager default request: 'Introduzca otra letra B: '.
+    validletters := false.
+
+    [ validletters = false ] whileTrue: [
+	    | A_isempty_islong A_isletter letraA_isvalid B_isempty_islong B_isletter letraB_isvalid |.
+	    
+	    A_isempty_islong := false.
+	    A_isletter := true.
+	    letraA_isvalid := false.
+	    
+	    B_isempty_islong := false.
+	    B_isletter := true.
+	    letraB_isvalid := false.
+
+        [ letraA_isvalid = false ] whileTrue: [	    
+	        ((letraA isNil or: letraA = '') or: letraA size > 1) ifTrue: [
+		        A_isempty_islong := true.
+	        ].
+	        
+	        (A_isempty_islong = false) ifTrue: [
+            	    letraA := (letraA at: 1).
+	            ((letraA) isLetter not) ifTrue: [
+		            A_isletter := false.
+	            ].
+	        ].
+	        
+	        (A_isempty_islong = true or: A_isletter = false)
+	            ifTrue: [letraA := UIManager default request: 'Introduzca una letra A válida (un solo carácter y nada de espacios en blanco) esta vez, por favor: '.]
+	            ifFalse: [letraA_isvalid := true].
+        ].
+        
+        [ letraB_isvalid = false ] whileTrue: [	    
+	        ((letraB isNil or: letraB = '') or: letraB size > 1) ifTrue: [
+		        B_isempty_islong := true.
+	        ].
+	        
+	        (B_isempty_islong = false) ifTrue: [
+            	    letraB := (letraB at: 1).
+	            ((letraB) isLetter not) ifTrue: [
+		            B_isletter := false.
+	            ].
+	        ].
+	        
+	        (B_isempty_islong = true or: B_isletter = false)
+	            ifTrue: [letraB := UIManager default request: 'Introduzca una letra B válida (un solo carácter y nada de espacios en blanco) esta vez, por favor: '.]
+	            ifFalse: [letraB_isvalid := true].
+        ].
+        
+        (letraA_isvalid = true and: letraB_isvalid = true) ifTrue: [
+            validletters := true.
+        ].
+    ].
+
+    txt := txt asLowercase.
+    letraA := letraA asLowercase.
+    letraB := letraB asLowercase.
+    cont := 0.
+
+    1 to: txt size do: [ :i |
+	    (i < txt size) ifTrue: [
+		    ((txt at: i) = letraA and: (txt at: i + 1) = letraB)
+			    ifTrue: [ cont := cont + 1 ].
+	    ].
+    ].
+
+    informe := 'Se produjeron un total de '.
+    informe := informe, cont asString.
+    informe := informe, ' ocasión/es en las que la primera letra introducida precedió a la segunda.'.
+
+    ^informe inspect.
