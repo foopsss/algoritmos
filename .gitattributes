@@ -1,2 +1,5 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and perform LF normalization.
 * text=auto
+
+# Classify .st files as Smalltalk source code.
+*.st linguist-language=Smalltalk
